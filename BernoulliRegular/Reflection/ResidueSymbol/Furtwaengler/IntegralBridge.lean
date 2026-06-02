@@ -55,20 +55,6 @@ noncomputable def residueCharInt : MulChar k (𝓞 R') :=
   residueMulChar S.zeta_k S.hzeta_k S.hdiv S.zeta_p_int_unit
     S.zeta_p_int_unit_isPrimitiveRoot
 
-
-
-
-
-
-/-- Coercing the integral residue character to `R'` recovers the original
-field-valued residue character. -/
-theorem residueCharInt_ringHomComp :
-    S.residueCharInt.ringHomComp (algebraMap (𝓞 R') R') = S.residueChar := by
-  ext u
-  letI : NeZero p := ⟨(Fact.out : Nat.Prime p).ne_zero⟩
-  simp [residueCharInt, residueChar, StickelbergerSetup.residueChar, abstractSetup,
-    residueMulChar_apply_unit]
-
 /-- The integral additive character defined by the exponent form
 `ψ(x) = ζ_ℓ ^ psiExponent x`. -/
 noncomputable def psiInt : AddChar k (𝓞 R') where

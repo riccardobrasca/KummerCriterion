@@ -352,18 +352,6 @@ theorem zeta_sub_one_mem_of_natCast_mem
     hζ.associated_sub_one_pow_sub_one_of_coprime ha_coprime
   exact hassoc.symm.mem_ideal_of_mem h_neg
 
-/-- **Iterated cyclotomic ramification.** Direct corollary: every power
-`ζ^n` of a primitive `q`-th root satisfies `ζ^n - 1 ∈ Q` for any prime
-ideal `Q` containing `q`. Combines `zeta_sub_one_mem_of_natCast_mem`
-with `pow_sub_one_mem_of_sub_one_mem`. -/
-theorem zeta_pow_sub_one_mem_of_natCast_mem
-    {R : Type*} [CommRing R] [IsDomain R]
-    {q : ℕ} [Fact q.Prime] {ζ : R} (hζ : IsPrimitiveRoot ζ q)
-    {Q : Ideal R} [Q.IsPrime] (hQ : (q : R) ∈ Q) (n : ℕ) :
-    ζ ^ n - 1 ∈ Q :=
-  pow_sub_one_mem_of_sub_one_mem ζ n (zeta_sub_one_mem_of_natCast_mem hζ hQ)
-
-
 end Furtwaengler
 
 end BernoulliRegular

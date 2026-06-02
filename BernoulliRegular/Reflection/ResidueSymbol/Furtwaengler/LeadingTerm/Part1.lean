@@ -207,19 +207,6 @@ ramification (mathlib's `IsCyclotomicExtension.Rat.ramificationIdx_eq`
 with `n = ℓ · p`, prime `ℓ`, `m = p`) is tracked as a separate
 follow-up ticket. See the L2c3a board entry. -/
 
-/-- Parametric form of the leading-term non-degeneracy: any `Q`-unit
-times `π^s` lies outside `Q^(s+1)`. Builds on the structural Dedekind
-fact `pi_pow_not_mem_Q_pow_succ_of_not_mem_sq`. -/
-theorem unit_mul_pi_pow_not_mem_Q_pow_succ
-    (S : TraceFormStickelbergerSetup ℓ p k K R')
-    (h_pi_ne_zero : S.π ≠ 0) (h_pi_nondeg : S.π ∉ S.Q ^ 2)
-    (u : 𝓞 R') (hu : u ∉ S.Q) (s : ℕ) :
-    u * S.π ^ s ∉ S.Q ^ (s + 1) := by
-  intro h_in
-  rcases Ideal.IsPrime.mul_mem_pow S.Q h_in with h_u | h_pi_pow
-  · exact hu h_u
-  · exact S.pi_pow_not_mem_Q_pow_succ_of_not_mem_sq h_pi_ne_zero h_pi_nondeg s h_pi_pow
-
 /-- **L2c3d-6 (stickOrd wrapper).** No digit vector of weight strictly
 less than `S.stickOrd a` survives the divisibility test
 `(#k - 1) ∣ (p - a) * S.stickD + digitValue m`. This is the

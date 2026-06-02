@@ -124,21 +124,6 @@ def dworkLeadingUnit (a : ℕ) : 𝓞 R' :=
   ((Fintype.card k - 1 : ℕ) : 𝓞 R') *
     S.teichUnitFullVal S.traceScale ^ (a * S.stickD)
 
-/-- The Dwork leading unit is not in `Q`. -/
-theorem dworkLeadingUnit_not_mem_Q
-    (a : ℕ) (_ha₁ : 1 ≤ a) (_ha₂ : a ≤ p - 1) :
-    S.dworkLeadingUnit a ∉ S.Q := by
-  classical
-  unfold dworkLeadingUnit
-  intro hmem
-  rcases (Ideal.IsPrime.mem_or_mem (hI := inferInstance)) hmem with hcard | hpow
-  · exact S.toTraceFormStickelbergerSetup.natCast_card_k_sub_one_not_mem_Q hcard
-  · have h_unit : S.teichUnitFullVal S.traceScale ∉ S.Q :=
-      S.toFullTeichStickelbergerSetup.teichUnitFullVal_not_mem_Q S.traceScale
-    have h_base : S.teichUnitFullVal S.traceScale ∈ S.Q :=
-      Ideal.IsPrime.mem_of_pow_mem (hI := inferInstance) _ hpow
-    exact h_unit h_base
-
 /-- Factorial-normalized Dwork leading coefficient is congruent to
 `π^s` modulo `Q^(s+1)`. -/
 theorem dworkLeadingFactorialProd_mul_coeffProd_sub_pi_pow_mem
