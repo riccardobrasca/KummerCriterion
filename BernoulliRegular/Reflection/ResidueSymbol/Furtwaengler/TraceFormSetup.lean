@@ -90,15 +90,6 @@ variable {R' : Type w} [Field R'] [NumberField R'] [Algebra K R'] [IsScalarTower
 
 variable (S : TraceFormStickelbergerSetup ℓ p k K R')
 
-/-- Trace-form expression for the abstract additive character. -/
-theorem psi_eq_zeta_ell_pow_trace (x : k) :
-    S.psi x =
-      S.zeta_ell ^ ((Algebra.trace (ZMod ℓ) k ((S.traceScale : k) * x)).val) := by
-  rw [S.psi_pow_form, S.psiExponent_trace]
-
-
-
-
 end TraceFormStickelbergerSetup
 
 /-! ### Conductor-flexible trace-form API -/

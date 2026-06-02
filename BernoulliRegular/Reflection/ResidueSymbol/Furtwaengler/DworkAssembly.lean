@@ -180,46 +180,6 @@ theorem dworkLeadingFactorialProd_mul_coeffProd_sub_pi_pow_mem
   simpa [dworkLeadingFactorialProd, dworkLeadingMultiIndex, hm₀_def,
     Finset.prod_mul_distrib] using hprod'
 
-/-- **Dwork replacement for L2c3d-7.** The reciprocal-convention integral
-Gauss sum lies in `Q^{s_ℓ(a · d)}`. -/
-theorem gaussSumIntRec_mem_Q_pow_stickOrd_dwork
-    (a : ℕ) (ha₁ : 1 ≤ a) (ha₂ : a ≤ p - 1) :
-    S.gaussSumIntRec a ∈ S.Q ^ S.stickOrd a := by
-  classical
-  set s := S.stickOrd a with hs_def
-  rcases Nat.eq_zero_or_pos s with h_zero | h_pos
-  · rw [h_zero, pow_zero, Ideal.one_eq_top]
-    exact (Submodule.mem_top : S.gaussSumIntRec a ∈ (⊤ : Ideal (𝓞 R')))
-  · set N := s - 1 with hN_def
-    have hN_succ : N + 1 = s := by omega
-    have h_diff := S.gaussSumIntRec_dwork_expansion a N ha₁ ha₂
-    rw [hN_succ] at h_diff
-    have h_sum_zero :
-        (∑ m ∈ multiIndexLE S.f N,
-          (∏ i : Fin S.f, S.dworkCoeff N (m i)) *
-          (∑ x : kˣ,
-            S.teichUnitFullVal x ^ ((p - a) * S.stickD) *
-            S.teichUnitFullVal (S.traceScale * x) ^ multiIndexValue ℓ m)) = 0 := by
-      apply Finset.sum_eq_zero
-      intro m hm
-      have hm_weight_le : multiIndexWeight m ≤ N := ((mem_multiIndexLE m).mp hm).2
-      have hm_weight_lt : multiIndexWeight m < s := by omega
-      have h_no_surv :
-          ¬ (Fintype.card k - 1) ∣
-              ((p - a) * S.stickD + multiIndexValue ℓ m) :=
-        S.toFullTeichStickelbergerSetup.no_survivor_multiIndex_of_weight_lt_stickOrd
-          a ha₁ ha₂ m (by simpa [hs_def] using hm_weight_lt)
-      have h_inner_zero :
-          (∑ x : kˣ,
-            S.teichUnitFullVal x ^ ((p - a) * S.stickD) *
-            S.teichUnitFullVal (S.traceScale * x) ^ multiIndexValue ℓ m) = 0 := by
-        rw [S.toFullTeichStickelbergerSetup.teichUnitFull_innerSum_eval
-          ((p - a) * S.stickD) (multiIndexValue ℓ m) S.traceScale]
-        exact if_neg h_no_surv
-      rw [h_inner_zero, mul_zero]
-    rw [h_sum_zero] at h_diff
-    simpa [sub_zero] using h_diff
-
 /-- Dwork leading congruence before factorial normalization. -/
 theorem gaussSumIntRec_sub_dworkLeadingTerm_mem_Q_pow_succ
     (a : ℕ) (ha₁ : 1 ≤ a) (ha₂ : a ≤ p - 1) :
@@ -361,53 +321,6 @@ theorem dworkLeadingFactorialProd_mul_gaussSumIntRec_sub_unit_pi_pow_mem
   have hsum := Ideal.add_mem _ hGmul hCmul
   convert hsum using 1
   ring
-
-/-- **Dwork replacement for L2c3e-5.** The reciprocal-convention integral
-Gauss sum is not in the next power `Q^(s+1)`. -/
-theorem gaussSumIntRec_not_mem_Q_pow_stickOrd_succ_dwork
-    (a : ℕ) (ha₁ : 1 ≤ a) (ha₂ : a ≤ p - 1) :
-    S.gaussSumIntRec a ∉ S.Q ^ (S.stickOrd a + 1) := by
-  classical
-  intro h_mem
-  have h_fact_G_mem :
-      S.dworkLeadingFactorialProd a * S.gaussSumIntRec a ∈
-        S.Q ^ (S.stickOrd a + 1) :=
-    Ideal.mul_mem_left _ _ h_mem
-  have h_diff :=
-    S.dworkLeadingFactorialProd_mul_gaussSumIntRec_sub_unit_pi_pow_mem a ha₁ ha₂
-  have h_unit_pi_mem :
-      S.dworkLeadingUnit a * S.π ^ S.stickOrd a ∈
-        S.Q ^ (S.stickOrd a + 1) := by
-    have htmp := Ideal.sub_mem _ h_fact_G_mem h_diff
-    convert htmp using 1
-    ring
-  have h_unit_notQ : S.dworkLeadingUnit a ∉ S.Q :=
-    S.dworkLeadingUnit_not_mem_Q a ha₁ ha₂
-  exact S.toTraceFormStickelbergerSetup.unit_mul_pi_pow_not_mem_Q_pow_succ
-    S.toTraceFormStickelbergerSetup.pi_ne_zero
-    S.toTraceFormStickelbergerSetup.pi_not_mem_Q_sq
-    (S.dworkLeadingUnit a) h_unit_notQ (S.stickOrd a) h_unit_pi_mem
-
-/-- Dwork exact reciprocal digit-sum Stickelberger congruence. -/
-theorem gaussSumIntRec_qadic_ord_at_prime_dwork
-    (a : ℕ) (ha₁ : 1 ≤ a) (ha₂ : a ≤ p - 1) :
-    S.gaussSumIntRec a ∈ S.Q ^ S.stickOrd a ∧
-      S.gaussSumIntRec a ∉ S.Q ^ (S.stickOrd a + 1) :=
-  ⟨S.gaussSumIntRec_mem_Q_pow_stickOrd_dwork a ha₁ ha₂,
-   S.gaussSumIntRec_not_mem_Q_pow_stickOrd_succ_dwork a ha₁ ha₂⟩
-
-/-- Ordinary-character exact order, exported with the complementary
-digit-sum index dictated by the stored ordinary character convention. -/
-theorem gaussSumInt_qadic_ord_at_prime_ord_dwork
-    (a : ℕ) (ha₁ : 1 ≤ a) (ha₂ : a ≤ p - 1) :
-    S.gaussSumInt a ∈ S.Q ^ S.stickOrdOrd a ∧
-      S.gaussSumInt a ∉ S.Q ^ (S.stickOrdOrd a + 1) := by
-  have h₁ : 1 ≤ p - a := by omega
-  have h₂ : p - a ≤ p - 1 := by omega
-  have hrec := S.gaussSumIntRec_qadic_ord_at_prime_dwork (p - a) h₁ h₂
-  unfold TraceFormStickelbergerSetup.gaussSumIntRec at hrec
-  unfold TraceFormStickelbergerSetup.stickOrdOrd
-  rwa [show p - (p - a) = a by omega] at hrec
 
 end FullTeichDworkSetup
 

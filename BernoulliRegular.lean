@@ -188,7 +188,6 @@ import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.CrossRingBridge.Pa
 import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.CyclotomicLocalSetup
 import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.CyclotomicLocalSetup.Part1
 import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.CyclotomicLocalSetup.Part2
-import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.CyclotomicLocalSetup.Part2.Concrete
 import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.CyclotomicLocalSetup.Part2.Flexible
 import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.CyclotomicPairGalois
 import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork

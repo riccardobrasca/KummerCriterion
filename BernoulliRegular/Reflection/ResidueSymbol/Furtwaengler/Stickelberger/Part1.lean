@@ -139,27 +139,6 @@ is the content of a later subticket since it requires concrete cyclotomic
 extension scaffolding.
 -/
 
-/-- **Abstract form of REF-18c2c2.** For a non-trivial multiplicative
-character `χ` and an additive character `ψ` that is "constantly 1 mod `I`"
-(i.e., `ψ(x) - 1 ∈ I` for all `x`), the Gauss sum lies in `I`.
-
-The proof splits `g(χ, ψ) = ∑ χ(x) (ψ(x) - 1) + ∑ χ(x)`. The second sum
-vanishes because `χ ≠ 1` (via `MulChar.sum_eq_zero_of_ne_one`); the first
-is in `I` because each summand is (by closure under R'-multiplication). -/
-theorem gaussSum_mem_ideal_of_addChar_sub_one_mem
-    {R : Type*} [CommRing R] [Fintype R]
-    {R' : Type*} [CommRing R'] [IsDomain R']
-    {χ : MulChar R R'} (hχ : χ ≠ 1) (ψ : AddChar R R')
-    {I : Ideal R'} (h : ∀ x : R, ψ x - 1 ∈ I) :
-    gaussSum χ ψ ∈ I := by
-  have h_split : gaussSum χ ψ = ∑ x, χ x * (ψ x - 1) + ∑ x, χ x := by
-    unfold gaussSum
-    rw [← Finset.sum_add_distrib]
-    refine Finset.sum_congr rfl fun x _ => ?_
-    rw [mul_sub, mul_one, sub_add_cancel]
-  rw [h_split, MulChar.sum_eq_zero_of_ne_one hχ, add_zero]
-  exact Ideal.sum_mem _ (fun x _ => Ideal.mul_mem_left _ _ (h x))
-
 /-- **Algebraic helper for the concrete instantiation of REF-18c2c2.**
 If `x - 1 ∈ I`, then `x^n - 1 ∈ I` for all `n`. Useful when verifying the
 hypothesis of `gaussSum_mem_ideal_of_addChar_sub_one_mem` for the concrete

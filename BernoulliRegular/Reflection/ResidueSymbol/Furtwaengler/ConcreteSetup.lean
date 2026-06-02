@@ -212,9 +212,6 @@ def residueChar : MulChar k R' :=
 
 
 
-/-- Accessor: `χ_q^p = 1` for the concrete residue character. -/
-theorem residueChar_pow_eq_one : S.residueChar ^ p = 1 :=
-  S.abstractSetup.residueChar_pow_eq_one
 
 
 

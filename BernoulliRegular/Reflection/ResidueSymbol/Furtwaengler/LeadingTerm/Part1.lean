@@ -85,13 +85,6 @@ def stickD (_S : TraceFormStickelbergerSetup ℓ p k K R') : ℕ :=
 def stickOrd (S : TraceFormStickelbergerSetup ℓ p k K R') (a : ℕ) : ℕ :=
   digitSum ℓ (a * S.stickD)
 
-/-- The predicted ordinary-character order. Since the setup's stored
-character satisfies `χ(x) ≡ x^d mod Q`, ordinary `χ^a` corresponds to the
-complementary reciprocal index `p-a`. -/
-def stickOrdOrd (S : TraceFormStickelbergerSetup ℓ p k K R') (a : ℕ) : ℕ :=
-  S.stickOrd (p - a)
-
-
 section CharacterOrthogonality
 
 variable [DecidableEq k]

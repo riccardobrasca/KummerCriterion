@@ -1,6 +1,11 @@
 module
 
-public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.CyclotomicLocalSetup.Part2.Concrete
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.ConcreteSetup
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.KummerFurtwaengler
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.CanonicalResidueRoot
+public import Mathlib.NumberTheory.Cyclotomic.Basic
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.CyclotomicLocalSetup.Part1
 
 @[expose] public section
 
