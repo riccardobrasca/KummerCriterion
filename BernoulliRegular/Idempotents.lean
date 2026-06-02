@@ -104,55 +104,6 @@ section Orthogonality
 
 variable (χ ψ : MulChar G R)
 
-/-- The explicit expansion of `ε_χ · ε_ψ` as a scalar multiple of the
-basic character-weighted sum. Independent of whether `χ = ψ`. -/
-lemma charIdempotent_mul_aux :
-    charIdempotent χ * charIdempotent ψ =
-      (⅟(Fintype.card G : R) * ⅟(Fintype.card G : R)) •
-        ((∑ σ : G, χ σ * ψ σ⁻¹) •
-          (∑ ρ : G, ψ ρ • MonoidAlgebra.single ρ⁻¹ (1 : R))) := by
-  -- Pull out the two scalar factors and expand the product of sums.
-  simp only [charIdempotent_def]
-  rw [smul_mul_assoc, mul_smul_comm, smul_smul, Finset.sum_mul_sum]
-  congr 1
-  -- Reindex the inner sum `τ ↦ σ⁻¹ * ρ`. For each σ, this is a bijection.
-  have inner : ∀ σ : G,
-      (∑ τ : G, (χ σ • MonoidAlgebra.single σ⁻¹ (1 : R)) *
-          (ψ τ • MonoidAlgebra.single τ⁻¹ (1 : R)))
-      = ∑ ρ : G, (χ σ * ψ (σ⁻¹ * ρ)) • MonoidAlgebra.single ρ⁻¹ (1 : R) := by
-    intro σ
-    rw [← (Group.mulLeft_bijective σ⁻¹).sum_comp
-      (g := fun τ => (χ σ • MonoidAlgebra.single σ⁻¹ (1 : R)) *
-        (ψ τ • MonoidAlgebra.single τ⁻¹ (1 : R)))]
-    refine Finset.sum_congr rfl fun ρ _ => ?_
-    -- single σ⁻¹ 1 * single (σ⁻¹ ρ)⁻¹ 1 = single ρ⁻¹ 1 (via `single_mul_single`).
-    rw [smul_mul_assoc, mul_smul_comm, MonoidAlgebra.single_mul_single, mul_one,
-      smul_smul]
-    congr 2
-    -- σ⁻¹ * (σ⁻¹ * ρ)⁻¹ = σ⁻¹ * (ρ⁻¹ * σ) = ρ⁻¹ (using CommGroup).
-    rw [mul_inv_rev, inv_inv, ← mul_assoc, mul_comm σ⁻¹ ρ⁻¹, mul_assoc,
-      inv_mul_cancel, mul_one]
-  -- Now rewrite each inner sum and then factor using ∑ σ ∑ ρ = ∑ ρ ∑ σ.
-  simp_rw [inner]
-  rw [Finset.sum_comm, Finset.smul_sum]
-  refine Finset.sum_congr rfl fun ρ _ => ?_
-  -- Goal: ∑ σ, (χ σ * ψ (σ⁻¹ * ρ)) • e_{ρ⁻¹}
-  --     = (∑ σ, χ σ * ψ σ⁻¹) • ψ ρ • e_{ρ⁻¹}
-  rw [smul_smul, Finset.sum_mul, Finset.sum_smul]
-  refine Finset.sum_congr rfl fun σ _ => ?_
-  rw [map_mul, mul_assoc]
-
-/-- The "inner character sum" `∑_σ χ σ · χ σ⁻¹` equals `|G|` for any character `χ`.
-This is the diagonal case used to prove `ε_χ² = ε_χ`. -/
-lemma sum_char_mul_char_inv_self :
-    (∑ σ : G, χ σ * χ σ⁻¹) = (Fintype.card G : R) := by
-  -- `χ σ * χ σ⁻¹ = χ (σ * σ⁻¹) = χ 1 = 1` for every σ, so the sum is `|G| * 1`.
-  simp only [← map_mul, mul_inv_cancel, MulChar.map_one, Finset.sum_const, Finset.card_univ,
-    nsmul_eq_mul, mul_one]
-
-
-
-
 end Orthogonality
 
 

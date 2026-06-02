@@ -36,15 +36,6 @@ namespace KummerArtinHasse
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-/-- The unit group of the valuation-completion integer ring at `lambda`. -/
-abbrev LambdaValuedUnitGroup : Type _ :=
-  (LambdaValuedIntegerRing p K)ˣ
-
-/-- The maximal ideal of the valuation-completion integer ring. -/
-abbrev LambdaValuedMaximalIdeal : Ideal (LambdaValuedIntegerRing p K) :=
-  IsLocalRing.maximalIdeal (LambdaValuedIntegerRing p K)
-
-
 /-- The cyclotomic uniformizer `pi = zeta_p - 1` in the valuation-completion
 integer ring. -/
 def lambdaValuedPiInteger : LambdaValuedIntegerRing p K :=

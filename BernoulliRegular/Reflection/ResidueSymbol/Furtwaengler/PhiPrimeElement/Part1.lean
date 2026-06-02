@@ -145,37 +145,6 @@ theorem gamma_notMem_of_absNorm_coprime
 
 
 
-/-- Construct the actual Φ-prime element from the existing descended
-Gauss-sum element `phiPrimeGenDescent S a`. -/
-noncomputable def ofDescent
-    {ℓ p : ℕ} [Fact (Nat.Prime ℓ)] [Fact (Nat.Prime p)]
-    {k : Type*} [Field k] [Fintype k] [Algebra (ZMod ℓ) k]
-    {K : Type*} [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
-    {R' : Type*} [Field R'] [NumberField R'] [Algebra K R'] [IsScalarTower ℚ K R']
-      [IsCyclotomicExtension {p, ℓ} ℚ R']
-    (S : FullTeichDworkSetup ℓ p k K R')
-    {a : ℕ} (ha₁ : 1 ≤ a) (ha₂ : a ≤ p - 1)
-    (h_ne_zero : S.gaussSumInt a ^ p ≠ 0)
-    {P : Ideal (𝓞 K)}
-    (h_span : Ideal.span ({phiPrimeGenDescent S ha₁ ha₂ h_ne_zero} : Set (𝓞 K)) =
-      stickelbergerIdeal (p := p) (K := K) P) :
-    PhiPrimeElement (p := p) (K := K) P where
-  gamma := phiPrimeGenDescent S ha₁ ha₂ h_ne_zero
-  span_gamma := h_span
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /-! ### K2-2 for the actual descended Φ element -/
 
 

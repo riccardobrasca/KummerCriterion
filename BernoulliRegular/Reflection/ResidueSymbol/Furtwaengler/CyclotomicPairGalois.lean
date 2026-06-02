@@ -28,16 +28,6 @@ namespace Furtwaengler
 
 variable {ℓ p : ℕ} [Fact (Nat.Prime ℓ)] [Fact (Nat.Prime p)]
 
-/-- Distinct primes `ℓ` and `p` are coprime in the order needed for
-`ZMod.chineseRemainder` at conductor `p * ℓ`. -/
-lemma prime_coprime_of_ne (hℓp : ℓ ≠ p) : p.Coprime ℓ :=
-  (Nat.Prime.coprime_iff_not_dvd (Fact.out : Nat.Prime p)).mpr <| by
-    intro h_dvd
-    have hp_eq_ell : p = ℓ :=
-      (Nat.prime_dvd_prime_iff_eq (Fact.out : Nat.Prime p)
-        (Fact.out : Nat.Prime ℓ)).mp h_dvd
-    exact hℓp hp_eq_ell.symm
-
 /-- Positivity of the product conductor `p * ℓ`. -/
 lemma pairConductor_pos : 0 < p * ℓ :=
   Nat.mul_pos (Fact.out : Nat.Prime p).pos (Fact.out : Nat.Prime ℓ).pos

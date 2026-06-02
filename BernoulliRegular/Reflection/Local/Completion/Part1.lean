@@ -124,54 +124,6 @@ abbrev completedLocalCyclotomicMaximalIdeal :
 /-- The completed local unit group. -/
 abbrev completedLocalCyclotomicUnitGroup := (completedLocalCyclotomicRing p K)ˣ
 
-/-- The local-to-completed map on cyclotomic local units. -/
-noncomputable def completedLocalCyclotomicUnitMap :
-    localCyclotomicUnitGroup p K →*
-      completedLocalCyclotomicUnitGroup p K :=
-  Units.map (algebraMap (localCyclotomicRing p K) (completedLocalCyclotomicRing p K))
-
-/-- The distinguished cyclotomic root of unity in the completed local unit group. -/
-noncomputable def completedLocalCyclotomicZetaUnit :
-    completedLocalCyclotomicUnitGroup p K :=
-  completedLocalCyclotomicUnitMap p K (localCyclotomicZetaUnit p K)
-
-@[simp]
-theorem completedLocalCyclotomicZetaUnit_coe :
-    ((completedLocalCyclotomicZetaUnit p K : completedLocalCyclotomicUnitGroup p K) :
-        completedLocalCyclotomicRing p K) =
-      algebraMap (localCyclotomicRing p K) (completedLocalCyclotomicRing p K)
-        (localCyclotomicZetaUnit p K : localCyclotomicRing p K) :=
-  rfl
-
-@[simp]
-theorem completedLocalCyclotomicZetaUnit_pow_eq_one :
-    completedLocalCyclotomicZetaUnit p K ^ p = 1 := by
-  rw [completedLocalCyclotomicZetaUnit, ← map_pow, localCyclotomicZetaUnit_pow_eq_one,
-    map_one]
-
-/-- The cyclotomic `p`-power roots of unity inside the completed local unit group. -/
-noncomputable def completedLocalCyclotomicMuP :
-    Subgroup (completedLocalCyclotomicUnitGroup p K) :=
-  Subgroup.zpowers (completedLocalCyclotomicZetaUnit p K)
-
-
-theorem completedLocalCyclotomicMuP_le_powMonoidHom_ker :
-    completedLocalCyclotomicMuP p K ≤
-      (powMonoidHom p : completedLocalCyclotomicUnitGroup p K →*
-        completedLocalCyclotomicUnitGroup p K).ker := by
-  rw [completedLocalCyclotomicMuP]
-  exact Subgroup.zpowers_le_of_mem (by
-    rw [MonoidHom.mem_ker]
-    exact completedLocalCyclotomicZetaUnit_pow_eq_one (p := p) (K := K))
-
-theorem completedLocalCyclotomicMuP_pow_eq_one
-    {u : completedLocalCyclotomicUnitGroup p K}
-    (hu : u ∈ completedLocalCyclotomicMuP p K) :
-    u ^ p = 1 := by
-  have hker := completedLocalCyclotomicMuP_le_powMonoidHom_ker (p := p) (K := K) hu
-  rw [MonoidHom.mem_ker] at hker
-  exact hker
-
 instance completedLocalCyclotomic_isAdicComplete :
     IsAdicComplete (completedLocalCyclotomicMaximalIdeal p K)
       (completedLocalCyclotomicRing p K) := by
@@ -204,55 +156,6 @@ theorem localCyclotomicUniformizer_not_mem_maximalIdeal_sq :
   rw [mem_principalUnitSubgroup_iff] at hnot
   simpa [localCyclotomicUniformizer, map_sub, map_one] using hnot
 
-theorem completedLocalCyclotomicMaximalIdeal_eq_ker_evalOne :
-    completedLocalCyclotomicMaximalIdeal p K =
-      RingHom.ker (AdicCompletion.evalOneₐ (localCyclotomicMaximalIdeal p K)).toRingHom := by
-  let R := localCyclotomicRing p K
-  let S := completedLocalCyclotomicRing p K
-  let M := localCyclotomicMaximalIdeal p K
-  have hfg : M.FG := (localCyclotomicMaximalIdeal_isPrincipal (p := p) (K := K)).fg
-  ext x
-  constructor
-  · intro hx
-    rw [RingHom.mem_ker]
-    have hxsmul : x ∈ M ^ 1 • (⊤ : Submodule R S) := by
-      rw [pow_one, Ideal.smul_top_eq_map]
-      simpa [S, R, M, completedLocalCyclotomicMaximalIdeal] using hx
-    have hxker : x ∈ LinearMap.ker (AdicCompletion.eval M R 1) := by
-      rw [← AdicCompletion.pow_smul_top_eq_ker_eval (I := M) (M := R) hfg (n := 1)]
-      exact hxsmul
-    have heval : AdicCompletion.eval M R 1 x = 0 := LinearMap.mem_ker.mp hxker
-    change AdicCompletion.evalOneₐ M x = 0
-    rw [← AdicCompletion.factorₐ_evalₐ_one (I := M) x]
-    have hle : M ^ 1 • (⊤ : Ideal R) ≤ M ^ 1 := by
-      rw [Ideal.smul_eq_mul, Ideal.mul_top]
-    rw [← AdicCompletion.factor_eval_eq_evalₐ (I := M) (R := R) (n := 1) (x := x) hle,
-      heval, map_zero, map_zero]
-  · intro hx
-    rw [RingHom.mem_ker] at hx
-    change AdicCompletion.evalOneₐ M x = 0 at hx
-    have hevalₐ : AdicCompletion.evalₐ M 1 x = 0 := by
-      have hfactor :
-          Ideal.Quotient.factor (show M ^ 1 ≤ M by simp) (AdicCompletion.evalₐ M 1 x) =
-            0 := by
-        rw [AdicCompletion.factorₐ_evalₐ_one (I := M) x]
-        exact hx
-      have hEq : M ^ 1 = M := by rw [pow_one]
-      apply (Ideal.quotEquivOfEq hEq).injective
-      simpa [Ideal.quotEquivOfEq_eq_factor hEq] using hfactor
-    have heval : AdicCompletion.eval M R 1 x = 0 := by
-      have hle : M ^ 1 ≤ M ^ 1 • (⊤ : Ideal R) := by
-        rw [Ideal.smul_eq_mul, Ideal.mul_top]
-      have hfac := AdicCompletion.factor_evalₐ_eq_eval (I := M) (R := R) (n := 1) (x := x) hle
-      rw [← hfac, hevalₐ, map_zero]
-    have hxker : x ∈ LinearMap.ker (AdicCompletion.eval M R 1) :=
-      LinearMap.mem_ker.mpr heval
-    have hxsmul : x ∈ M ^ 1 • (⊤ : Submodule R S) := by
-      rw [AdicCompletion.pow_smul_top_eq_ker_eval (I := M) (M := R) hfg (n := 1)]
-      exact hxker
-    rw [pow_one, Ideal.smul_top_eq_map] at hxsmul
-    simpa [S, R, M, completedLocalCyclotomicMaximalIdeal] using hxsmul
-
 theorem completedLocalCyclotomicUniformizer_ne_zero :
     completedLocalCyclotomicUniformizer p K ≠ 0 := by
   intro hzero
@@ -267,49 +170,6 @@ theorem completedLocalCyclotomicUniformizer_ne_zero :
     (Ideal.Quotient.eq_zero_iff_mem.mp hmk)
 
 
-
-theorem completedLocalCyclotomicMaximalIdeal_pow_le_ker_evalₐ (n : ℕ) :
-    completedLocalCyclotomicMaximalIdeal p K ^ n ≤
-      RingHom.ker (AdicCompletion.evalₐ (localCyclotomicMaximalIdeal p K) n).toRingHom := by
-  let R := localCyclotomicRing p K
-  let S := completedLocalCyclotomicRing p K
-  let M := localCyclotomicMaximalIdeal p K
-  change (Ideal.map (algebraMap R S) M) ^ n ≤
-    RingHom.ker (AdicCompletion.evalₐ M n).toRingHom
-  rw [← Ideal.map_pow]
-  rw [Ideal.map_le_iff_le_comap]
-  intro x hx
-  rw [Ideal.mem_comap, RingHom.mem_ker]
-  simpa [R, M] using (Ideal.Quotient.eq_zero_iff_mem.mpr hx :
-    Ideal.Quotient.mk (M ^ n) x = 0)
-
-theorem completedLocalCyclotomicMaximalIdeal_pow_eq_ker_evalₐ (n : ℕ) :
-    completedLocalCyclotomicMaximalIdeal p K ^ n =
-      RingHom.ker (AdicCompletion.evalₐ (localCyclotomicMaximalIdeal p K) n).toRingHom := by
-  let R := localCyclotomicRing p K
-  let S := completedLocalCyclotomicRing p K
-  let M := localCyclotomicMaximalIdeal p K
-  have hfg : M.FG := (localCyclotomicMaximalIdeal_isPrincipal (p := p) (K := K)).fg
-  ext x
-  constructor
-  · intro hx
-    exact completedLocalCyclotomicMaximalIdeal_pow_le_ker_evalₐ (p := p) (K := K) n hx
-  · intro hx
-    rw [RingHom.mem_ker] at hx
-    change AdicCompletion.evalₐ M n x = 0 at hx
-    have heval : AdicCompletion.eval M R n x = 0 := by
-      have hle : M ^ n ≤ M ^ n • (⊤ : Ideal R) := by
-        rw [Ideal.smul_eq_mul, Ideal.mul_top]
-      have hfac := AdicCompletion.factor_evalₐ_eq_eval (I := M) (R := R) (n := n) (x := x) hle
-      rw [← hfac, hx, map_zero]
-    have hxker : x ∈ LinearMap.ker (AdicCompletion.eval M R n) :=
-      LinearMap.mem_ker.mpr heval
-    have hxsmul : x ∈ M ^ n • (⊤ : Submodule R S) := by
-      rw [AdicCompletion.pow_smul_top_eq_ker_eval (I := M) (M := R) hfg (n := n)]
-      exact hxker
-    rw [Ideal.smul_top_eq_map] at hxsmul
-    rw [← Ideal.map_pow]
-    simpa [S, R, M, completedLocalCyclotomicMaximalIdeal] using hxsmul
 
 theorem completedLocalCyclotomicMaximalIdeal_pow_eq_span_uniformizer_pow (n : ℕ) :
     completedLocalCyclotomicMaximalIdeal p K ^ n =
@@ -417,13 +277,6 @@ theorem natCast_prime_mem_completedLocalCyclotomicMaximalIdeal_pow_pred :
   rw [← span_natCast_prime_eq_completedLocalCyclotomicMaximalIdeal_pow_pred (p := p) (K := K)]
   exact Ideal.mem_span_singleton_self (p : completedLocalCyclotomicRing p K)
 
-theorem natCast_prime_mem_completedLocalCyclotomicMaximalIdeal :
-    (p : completedLocalCyclotomicRing p K) ∈ completedLocalCyclotomicMaximalIdeal p K := by
-  have hp : (p : completedLocalCyclotomicRing p K) ∈
-      completedLocalCyclotomicMaximalIdeal p K ^ (p - 1) :=
-    natCast_prime_mem_completedLocalCyclotomicMaximalIdeal_pow_pred (p := p) (K := K)
-  exact Ideal.pow_le_self (Nat.sub_ne_zero_of_lt (Fact.out : Nat.Prime p).one_lt) hp
-
 theorem completedLocalCyclotomicMaximalIdeal_pow_add_pred_eq_mul_span_natCast (n : ℕ) :
     completedLocalCyclotomicMaximalIdeal p K ^ (n + (p - 1)) =
       completedLocalCyclotomicMaximalIdeal p K ^ n *
@@ -502,32 +355,6 @@ theorem completedPrincipalUnitSubgroup_mono {m n : ℕ} (h : n ≤ m) :
   intro u hu
   rw [mem_completedPrincipalUnitSubgroup_iff] at hu ⊢
   exact Ideal.pow_le_pow_right h hu
-
-/-- The completed distinguished cyclotomic root is a principal unit. -/
-theorem completedLocalCyclotomicZetaUnit_mem_completedPrincipalUnitSubgroup_one :
-    completedLocalCyclotomicZetaUnit p K ∈ completedPrincipalUnitSubgroup p K 1 := by
-  rw [mem_completedPrincipalUnitSubgroup_iff]
-  rw [pow_one]
-  let R := localCyclotomicRing p K
-  let S := completedLocalCyclotomicRing p K
-  let M := localCyclotomicMaximalIdeal p K
-  have hzeta : (localCyclotomicZetaUnit p K : R) - 1 ∈ M := by
-    simpa [R, M] using
-      (mem_principalUnitSubgroup_iff (p := p) (K := K) (n := 1)
-        (u := localCyclotomicZetaUnit p K)).mp
-        (localCyclotomicZetaUnit_mem_principalUnitSubgroup_one (p := p) (K := K))
-  have hmap : algebraMap R S ((localCyclotomicZetaUnit p K : R) - 1) ∈
-      completedLocalCyclotomicMaximalIdeal p K :=
-    Ideal.mem_map_of_mem (algebraMap R S) hzeta
-  simpa [S, R, completedLocalCyclotomicZetaUnit, completedLocalCyclotomicUnitMap,
-    map_sub, map_one] using hmap
-
-theorem completedLocalCyclotomicMuP_le_completedPrincipalUnitSubgroup_one :
-    completedLocalCyclotomicMuP p K ≤ completedPrincipalUnitSubgroup p K 1 := by
-  rw [completedLocalCyclotomicMuP]
-  exact Subgroup.zpowers_le_of_mem
-    (completedLocalCyclotomicZetaUnit_mem_completedPrincipalUnitSubgroup_one
-      (p := p) (K := K))
 
 @[simp]
 theorem one_mem_completedPrincipalUnitSubgroup (n : ℕ) :

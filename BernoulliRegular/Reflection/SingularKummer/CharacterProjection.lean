@@ -27,39 +27,10 @@ namespace CharacterProjection
 
 variable (p : ℕ)
 
-/-- The cyclotomic Galois group in the explicit model used for character
-indices. -/
-abbrev Delta : Type :=
-  (ZMod p)ˣ
-
 variable {p}
 variable [NeZero p]
 variable {M N : Type*} [AddCommGroup M] [AddCommGroup N]
 variable [Module (ZMod p) M] [Module (ZMod p) N]
-
-/-- A finite linear combination of the operators in a `Delta`-action.  The
-standard character projection is obtained by using the usual character
-coefficients. -/
-def projection
-    (ρ : Delta p →* M ≃ₗ[ZMod p] M) (c : Delta p → ZMod p) :
-    M →ₗ[ZMod p] M :=
-  ∑ a : Delta p, c a • (ρ a : M →ₗ[ZMod p] M)
-
-
-/-- Coefficients for the `i`-th character projection.  The coefficient attached
-to `a` is `|Delta|⁻¹ a⁻ᶦ`, with values in `ZMod p`. -/
-def characterProjectionCoefficient (i : ℕ) (a : Delta p) : ZMod p :=
-  (Fintype.card (Delta p) : ZMod p)⁻¹ * (((a⁻¹ : Delta p) : ZMod p) ^ i)
-
-/-- The finite-sum projection attached to the `i`-th character. -/
-def characterProjection
-    (i : ℕ) (ρ : Delta p →* M ≃ₗ[ZMod p] M) :
-    M →ₗ[ZMod p] M :=
-  projection (p := p) ρ (characterProjectionCoefficient (p := p) i)
-
-
-
-
 
 end CharacterProjection
 

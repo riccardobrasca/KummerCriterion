@@ -33,34 +33,6 @@ set_option linter.unusedSectionVars false
 variable (p : ℕ) [hp : Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-/-- The actual cyclotomic automorphism indexed by `a` sends the distinguished
-unit `zeta_p` to `zeta_p^a`. -/
-@[simp]
-theorem cyclotomicUnitEquiv_zetaUnit (a : CyclotomicUnitDelta p) :
-    cyclotomicUnitEquiv (p := p) K a (cyclotomicZetaUnit (p := p) K) =
-      cyclotomicZetaUnit (p := p) K ^ (a : ZMod p).val := by
-  apply Units.ext
-  change cyclotomicRingOfIntegersEquiv (p := p) K a
-      ((cyclotomicZetaUnit (p := p) K : CyclotomicUnitGroup K) : 𝓞 K) =
-    ((cyclotomicZetaUnit (p := p) K ^ (a : ZMod p).val : CyclotomicUnitGroup K) : 𝓞 K)
-  change cyclotomicSigmaOfUnit (p := p) K a • cyclotomicZetaInteger (p := p) K =
-    cyclotomicZetaInteger (p := p) K ^ (a : ZMod p).val
-  exact cyclotomicSigmaOfUnit_smul_zetaInteger (p := p) (K := K) a
-
-/-- The class of `zeta_p` in `E/E^p` transforms by the Teichmuller character. -/
-@[simp]
-theorem cyclotomicUnitModPDeltaAction_act_zetaPowerClass
-    (a : CyclotomicUnitDelta p) :
-    (cyclotomicUnitModPDeltaAction (p := p) K).act a
-        (cyclotomicZetaPowerClass (p := p) K) =
-      cyclotomicZetaPowerClass (p := p) K ^ (a : ZMod p).val := by
-  rw [cyclotomicZetaPowerClass, cyclotomicUnitPowerQuotientDeltaAction_act_mk,
-    cyclotomicUnitEquiv_zetaUnit (p := p) (K := K) a, map_pow]
-
-
-
-
-
 end BernoulliRegular
 
 end

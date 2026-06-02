@@ -41,36 +41,6 @@ theorem localCyclotomicZetaUnit_coe :
         (IsCyclotomicExtension.zeta_spec p ℚ K).toInteger := by
   rfl
 
-@[simp]
-theorem localCyclotomicZetaUnit_pow_eq_one :
-    localCyclotomicZetaUnit p K ^ p = 1 := by
-  let hζ := IsCyclotomicExtension.zeta_spec p ℚ K
-  change (Units.map (algebraMap (𝓞 K) (localCyclotomicRing p K)).toMonoidHom hζ.unit') ^
-      p = 1
-  rw [← map_pow, hζ.unit'_pow, map_one]
-
-
-
-
-
-/-- The localized distinguished root is a principal unit. -/
-theorem localCyclotomicZetaUnit_mem_principalUnitSubgroup_one :
-    localCyclotomicZetaUnit p K ∈ principalUnitSubgroup p K 1 := by
-  rw [mem_principalUnitSubgroup_iff]
-  rw [pow_one]
-  let hζ := IsCyclotomicExtension.zeta_spec p ℚ K
-  change algebraMap (𝓞 K) (localCyclotomicRing p K) hζ.toInteger - 1 ∈
-    localCyclotomicMaximalIdeal p K
-  have hmem : hζ.toInteger - 1 ∈ cyclotomicLambda p K := by
-    rw [cyclotomicLambda, zetaPrime]
-    exact Ideal.mem_span_singleton_self ((hζ.toInteger : 𝓞 K) - 1)
-  have hmap : algebraMap (𝓞 K) (localCyclotomicRing p K) (hζ.toInteger - 1) ∈
-      localCyclotomicMaximalIdeal p K := by
-    rw [← localCyclotomicMaximalIdeal_eq_map p K]
-    exact Ideal.mem_map_of_mem (algebraMap (𝓞 K) (localCyclotomicRing p K)) hmem
-  simpa using hmap
-
-
 /-- The localized distinguished root is not in the second principal-unit step. -/
 theorem localCyclotomicZetaUnit_not_mem_principalUnitSubgroup_two :
     localCyclotomicZetaUnit p K ∉ principalUnitSubgroup p K 2 := by

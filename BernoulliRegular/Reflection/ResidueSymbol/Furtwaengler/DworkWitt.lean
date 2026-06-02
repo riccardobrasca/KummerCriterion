@@ -331,17 +331,6 @@ theorem frobeniusUnitPreimage_pow
       ((_root_.iterateFrobeniusEquiv k ℓ N).symm (x : k))) = (x : k)
   rw [RingEquiv.apply_symm_apply]
 
-/-- The concrete Teichmüller lift extended from units to all residue-field
-elements by sending `0` to `0`. -/
-noncomputable def teichFullVal
-    (F : FullTeichStickelbergerSetup ℓ p k K R') (x : k) : 𝓞 R' := by
-  classical
-  exact if hx : x = 0 then 0 else F.teichUnitFullVal (Units.mk0 x hx)
-
-
-
-
-
 /-- On a Teichmüller unit, the concrete Fontaine-style Witt map recovers the
 chosen integral Teichmüller lift modulo `Q^(N+1)`. -/
 theorem wittThetaModQPow_teichmuller_unit

@@ -154,12 +154,6 @@ theorem mem_Q_iff_residueMap_eq_zero (x : 𝓞 R') :
     x ∈ S.Q ↔ S.residueMap x = 0 := by
   rw [← S.residueMap_ker_eq, RingHom.mem_ker]
 
-/-- The integral lift of `ζ_p` reduces to the selected finite-field root. -/
-@[simp]
-theorem residueMap_zeta_p_int : S.residueMap S.zeta_p_int = (S.zeta_k : k) :=
-  S.zeta_p_int_residue
-
-
 /-- The residue map identifies the quotient `𝓞 R' / Q` with the chosen
 finite-field model `k`. -/
 noncomputable def residueQuotientEquiv : 𝓞 R' ⧸ S.Q ≃+* k :=
@@ -171,58 +165,6 @@ noncomputable def residueQuotientEquiv : 𝓞 R' ⧸ S.Q ≃+* k :=
 theorem residueQuotientEquiv_mk (x : 𝓞 R') :
     S.residueQuotientEquiv (Ideal.Quotient.mk S.Q x) = S.residueMap x := by
   simp [residueQuotientEquiv]
-
-/-- Elements outside `Q` become units modulo every positive power of `Q`. -/
-theorem quotient_mk_isUnit_of_not_mem_Q (N : ℕ) {s : 𝓞 R'} (hs : s ∉ S.Q) :
-    IsUnit (Ideal.Quotient.mk (S.Q ^ (N + 1)) s) := by
-  haveI : S.Q.IsMaximal := by
-    rw [← S.residueMap_ker_eq]
-    exact RingHom.ker_isMaximal_of_surjective S.residueMap S.residueMap_surjective
-  exact (Ideal.Quotient.isUnit_mk_pow_iff_notMem (I := S.Q)
-    (n := N + 1) (Nat.succ_ne_zero N)).2 hs
-
-
-
-
-
-
-
-
-/-- The quotient map sends every local denominator away from `Q` to a unit. -/
-theorem quotient_mk_isUnit_primeCompl
-    (N : ℕ) (s : S.Q.primeCompl) :
-    IsUnit (Ideal.Quotient.mk (S.Q ^ (N + 1)) (s : 𝓞 R')) :=
-  S.quotient_mk_isUnit_of_not_mem_Q N s.property
-
-/-- The canonical map from the localization of `𝓞 R'` away from `Q` to the
-finite quotient `𝓞 R' / Q^(N+1)`. This keeps local finite-log fractions inside
-the same global quotient used by the Dwork endpoint. -/
-noncomputable def quotientLocalizationAwayQMap (N : ℕ) :
-    Localization S.Q.primeCompl →+* (𝓞 R' ⧸ S.Q ^ (N + 1)) :=
-  IsLocalization.lift
-    (M := S.Q.primeCompl)
-    (S := Localization S.Q.primeCompl)
-    (P := 𝓞 R' ⧸ S.Q ^ (N + 1))
-    (g := Ideal.Quotient.mk (S.Q ^ (N + 1)))
-    (fun s => S.quotient_mk_isUnit_primeCompl N s)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /-- The chosen finite field has cardinality `ℓ ^ f`. -/
 theorem card_k_eq : Fintype.card k = ℓ ^ S.f :=

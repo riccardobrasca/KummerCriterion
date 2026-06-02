@@ -44,13 +44,6 @@ theorem zeta_p_int_unit_coe : (S.zeta_p_int_unit : 𝓞 R') = S.zeta_p_int := by
   simp [zeta_p_int_unit]
 
 
-/-- The unit lift of `ζ_p` reduces to the selected finite-field root. -/
-@[simp]
-theorem residueMap_zeta_p_int_unit :
-    S.residueMap (S.zeta_p_int_unit : 𝓞 R') = (S.zeta_k : k) := by
-  rw [S.zeta_p_int_unit_coe]
-  exact S.residueMap_zeta_p_int
-
 /-- The unit lift of `ζ_p` remains primitive. -/
 theorem zeta_p_int_unit_isPrimitiveRoot : IsPrimitiveRoot S.zeta_p_int_unit p := by
   simpa [zeta_p_int_unit] using

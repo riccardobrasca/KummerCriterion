@@ -331,36 +331,6 @@ variable [IsScalarTower ℤ (𝓞 K) (𝓞 R')]
 
 variable (S : ConcreteStickelbergerSetup ℓ p k K R')
 
-/-! ### Structural cyclotomic facts on `K → R'`
-
-`IsGalois ℚ R'` comes free from `IsCyclotomicExtension {p, ℓ} ℚ R'`.
-By `IsGalois.tower_top_of_isGalois` and the scalar tower `ℚ → K → R'`,
-we get `IsGalois K R'`. Similarly, `FiniteDimensional K R'` follows
-from the global finite-dimensionality. These are stated as theorems
-(not instances) since ℓ, p are ambient and don't appear in the
-conclusion. -/
-
-omit [IsScalarTower ℤ (𝓞 K) (𝓞 R')] in
-theorem isGalois_K_R'_of_cyclotomic
-    (_S : ConcreteStickelbergerSetup ℓ p k K R') : IsGalois K R' := by
-  haveI : IsGalois ℚ R' :=
-    IsCyclotomicExtension.isGalois ({p, ℓ} : Set ℕ) (K := ℚ) (L := R')
-  exact IsGalois.tower_top_of_isGalois ℚ K R'
-
-omit [IsScalarTower ℤ (𝓞 K) (𝓞 R')] in
-theorem finiteDimensional_K_R'_of_cyclotomic
-    (_S : ConcreteStickelbergerSetup ℓ p k K R') : FiniteDimensional K R' := by
-  haveI : FiniteDimensional ℚ R' :=
-    IsCyclotomicExtension.finiteDimensional (S := ({p, ℓ} : Set ℕ)) (K := ℚ) R'
-  exact Module.Finite.of_restrictScalars_finite ℚ K R'
-
-omit [IsScalarTower ℤ (𝓞 K) (𝓞 R')] in
-/-- `FaithfulSMul (𝓞 K) (𝓞 R')` derived from the number-field structure
-via `FaithfulSMul.of_field_isFractionRing`. -/
-theorem faithfulSMul_OK_OR'_of_cyclotomic (_S : ConcreteStickelbergerSetup ℓ p k K R') :
-    FaithfulSMul (𝓞 K) (𝓞 R') :=
-  FaithfulSMul.of_field_isFractionRing (𝓞 K) (𝓞 R') K R'
-
 /-- The descent prime in `𝓞 K`: `q_K := S.Q.under (𝓞 K)`. -/
 noncomputable def descentPrime : Ideal (𝓞 K) := S.Q.under (𝓞 K)
 

@@ -61,43 +61,6 @@ variable (p : ℕ) [hp : Fact p.Prime]
 
 
 
-/-- The K-level multiplicative identity `(ζ - 1) · cyclotomicUnit = ζ^k - 1`
-in K, lifted from the 𝓞 K version. -/
-theorem zeta_sub_one_mul_cyclotomicUnit_in_K (k : ℕ) :
-    (IsCyclotomicExtension.zeta p ℚ K - 1) *
-        algebraMap (𝓞 K) K (cyclotomicUnit p K k) =
-      IsCyclotomicExtension.zeta p ℚ K ^ k - 1 := by
-  have h := zeta_sub_one_mul_cyclotomicUnit p K k
-  have := congrArg (algebraMap (𝓞 K) K) h
-  rw [map_mul, map_sub, map_sub, map_pow, map_one] at this
-  convert this using 2
-
-/-- **Norm of the cyclotomic unit.** For `k` coprime to `p` (odd prime),
-`Algebra.norm ℚ (cyclotomicUnit p K k) = 1`. -/
-theorem cyclotomicUnit_norm_rat (k : ℕ) (hk : k.Coprime p) (hp_odd : p ≠ 2) :
-    Algebra.norm ℚ (algebraMap (𝓞 K) K (cyclotomicUnit p K k)) = (1 : ℚ) := by
-  have h_K := zeta_sub_one_mul_cyclotomicUnit_in_K p K k
-  have hp_pos : 0 < (p : ℚ) := by exact_mod_cast hp.1.pos
-  have h_norm := congrArg (Algebra.norm ℚ : K → ℚ) h_K
-  rw [map_mul, FLT37.zeta_pow_sub_one_norm_rat p K hp_odd k hk] at h_norm
-  -- LHS: norm(ζ - 1) · norm(cyclotomicUnit) = p · norm(cyclotomicUnit)
-  have h_zeta := FLT37.zetaSubOne_norm_rat p K hp_odd
-  rw [FLT37.algebraMap_zetaSubOne] at h_zeta
-  rw [h_zeta] at h_norm
-  -- h_norm : p * norm(...) = p
-  exact mul_left_cancel₀ hp_pos.ne' (h_norm.trans (mul_one _).symm)
-
-/-- **Integer norm of the cyclotomic unit.** For `k` coprime to `p` (odd
-prime), `Algebra.norm ℤ (cyclotomicUnit p K k) = 1`. -/
-theorem cyclotomicUnit_norm_int (k : ℕ) (hk : k.Coprime p) (hp_odd : p ≠ 2) :
-    Algebra.norm ℤ (cyclotomicUnit p K k) = (1 : ℤ) := by
-  have h_rat := cyclotomicUnit_norm_rat p K k hk hp_odd
-  have h_coe : ((Algebra.norm ℤ (cyclotomicUnit p K k) : ℤ) : ℚ) =
-      Algebra.norm ℚ (algebraMap (𝓞 K) K (cyclotomicUnit p K k)) :=
-    Algebra.coe_norm_int _
-  rw [h_rat] at h_coe
-  exact_mod_cast h_coe
-
 /-- `cyclotomicUnit p K p = 0`, since `∑_{j=0}^{p-1} ζ^j = 0`
 (cyclotomic identity). -/
 theorem cyclotomicUnit_p_eq_zero : cyclotomicUnit p K p = 0 :=
@@ -178,51 +141,6 @@ theorem realCyclotomicUnit_complexConj [IsCMField K] (k : ℕ) :
     apply RingOfIntegers.ext
     simp]
   ring
-
-
-
-/-- **Integer norm of the real cyclotomic combination.** For `k` coprime
-to `p` (odd prime), `Algebra.norm ℤ (realCyclotomicUnit p K k) = 1`. -/
-theorem realCyclotomicUnit_norm_int [IsCMField K] (k : ℕ) (hk : k.Coprime p)
-    (hp_odd : p ≠ 2) :
-    Algebra.norm ℤ (realCyclotomicUnit p K k) = (1 : ℤ) := by
-  -- realCyclotomicUnit = cyclotomicUnit · σ(cyclotomicUnit)
-  -- norm(σ x) = norm(x), so norm(realCyclotomicUnit) = norm(cyclotomicUnit)^2 = 1
-  unfold realCyclotomicUnit
-  rw [map_mul]
-  have h_conj : Algebra.norm ℤ (ringOfIntegersComplexConj K (cyclotomicUnit p K k)) =
-      Algebra.norm ℤ (cyclotomicUnit p K k) := by
-    apply (algebraMap ℤ ℚ).injective_int
-    have h1 := Algebra.coe_norm_int (ringOfIntegersComplexConj K (cyclotomicUnit p K k))
-    have h2 := Algebra.coe_norm_int (cyclotomicUnit p K k)
-    -- transit through ℚ-norm
-    have h_q : Algebra.norm ℚ (algebraMap (𝓞 K) K
-        (ringOfIntegersComplexConj K (cyclotomicUnit p K k))) =
-        Algebra.norm ℚ (algebraMap (𝓞 K) K (cyclotomicUnit p K k)) := by
-      have h_eq : algebraMap (𝓞 K) K
-          (ringOfIntegersComplexConj K (cyclotomicUnit p K k)) =
-          BernoulliRegular.complexConjRat (p := p) (K := K) hp_odd
-            (algebraMap (𝓞 K) K (cyclotomicUnit p K k)) := by
-        change ((ringOfIntegersComplexConj K (cyclotomicUnit p K k) : 𝓞 K) : K) =
-          BernoulliRegular.complexConjRat (p := p) (K := K) hp_odd
-            ((cyclotomicUnit p K k : 𝓞 K) : K)
-        rw [coe_ringOfIntegersComplexConj]
-        rfl
-      rw [h_eq]
-      exact Algebra.norm_eq_of_algEquiv
-        (BernoulliRegular.complexConjRat (p := p) (K := K) hp_odd) _
-    change ((algebraMap ℤ ℚ) (Algebra.norm ℤ _) : ℚ) =
-      ((algebraMap ℤ ℚ) (Algebra.norm ℤ _))
-    rw [show (algebraMap ℤ ℚ) (Algebra.norm ℤ
-      (ringOfIntegersComplexConj K (cyclotomicUnit p K k))) =
-      ((Algebra.norm ℤ (ringOfIntegersComplexConj K (cyclotomicUnit p K k)) : ℤ) : ℚ) from rfl,
-      show (algebraMap ℤ ℚ) (Algebra.norm ℤ (cyclotomicUnit p K k)) =
-        ((Algebra.norm ℤ (cyclotomicUnit p K k) : ℤ) : ℚ) from rfl, h1, h2]
-    exact h_q
-  rw [h_conj, ← sq]
-  rw [cyclotomicUnit_norm_int p K k hk hp_odd]
-  ring
-
 
 
 

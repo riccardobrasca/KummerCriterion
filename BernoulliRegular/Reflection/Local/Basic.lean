@@ -84,12 +84,6 @@ theorem localCyclotomicMaximalIdeal_eq_map :
   simpa [localCyclotomicMaximalIdeal, localCyclotomicRing] using
   (Localization.AtPrime.map_eq_maximalIdeal (R := 𝓞 K) (I := cyclotomicLambda p K))
 
-theorem localCyclotomicMaximalIdeal_comap :
-    Ideal.comap (algebraMap (𝓞 K) (localCyclotomicRing p K))
-    (localCyclotomicMaximalIdeal p K) = cyclotomicLambda p K := by
-  simpa [localCyclotomicMaximalIdeal, localCyclotomicRing] using
-  (Localization.AtPrime.comap_maximalIdeal (R := 𝓞 K) (I := cyclotomicLambda p K))
-
 @[simp]
 theorem mem_principalUnitSubgroup_iff {n : ℕ} {u : localCyclotomicUnitGroup p K} :
     u ∈ principalUnitSubgroup p K n ↔

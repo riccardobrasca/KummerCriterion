@@ -38,26 +38,14 @@ variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 abbrev LambdaLocalIntegerRing : Type _ :=
   Reflection.Local.completedLocalCyclotomicRing p K
 
-
-/-- The completed maximal ideal in the completed local integer ring. -/
-abbrev LambdaMaximalIdeal : Ideal (LambdaLocalIntegerRing p K) :=
-  Reflection.Local.completedLocalCyclotomicMaximalIdeal p K
-
-
-
 /-- The completed local uniformizer `pi = zeta_p - 1`. -/
 def lambdaPi : LambdaLocalIntegerRing p K :=
   Reflection.Local.completedLocalCyclotomicUniformizer p K
-
 
 @[simp]
 theorem lambdaPi_ne_zero :
     lambdaPi p K ≠ 0 :=
   Reflection.Local.completedLocalCyclotomicUniformizer_ne_zero (p := p) (K := K)
-
-
-
-
 
 
 

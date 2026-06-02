@@ -36,18 +36,6 @@ namespace SingularKummer
 
 variable {A : Type*} [AddCommGroup A]
 
-/-- The subgroup `nA` of `n`-multiples in an additive abelian group. -/
-abbrev multiplesSubgroup (A : Type*) [AddCommGroup A] (n : ℕ) : AddSubgroup A :=
-  (nsmulAddMonoidHom (α := A) n).range
-
-/-- The subgroup `A[n]` of elements killed by `n`. -/
-abbrev torsionBySubgroup (A : Type*) [AddCommGroup A] (n : ℕ) : AddSubgroup A :=
-  (nsmulAddMonoidHom (α := A) n).ker
-
-/-- The elementary quotient `A / nA`, written additively. -/
-abbrev elementaryQuotient (A : Type*) [AddCommGroup A] (n : ℕ) : Type _ :=
-  A ⧸ multiplesSubgroup A n
-
 end SingularKummer
 end Reflection
 end BernoulliRegular

@@ -522,31 +522,6 @@ theorem artinHasseExpSeries_dwork_quotient_eq_rescale_exp
   exact eq_rescale_exp_of_derivative_eq_smul (r : ℚ) hGderiv (by
     simp [artinHasseExpSeries_constantCoeff, hr_ne_zero])
 
-/-- Multiplication form of the formal Dwork quotient identity, avoiding an
-inverse on the target side:
-`E_r(T)^r = exp(rT) * E_r(T^r)`. -/
-theorem artinHasseExpSeries_pow_eq_rescale_exp_mul_subst_X_pow
-    (r : ℕ) [Fact (Nat.Prime r)] :
-    artinHasseExpSeries r ^ r =
-      PowerSeries.rescale (r : ℚ) (PowerSeries.exp ℚ) *
-        PowerSeries.subst ((PowerSeries.X : PowerSeries ℚ) ^ r)
-          (artinHasseExpSeries r) := by
-  let E : PowerSeries ℚ := artinHasseExpSeries r
-  let S : PowerSeries ℚ :=
-    PowerSeries.subst ((PowerSeries.X : PowerSeries ℚ) ^ r) (artinHasseExpSeries r)
-  have hS0 : PowerSeries.constantCoeff S = 1 := by
-    simp [S, artinHasseExpSeries_constantCoeff, (Fact.out : Nat.Prime r).ne_zero]
-  have hcancel : S⁻¹ * S = 1 :=
-    PowerSeries.inv_mul_cancel S (by simp [hS0])
-  calc
-    artinHasseExpSeries r ^ r = (artinHasseExpSeries r ^ r * S⁻¹) * S := by
-      rw [mul_assoc, hcancel, mul_one]
-    _ = PowerSeries.rescale (r : ℚ) (PowerSeries.exp ℚ) * S := by
-      rw [artinHasseExpSeries_dwork_quotient_eq_rescale_exp]
-    _ = PowerSeries.rescale (r : ℚ) (PowerSeries.exp ℚ) *
-        PowerSeries.subst ((PowerSeries.X : PowerSeries ℚ) ^ r)
-          (artinHasseExpSeries r) := rfl
-
 private theorem rescale_exp_sub_one_coeff_rMultiple
     (r : ℕ) [Fact (Nat.Prime r)] (n : ℕ) (hn : 1 ≤ n) :
     ∃ q : ℚ, DieudonneDwork.IsRIntegralRat r q ∧
@@ -685,94 +660,6 @@ private theorem rescale_exp_coeff_mul_eq_choose_mul_coeff
   rw [pow_add]
   rw [← hfact]
   ring
-
-theorem rescale_exp_mapTo_coeff_mul_eq_choose_mul_coeff
-    (r : ℕ) [Fact (Nat.Prime r)] {A : Type*} [CommRing A]
-    (φ : DieudonneDwork.rIntegralRatSubring r →+* A) (i j : ℕ) :
-    let Rps : PowerSeries A := (rescale_exp_isRIntegral r).mapTo φ
-    (PowerSeries.coeff (R := A) i) Rps *
-        (PowerSeries.coeff (R := A) j) Rps =
-      ((Nat.choose (i + j) i : ℕ) : A) *
-        (PowerSeries.coeff (R := A) (i + j)) Rps := by
-  dsimp only
-  let hRes : DieudonneDwork.IsRIntegralPS r
-      (PowerSeries.rescale (r : ℚ) (PowerSeries.exp ℚ)) :=
-    rescale_exp_isRIntegral r
-  let qi : DieudonneDwork.rIntegralRatSubring r :=
-    ⟨(PowerSeries.coeff (R := ℚ) i)
-        (PowerSeries.rescale (r : ℚ) (PowerSeries.exp ℚ)), hRes i⟩
-  let qj : DieudonneDwork.rIntegralRatSubring r :=
-    ⟨(PowerSeries.coeff (R := ℚ) j)
-        (PowerSeries.rescale (r : ℚ) (PowerSeries.exp ℚ)), hRes j⟩
-  let qij : DieudonneDwork.rIntegralRatSubring r :=
-    ⟨(PowerSeries.coeff (R := ℚ) (i + j))
-        (PowerSeries.rescale (r : ℚ) (PowerSeries.exp ℚ)), hRes (i + j)⟩
-  have hq : qi * qj = ((Nat.choose (i + j) i : ℕ) : DieudonneDwork.rIntegralRatSubring r) *
-      qij := by
-    apply Subtype.ext
-    change
-      (PowerSeries.coeff (R := ℚ) i)
-          (PowerSeries.rescale (r : ℚ) (PowerSeries.exp ℚ)) *
-        (PowerSeries.coeff (R := ℚ) j)
-          (PowerSeries.rescale (r : ℚ) (PowerSeries.exp ℚ)) =
-        ((Nat.choose (i + j) i : ℕ) : ℚ) *
-          (PowerSeries.coeff (R := ℚ) (i + j))
-            (PowerSeries.rescale (r : ℚ) (PowerSeries.exp ℚ))
-    exact rescale_exp_coeff_mul_eq_choose_mul_coeff r i j
-  calc
-    (PowerSeries.coeff (R := A) i) (hRes.mapTo φ) *
-        (PowerSeries.coeff (R := A) j) (hRes.mapTo φ)
-        = φ qi * φ qj := by simp [qi, qj]
-    _ = φ (qi * qj) := by rw [map_mul]
-    _ = φ (((Nat.choose (i + j) i : ℕ) : DieudonneDwork.rIntegralRatSubring r) *
-          qij) := by rw [hq]
-    _ = ((Nat.choose (i + j) i : ℕ) : A) *
-        (PowerSeries.coeff (R := A) (i + j)) (hRes.mapTo φ) := by
-          simp [qij]
-
-theorem rescale_exp_mapTo_mul
-    (r : ℕ) [Fact (Nat.Prime r)] {A : Type*} [CommRing A]
-    (φ : DieudonneDwork.rIntegralRatSubring r →+* A) (a b : A) :
-    let Rps : PowerSeries A := (rescale_exp_isRIntegral r).mapTo φ
-    PowerSeries.rescale a Rps * PowerSeries.rescale b Rps =
-      PowerSeries.rescale (a + b) Rps := by
-  classical
-  dsimp only
-  let Rps : PowerSeries A := (rescale_exp_isRIntegral r).mapTo φ
-  ext n
-  rw [PowerSeries.coeff_mul, PowerSeries.coeff_rescale, add_pow]
-  rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
-  rw [Finset.sum_mul]
-  refine Finset.sum_congr rfl ?_
-  intro i hi
-  have hin : i ≤ n := Nat.lt_succ_iff.mp (Finset.mem_range.mp hi)
-  have hcoeff :
-      (PowerSeries.coeff (R := A) i) Rps *
-          (PowerSeries.coeff (R := A) (n - i)) Rps =
-        ((Nat.choose n i : ℕ) : A) * (PowerSeries.coeff (R := A) n) Rps := by
-    simpa [Rps, Nat.add_sub_of_le hin] using
-      rescale_exp_mapTo_coeff_mul_eq_choose_mul_coeff r φ i (n - i)
-  rw [PowerSeries.coeff_rescale, PowerSeries.coeff_rescale]
-  change
-    a ^ i * (PowerSeries.coeff (R := A) i) Rps *
-        (b ^ (n - i) * (PowerSeries.coeff (R := A) (n - i)) Rps) =
-      a ^ i * b ^ (n - i) * ((Nat.choose n i : ℕ) : A) *
-        (PowerSeries.coeff (R := A) n) Rps
-  calc
-    a ^ i * (PowerSeries.coeff (R := A) i) Rps *
-        (b ^ (n - i) * (PowerSeries.coeff (R := A) (n - i)) Rps)
-        = a ^ i * b ^ (n - i) *
-            ((PowerSeries.coeff (R := A) i) Rps *
-              (PowerSeries.coeff (R := A) (n - i)) Rps) := by
-          ring
-    _ = a ^ i * b ^ (n - i) *
-        (((Nat.choose n i : ℕ) : A) * (PowerSeries.coeff (R := A) n) Rps) := by
-          rw [hcoeff]
-    _ = a ^ i * b ^ (n - i) * ((Nat.choose n i : ℕ) : A) *
-        (PowerSeries.coeff (R := A) n) Rps := by
-          ring
-
-
 
 end Furtwaengler
 

@@ -54,13 +54,6 @@ def dworkThetaTrunc {A : Type*} [CommSemiring A]
 
 
 
-/-- An element of `I` becomes nilpotent modulo `I^(N+1)`. -/
-theorem quotient_mk_mem_pow_succ_eq_zero
-    {A : Type*} [CommRing A] (I : Ideal A) {x : A} (hx : x ∈ I) (N : ℕ) :
-    (Ideal.Quotient.mk (I ^ (N + 1)) x) ^ (N + 1) = 0 := by
-  rw [← map_pow, Ideal.Quotient.eq_zero_iff_mem]
-  exact Ideal.pow_mem_pow hx (N + 1)
-
 /-- Substitution of a nilpotent constant into a power series is the finite
 polynomial evaluation at that constant. -/
 theorem powerSeries_subst_C_eq_C_sum_range_of_pow_succ_eq_zero
@@ -135,118 +128,6 @@ theorem powerSeries_trunc_eval₂_mul_of_pow_succ_eq_zero
           ((PowerSeries.trunc (N + 1) F).eval₂ (RingHom.id A) a *
             (PowerSeries.trunc (N + 1) G).eval₂ (RingHom.id A) a) := by
           simp
-
-/-- Finite truncation evaluation at a nilpotent element commutes with powers. -/
-theorem powerSeries_trunc_eval₂_pow_of_pow_succ_eq_zero
-    {A : Type*} [CommRing A] (a : A) (N : ℕ) (ha : a ^ (N + 1) = 0)
-    (F : PowerSeries A) (m : ℕ) :
-    (PowerSeries.trunc (N + 1) (F ^ m)).eval₂ (RingHom.id A) a =
-      ((PowerSeries.trunc (N + 1) F).eval₂ (RingHom.id A) a) ^ m := by
-  have hCa : PowerSeries.HasSubst (PowerSeries.C a : PowerSeries A) := by
-    change IsNilpotent (PowerSeries.constantCoeff (PowerSeries.C a : PowerSeries A))
-    exact ⟨N + 1, by simpa using ha⟩
-  apply PowerSeries.C_injective
-  calc
-    PowerSeries.C ((PowerSeries.trunc (N + 1) (F ^ m)).eval₂ (RingHom.id A) a)
-        = PowerSeries.subst (PowerSeries.C a) (F ^ m) := by
-          rw [powerSeries_subst_C_eq_C_eval₂_trunc_of_pow_succ_eq_zero a N ha]
-    _ = PowerSeries.subst (PowerSeries.C a) F ^ m := by
-          rw [PowerSeries.subst_pow hCa]
-    _ = PowerSeries.C ((PowerSeries.trunc (N + 1) F).eval₂ (RingHom.id A) a) ^ m := by
-          rw [powerSeries_subst_C_eq_C_eval₂_trunc_of_pow_succ_eq_zero a N ha F]
-    _ = PowerSeries.C
-          (((PowerSeries.trunc (N + 1) F).eval₂ (RingHom.id A) a) ^ m) := by
-          simp
-
-
-
-
-
-/-- Evaluating `F(T^r)` at a nilpotent element is the same as evaluating `F`
-at the corresponding power. -/
-theorem powerSeries_trunc_eval₂_subst_X_pow_of_pow_succ_eq_zero
-    {A : Type*} [CommRing A] (a : A) (N r : ℕ) (hr : r ≠ 0)
-    (ha : a ^ (N + 1) = 0) (ha_pow : (a ^ r) ^ (N + 1) = 0)
-    (F : PowerSeries A) :
-    (PowerSeries.trunc (N + 1)
-        (PowerSeries.subst ((PowerSeries.X : PowerSeries A) ^ r) F)).eval₂
-        (RingHom.id A) a =
-      (PowerSeries.trunc (N + 1) F).eval₂ (RingHom.id A) (a ^ r) := by
-  have hCa : PowerSeries.HasSubst (PowerSeries.C a : PowerSeries A) := by
-    change IsNilpotent (PowerSeries.constantCoeff (PowerSeries.C a : PowerSeries A))
-    exact ⟨N + 1, by simpa using ha⟩
-  have hXr : PowerSeries.HasSubst ((PowerSeries.X : PowerSeries A) ^ r) :=
-    PowerSeries.HasSubst.X_pow hr
-  apply PowerSeries.C_injective
-  calc
-    PowerSeries.C
-        ((PowerSeries.trunc (N + 1)
-          (PowerSeries.subst ((PowerSeries.X : PowerSeries A) ^ r) F)).eval₂
-          (RingHom.id A) a)
-        = PowerSeries.subst (PowerSeries.C a)
-            (PowerSeries.subst ((PowerSeries.X : PowerSeries A) ^ r) F) := by
-          rw [powerSeries_subst_C_eq_C_eval₂_trunc_of_pow_succ_eq_zero a N ha]
-    _ = PowerSeries.subst
-          (PowerSeries.subst (PowerSeries.C a) ((PowerSeries.X : PowerSeries A) ^ r)) F := by
-          rw [PowerSeries.subst_comp_subst_apply hXr hCa]
-    _ = PowerSeries.subst (PowerSeries.C (a ^ r)) F := by
-          congr 1
-          rw [PowerSeries.subst_pow hCa, PowerSeries.subst_X hCa]
-          simp
-    _ = PowerSeries.C
-          ((PowerSeries.trunc (N + 1) F).eval₂ (RingHom.id A) (a ^ r)) := by
-          rw [powerSeries_subst_C_eq_C_eval₂_trunc_of_pow_succ_eq_zero (a ^ r) N ha_pow F]
-
-/-- Evaluating a rescaled finite truncation at `a` is the same as evaluating
-the original finite truncation at `a * u`. -/
-theorem powerSeries_trunc_rescale_eval₂_eq_trunc_eval₂_mul
-    {A : Type*} [CommSemiring A] (F : PowerSeries A) (N : ℕ) (a u : A) :
-    (PowerSeries.trunc (N + 1) (PowerSeries.rescale u F)).eval₂ (RingHom.id A) a =
-      (PowerSeries.trunc (N + 1) F).eval₂ (RingHom.id A) (a * u) := by
-  rw [PowerSeries.eval₂_trunc_eq_sum_range, PowerSeries.eval₂_trunc_eq_sum_range]
-  refine Finset.sum_congr rfl ?_
-  intro n _hn
-  simp [PowerSeries.coeff_rescale, mul_pow, mul_assoc, mul_comm]
-
-/-- Two truncated ordinary-exponential correction factors multiply by adding
-their target arguments, after extracting the common nilpotent parameter. -/
-theorem rescale_exp_trunc_eval₂_mul
-    (r : ℕ) [Fact (Nat.Prime r)] {A : Type*} [CommRing A]
-    (φ : DieudonneDwork.rIntegralRatSubring r →+* A) (N : ℕ)
-    (δ x y : A) (hδ : δ ^ (N + 1) = 0) :
-    let Rps : PowerSeries A := (rescale_exp_isRIntegral r).mapTo φ
-    (PowerSeries.trunc (N + 1) Rps).eval₂ (RingHom.id A) (δ * x) *
-        (PowerSeries.trunc (N + 1) Rps).eval₂ (RingHom.id A) (δ * y) =
-      (PowerSeries.trunc (N + 1) Rps).eval₂ (RingHom.id A) (δ * (x + y)) := by
-  dsimp only
-  let Rps : PowerSeries A := (rescale_exp_isRIntegral r).mapTo φ
-  have hmul :=
-    powerSeries_trunc_eval₂_mul_of_pow_succ_eq_zero
-      (A := A) δ N hδ (PowerSeries.rescale x Rps) (PowerSeries.rescale y Rps)
-  have hformal : PowerSeries.rescale x Rps * PowerSeries.rescale y Rps =
-      PowerSeries.rescale (x + y) Rps := by
-    simpa [Rps] using rescale_exp_mapTo_mul r φ x y
-  calc
-    (PowerSeries.trunc (N + 1) Rps).eval₂ (RingHom.id A) (δ * x) *
-        (PowerSeries.trunc (N + 1) Rps).eval₂ (RingHom.id A) (δ * y)
-        =
-          (PowerSeries.trunc (N + 1) (PowerSeries.rescale x Rps)).eval₂
-              (RingHom.id A) δ *
-            (PowerSeries.trunc (N + 1) (PowerSeries.rescale y Rps)).eval₂
-              (RingHom.id A) δ := by
-          rw [powerSeries_trunc_rescale_eval₂_eq_trunc_eval₂_mul,
-            powerSeries_trunc_rescale_eval₂_eq_trunc_eval₂_mul]
-    _ = (PowerSeries.trunc (N + 1)
-            (PowerSeries.rescale x Rps * PowerSeries.rescale y Rps)).eval₂
-            (RingHom.id A) δ := by
-          rw [hmul]
-    _ = (PowerSeries.trunc (N + 1) (PowerSeries.rescale (x + y) Rps)).eval₂
-            (RingHom.id A) δ := by
-          rw [hformal]
-    _ = (PowerSeries.trunc (N + 1) Rps).eval₂ (RingHom.id A) (δ * (x + y)) := by
-          rw [powerSeries_trunc_rescale_eval₂_eq_trunc_eval₂_mul]
-
-
 
 end Furtwaengler
 

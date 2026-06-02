@@ -70,27 +70,6 @@ theorem sum_range_shift_iterate_eq_of_period
         _ = ∑ i ∈ Finset.range f, g i := ih
 
 
-/-- A finite product over a cyclically shifted range is unchanged when the
-last shifted term equals the first term. -/
-theorem prod_range_shift_eq_of_last_eq_first
-    {A : Type*} [CommMonoid A] (g : ℕ → A) (f : ℕ)
-    (hperiod : g f = g 0) :
-    (∏ i ∈ Finset.range f, g (i + 1)) =
-      ∏ i ∈ Finset.range f, g i := by
-  cases f with
-  | zero =>
-      simp
-  | succ f =>
-      rw [Finset.prod_range_succ, Finset.prod_range_succ']
-      simp [hperiod]
-
-
-
-
-
-
-
-
 end Furtwaengler
 
 end BernoulliRegular

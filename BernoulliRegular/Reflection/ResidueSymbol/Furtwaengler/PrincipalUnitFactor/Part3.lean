@@ -61,57 +61,6 @@ namespace Furtwaengler
 variable {p : ℕ} [Fact p.Prime]
 variable {K : Type*} [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-/-- The product of all cyclotomic Galois conjugates of an algebraic integer is
-its integer norm. -/
-theorem prod_cyclotomicRingOfIntegersEquiv_eq_intNorm (α : 𝓞 K) :
-    (∏ a : CyclotomicUnitDelta p,
-      cyclotomicRingOfIntegersEquiv (p := p) K a α) =
-        ((Algebra.norm ℤ α : ℤ) : 𝓞 K) := by
-  classical
-  haveI : IsGalois ℚ K := IsCyclotomicExtension.isGalois ({p} : Set ℕ) ℚ K
-  apply RingOfIntegers.ext
-  change algebraMap (𝓞 K) K
-      (∏ a : CyclotomicUnitDelta p,
-        cyclotomicRingOfIntegersEquiv (p := p) K a α) =
-    algebraMap (𝓞 K) K (((Algebra.norm ℤ α : ℤ) : 𝓞 K))
-  rw [map_prod]
-  have hprod :
-      (∏ a : CyclotomicUnitDelta p,
-        algebraMap (𝓞 K) K
-          (cyclotomicRingOfIntegersEquiv (p := p) K a α)) =
-        ∏ σ : Gal(K / ℚ), σ (α : K) := by
-    symm
-    refine Fintype.prod_equiv
-      (cyclotomicGalEquivZMod (p := p) K)
-      (fun σ : Gal(K / ℚ) => σ (α : K))
-      (fun a : CyclotomicUnitDelta p =>
-        algebraMap (𝓞 K) K
-          (cyclotomicRingOfIntegersEquiv (p := p) K a α)) ?_
-    intro σ
-    have ha : cyclotomicSigmaOfUnit (p := p) K
-        (cyclotomicGalEquivZMod (p := p) K σ) = σ := by
-      unfold cyclotomicSigmaOfUnit
-      exact (cyclotomicGalEquivZMod (p := p) K).symm_apply_apply σ
-    unfold cyclotomicRingOfIntegersEquiv
-    change σ (α : K) =
-      algebraMap (𝓞 K) K
-        ((MulSemiringAction.toRingEquiv (Gal(K / ℚ)) (𝓞 K)
-          (cyclotomicSigmaOfUnit (p := p) K
-            (cyclotomicGalEquivZMod (p := p) K σ))) α)
-    rw [ha]
-    change σ (α : K) = algebraMap (𝓞 K) K (σ • α)
-    exact (algebraMap.coe_smul' σ α K).symm
-  rw [hprod]
-  rw [← Algebra.norm_eq_prod_automorphisms (K := ℚ) (L := K) (x := (α : K))]
-  rw [← Algebra.coe_norm_int α]
-  simp
-
-
-
-
-
-
-
 /-- Right-cancelling a semi-primary element which is prime to `ζ - 1`
 preserves semi-primarity.
 

@@ -28,31 +28,6 @@ namespace KummerArtinHasse
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-/-- The residue ring of the local cyclotomic ring at `lambda`.
-
-This is definitionally the residue field of the uncompleted local ring.  We
-use the uncompleted residue ring as target because the completed ring maps to
-it through `AdicCompletion.evalOneₐ`. -/
-abbrev LambdaResidueRing : Type _ :=
-  Reflection.Local.localCyclotomicRing p K ⧸
-    Reflection.Local.localCyclotomicMaximalIdeal p K
-
-/-- The nonzero residue classes, written as units of the residue ring. -/
-abbrev LambdaResidueUnitGroup : Type _ :=
-  (LambdaResidueRing p K)ˣ
-
-
-
-
-
-
-
-
-
-
-
-
-
 end KummerArtinHasse
 end Furtwaengler
 end BernoulliRegular

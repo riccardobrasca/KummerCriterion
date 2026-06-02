@@ -287,17 +287,6 @@ theorem familyIndexAsCEnotOneEquiv_apply
         (familyIndexAsUnit p K hp_odd hp_three i) :=
   rfl
 
-/-- **Specification of `KplusInfinitePlaceEquivCyclotomicEvenDelta_canonical`**:
-the canonical bijection sends `v` to `kplusEmbeddingIndexQuotient v`. -/
-@[simp]
-theorem KplusInfinitePlaceEquivCyclotomicEvenDelta_canonical_apply
-    (K : Type) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
-    [NumberField.IsCMField K] (hp_two : 2 < p)
-    (v : NumberField.InfinitePlace (NumberField.maximalRealSubfield K)) :
-    KplusInfinitePlaceEquivCyclotomicEvenDelta_canonical (p := p) K hp_two v =
-      kplusEmbeddingIndexQuotient (p := p) K v :=
-  rfl
-
 /-- **Cardinality of `{c : CyclotomicEvenDelta p // c ≠ 1}`** equals `(p-3)/2`.
 
 Direct from `Fintype.card_subtype_compl` + `cyclotomicEvenDelta_card`. -/

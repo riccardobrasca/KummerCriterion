@@ -48,48 +48,15 @@ noncomputable def zetaSubOne : 𝓞 K :=
   (zeta_spec p ℚ K).unit' - 1
 
 variable {p K} in
-@[simp]
-theorem zetaSubOne_def :
-    (zetaSubOne p K : 𝓞 K) = (zeta_spec p ℚ K).unit' - 1 :=
-  rfl
-
-/-- The image of `zetaSubOne p K` in `K` via the algebra map is `ζ - 1`. -/
-theorem algebraMap_zetaSubOne :
-    algebraMap (𝓞 K) K (zetaSubOne p K) = ζ - 1 := by
-  rw [zetaSubOne_def]
-  push_cast
-  rfl
-
-/-- **Norm of `ζ - 1` (rational form).** For an odd prime `p` and the cyclotomic
-field `K = ℚ(ζ_p)`, the field-level norm of `ζ - 1` is `p`. -/
-theorem zetaSubOne_norm_rat (hp_odd : p ≠ 2) :
-    Algebra.norm ℚ (algebraMap (𝓞 K) K (zetaSubOne p K)) = (p : ℚ) := by
-  rw [algebraMap_zetaSubOne]
-  have h_irr := Polynomial.cyclotomic.irreducible_rat hp.1.pos
-  have h_norm := (zeta_spec p ℚ K).sub_one_norm_isPrimePow hp.1.isPrimePow h_irr hp_odd
-  rw [h_norm, Nat.Prime.minFac_eq hp.1]
-
-
-
-
 /-- `zetaSubOne p K` is a prime element of `𝓞 K`. -/
 theorem zetaSubOne_prime : Prime (zetaSubOne p K) :=
   (zeta_spec p ℚ K).zeta_sub_one_prime'
 
 /-- `zetaSubOne p K` is non-zero. -/
 theorem zetaSubOne_ne_zero : zetaSubOne p K ≠ 0 :=
-  (zetaSubOne_prime p K).ne_zero
+  (zetaSubOne_prime (p := p) (K := K)).ne_zero
 
 
-
-/-- **Norm of `ζ^k - 1`.** For an odd prime `p` and `k` coprime to `p`,
-the field-level norm of `ζ^k - 1` over `ℚ` is `p`. -/
-theorem zeta_pow_sub_one_norm_rat (hp_odd : p ≠ 2) (k : ℕ) (hk : k.Coprime p) :
-    Algebra.norm ℚ (ζ ^ k - 1) = (p : ℚ) := by
-  have hζk : IsPrimitiveRoot (ζ ^ k) p :=
-    (zeta_spec p ℚ K).pow_of_coprime k hk
-  have h_irr := Polynomial.cyclotomic.irreducible_rat hp.1.pos
-  rw [hζk.sub_one_norm_isPrimePow hp.1.isPrimePow h_irr hp_odd, Nat.Prime.minFac_eq hp.1]
 
 variable {K}
 

@@ -132,30 +132,6 @@ def evenDeltaCharacterPullback {R : Type*} [CommMonoidWithZero R]
 
 
 
-/-- An even character of `Delta` descends to a character of `Delta / {±1}`. -/
-def evenDeltaCharacterDescend {R : Type*} [CommMonoidWithZero R]
-    (χ : MulChar (CyclotomicUnitDelta p) R)
-    (hχ_even : IsEvenDeltaCharacter (p := p) χ) :
-    MulChar (CyclotomicEvenDelta p) R where
-  __ := QuotientGroup.lift (CyclotomicEvenDeltaSubgroup p) χ.toMonoidHom (by
-    apply Subgroup.zpowers_le_of_mem
-    rw [MonoidHom.mem_ker]
-    exact hχ_even)
-  map_nonunit' a ha := (ha (Group.isUnit a)).elim
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 section DeltaIdempotents
 
 variable {R : Type*} [CommRing R] [IsDomain R]

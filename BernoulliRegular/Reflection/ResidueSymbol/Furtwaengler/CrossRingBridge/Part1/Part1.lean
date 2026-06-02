@@ -90,65 +90,6 @@ theorem residueFieldEmbedding_injective
   rw [← h_over]
   exact hx
 
-/-! ### CharP transfer through the bridge
-
-If `P ⊂ 𝓞 K` is maximal containing the rational prime `ℓ`, and `𝔭 ⊂ 𝓞 R'`
-lies over `P`, then `𝔭` also contains `(ℓ : 𝓞 R')` and inherits CharP `ℓ`. -/
-
-
-
-/-! ### MulChar / AddChar reduction along ring hom
-
-For `χ : MulChar R R'` with `χ^p = 1` and a ring hom `σ : R' →+* R''`,
-the post-composition `χ.ringHomComp σ : MulChar R R''` also satisfies
-`(χ.ringHomComp σ)^p = 1`. This is needed to apply K2-1 in `R'' = 𝓞 R' / 𝔭`. -/
-
-
-/-! ### Constructive descent generator from `FullTeichDworkSetup`
-
-For a `FullTeichDworkSetup S`, the existing chain provides
-`exists_descentPrime_pow_mul_stickOrdOrd_div` which extracts a Galois-fixed
-lift `γ ∈ 𝓞 K` of `S.gaussSumInt a ^ p ∈ 𝓞 R'`. We name this lift
-`phiPrimeGenDescent S a` for use in the K2-2 chain. -/
-
-/-- **Constructive descent generator**: for index `a`, the unique lift
-`γ ∈ 𝓞 K` with `algebraMap γ = S.gaussSumInt a ^ p`, extracted from
-`exists_descentPrime_pow_mul_stickOrdOrd_div`. -/
-noncomputable def phiPrimeGenDescent
-    {ℓ p : ℕ} [Fact (Nat.Prime ℓ)] [Fact (Nat.Prime p)]
-    {k : Type*} [Field k] [Fintype k] [Algebra (ZMod ℓ) k]
-    {K : Type*} [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
-    {R' : Type*} [Field R'] [NumberField R'] [Algebra K R'] [IsScalarTower ℚ K R']
-      [IsCyclotomicExtension {p, ℓ} ℚ R']
-    (S : FullTeichDworkSetup ℓ p k K R')
-    {a : ℕ} (ha₁ : 1 ≤ a) (ha₂ : a ≤ p - 1)
-    (h_ne_zero : S.gaussSumInt a ^ p ≠ 0) : 𝓞 K :=
-  (S.exists_descentPrime_pow_mul_stickOrdOrd_div ha₁ ha₂ h_ne_zero).choose
-
-
-/-- **Constructive descent property**: `algebraMap (phiPrimeGenDescent S a)
-= S.gaussSumInt a ^ p` in `𝓞 R'`. -/
-theorem algebraMap_phiPrimeGenDescent
-    {ℓ p : ℕ} [Fact (Nat.Prime ℓ)] [Fact (Nat.Prime p)]
-    {k : Type*} [Field k] [Fintype k] [Algebra (ZMod ℓ) k]
-    {K : Type*} [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
-    {R' : Type*} [Field R'] [NumberField R'] [Algebra K R'] [IsScalarTower ℚ K R']
-      [IsCyclotomicExtension {p, ℓ} ℚ R']
-    (S : FullTeichDworkSetup ℓ p k K R')
-    {a : ℕ} (ha₁ : 1 ≤ a) (ha₂ : a ≤ p - 1)
-    (h_ne_zero : S.gaussSumInt a ^ p ≠ 0) :
-    algebraMap (𝓞 K) (𝓞 R') (phiPrimeGenDescent S ha₁ ha₂ h_ne_zero) =
-      S.gaussSumInt a ^ p :=
-  (S.exists_descentPrime_pow_mul_stickOrdOrd_div ha₁ ha₂ h_ne_zero).choose_spec.2.1
-
-
-
-
-
-
-
-
-
 /-- Prime-over data for a source prime, including the split residue-field
 condition needed by the canonical quotient map. -/
 structure Ref18SourcePrimeOverData

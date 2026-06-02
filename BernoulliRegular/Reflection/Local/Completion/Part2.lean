@@ -29,13 +29,6 @@ section CyclotomicSetup
 variable (p : ℕ) [Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-/-- The completed cyclotomic root, viewed as an element of completed `U_1`. -/
-noncomputable def completedLocalCyclotomicZetaPrincipalUnit :
-    completedPrincipalUnitSubgroup p K 1 :=
-  ⟨completedLocalCyclotomicZetaUnit p K,
-    completedLocalCyclotomicZetaUnit_mem_completedPrincipalUnitSubgroup_one (p := p) (K := K)⟩
-
-
 theorem exists_completedPrincipalUnit_pow_prime_sub_one_add_mem_next
     {n : ℕ} (hn : 2 ≤ n) {x : completedLocalCyclotomicRing p K}
     (hx : x ∈ completedLocalCyclotomicMaximalIdeal p K ^ (n + (p - 1))) :
