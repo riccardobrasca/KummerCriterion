@@ -202,21 +202,6 @@ def abstractSetup : StickelbergerSetup p k R' where
   zeta_R := S.zeta_p
   hzeta_R := S.hzeta_p
 
-/-- The residue character specialised to the concrete bundle. -/
-def residueChar : MulChar k R' :=
-  S.abstractSetup.residueChar
-
-
-
-
-
-
-
-
-
-
-
-
 end ConcreteStickelbergerSetup
 
 /-- Conductor-flexible concrete arithmetic data for the Stickelberger

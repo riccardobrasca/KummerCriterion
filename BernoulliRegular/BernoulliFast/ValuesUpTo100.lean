@@ -10,12 +10,6 @@ This file caches `bernoulli 0` and the even-indexed rational values through
 
 namespace BernoulliRegular.BernoulliFast
 
-@[simp] theorem bernoulli_0 : bernoulli 0 = (1 : ℚ) := by
-  bernoulli_decide
-
-@[simp] theorem bernoulli_2 : bernoulli 2 = (1 / 6 : ℚ) := by
-  bernoulli_decide
-
 @[simp] theorem bernoulli_4 : bernoulli 4 = (-1 / 30 : ℚ) := by
   bernoulli_decide
 
@@ -186,21 +180,6 @@ namespace BernoulliRegular.BernoulliFast
 @[simp] theorem bernoulli_94 : bernoulli 94 =
     (1220813806579744469607301679413201203958508415202696621436215105284649447 /
       6 : ℚ) := by
-  bernoulli_decide
-
-@[simp] theorem bernoulli_96 : bernoulli 96 =
-    (-211600449597266513097597728109824233673043954389060234150638733420050668349987259 /
-      4501770 : ℚ) := by
-  bernoulli_decide
-
-@[simp] theorem bernoulli_98 : bernoulli 98 =
-    (67908260672905495624051117546403605607342195728504487509073961249992947058239 /
-      6 : ℚ) := by
-  bernoulli_decide
-
-@[simp] theorem bernoulli_100 : bernoulli 100 =
-    (-94598037819122125295227433069493721872702841533066936133385696204311395415197247711 /
-      33330 : ℚ) := by
   bernoulli_decide
 
 end BernoulliRegular.BernoulliFast

@@ -168,18 +168,6 @@ theorem teichUnitFullVal_pow (x : kˣ) (n : ℕ) :
   rw [map_pow]
   rfl
 
-/-- The integral Teichmüller value is a unit in `𝓞 R'`, hence not in
-the prime ideal `Q`. -/
-theorem teichUnitFullVal_not_mem_Q (x : kˣ) :
-    S.teichUnitFullVal x ∉ S.Q := by
-  classical
-  intro hmem
-  -- (teichUnitFull x : 𝓞 R')ˣ has an inverse, so its underlying value
-  -- is a unit; units of 𝓞 R' aren't in any proper prime ideal.
-  have hunit : IsUnit (S.teichUnitFullVal x) := ⟨S.teichUnitFull x, rfl⟩
-  have hQ_prime : S.Q.IsPrime := inferInstance
-  exact hQ_prime.ne_top (Ideal.eq_top_of_isUnit_mem _ hmem hunit)
-
 /-- The Teichmüller residue identity in residue-map form: applying
 `residueMap` to `teichUnitFullVal x` yields `x` (as an element of `k`). -/
 theorem residueMap_teichUnitFullVal (x : kˣ) :
@@ -189,7 +177,6 @@ theorem residueMap_teichUnitFullVal (x : kˣ) :
   have h := S.teichUnitFull_residue x
   rw [← S.toConcreteStickelbergerSetup.residueQuotientEquiv_mk]
   exact h
-
 
 section TeichOrthogonality
 
@@ -372,11 +359,6 @@ theorem ell_not_dvd_card_k_sub_one (S : TraceFormStickelbergerSetup ℓ p k K R'
     have h := Nat.dvd_sub hℓ_dvd_card hdvd
     rwa [Nat.sub_sub_self hcard_pos] at h
   exact (Fact.out : Nat.Prime ℓ).one_lt.ne' (Nat.dvd_one.mp hone)
-
-/-- The integer `Fintype.card k - 1` is a `Q`-unit. -/
-theorem natCast_card_k_sub_one_not_mem_Q :
-    ((Fintype.card k - 1 : ℕ) : 𝓞 R') ∉ S.Q :=
-  S.natCast_not_mem_Q_of_not_dvd S.ell_not_dvd_card_k_sub_one
 
 /-- The uniformizer `π = ζ_ℓ - 1` is non-zero in `𝓞 R'`. Follows from
 `zeta_ell_int` being a primitive `ℓ`-th root of unity with `ℓ ≥ 2`. -/

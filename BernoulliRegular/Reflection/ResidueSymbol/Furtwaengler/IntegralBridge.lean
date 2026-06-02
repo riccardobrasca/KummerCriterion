@@ -39,11 +39,6 @@ characters valued in `𝓞 R'`. -/
 noncomputable def zeta_p_int_unit : (𝓞 R')ˣ :=
   (S.zeta_p_int_isPrimitiveRoot.isUnit (Fact.out : Nat.Prime p).ne_zero).unit
 
-@[simp]
-theorem zeta_p_int_unit_coe : (S.zeta_p_int_unit : 𝓞 R') = S.zeta_p_int := by
-  simp [zeta_p_int_unit]
-
-
 /-- The unit lift of `ζ_p` remains primitive. -/
 theorem zeta_p_int_unit_isPrimitiveRoot : IsPrimitiveRoot S.zeta_p_int_unit p := by
   simpa [zeta_p_int_unit] using
