@@ -47,3 +47,18 @@ so every other odd prime under 100 is regular. Combined with `flt-regular`, this
 yields Fermat's Last Theorem for all those exponents — i.e. for the overwhelming
 majority of exponents below 100 directly from regularity (the three irregular
 exponents 37, 59, 67 being handled by other means).
+
+This is packaged as a self-contained theorem in
+[`BernoulliRegular/BernoulliFast/FermatLastTheoremUpTo100.lean`](BernoulliRegular/BernoulliFast/FermatLastTheoremUpTo100.lean):
+
+```lean
+/-- Fermat's Last Theorem for every exponent up to `100` except `2`, the
+three irregular primes below `100`, and `74 = 2 * 37`. -/
+theorem fermatLastTheoremFor_le100_of_ne_irregular
+    (n : ℕ) (hn_two : 2 < n) (hn_le100 : n ≤ 100)
+    (hn37 : n ≠ 37) (hn59 : n ≠ 59) (hn67 : n ≠ 67) (hn74 : n ≠ 74) :
+    FermatLastTheoremFor n
+```
+
+The composite exponent `74 = 2 · 37` is excluded because reducing it by divisor
+monotonicity would route through the irregular exponent `37`.
