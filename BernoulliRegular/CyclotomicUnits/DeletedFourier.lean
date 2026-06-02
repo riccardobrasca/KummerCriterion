@@ -23,8 +23,6 @@ namespace CyclotomicUnits
 /-- The non-identity elements of a group. -/
 abbrev Nonidentity (G : Type*) [One G] := {g : G // g ≠ 1}
 
-/-- The complement of an arbitrary element of a group. -/
-abbrev DeletedAt (G : Type*) (h₀ : G) := {g : G // g ≠ h₀}
 
 /-- The nontrivial multiplicative characters of a group. -/
 abbrev NontrivChar (G : Type*) [CommMonoid G] :=
@@ -53,27 +51,6 @@ section FiniteGroup
 
 variable {G : Type*} [CommGroup G] [Fintype G]
 
-/-- Left multiplication by `h₀` identifies `G \ {1}` with `G \ {h₀}`. -/
-def nonidentityMulLeftEquivDeletedAt (h₀ : G) :
-    Nonidentity G ≃ DeletedAt G h₀ where
-  toFun r := ⟨h₀ * r.val, by
-    intro h
-    apply r.property
-    have h' : h₀ * r.val = h₀ * 1 := by simpa using h
-    exact mul_left_cancel h'⟩
-  invFun h := ⟨h₀⁻¹ * h.val, by
-    intro h'
-    apply h.property
-    calc
-      h.val = h₀ * (h₀⁻¹ * h.val) := by group
-      _ = h₀ * 1 := by rw [h']
-      _ = h₀ := by rw [mul_one]⟩
-  left_inv r := by
-    ext
-    simp
-  right_inv h := by
-    ext
-    simp
 
 /-- The deleted set has one fewer element than the group. -/
 theorem card_nonidentity_add_one [DecidableEq G] :
@@ -139,34 +116,6 @@ theorem sum_nonidentity_inv_mulChar_mul
 def deletedFourierCoeff (q : G → ℂ) (χ : MulChar G ℂ) : ℂ :=
   ∑ h : G, q h * (χ h)⁻¹
 
-/-- Translating the input of `q` by `h₀` multiplies the inverse-character
-Fourier coefficient by `χ h₀`. -/
-theorem deletedFourierCoeff_mulLeft
-    (q : G → ℂ) (χ : MulChar G ℂ) (h₀ : G) :
-    deletedFourierCoeff (G := G) (fun h => q (h₀ * h)) χ =
-      χ h₀ * deletedFourierCoeff (G := G) q χ := by
-  classical
-  unfold deletedFourierCoeff
-  have hsum := Equiv.sum_comp (Equiv.mulLeft h₀)
-    (fun h : G => q h * (χ (h₀⁻¹ * h))⁻¹)
-  have hleft :
-      (∑ x : G, q ((Equiv.mulLeft h₀) x) *
-          (χ (h₀⁻¹ * (Equiv.mulLeft h₀) x))⁻¹) =
-        ∑ x : G, q (h₀ * x) * (χ x)⁻¹ := by
-    refine Finset.sum_congr rfl ?_
-    intro x _
-    simp
-  rw [hleft] at hsum
-  rw [hsum]
-  have hterm : ∀ h : G, q h * (χ (h₀⁻¹ * h))⁻¹ =
-      χ h₀ * (q h * (χ h)⁻¹) := by
-    intro h
-    rw [← map_inv]
-    have hinv : (h₀⁻¹ * h)⁻¹ = h⁻¹ * h₀ := by group
-    rw [hinv, map_mul, map_inv]
-    ring
-  rw [Finset.sum_congr rfl (fun h _ => hterm h)]
-  rw [← Finset.mul_sum]
 
 /-- The deleted character matrix, with rows reindexed by an equivalence
 between nontrivial characters and non-identity elements. -/
@@ -307,29 +256,9 @@ def deletedConvolutionMatrixOnNonidentity (q : G → ℂ) :
     Matrix (Nonidentity G) (Nonidentity G) ℂ :=
   Matrix.of fun h k => q (h.val * k.val⁻¹) - q h.val
 
-/-- The deleted convolution matrix with an arbitrary omitted row `h₀` and
-columns still indexed by `G \ {1}`. -/
-def deletedConvolutionMatrixAt (h₀ : G) (q : G → ℂ) :
-    Matrix (DeletedAt G h₀) (Nonidentity G) ℂ :=
-  Matrix.of fun h k => q (h.val * k.val⁻¹) - q h.val
 
-/-- The arbitrary-row deleted matrix after ordering rows as `h = h₀ * r`,
-`r ∈ G \ {1}`. -/
-def deletedConvolutionMatrixAtReindexed (h₀ : G) (q : G → ℂ) :
-    Matrix (Nonidentity G) (Nonidentity G) ℂ :=
-  (deletedConvolutionMatrixAt (G := G) h₀ q).submatrix
-    (nonidentityMulLeftEquivDeletedAt (G := G) h₀) id
 
 omit [Fintype G] in
-/-- Reindexing rows by `h = h₀ * r` turns the arbitrary-row matrix into the
-identity-deleted matrix for the translated function `r ↦ q (h₀ * r)`. -/
-theorem deletedConvolutionMatrixAtReindexed_eq_translated
-    (h₀ : G) (q : G → ℂ) :
-    deletedConvolutionMatrixAtReindexed (G := G) h₀ q =
-      deletedConvolutionMatrixOnNonidentity (G := G) (fun h => q (h₀ * h)) := by
-  ext h k
-  simp [deletedConvolutionMatrixAtReindexed, deletedConvolutionMatrixAt,
-    deletedConvolutionMatrixOnNonidentity, nonidentityMulLeftEquivDeletedAt, mul_assoc]
 
 omit [Fintype G] in
 /-- Reindexing the literal deleted convolution matrix by `ρ` gives the
@@ -393,20 +322,6 @@ theorem det_deletedConvolutionMatrixOnNonidentity_eq_prod_deletedFourierCoeff
   rwa [Matrix.det_submatrix_equiv_self] at h
 
 
-/-- Arbitrary omitted-row determinant identity, with rows ordered as
-`h = h₀ * r`, `r ∈ G \ {1}`. -/
-theorem det_deletedConvolutionMatrixAtReindexed_eq_charFactor_mul_prod
-    [DecidableEq G] [Fintype (MulChar G ℂ)] [DecidableEq (MulChar G ℂ)]
-    (ρ : NontrivChar G ≃ Nonidentity G) (h₀ : G) (q : G → ℂ) :
-    (deletedConvolutionMatrixAtReindexed (G := G) h₀ q).det =
-      (∏ χ : NontrivChar G, χ.val h₀) *
-        ∏ χ : NontrivChar G, deletedFourierCoeff (G := G) q χ.val := by
-  classical
-  rw [deletedConvolutionMatrixAtReindexed_eq_translated]
-  rw [det_deletedConvolutionMatrixOnNonidentity_eq_prod_deletedFourierCoeff
-    (G := G) ρ (fun h => q (h₀ * h))]
-  simp_rw [deletedFourierCoeff_mulLeft (G := G) q]
-  rw [Finset.prod_mul_distrib]
 
 
 /-- Inversion preserves the deleted index set. -/

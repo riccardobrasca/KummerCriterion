@@ -36,32 +36,11 @@ namespace Furtwaengler
 
 variable {R : Type*} [CommSemiring R]
 
-/-- The integer-formula trace sum `Σ_{i=0}^{f-1} x^{ℓ^i}` in any
-commutative semiring. For `R = k = 𝔽_{ℓ ^ f}` this equals
-`algebraMap 𝔽_ℓ k (Algebra.trace 𝔽_ℓ k x)`. -/
-def traceSum (ℓ f : ℕ) (x : R) : R :=
-  ∑ i ∈ Finset.range f, x ^ (ℓ ^ i)
 
 
 
 
 
-/-- **Trace-power expansion is the algebraMap of `(Algebra.trace x)^n`.**
-Bridge between the integer formula `traceSum` and the genuine algebraic
-trace. For `K = 𝔽_ℓ` and `L = k = 𝔽_{ℓ ^ f}` with `Nat.card K = ℓ`:
-
-`algebraMap K L (Algebra.trace K L x ^ n) = (traceSum ℓ f x) ^ n`. -/
-theorem algebraMap_trace_pow_eq_traceSum_pow
-    {K L : Type*} [Field K] [Field L] [Finite L] [Algebra K L]
-    {ℓ f : ℕ} (h_card_K : Nat.card K = ℓ) (h_finrank : Module.finrank K L = f)
-    (x : L) (n : ℕ) :
-    algebraMap K L (Algebra.trace K L x) ^ n = (traceSum ℓ f x) ^ n := by
-  congr 1
-  rw [FiniteField.algebraMap_trace_eq_sum_pow]
-  unfold traceSum
-  rw [h_finrank]
-  refine Finset.sum_congr rfl fun i _ => ?_
-  rw [h_card_K]
 
 end Furtwaengler
 

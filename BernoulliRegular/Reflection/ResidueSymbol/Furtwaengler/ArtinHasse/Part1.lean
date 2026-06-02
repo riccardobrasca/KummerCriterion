@@ -605,27 +605,6 @@ theorem artinHasseExpSeries_coeff_isRIntegral
     simpa [hquot] using rescale_exp_sub_one_coeff_rMultiple r n hn
   exact hps n
 
-/-- The ordinary exponential `exp(rT)` has `r`-integral coefficients. -/
-theorem rescale_exp_isRIntegral
-    (r : ℕ) [Fact (Nat.Prime r)] :
-    DieudonneDwork.IsRIntegralPS r
-      (PowerSeries.rescale (r : ℚ) (PowerSeries.exp ℚ)) := by
-  intro n
-  by_cases hn0 : n = 0
-  · simp [hn0, DieudonneDwork.IsRIntegralRat.one]
-  · have hn : 1 ≤ n := Nat.succ_le_of_lt (Nat.pos_of_ne_zero hn0)
-    rcases rescale_exp_sub_one_coeff_rMultiple r n hn with ⟨q, hq, hcoeff⟩
-    have hcoeff' :
-        (PowerSeries.coeff (R := ℚ) n)
-            (PowerSeries.rescale (r : ℚ) (PowerSeries.exp ℚ)) =
-          (r : ℚ) * q := by
-      have hcoeff_one :
-          (PowerSeries.coeff (R := ℚ) n) (1 : PowerSeries ℚ) = 0 := by
-        simp [PowerSeries.coeff_one, hn0]
-      rw [map_sub, hcoeff_one] at hcoeff
-      simpa [sub_zero] using hcoeff
-    rw [hcoeff']
-    exact (DieudonneDwork.IsRIntegralRat.natCast r r).mul hq
 
 private theorem rescale_exp_coeff_mul_eq_choose_mul_coeff
     (r : ℕ) [Fact (Nat.Prime r)] (i j : ℕ) :

@@ -61,19 +61,6 @@ namespace Furtwaengler
 variable {p : ℕ} [Fact p.Prime]
 variable {K : Type*} [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-/-- A finite product of semi-primary elements is semi-primary. -/
-theorem isSemiPrimary_finset_prod
-    {ι : Type*} (s : Finset ι) (f : ι → 𝓞 K)
-    (hf : ∀ i ∈ s, FLT37.IsSemiPrimary p (K := K) (f i)) :
-    FLT37.IsSemiPrimary p (K := K) (s.prod f) := by
-  classical
-  induction s using Finset.induction_on with
-  | empty =>
-      simpa using FLT37.IsSemiPrimary.one (p := p) (K := K)
-  | insert i s hi ih =>
-      rw [Finset.prod_insert hi]
-      exact (hf i (by simp)).mul
-        (ih fun j hj => hf j (by simp [hj]))
 
 
 

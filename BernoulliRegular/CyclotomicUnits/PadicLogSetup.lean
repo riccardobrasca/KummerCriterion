@@ -504,23 +504,13 @@ end FormalDwork
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-/-- The completed local integer ring at `lambda = zeta_p - 1`. -/
-abbrev LocalIntegerRing : Type _ :=
-  Furtwaengler.KummerArtinHasse.LambdaLocalIntegerRing p K
 
 
 
 
 
-/-- The proved cyclotomic local uniformizer `lambda = zeta_p - 1`. -/
-def cyclotomicLambda : LocalIntegerRing p K :=
-  Furtwaengler.KummerArtinHasse.lambdaPi p K
 
 
-@[simp]
-theorem cyclotomicLambda_ne_zero :
-    cyclotomicLambda p K ≠ 0 :=
-  Furtwaengler.KummerArtinHasse.lambdaPi_ne_zero (p := p) (K := K)
 
 
 
@@ -561,14 +551,7 @@ theorem valuedCyclotomicZeta_pow_eq_one :
 
 
 
-/-- The global integral element `zeta_p - 1`. -/
-def globalCyclotomicLambdaInteger : 𝓞 K :=
-  Furtwaengler.KummerArtinHasse.lambdaPiIntegral p K
 
-@[simp]
-theorem globalCyclotomicLambdaInteger_ne_zero :
-    globalCyclotomicLambdaInteger p K ≠ 0 :=
-  Furtwaengler.KummerArtinHasse.lambdaPiIntegral_ne_zero (p := p) (K := K)
 
 /-- The global field unit attached to `zeta_p - 1`. -/
 def globalCyclotomicLambdaFieldUnit : Kˣ :=

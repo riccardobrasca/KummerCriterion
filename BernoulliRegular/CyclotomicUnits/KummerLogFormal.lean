@@ -269,10 +269,6 @@ theorem factorial_two_mul_index_zmod_ne_zero {p j : ℕ} [Fact p.Prime]
   have hlt : 2 * j < p := by omega
   exact Nat.not_lt.mpr ((Nat.Prime.dvd_factorial (Fact.out : Nat.Prime p)).mp hp_dvd) hlt
 
-theorem factorial_two_mul_index_zmod_isUnit {p j : ℕ} [Fact p.Prime]
-    (hj : 1 ≤ j) (hjp : 2 * j ≤ p - 3) :
-    IsUnit (((Nat.factorial (2 * j) : ℕ) : ZMod p)) :=
-  isUnit_iff_ne_zero.mpr (factorial_two_mul_index_zmod_ne_zero hj hjp)
 
 theorem kummerLogUnitFactor_ne_zero {p j : ℕ} [Fact p.Prime]
     (hj : 1 ≤ j) (hjp : 2 * j ≤ p - 3) :

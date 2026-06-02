@@ -43,76 +43,7 @@ variable {K : Type*} [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
 /-! ### K1 — α^Θ symbol left-Galois sum at a single ideal -/
 
-/-- **K1: Left-slot Galois sum for `(α^Θ / B)_p`** at any ideal `B`.
 
-Generalises `pthSymbolAtPrincipal_canonical_principalGen_left_eq_galois_sum`
-from principal `(γ)` to arbitrary ideals `B`. The hypothesis is that
-each `σ_{a^{-1}} α` is coprime to every prime factor of `B`. -/
-theorem pthSymbolAtIdeal_canonical_principalGen_eq_galois_sum
-    (α : 𝓞 K) (B : Ideal (𝓞 K))
-    (h_coprime : ∀ (a : CyclotomicUnitDelta p)
-      (P : Ideal (𝓞 K)), P ∈ normalizedFactors B →
-      cyclotomicRingOfIntegersEquiv (p := p) K a⁻¹ α ∉ P) :
-    pthSymbolAtIdeal_canonical (p := p) (K := K)
-        (stickelbergerPrincipalGen (p := p) (K := K) α) B =
-      ∑ a : CyclotomicUnitDelta p,
-        ((a : ZMod p).val : ZMod p) *
-          pthSymbolAtIdeal_canonical (p := p) (K := K)
-            (cyclotomicRingOfIntegersEquiv (p := p) K a⁻¹ α) B := by
-  classical
-  unfold stickelbergerPrincipalGen
-  -- Distribute pthSymbolAtIdeal_canonical over Finset-prod numerator.
-  rw [pthSymbolAtIdeal_canonical_finset_prod_α (p := p) Finset.univ
-    (fun a : CyclotomicUnitDelta p =>
-      (cyclotomicRingOfIntegersEquiv (p := p) K a⁻¹ α) ^ ((a : ZMod p).val))
-    (I := B)
-    (fun a _ P hP h_in_pow => ?_)]
-  · -- Each (σ_{a^{-1}} α)^a.val term unfolds via _pow_α.
-    refine Finset.sum_congr rfl fun a _ => ?_
-    rw [pthSymbolAtIdeal_canonical_pow_α (p := p)
-      (fun P hP => h_coprime a P hP) ((a : ZMod p).val)]
-  · -- side condition for finset_prod: (σ_{a^{-1}} α)^a.val ∉ P.
-    obtain ⟨_, hP_ne_bot, hP_max⟩ := isPrime_of_mem_normalizedFactors hP
-    haveI hP_prime : P.IsPrime := hP_max.isPrime
-    have h_in : cyclotomicRingOfIntegersEquiv (p := p) K a⁻¹ α ∈ P :=
-      hP_prime.mem_of_pow_mem ((a : ZMod p).val) h_in_pow
-    exact (h_coprime a P hP) h_in
-
-/-- **K1 specialised to a single non-bot prime `P'`**: the Galois sum
-collapses to a single prime-level term per Galois index. -/
-theorem pthSymbolAtIdeal_canonical_principalGen_at_prime_eq_galois_sum
-    (α : 𝓞 K) {P' : Ideal (𝓞 K)} [P'.IsPrime] (hP'_ne : P' ≠ ⊥)
-    (h_coprime : ∀ a : CyclotomicUnitDelta p,
-      cyclotomicRingOfIntegersEquiv (p := p) K a⁻¹ α ∉ P') :
-    pthSymbolAtIdeal_canonical (p := p) (K := K)
-        (stickelbergerPrincipalGen (p := p) (K := K) α) P' =
-      ∑ a : CyclotomicUnitDelta p,
-        ((a : ZMod p).val : ZMod p) *
-          pthSymbolAtPrime_canonical (p := p) (K := K)
-            (cyclotomicRingOfIntegersEquiv (p := p) K a⁻¹ α) P' := by
-  classical
-  -- Apply the general form, then translate ideal-symbol → prime-symbol at P'.
-  rw [pthSymbolAtIdeal_canonical_principalGen_eq_galois_sum α P' ?_]
-  · refine Finset.sum_congr rfl fun a _ => ?_
-    -- pthSymbolAtIdeal_canonical _ P' = pthSymbolAtPrime_canonical _ P' (P' prime).
-    rw [pthSymbolAtIdeal_canonical_prime_eq_pthSymbolAtPrime_canonical
-      (cyclotomicRingOfIntegersEquiv (p := p) K a⁻¹ α) hP'_ne]
-  · -- coprimality at every prime factor of P'.
-    intro a P hP
-    -- normalizedFactors P' = {P'} for prime P'.
-    have hP_eq : P = P' := by
-      have h_factors :
-          UniqueFactorizationMonoid.normalizedFactors P' = ({P'} : Multiset _) := by
-        have h_prime_in_R : Prime P' := (Ideal.prime_iff_isPrime hP'_ne).mpr inferInstance
-        have h_irreducible : Irreducible P' := h_prime_in_R.irreducible
-        have h_assoc :=
-          UniqueFactorizationMonoid.normalizedFactors_irreducible h_irreducible
-        rw [show normalize P' = P' from normalize_eq P'] at h_assoc
-        exact h_assoc
-      rw [h_factors] at hP
-      exact Multiset.mem_singleton.mp hP
-    rw [hP_eq]
-    exact h_coprime a
 
 /-! ### K2 — integer-against-prime symbol formula (structural hypothesis)
 

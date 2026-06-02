@@ -65,15 +65,6 @@ theorem tendsto_sub_one_mul_dedekindZeta_via_LProducts :
   filter_upwards [self_mem_nhdsWithin] with s hs
   rw [dedekindZeta_eq_riemannZeta_mul_nontrivialLProduct_of_one_lt_re p K (by exact_mod_cast hs)]
 
-/-- The class-number-formula-ready factorization: the Dedekind zeta residue of
-`K = ℚ(ζ_p)` is the real part of `nontrivialLProduct p 1 = ∏_{χ≠1} L(1, χ)`. -/
-theorem residue_ready_factorization :
-    NumberField.dedekindZeta_residue K =
-      ((nontrivialLProduct p (1 : ℂ)).re) := by
-  have heq : ((NumberField.dedekindZeta_residue K : ℝ) : ℂ) = nontrivialLProduct p (1 : ℂ) :=
-    tendsto_nhds_unique (NumberField.tendsto_sub_one_mul_dedekindZeta_nhdsGT K)
-      (tendsto_sub_one_mul_dedekindZeta_via_LProducts p K)
-  rw [← heq, Complex.ofReal_re]
 
 
 end ZetaFactorisation

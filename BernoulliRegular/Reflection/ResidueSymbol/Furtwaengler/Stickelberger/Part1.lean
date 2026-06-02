@@ -51,61 +51,9 @@ namespace Furtwaengler
 variable {R : Type*} [CommRing R] [Fintype R]
 variable {R' : Type*} [CommRing R']
 
-/-- **Galois invariance of `g(χ)^n` for characters of order dividing `n`.**
-
-If χ : MulChar R R' has `χ^n = 1`, and σ : R' →+* R' is a ring hom that
-fixes χ (i.e., `σ ∘ χ = χ`) and shifts ψ by a unit `a` (i.e.,
-`σ ∘ ψ = AddChar.mulShift ψ a`), then σ fixes the `n`-th power of `g(χ, ψ)`. -/
-theorem gaussSum_pow_invariant_of_pow_eq_one
-    (χ : MulChar R R') (ψ : AddChar R R') {n : ℕ}
-    (hχn : χ ^ n = 1)
-    (σ : R' →+* R') (a : Rˣ)
-    (hσχ : χ.ringHomComp σ = χ)
-    (hσψ : σ.toMonoidHom.compAddChar ψ = AddChar.mulShift ψ a) :
-    σ ((gaussSum χ ψ) ^ n) = (gaussSum χ ψ) ^ n := by
-  rw [map_pow, gaussSum_ringHomComp, hσχ, hσψ]
-  -- Goal: (gaussSum χ (AddChar.mulShift ψ a))^n = (gaussSum χ ψ)^n.
-  have hmul : χ ↑a * gaussSum χ (AddChar.mulShift ψ a) = gaussSum χ ψ :=
-    gaussSum_mulShift χ ψ a
-  have hpow : (χ ↑a) ^ n * (gaussSum χ (AddChar.mulShift ψ a)) ^ n =
-      (gaussSum χ ψ) ^ n := by
-    rw [← mul_pow, hmul]
-  have hχa_n : (χ ↑a) ^ n = 1 := by
-    rw [← MulChar.pow_apply_coe χ n a, hχn, MulChar.one_apply_coe]
-  rw [← hpow, hχa_n, one_mul]
 
 
-/-- The residue character has order dividing `p`: `χ_q^p = 1` as a `MulChar`.
 
-This is the input the Galois invariance lemma needs. The proof goes by
-extensionality: on units `↑u`, `MulChar.pow_apply_coe` reduces to
-`(residueMulChar (↑u))^p`, which we already know is `1`. On non-units
-(only `0` for a field), both sides are `0` by `MulChar.map_nonunit`. -/
-theorem residueMulChar_pow_eq_one_mulChar
-    {k : Type*} [Field k] [Fintype k]
-    {R' : Type*} [CommMonoidWithZero R']
-    {p : ℕ} [NeZero p]
-    (zeta_q : kˣ) (hzeta_q : IsPrimitiveRoot zeta_q p)
-    (hdiv : p ∣ Fintype.card k - 1)
-    (zeta_R : R'ˣ) (hzeta_R : IsPrimitiveRoot zeta_R p) :
-    (residueMulChar zeta_q hzeta_q hdiv zeta_R hzeta_R) ^ p = 1 := by
-  ext x
-  rw [MulChar.pow_apply_coe, residueMulChar_pow_eq_one, MulChar.one_apply_coe]
-
-/-- The order of the residue character is exactly `p`: it is `≤ p` (since
-`χ^p = 1`) and `≠ 1` (it is non-trivial), hence equals `p` because `p` is
-prime. -/
-theorem orderOf_residueMulChar
-    {k : Type*} [Field k] [Fintype k]
-    {R' : Type*} [CommRing R'] [IsDomain R']
-    {p : ℕ} [hp : Fact p.Prime]
-    (zeta_q : kˣ) (hzeta_q : IsPrimitiveRoot zeta_q p)
-    (hdiv : p ∣ Fintype.card k - 1)
-    (zeta_R : R'ˣ) (hzeta_R : IsPrimitiveRoot zeta_R p) :
-    orderOf (residueMulChar zeta_q hzeta_q hdiv zeta_R hzeta_R) = p :=
-  orderOf_eq_prime
-    (residueMulChar_pow_eq_one_mulChar zeta_q hzeta_q hdiv zeta_R hzeta_R)
-    (residueMulChar_ne_one zeta_q hzeta_q hdiv zeta_R hzeta_R)
 
 
 
@@ -154,30 +102,6 @@ theorem pow_sub_one_mem_of_sub_one_mem
   exact Ideal.mul_mem_right _ _ h
 
 
-/-- **Galois compatibility of `residueMulChar`.** For a ring hom
-`σ : R' →+* R'` that sends `ζ_R` to `ζ_R^a`, post-composition of the
-residue MulChar with `σ` equals the `a`-th power character:
-`σ ∘ residueMulChar = (residueMulChar)^a`.
-
-This identifies how a Galois automorphism `σ` (concretely `σ_a` sending
-`ζ_R ↦ ζ_R^a`) permutes the residue character among its powers. Combined
-with `gaussSum_ringHomComp` (REF-18c2b), it gives the input REF-18c2c3
-needs for the Galois orbit assembly: `σ_a(g(χ_q)) = g(χ_q^a, σ_a · ψ_q)`
-after suitable adjustment. -/
-theorem residueMulChar_ringHomComp_pow_eq
-    {k : Type*} [Field k] [Fintype k]
-    {R' : Type*} [CommRing R']
-    {p : ℕ} [NeZero p]
-    (zeta_q : kˣ) (hzeta_q : IsPrimitiveRoot zeta_q p)
-    (hdiv : p ∣ Fintype.card k - 1)
-    (zeta_R : R'ˣ) (hzeta_R : IsPrimitiveRoot zeta_R p)
-    (σ : R' →+* R') (a : ℕ)
-    (hσ : σ ((zeta_R : R'ˣ) : R') = ((zeta_R : R'ˣ) : R') ^ a) :
-    (residueMulChar zeta_q hzeta_q hdiv zeta_R hzeta_R).ringHomComp σ =
-      (residueMulChar zeta_q hzeta_q hdiv zeta_R hzeta_R) ^ a := by
-  ext x
-  rw [MulChar.ringHomComp_apply, MulChar.pow_apply_coe,
-      residueMulChar_apply_unit, σ.map_pow, hσ, ← pow_mul, ← pow_mul, mul_comm]
 
 /-!
 ### Galois orbit of `g(χ_q)` (REF-18c2c3 — abstract form)
@@ -263,20 +187,6 @@ genuinely "cyclotomic-arithmetic" content from the underlying ring theory.
 -/
 
 
-/-- **Algebraic helper for support analysis.** If `a * b = q^n` for some `n`
-and a prime ideal `P` contains `a`, then `P` contains `q`.
-
-This is a pure algebra lemma: any prime in the support of an element
-dividing `q^n` must lie above `q`. -/
-theorem prime_mem_of_mul_eq_pow {R : Type*} [CommRing R]
-    {P : Ideal R} [hP : P.IsPrime] {a b q : R} {n : ℕ}
-    (hab : a * b = q ^ n) (ha : a ∈ P) :
-    q ∈ P := by
-  have hqn : q ^ n ∈ P := hab ▸ Ideal.mul_mem_right b P ha
-  rcases n with _ | n
-  · rw [pow_zero] at hqn
-    exact absurd ((Ideal.eq_top_iff_one P).mpr hqn) hP.ne_top
-  · exact hP.mem_of_pow_mem _ hqn
 
 
 /-!
@@ -306,51 +216,6 @@ private theorem _root_.Associated.mem_ideal_of_mem
   obtain ⟨u, rfl⟩ := h
   exact Ideal.mul_mem_right (u : R) I ha
 
-/-- **Cyclotomic ramification of a rational prime.** In a domain `R`
-containing a primitive `q`-th root of unity `ζ` (with `q` a rational prime),
-every prime ideal `Q` of `R` containing `q` also contains `ζ - 1`.
-
-The proof:
-1. The identity `Φ_q(1) = q` (from `eval_one_cyclotomic_prime`) combined
-   with the factorisation `Φ_q = ∏_{μ primitive} (X - C μ)` (from
-   `cyclotomic_eq_prod_X_sub_primitiveRoots`) gives
-   `q = ∏_{μ ∈ primitiveRoots q R} (1 - μ)` in `R`.
-2. By primality of `Q`, since the product `∏ (1 - μ)` lies in `Q`,
-   some factor `1 - μ ∈ Q`.
-3. By `IsPrimitiveRoot.isPrimitiveRoot_iff`, that `μ` equals `ζ^a` for
-   some `a` coprime to `q`.
-4. By `IsPrimitiveRoot.associated_sub_one_pow_sub_one_of_coprime`,
-   `ζ - 1` and `ζ^a - 1` are associated, hence `ζ - 1 ∈ Q`. -/
-theorem zeta_sub_one_mem_of_natCast_mem
-    {R : Type*} [CommRing R] [IsDomain R]
-    {q : ℕ} [hq : Fact q.Prime] {ζ : R} (hζ : IsPrimitiveRoot ζ q)
-    {Q : Ideal R} [Q.IsPrime] (hQ : (q : R) ∈ Q) :
-    ζ - 1 ∈ Q := by
-  have hqpos : 0 < q := hq.out.pos
-  -- Step 1: q = ∏_{μ ∈ primitiveRoots q R} (1 - μ) in R
-  have hprod : (∏ μ ∈ primitiveRoots q R, ((1 : R) - μ)) = (q : R) := by
-    have heval : (Polynomial.cyclotomic q R).eval 1 = (q : R) :=
-      Polynomial.eval_one_cyclotomic_prime
-    rw [Polynomial.cyclotomic_eq_prod_X_sub_primitiveRoots hζ] at heval
-    rw [Polynomial.eval_prod] at heval
-    simp only [Polynomial.eval_sub, Polynomial.eval_X, Polynomial.eval_C] at heval
-    exact heval
-  -- Step 2: ∏ (1 - μ) ∈ Q, so some 1 - μ ∈ Q
-  have hprod_mem : (∏ μ ∈ primitiveRoots q R, ((1 : R) - μ)) ∈ Q := hprod ▸ hQ
-  obtain ⟨μ, hμ_mem, hμμ⟩ := Ideal.IsPrime.prod_mem_iff.mp hprod_mem
-  -- Step 3: μ is a primitive q-th root of unity, hence μ = ζ^a for some a
-  have hμ_prim : IsPrimitiveRoot μ q := isPrimitiveRoot_of_mem_primitiveRoots hμ_mem
-  have hne : NeZero q := ⟨hq.out.ne_zero⟩
-  obtain ⟨a, _, ha_coprime, rfl⟩ := (hζ.isPrimitiveRoot_iff (k := q)).mp hμ_prim
-  -- Step 4: 1 - ζ^a ∈ Q ⟹ ζ^a - 1 ∈ Q
-  have h_neg : ζ ^ a - 1 ∈ Q := by
-    have : ζ ^ a - 1 = -((1 : R) - ζ ^ a) := by ring
-    rw [this]
-    exact Q.neg_mem hμμ
-  -- Step 5: ζ - 1 ∼ ζ^a - 1, so ζ - 1 ∈ Q
-  have hassoc : Associated (ζ - 1) (ζ ^ a - 1) :=
-    hζ.associated_sub_one_pow_sub_one_of_coprime ha_coprime
-  exact hassoc.symm.mem_ideal_of_mem h_neg
 
 end Furtwaengler
 

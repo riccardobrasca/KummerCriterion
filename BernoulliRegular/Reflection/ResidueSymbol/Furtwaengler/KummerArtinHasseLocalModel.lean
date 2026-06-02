@@ -34,18 +34,8 @@ namespace KummerArtinHasse
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-/-- The completed local integer ring at `lambda = (zeta_p - 1)`. -/
-abbrev LambdaLocalIntegerRing : Type _ :=
-  Reflection.Local.completedLocalCyclotomicRing p K
 
-/-- The completed local uniformizer `pi = zeta_p - 1`. -/
-def lambdaPi : LambdaLocalIntegerRing p K :=
-  Reflection.Local.completedLocalCyclotomicUniformizer p K
 
-@[simp]
-theorem lambdaPi_ne_zero :
-    lambdaPi p K ≠ 0 :=
-  Reflection.Local.completedLocalCyclotomicUniformizer_ne_zero (p := p) (K := K)
 
 
 

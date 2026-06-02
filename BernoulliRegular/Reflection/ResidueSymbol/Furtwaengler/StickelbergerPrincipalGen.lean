@@ -53,12 +53,6 @@ namespace Furtwaengler
 variable {p : ℕ} [Fact p.Prime]
 variable {K : Type*} [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-/-- **The Stickelberger principal generator** `α^Θ ∈ 𝓞 K`, where
-`Θ = ∑_a a · σ_{a^{-1}}` is the Stickelberger element. Defined as
-`∏_a (σ_{a^{-1}} α)^a.val`. -/
-noncomputable def stickelbergerPrincipalGen (α : 𝓞 K) : 𝓞 K :=
-  ∏ a : CyclotomicUnitDelta p,
-    (cyclotomicRingOfIntegersEquiv (p := p) K a⁻¹ α) ^ ((a : ZMod p).val)
 
 
 
@@ -100,34 +94,6 @@ of an ideal, can be expanded under `pthSymbolAtIdeal_canonical` slot 1
 into a sum of individual symbols.
 -/
 
-/-- **Finset-product version of `pthSymbolAtIdeal_canonical_mul_α`**.
-For a finset `s : Finset ι` indexing elements `f i : 𝓞 K`, with each
-`f i` coprime to every prime factor of `I`, the canonical residue symbol
-in the numerator slot satisfies
-`(∏_i f i / I)_p = ∑_i (f i / I)_p`. -/
-theorem pthSymbolAtIdeal_canonical_finset_prod_α {ι : Type*}
-    (s : Finset ι) (f : ι → 𝓞 K) {I : Ideal (𝓞 K)}
-    (hf : ∀ i ∈ s, ∀ P ∈ UniqueFactorizationMonoid.normalizedFactors I, f i ∉ P) :
-    pthSymbolAtIdeal_canonical (p := p) (K := K) (∏ i ∈ s, f i) I =
-      ∑ i ∈ s, pthSymbolAtIdeal_canonical (p := p) (K := K) (f i) I := by
-  classical
-  induction s using Finset.induction_on with
-  | empty =>
-    rw [Finset.prod_empty, pthSymbolAtIdeal_canonical_one_alpha,
-      Finset.sum_empty]
-  | insert i s hi ih =>
-    rw [Finset.prod_insert hi, Finset.sum_insert hi]
-    rw [pthSymbolAtIdeal_canonical_mul_α (p := p)
-      (hf i (Finset.mem_insert_self i s))]
-    · rw [ih (fun j hj P hP => hf j (Finset.mem_insert_of_mem hj) P hP)]
-    · -- ∀ P ∈ normalizedFactors I, ∏_{j ∈ s} f j ∉ P (P prime).
-      intro P hP h_in_prod
-      obtain ⟨_, hP_ne_bot, hP_max⟩ := isPrime_of_mem_normalizedFactors hP
-      haveI : P.IsPrime := hP_max.isPrime
-      -- ∏ f ∈ P (prime) ⟹ some f j ∈ P.
-      obtain ⟨j, hj_mem, hj_in⟩ :=
-        Ideal.IsPrime.prod_mem_iff.mp h_in_prod
-      exact (hf j (Finset.mem_insert_of_mem hj_mem) P hP) hj_in
 
 /-! ### Left-slot Galois sum for `(α^Θ / γ)_p`
 

@@ -42,10 +42,6 @@ variable (p : ℕ) [hp : Fact p.Prime]
 
 local notation3 "K⁺" => NumberField.maximalRealSubfield K
 
-/-- An element `γ ∈ 𝓞 K⁺` is **primary** when it is congruent to a
-rational integer modulo `𝔭⁺^p`. -/
-def IsPrimaryPlus [IsCMField K] (γ : 𝓞 (K⁺)) : Prop :=
-  ∃ a : ℤ, γ - (a : 𝓞 (K⁺)) ∈ zetaPrimePlus p K ^ p
 
 namespace IsPrimaryPlus
 
@@ -55,20 +51,7 @@ variable {p K}
 
 
 
-/-- The negation of a K⁺-primary element is K⁺-primary. -/
-theorem neg [IsCMField K] {γ : 𝓞 (K⁺)} (hγ : IsPrimaryPlus p K γ) :
-    IsPrimaryPlus p K (-γ) := by
-  obtain ⟨a, ha⟩ := hγ
-  refine ⟨-a, ?_⟩
-  have : -γ - ((-a : ℤ) : 𝓞 (K⁺)) = -(γ - (a : 𝓞 (K⁺))) := by push_cast; ring
-  rw [this]
-  exact (zetaPrimePlus p K ^ p).neg_mem ha
 
-/-- `IsPrimaryPlus` is preserved by `Neg.neg` in both directions. -/
-@[simp]
-theorem neg_iff [IsCMField K] {γ : 𝓞 (K⁺)} :
-    IsPrimaryPlus p K (-γ) ↔ IsPrimaryPlus p K γ :=
-  ⟨fun h => by simpa using h.neg, fun h => h.neg⟩
 
 
 
@@ -230,15 +213,6 @@ theorem cyclotomicUnitUnit_val (k : ℕ) (hk : k.Coprime p) (hp_two : 2 ≤ p) :
     (cyclotomicUnitUnit p K k hk hp_two : 𝓞 K) = cyclotomicUnit p K k :=
   IsUnit.unit_spec _
 
-/-- For `k` coprime to `p`, `(ζ - 1)` is associated to `(ζ^k - 1)` in `𝓞 K`,
-with witness `cyclotomicUnitUnit k` (since `(ζ - 1) · cyclotomicUnit k = ζ^k - 1`). -/
-theorem associated_zeta_sub_one_zeta_pow_sub_one (k : ℕ) (hk : k.Coprime p)
-    (hp_two : 2 ≤ p) :
-    Associated (((zeta_spec p ℚ K).unit' : 𝓞 K) - 1)
-      (((zeta_spec p ℚ K).unit' : 𝓞 K) ^ k - 1) :=
-  ⟨cyclotomicUnitUnit p K k hk hp_two, by
-    rw [cyclotomicUnitUnit_val]
-    exact zeta_sub_one_mul_cyclotomicUnit p K k⟩
 
 
 
@@ -248,61 +222,9 @@ theorem zetaSubOne_dvd_zeta_pow_sub_one (k : ℕ) :
       (((zeta_spec p ℚ K).unit' : 𝓞 K) ^ k - 1) :=
   ⟨cyclotomicUnit p K k, (zeta_sub_one_mul_cyclotomicUnit p K k).symm⟩
 
-/-- For integers `a, b` and any natural `k`, `(ζ - 1) ∣ (a + ζ^k · b - (a + b))`
-in `𝓞 K`. The key residue-modulo-(ζ-1) computation for FLT case I. -/
-theorem zetaSubOne_dvd_factor_sub_sum (a b : ℤ) (k : ℕ) :
-    (((zeta_spec p ℚ K).unit' : 𝓞 K) - 1) ∣
-      (((a : 𝓞 K) + ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ k * (b : 𝓞 K)) -
-        ((a + b : ℤ) : 𝓞 K)) := by
-  have h := zetaSubOne_dvd_zeta_pow_sub_one p K k
-  have heq :
-      ((a : 𝓞 K) + ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ k * (b : 𝓞 K)) -
-        ((a + b : ℤ) : 𝓞 K) =
-      (((zeta_spec p ℚ K).unit' : 𝓞 K) ^ k - 1) * (b : 𝓞 K) := by
-    push_cast
-    ring
-  rw [heq]
-  exact h.mul_right _
 
 
-/-- **`(ζ - 1)^{p-1} ∣ p` in `𝓞 K`.** Cyclotomic ramification: `(p)·𝓞 K`
-factors with `zetaPrime` to multiplicity `p - 1`. We use the project's
-`primesOver_ramificationIdx_eq_prime_sub_one_at_p` and mathlib's
-`Ideal.le_pow_ramificationIdx`. -/
-theorem zetaSubOne_pow_p_sub_one_dvd_p :
-    (((zeta_spec p ℚ K).unit' : 𝓞 K) - 1) ^ (p - 1) ∣ ((p : ℕ) : 𝓞 K) := by
-  -- ramificationIdx (rationalPrimeIdeal p) (zetaPrime p K) = p - 1.
-  have hram : (rationalPrimeIdeal p).ramificationIdx (zetaPrime p K) = p - 1 :=
-    primesOver_ramificationIdx_eq_prime_sub_one_at_p (p := p) (K := K) (zetaPrime p K)
-      (zetaPrime_mem_primesOver_at_p (p := p) (K := K))
-  -- map (algebraMap ℤ (𝓞 K)) (rationalPrimeIdeal p) ≤ (zetaPrime p K) ^ (p - 1).
-  have h_le := Ideal.le_pow_ramificationIdx
-    (R := ℤ) (S := 𝓞 K)
-    (p := rationalPrimeIdeal p) (P := zetaPrime p K)
-  rw [hram] at h_le
-  -- Cast (p : 𝓞 K) ∈ map ... rationalPrimeIdeal p:
-  have hp_mem : ((p : ℕ) : 𝓞 K) ∈
-      (rationalPrimeIdeal p).map (algebraMap ℤ (𝓞 K)) := by
-    have h_int : ((p : ℕ) : 𝓞 K) = algebraMap ℤ (𝓞 K) (p : ℤ) := by
-      push_cast; rfl
-    rw [h_int]
-    refine Ideal.mem_map_of_mem (algebraMap ℤ (𝓞 K)) ?_
-    rw [rationalPrimeIdeal]
-    exact Ideal.subset_span (Set.mem_singleton _)
-  -- so (p : 𝓞 K) ∈ (zetaPrime)^{p-1}, which is the span of (ζ-1)^{p-1}.
-  have hp_in_pow : ((p : ℕ) : 𝓞 K) ∈ (zetaPrime p K) ^ (p - 1) := h_le hp_mem
-  rw [show zetaPrime p K =
-    Ideal.span {((zeta_spec p ℚ K).toInteger - 1 : 𝓞 K)} from rfl,
-    Ideal.span_singleton_pow, Ideal.mem_span_singleton] at hp_in_pow
-  exact hp_in_pow
 
-/-- **`(ζ-1)^2 ∣ p` for `p ≥ 3`** in `𝓞 K`. Direct corollary of
-`zetaSubOne_pow_p_sub_one_dvd_p`: `(ζ-1)^2 ∣ (ζ-1)^{p-1} ∣ p` when
-`p - 1 ≥ 2`, i.e., `p ≥ 3`. -/
-theorem zetaSubOne_sq_dvd_p (hp_three : 3 ≤ p) :
-    (((zeta_spec p ℚ K).unit' : 𝓞 K) - 1) ^ 2 ∣ ((p : ℕ) : 𝓞 K) :=
-  (pow_dvd_pow _ (by omega : 2 ≤ p - 1)).trans
-    (zetaSubOne_pow_p_sub_one_dvd_p (p := p) (K := K))
 
 
 

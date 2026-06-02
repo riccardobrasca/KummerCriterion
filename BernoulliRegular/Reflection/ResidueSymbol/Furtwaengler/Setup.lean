@@ -51,53 +51,7 @@ variable (p : ℕ) [Fact p.Prime]
 variable (k : Type*) [Field k] [Fintype k]
 variable (R' : Type*) [CommRing R'] [IsDomain R']
 
-/-- The bundled data driving the Stickelberger prime factorisation argument:
-a finite field `k`, a target domain `R'`, primitive `p`-th roots of unity in
-both `kˣ` and `R'ˣ`, the divisibility `p ∣ #k − 1`, and a primitive additive
-character `ψ_q : k → R'`. The residue character `χ_q` and its Gauss sum
-`g(χ_q, ψ_q)` are then determined by the bundle. -/
-structure StickelbergerSetup where
-  /-- A primitive `p`-th root of unity in the residue field. -/
-  zeta_q : kˣ
-  /-- Witness of primitivity. -/
-  hzeta_q : IsPrimitiveRoot zeta_q p
-  /-- The cardinality compatibility condition: `p ∣ #k − 1`. -/
-  hdiv : p ∣ Fintype.card k - 1
-  /-- A primitive `p`-th root of unity in the target ring. -/
-  zeta_R : R'ˣ
-  /-- Witness of primitivity. -/
-  hzeta_R : IsPrimitiveRoot zeta_R p
 
-namespace StickelbergerSetup
-
-variable {p k R'}
-variable (S : StickelbergerSetup p k R')
-
-/-- The residue `MulChar` specialised to the bundle. -/
-def residueChar : MulChar k R' :=
-  Furtwaengler.residueMulChar S.zeta_q S.hzeta_q S.hdiv S.zeta_R S.hzeta_R
-
-
-omit [IsDomain R'] in
-/-- Bundle accessor: `χ_q^p = 1` as a `MulChar`. -/
-theorem residueChar_pow_eq_one : S.residueChar ^ p = 1 :=
-  Furtwaengler.residueMulChar_pow_eq_one_mulChar
-    S.zeta_q S.hzeta_q S.hdiv S.zeta_R S.hzeta_R
-
-
-/-- Bundle accessor: `orderOf χ_q = p`. -/
-theorem orderOf_residueChar : orderOf S.residueChar = p :=
-  Furtwaengler.orderOf_residueMulChar
-    S.zeta_q S.hzeta_q S.hdiv S.zeta_R S.hzeta_R
-
-
-
-
-
-
-
-
-end StickelbergerSetup
 
 end Furtwaengler
 

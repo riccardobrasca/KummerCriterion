@@ -82,10 +82,6 @@ noncomputable def rationalPadicTeichmuller (a : ZMod p) :
   padicIntToRationalPadicIntegerRingEquiv (p := p)
     (BernoulliRegular.teichmuller p a)
 
-@[simp]
-theorem rationalPadicTeichmuller_zero :
-    rationalPadicTeichmuller p 0 = 0 := by
-  simp [rationalPadicTeichmuller]
 
 @[simp]
 theorem rationalPadicTeichmuller_one :
@@ -105,19 +101,6 @@ theorem rationalPadicTeichmuller_pow_prime (a : ZMod p) :
   rw [← map_pow, BernoulliRegular.teichmuller_pow_card (p := p) a]
 
 
-@[simp]
-theorem rationalPadicTeichmuller_eq_zero_iff {a : ZMod p} :
-    rationalPadicTeichmuller p a = 0 ↔ a = 0 := by
-  constructor
-  · intro h
-    have hpre :
-        BernoulliRegular.teichmuller p a = 0 := by
-      have h' := congrArg
-        (padicIntToRationalPadicIntegerRingEquiv (p := p)).symm h
-      simpa [rationalPadicTeichmuller] using h'
-    simpa using (BernoulliRegular.teichmuller_eq_zero_iff (p := p)).mp hpre
-  · intro h
-    simp [h]
 
 /-- The residue map on the rational completed integer coefficient ring,
 transported from mathlib's `PadicInt.toZMod`. -/

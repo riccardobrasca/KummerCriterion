@@ -24,29 +24,6 @@ namespace BernoulliRegular
 
 namespace Furtwaengler
 
-universe u v w
-
-
-namespace ConcreteStickelbergerSetup
-
-variable {ℓ p : ℕ} [Fact (Nat.Prime ℓ)] [Fact (Nat.Prime p)]
-variable {k : Type u} [Field k] [Fintype k]
-variable {K : Type v} [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
-variable {R' : Type w} [Field R'] [NumberField R'] [Algebra K R'] [IsScalarTower ℚ K R']
-  [IsCyclotomicExtension {p, ℓ} ℚ R']
-
-variable (S : ConcreteStickelbergerSetup ℓ p k K R')
-
-
-
-
-
-
-
-
-
-end ConcreteStickelbergerSetup
-
 end Furtwaengler
 
 end BernoulliRegular

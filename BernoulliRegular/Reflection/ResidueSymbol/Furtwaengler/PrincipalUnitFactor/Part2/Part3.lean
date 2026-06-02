@@ -25,25 +25,6 @@ variable {K : Type*} [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
 
 
-/-- If `α` is semi-primary, then the Stickelberger principal generator
-`α^Θ` is semi-primary. -/
-theorem isSemiPrimary_stickelbergerPrincipalGen
-    (hp_two : 2 ≤ p) {α : 𝓞 K}
-    (hα : FLT37.IsSemiPrimary p (K := K) α) :
-    FLT37.IsSemiPrimary p (K := K)
-      (stickelbergerPrincipalGen (p := p) (K := K) α) := by
-  unfold stickelbergerPrincipalGen
-  refine isSemiPrimary_finset_prod
-    (p := p) (K := K) (Finset.univ : Finset (CyclotomicUnitDelta p))
-    (fun a =>
-      (cyclotomicRingOfIntegersEquiv (p := p) K a⁻¹ α) ^
-        ((a : ZMod p).val)) ?_
-  intro a _
-  exact isSemiPrimary_pow
-    (p := p) (K := K)
-    (isSemiPrimary_cyclotomicRingOfIntegersEquiv
-      (p := p) (K := K) hp_two a⁻¹ hα)
-    ((a : ZMod p).val)
 
 
 

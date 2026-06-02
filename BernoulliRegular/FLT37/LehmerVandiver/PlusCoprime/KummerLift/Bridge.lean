@@ -42,16 +42,6 @@ variable (p : ℕ) [Fact p.Prime]
 variable (K : Type u) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
   [NumberField.IsCMField K]
 
-/-- **Cor 8.19 bridge (real form)**: data packaging the classical
-implication `IsPthPower(pollaczekUnitPlus) → p ∣ h⁺` in the contrapositive
-form `¬ IsPthPower(pollaczekUnitPlus) → ¬ p ∣ h⁺` consumed by LV005's
-chain.
-
-Stated on the σ-symmetrised real form `pollaczekUnitPlus` (LV005b):
-`= pollaczekUnit · σ(pollaczekUnit)`, σ-fixed under complex conjugation.
-This avoids the ζ-prefactor obstruction inherent to the bare K-side
-form. -/
-structure Cor8_19Bridge (i : ℕ) where
 
 namespace Cor8_19Bridge
 

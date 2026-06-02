@@ -116,15 +116,7 @@ lemma toZMod_teichmuller (a : ZMod p) : PadicInt.toZMod (teichmuller p a) = a :=
 lemma teichmuller_pow_sub_one {a : ZMod p} (ha : a ≠ 0) : teichmuller p a ^ (p - 1) = 1 := by
   rw [← map_pow, ZMod.pow_card_sub_one_eq_one ha, map_one]
 
-/-- `ω(a)` is a unit of `ℤ_[p]` whenever `a ≠ 0`. -/
-lemma isUnit_teichmuller {a : ZMod p} (ha : a ≠ 0) : IsUnit (teichmuller p a) :=
-  IsUnit.of_pow_eq_one (teichmuller_pow_sub_one ha) (by have := hp.1.one_lt; omega)
 
-/-- `ω(a) = 0` iff `a = 0`. -/
-@[simp]
-lemma teichmuller_eq_zero_iff {a : ZMod p} : teichmuller p a = 0 ↔ a = 0 :=
-  ⟨fun h => not_imp_not.mp (fun ha => (isUnit_teichmuller ha).ne_zero) h,
-    fun h => h ▸ teichmuller_zero⟩
 
 /-- `ω` is injective on `ZMod p` (follows from `toZMod ∘ ω = id`). -/
 lemma teichmuller_injective : Function.Injective (teichmuller p) := fun _ _ hab => by

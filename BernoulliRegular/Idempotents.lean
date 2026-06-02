@@ -70,17 +70,9 @@ set_option linter.unusedDecidableInType false
 variable {G : Type*} [CommGroup G] [Fintype G] [DecidableEq G]
 variable {R : Type*} [CommRing R]
 
-/-- The character idempotent `ε_χ := (1/|G|) ∑_{σ ∈ G} χ(σ) · σ⁻¹ ∈ R[G]`
-associated to a multiplicative character `χ : MulChar G R`. -/
-def charIdempotent [Invertible ((Fintype.card G : R))] (χ : MulChar G R) :
-    MonoidAlgebra R G :=
-  ⅟(Fintype.card G : R) • ∑ σ : G, χ σ • MonoidAlgebra.single σ⁻¹ (1 : R)
 
 variable [Invertible ((Fintype.card G : R))]
 
-@[simp] lemma charIdempotent_def (χ : MulChar G R) :
-    charIdempotent χ =
-      ⅟(Fintype.card G : R) • ∑ σ : G, χ σ • MonoidAlgebra.single σ⁻¹ (1 : R) := rfl
 
 /-! ### Orthogonality of the idempotents (Diekmann Lemma 50)
 
@@ -137,39 +129,8 @@ variable [IsDomain R] [HasEnoughRootsOfUnity R (Monoid.exponent G)]
 attribute [local instance] Fintype.ofFinite
 
 -- For a group `G`, `Monoid.exponent Gˣ = Monoid.exponent G`: `toUnits : G ≃* Gˣ`.
-lemma hasEnoughRootsOfUnity_units_of_group :
-    HasEnoughRootsOfUnity R (Monoid.exponent Gˣ) := by
-  rw [Monoid.exponent_eq_of_mulEquiv (toUnits (G := G)).symm]
-  infer_instance
 
-/-- Generalisation of `DirichletCharacter.sum_characters_eq_zero` to any
-finite commutative group `G`: for `a ≠ 1`, the sum of `χ a` over all
-multiplicative characters `χ : MulChar G R` vanishes. -/
-theorem MulChar.sum_characters_eq_zero_of_finite_group
-    {a : G} (ha : a ≠ 1) :
-    ∑ χ : MulChar G R, χ a = 0 := by
-  have := hasEnoughRootsOfUnity_units_of_group (G := G) (R := R)
-  obtain ⟨χ, hχ⟩ := MulChar.exists_apply_ne_one_of_hasEnoughRootsOfUnity G R ha
-  refine eq_zero_of_mul_eq_self_left hχ ?_
-  simp only [Finset.mul_sum, ← MulChar.mul_apply]
-  exact Fintype.sum_bijective _ (Group.mulLeft_bijective χ) _ _ fun _ ↦ rfl
 
-/-- Generalisation of `DirichletCharacter.sum_characters_eq`: for any
-`a : G`, the sum of `χ a` over all multiplicative characters
-`χ : MulChar G R` equals `|G|` when `a = 1`, and `0` otherwise. -/
-theorem MulChar.sum_characters_eq (a : G) :
-    ∑ χ : MulChar G R, χ a =
-      if a = 1 then (Fintype.card G : R) else 0 := by
-  split_ifs with ha
-  · -- `a = 1`: every character sends `1` to `1`, so the sum is `|MulChar G R|`.
-    have := hasEnoughRootsOfUnity_units_of_group (G := G) (R := R)
-    have hcardEq : Nat.card (MulChar G R) = Nat.card G :=
-      (MulChar.card_eq_card_units_of_hasEnoughRootsOfUnity G R).trans
-        (Nat.card_congr (toUnits (G := G)).symm.toEquiv)
-    simpa only [ha, MulChar.map_one, Finset.sum_const, Finset.card_univ,
-      nsmul_eq_mul, mul_one, ← Nat.card_eq_fintype_card]
-      using congrArg (Nat.cast (R := R)) hcardEq
-  · exact MulChar.sum_characters_eq_zero_of_finite_group ha
 
 /-! ### Completeness of the character idempotents (T029 / Step B)
 
@@ -186,31 +147,6 @@ The idempotents `ε_χ` sum to `1` in `R[G]`. The computation, writing
 ```
 -/
 
-/-- **Diekmann Lemma 50 (part 3)**: the family of character idempotents
-`{ε_χ : χ : MulChar G R}` is complete, i.e. sums to `1` in `R[G]`. -/
-theorem charIdempotent_sum_eq_one :
-    ∑ χ : MulChar G R, charIdempotent χ = (1 : MonoidAlgebra R G) := by
-  -- Expand the definition of `charIdempotent`, pull the common scalar
-  -- `⅟|G|` out, swap the order of summation, and apply `sum_characters_eq`.
-  simp only [charIdempotent_def]
-  rw [← Finset.smul_sum, Finset.sum_comm]
-  -- Goal: `⅟|G| • ∑ σ, ∑ χ, χ σ • single σ⁻¹ 1 = 1`.
-  -- Inner sum: `∑ χ, χ σ • single σ⁻¹ 1 = ite (σ = 1) (|G| • single σ⁻¹ 1) 0`.
-  -- After this rewrite, only `σ = 1` survives in the outer sum.
-  have hrw : ∀ σ : G,
-      (∑ χ : MulChar G R, χ σ • MonoidAlgebra.single σ⁻¹ (1 : R))
-        = if σ = 1 then
-            (Fintype.card G : R) • MonoidAlgebra.single σ⁻¹ (1 : R)
-          else 0 := by
-    intro σ
-    rw [← Finset.sum_smul, MulChar.sum_characters_eq]
-    split_ifs <;> simp only [zero_smul]
-  simp_rw [hrw]
-  rw [Finset.sum_ite_eq' Finset.univ (1 : G)
-    (fun σ => ((Fintype.card G : R)) • MonoidAlgebra.single σ⁻¹ (1 : R)), if_pos]
-  · -- Goal: `⅟|G| • (|G| • single (1:G)⁻¹ 1) = 1`.
-    rw [inv_one, smul_smul, invOf_mul_self, one_smul]; rfl
-  · exact Finset.mem_univ _
 
 /-! ### Complete orthogonal idempotents + ring decomposition (T029 / Steps C, D)
 
@@ -252,24 +188,6 @@ variable [Inv2 : Invertible (2 : R)]
 
 
 
-/-- Key computational identity: multiplication by `single c 1` scales each
-character idempotent `ε_χ` by the eigenvalue `χ c`. -/
-lemma single_mul_charIdempotent (c : G) (χ : MulChar G R) :
-    MonoidAlgebra.single c (1 : R) * charIdempotent χ = χ c • charIdempotent χ := by
-  rw [charIdempotent_def, mul_smul_comm, smul_comm (χ c) (⅟((Fintype.card G : R)))]
-  congr 1
-  calc MonoidAlgebra.single c (1 : R) *
-      ∑ σ : G, χ σ • MonoidAlgebra.single σ⁻¹ (1 : R)
-      = ∑ σ : G, χ σ • MonoidAlgebra.single (c * σ⁻¹) (1 : R) := by
-        simp_rw [Finset.mul_sum, mul_smul_comm, MonoidAlgebra.single_mul_single, mul_one]
-    _ = ∑ σ : G, χ (σ * c) • MonoidAlgebra.single (c * (σ * c)⁻¹) (1 : R) :=
-        ((Group.mulRight_bijective c).sum_comp
-          (fun σ => χ σ • MonoidAlgebra.single (c * σ⁻¹) (1 : R))).symm
-    _ = ∑ σ : G, (χ c * χ σ) • MonoidAlgebra.single σ⁻¹ (1 : R) := by
-        refine Finset.sum_congr rfl fun σ _ => ?_
-        rw [map_mul, mul_comm (χ σ) (χ c), mul_inv_rev, ← mul_assoc, mul_inv_cancel, one_mul]
-    _ = χ c • ∑ σ : G, χ σ • MonoidAlgebra.single σ⁻¹ (1 : R) := by
-        simp_rw [Finset.smul_sum, smul_smul]
 
 
 

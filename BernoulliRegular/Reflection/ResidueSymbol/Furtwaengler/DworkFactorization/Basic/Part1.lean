@@ -28,10 +28,6 @@ namespace Furtwaengler
 
 universe u v w
 
-/-- The finite truncation `∑_{n ≤ N} λ_n T^n` of a Dwork theta series. -/
-def dworkThetaTrunc {A : Type*} [CommSemiring A]
-    (dworkCoeff : ℕ → A) (N : ℕ) (u : A) : A :=
-  ∑ n ∈ Finset.range (N + 1), dworkCoeff n * u ^ n
 
 
 

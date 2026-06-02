@@ -63,35 +63,12 @@ variable (p : ℕ) [Fact p.Prime]
 /-- The distinguished prime `lambda = (ζ_p - 1)` above `p` in `𝓞 K`. -/
 abbrev cyclotomicLambda : Ideal (𝓞 K) := zetaPrime p K
 
-/-- The localization of `𝓞 K` at the distinguished prime `lambda = (ζ_p - 1)`. -/
-abbrev localCyclotomicRing := Localization.AtPrime (cyclotomicLambda p K)
 
 
-/-- The maximal ideal in the localized ring, i.e. the local avatar of `lambda`. -/
-abbrev localCyclotomicMaximalIdeal : Ideal (localCyclotomicRing p K) :=
-  IsLocalRing.maximalIdeal (localCyclotomicRing p K)
 
-/-- The local unit group `U = O_Fˣ` at `lambda`. -/
-abbrev localCyclotomicUnitGroup := (localCyclotomicRing p K)ˣ
 
-/-- The principal-unit filtration `U_n = 1 + lambda^n O_F`. -/
-def principalUnitSubgroup (n : ℕ) : Subgroup (localCyclotomicUnitGroup p K) :=
-  Ideal.oneUnitsSubgroup ((localCyclotomicMaximalIdeal p K) ^ n)
 
-theorem localCyclotomicMaximalIdeal_eq_map :
-  Ideal.map (algebraMap (𝓞 K) (localCyclotomicRing p K)) (cyclotomicLambda p K) =
-      localCyclotomicMaximalIdeal p K := by
-  simpa [localCyclotomicMaximalIdeal, localCyclotomicRing] using
-  (Localization.AtPrime.map_eq_maximalIdeal (R := 𝓞 K) (I := cyclotomicLambda p K))
 
-@[simp]
-theorem mem_principalUnitSubgroup_iff {n : ℕ} {u : localCyclotomicUnitGroup p K} :
-    u ∈ principalUnitSubgroup p K n ↔
-      (u : localCyclotomicRing p K) - 1 ∈ (localCyclotomicMaximalIdeal p K) ^ n :=
-  by
-    change u ∈ Ideal.oneUnitsSubgroup ((localCyclotomicMaximalIdeal p K) ^ n) ↔
-      (u : localCyclotomicRing p K) - 1 ∈ (localCyclotomicMaximalIdeal p K) ^ n
-    exact Ideal.mem_oneUnitsSubgroup
 
 end CyclotomicSetup
 

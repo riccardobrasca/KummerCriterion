@@ -64,10 +64,6 @@ theorem IsRIntegralRat.one (r : ℕ) : IsRIntegralRat r 1 := by
   simp
 
 
-theorem IsRIntegralRat.natCast (r : ℕ) (n : ℕ) : IsRIntegralRat r (n : ℚ) := by
-  unfold IsRIntegralRat
-  rw [Rat.den_natCast]
-  exact Nat.coprime_one_left r
 
 theorem IsRIntegralRat.add {r : ℕ} {q₁ q₂ : ℚ}
     (h₁ : IsRIntegralRat r q₁) (h₂ : IsRIntegralRat r q₂) :

@@ -26,10 +26,6 @@ namespace Furtwaengler
 
 
 
-/-- If `ℓ` is prime and `n < ℓ`, then `ℓ` does not divide `n!`. -/
-theorem factorial_not_dvd_of_lt_prime {ℓ n : ℕ} [Fact (Nat.Prime ℓ)] (hn : n < ℓ) :
-    ¬ ℓ ∣ Nat.factorial n := fun h =>
-  Nat.not_lt.mpr ((Nat.Prime.dvd_factorial (Fact.out : Nat.Prime ℓ)).mp h) hn
 
 
 

@@ -103,4 +103,4 @@ elab "#unusedBy " id:ident : command => do
     are used. Operation took {(timeEnd - timeStart) / 1000}s"
 
 -- Replace the declaration below with the `foo` you want to analyse, then rerun.
-#unusedBy BernoulliRegular.fermatLastTheoremFor_le100_of_ne_irregular
+#unusedBy fermatLastTheoremFor_le100_of_ne_irregular

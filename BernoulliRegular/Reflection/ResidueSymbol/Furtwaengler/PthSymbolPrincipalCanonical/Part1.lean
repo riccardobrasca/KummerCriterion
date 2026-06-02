@@ -52,14 +52,6 @@ variable {K : Type*} [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 Mirrors `pthSymbolAtIdeal` but uses `pthSymbolAtPrime_canonical` as the
 prime-level building block. -/
 
-/-- The canonical `p`-th-power residue symbol `(α/I)_p` extended to integral
-ideals by multiplicativity over the prime factorization of `I`. Same shape
-as `pthSymbolAtIdeal`, but with `pthSymbolAtPrime_canonical` (which uses the
-canonical primitive `p`-th root, eliminating the `Classical.choose`). -/
-noncomputable def pthSymbolAtIdeal_canonical
-    (α : 𝓞 K) (I : Ideal (𝓞 K)) : ZMod p :=
-  ((UniqueFactorizationMonoid.normalizedFactors I).map
-    (fun P => pthSymbolAtPrime_canonical (p := p) α P)).sum
 
 
 
@@ -68,32 +60,10 @@ noncomputable def pthSymbolAtIdeal_canonical
 
 
 
-/-- For a non-zero prime ideal `P`, the canonical ideal symbol agrees
-with the canonical prime symbol. -/
-theorem pthSymbolAtIdeal_canonical_prime_eq_pthSymbolAtPrime_canonical
-    (α : 𝓞 K) {P : Ideal (𝓞 K)} [hP_prime : P.IsPrime] (hP_ne : P ≠ ⊥) :
-    pthSymbolAtIdeal_canonical (p := p) (K := K) α P =
-      pthSymbolAtPrime_canonical (p := p) (K := K) α P := by
-  unfold pthSymbolAtIdeal_canonical
-  have hP_prime_in_R : Prime P := (Ideal.prime_iff_isPrime hP_ne).mpr hP_prime
-  have hP_irreducible : Irreducible P := hP_prime_in_R.irreducible
-  have h_factors :
-      UniqueFactorizationMonoid.normalizedFactors P = ({P} : Multiset _) := by
-    have h_assoc :=
-      UniqueFactorizationMonoid.normalizedFactors_irreducible hP_irreducible
-    rw [show normalize P = P from normalize_eq P] at h_assoc
-    exact h_assoc
-  rw [h_factors]
-  simp
 
 
 /-! ### Canonical `pthSymbolAtPrincipal` -/
 
-/-- The canonical principal-symbol `(α/(β))_p`, defined as
-`pthSymbolAtIdeal_canonical α (Ideal.span {β})`. -/
-noncomputable def pthSymbolAtPrincipal_canonical
-    (α β : 𝓞 K) : ZMod p :=
-  pthSymbolAtIdeal_canonical (p := p) (K := K) α (Ideal.span ({β} : Set (𝓞 K)))
 
 
 /-! ### c.3 unconditional half (consequence of c.1 only)
@@ -153,68 +123,6 @@ These mirror the corresponding `pthSymbolAtIdeal` API lemmas
 canonical symbol. Each one reduces, term-by-term over the prime factorization
 of `I`, to the corresponding `pthSymbolAtPrime_canonical` lemma. -/
 
-/-- **The canonical symbol of `1` at any ideal is `0`**. Each prime factor of
-`I` is maximal and non-zero, so `pthSymbolAtPrime_canonical 1 P = 0`
-term-by-term. -/
-@[simp] theorem pthSymbolAtIdeal_canonical_one_alpha
-    (I : Ideal (𝓞 K)) :
-    pthSymbolAtIdeal_canonical (p := p) (K := K) (1 : 𝓞 K) I = 0 := by
-  unfold pthSymbolAtIdeal_canonical
-  rw [show
-      ((UniqueFactorizationMonoid.normalizedFactors I).map
-        (fun P => pthSymbolAtPrime_canonical (p := p) (K := K) (1 : 𝓞 K) P)) =
-      ((UniqueFactorizationMonoid.normalizedFactors I).map (fun _ => (0 : ZMod p)))
-        from ?_]
-  · simp
-  · refine Multiset.map_congr rfl fun P hP => ?_
-    obtain ⟨_, hP_ne_bot, hP_max⟩ := isPrime_of_mem_normalizedFactors hP
-    exact pthSymbolAtPrime_canonical_one (p := p) (K := K) hP_ne_bot hP_max
-
-
-/-- **Multiplicativity in `α` at the ideal level.** For non-zero `I` with
-`α, β` coprime to every prime factor of `I`, the canonical symbol is
-additive in the numerator. Reduces, term-by-term, to
-`pthSymbolAtPrime_canonical_mul`. -/
-theorem pthSymbolAtIdeal_canonical_mul_α
-    {α β : 𝓞 K} {I : Ideal (𝓞 K)}
-    (hα : ∀ P ∈ UniqueFactorizationMonoid.normalizedFactors I, α ∉ P)
-    (hβ : ∀ P ∈ UniqueFactorizationMonoid.normalizedFactors I, β ∉ P) :
-    pthSymbolAtIdeal_canonical (p := p) (K := K) (α * β) I =
-      pthSymbolAtIdeal_canonical (p := p) (K := K) α I +
-        pthSymbolAtIdeal_canonical (p := p) (K := K) β I := by
-  unfold pthSymbolAtIdeal_canonical
-  have hmap :
-      ((UniqueFactorizationMonoid.normalizedFactors I).map
-        (fun P => pthSymbolAtPrime_canonical (p := p) (K := K) (α * β) P)) =
-      ((UniqueFactorizationMonoid.normalizedFactors I).map
-        (fun P => pthSymbolAtPrime_canonical (p := p) (K := K) α P +
-          pthSymbolAtPrime_canonical (p := p) (K := K) β P)) := by
-    refine Multiset.map_congr rfl fun P hP => ?_
-    obtain ⟨_, hP_ne_bot, hP_max⟩ := isPrime_of_mem_normalizedFactors hP
-    exact pthSymbolAtPrime_canonical_mul (p := p) (K := K)
-      hP_ne_bot hP_max (hα P hP) (hβ P hP)
-  rw [hmap, Multiset.sum_map_add]
-
-/-- **Power form in the `α` slot at the ideal level.** Reduces, term-by-term,
-to `pthSymbolAtPrime_canonical_pow`. -/
-theorem pthSymbolAtIdeal_canonical_pow_α
-    {α : 𝓞 K} {I : Ideal (𝓞 K)}
-    (hα : ∀ P ∈ UniqueFactorizationMonoid.normalizedFactors I, α ∉ P)
-    (n : ℕ) :
-    pthSymbolAtIdeal_canonical (p := p) (K := K) (α ^ n) I =
-      (n : ZMod p) * pthSymbolAtIdeal_canonical (p := p) (K := K) α I := by
-  unfold pthSymbolAtIdeal_canonical
-  have hmap :
-      ((UniqueFactorizationMonoid.normalizedFactors I).map
-        (fun P => pthSymbolAtPrime_canonical (p := p) (K := K) (α ^ n) P)) =
-      ((UniqueFactorizationMonoid.normalizedFactors I).map
-        (fun P => (n : ZMod p) *
-          pthSymbolAtPrime_canonical (p := p) (K := K) α P)) := by
-    refine Multiset.map_congr rfl fun P hP => ?_
-    obtain ⟨_, hP_ne_bot, hP_max⟩ := isPrime_of_mem_normalizedFactors hP
-    exact pthSymbolAtPrime_canonical_pow (p := p) (K := K)
-      hP_ne_bot hP_max (hα P hP) n
-  rw [hmap, Multiset.sum_map_mul_left]
 
 
 
@@ -222,39 +130,9 @@ theorem pthSymbolAtIdeal_canonical_pow_α
 
 
 
-/-- **Unit-times-α absorption at the ideal level**: if every per-prime
-symbol of u vanishes (e.g., u is a `p`-th power, or u = ±1 for odd p),
-then `pthSymbolAtIdeal_canonical (α · u) I = pthSymbolAtIdeal_canonical α I`.
-The unit factor is absorbed term-by-term. -/
-theorem pthSymbolAtIdeal_canonical_mul_unit_α_eq_self
-    (α : 𝓞 K) {u : 𝓞 K} (hu : IsUnit u)
-    (hu_zero : ∀ P : Ideal (𝓞 K),
-      pthSymbolAtPrime_canonical (p := p) (K := K) u P = 0)
-    (I : Ideal (𝓞 K)) :
-    pthSymbolAtIdeal_canonical (p := p) (K := K) (α * u) I =
-      pthSymbolAtIdeal_canonical (p := p) (K := K) α I := by
-  unfold pthSymbolAtIdeal_canonical
-  refine congrArg Multiset.sum ?_
-  refine Multiset.map_congr rfl fun P _ => ?_
-  -- pthSymbolAtPrime_canonical (α · u) P = pthSymbolAtPrime_canonical α P
-  -- via the canonical-symbol's behavior at each P:
-  by_cases hbot : P = ⊥
-  · subst hbot
-    rw [pthSymbolAtPrime_canonical_eq_zero_of_eq_bot,
-        pthSymbolAtPrime_canonical_eq_zero_of_eq_bot]
-  by_cases hmax : P.IsMaximal
-  · by_cases hα_in : α ∈ P
-    · -- α ∈ P: both α and α·u are in P (since P is an ideal closed under mult).
-      have hαu : α * u ∈ P := P.mul_mem_right u hα_in
-      rw [pthSymbolAtPrime_canonical_eq_zero_of_mem hbot hmax hα_in,
-          pthSymbolAtPrime_canonical_eq_zero_of_mem hbot hmax hαu]
-    · -- α ∉ P: need u ∉ P. Then mul splits.
-      have hu_not : u ∉ P := fun h_in =>
-        hmax.ne_top (Ideal.eq_top_of_isUnit_mem P h_in hu)
-      rw [pthSymbolAtPrime_canonical_mul (p := p) (K := K) hbot hmax hα_in hu_not,
-          hu_zero P, add_zero]
-  · rw [pthSymbolAtPrime_canonical_eq_zero_of_not_isMaximal _ hbot hmax,
-        pthSymbolAtPrime_canonical_eq_zero_of_not_isMaximal _ hbot hmax]
+
+
+
 
 
 

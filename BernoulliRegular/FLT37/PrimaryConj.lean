@@ -84,107 +84,18 @@ theorem associated_complexConj_zetaSubOne [IsCMField K] :
   ⟨zetaSubOneConjUnit p K, by rw [complexConj_zetaSubOne_eq]; ring⟩
 
 
-/-- `σ((ζ - 1)^k)` is associated to `(ζ - 1)^k` for any `k`. -/
-theorem associated_complexConj_zetaSubOne_pow [IsCMField K] (k : ℕ) :
-    Associated (zetaSubOne p K ^ k)
-      (ringOfIntegersComplexConj K (zetaSubOne p K ^ k)) := by
-  rw [map_pow]
-  exact (associated_complexConj_zetaSubOne p K).pow_pow
 
-/-- Divisibility by `(ζ - 1)^k` is preserved by complex conjugation. -/
-theorem zetaSubOne_pow_dvd_complexConj_iff [IsCMField K] (k : ℕ) (x : 𝓞 K) :
-    zetaSubOne p K ^ k ∣ ringOfIntegersComplexConj K x ↔
-      zetaSubOne p K ^ k ∣ x := by
-  have hxx (y : 𝓞 K) : ringOfIntegersComplexConj K (ringOfIntegersComplexConj K y) = y := by
-    apply RingOfIntegers.ext
-    simp
-  refine ⟨fun h => ?_, fun h => ?_⟩
-  · have h_apply : ringOfIntegersComplexConj K (zetaSubOne p K ^ k) ∣
-        ringOfIntegersComplexConj K (ringOfIntegersComplexConj K x) :=
-      map_dvd (ringOfIntegersComplexConj K).toRingEquiv.toRingHom h
-    rw [hxx] at h_apply
-    exact (associated_complexConj_zetaSubOne_pow p K k).dvd.trans h_apply
-  · have h_apply : ringOfIntegersComplexConj K (zetaSubOne p K ^ k) ∣
-        ringOfIntegersComplexConj K x :=
-      map_dvd (ringOfIntegersComplexConj K).toRingEquiv.toRingHom h
-    exact (associated_complexConj_zetaSubOne_pow p K k).dvd.trans h_apply
 
 end ConjSetup
 
-/-- Complex conjugation preserves primarity: if `α` is primary, so is `σ(α)`,
-with the same integer witness `a`. -/
-theorem IsPrimary.complexConj
-    {p : ℕ} [Fact p.Prime] {K : Type*} [Field K] [NumberField K]
-    [IsCyclotomicExtension {p} ℚ K] [IsCMField K]
-    {α : 𝓞 K} (hα : IsPrimary p α) :
-    IsPrimary p (K := K) (ringOfIntegersComplexConj K α) := by
-  obtain ⟨a, ha⟩ := hα
-  refine ⟨a, ?_⟩
-  have ha_int : ringOfIntegersComplexConj K ((a : ℤ) : 𝓞 K) = ((a : ℤ) : 𝓞 K) := by
-    change ringOfIntegersComplexConj K ((algebraMap ℤ (𝓞 K)) a) = (algebraMap ℤ (𝓞 K)) a
-    rw [IsScalarTower.algebraMap_apply ℤ (𝓞 (NumberField.maximalRealSubfield K)) (𝓞 K),
-      AlgEquiv.commutes]
-  have hsub : ringOfIntegersComplexConj K α - ((a : ℤ) : 𝓞 K) =
-      ringOfIntegersComplexConj K (α - ((a : ℤ) : 𝓞 K)) := by
-    rw [map_sub, ha_int]
-  rw [hsub, zetaSubOne_pow_dvd_complexConj_iff]
-  exact ha
-
-/-- IsPrimary is invariant under complex conjugation (biconditional). -/
-@[simp]
-theorem IsPrimary.complexConj_iff
-    {p : ℕ} [Fact p.Prime] {K : Type*} [Field K] [NumberField K]
-    [IsCyclotomicExtension {p} ℚ K] [IsCMField K]
-    {α : 𝓞 K} :
-    IsPrimary p (K := K) (ringOfIntegersComplexConj K α) ↔ IsPrimary p α := by
-  refine ⟨fun h => ?_, IsPrimary.complexConj⟩
-  have h2 : IsPrimary p (K := K)
-      (ringOfIntegersComplexConj K (ringOfIntegersComplexConj K α)) :=
-    h.complexConj
-  have heq : ringOfIntegersComplexConj K (ringOfIntegersComplexConj K α) = α := by
-    apply RingOfIntegers.ext
-    simp
-  rw [heq] at h2
-  exact h2
 
 
 
 
 
 
-/-- IsHyperprimary is invariant under complex conjugation. The witness for
-`σ α` is `σ β`, and `(ζ-1)^{p+1} | α - β^p` transports through `σ` (which
-preserves the ideal `(ζ-1)`-power up to a unit). -/
-theorem IsHyperprimary.complexConj
-    {p : ℕ} [Fact p.Prime] {K : Type*} [Field K] [NumberField K]
-    [IsCyclotomicExtension {p} ℚ K] [IsCMField K]
-    {α : 𝓞 K} (hα : IsHyperprimary p α) :
-    IsHyperprimary p (K := K) (ringOfIntegersComplexConj K α) := by
-  obtain ⟨β, hβ⟩ := hα
-  refine ⟨ringOfIntegersComplexConj K β, ?_⟩
-  -- σ(α) - σ(β)^p = σ(α - β^p)
-  rw [show ringOfIntegersComplexConj K α -
-      (ringOfIntegersComplexConj K β) ^ p =
-      ringOfIntegersComplexConj K (α - β ^ p) from by
-    rw [map_sub, map_pow]]
-  rw [zetaSubOne_pow_dvd_complexConj_iff]
-  exact hβ
 
-/-- IsHyperprimary is invariant under complex conjugation (biconditional). -/
-@[simp]
-theorem IsHyperprimary.complexConj_iff
-    {p : ℕ} [Fact p.Prime] {K : Type*} [Field K] [NumberField K]
-    [IsCyclotomicExtension {p} ℚ K] [IsCMField K]
-    {α : 𝓞 K} :
-    IsHyperprimary p (K := K) (ringOfIntegersComplexConj K α) ↔
-      IsHyperprimary p α := by
-  refine ⟨fun h => ?_, IsHyperprimary.complexConj⟩
-  have h2 := h.complexConj
-  have heq : ringOfIntegersComplexConj K (ringOfIntegersComplexConj K α) = α := by
-    apply RingOfIntegers.ext
-    simp
-  rw [heq] at h2
-  exact h2
+
 
 
 end FLT37

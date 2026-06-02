@@ -123,101 +123,14 @@ theorem cyclotomicRingOfIntegersEquiv_mul_apply
     (cyclotomicSigmaOfUnit (p := p) K a)
     (cyclotomicSigmaOfUnit (p := p) K b) x
 
-/-- The induced automorphism of the global unit group `E = O_K^*`. -/
-noncomputable def cyclotomicUnitEquiv (a : CyclotomicUnitDelta p) :
-    CyclotomicUnitGroup K ≃* CyclotomicUnitGroup K :=
-  Units.mapEquiv ((cyclotomicRingOfIntegersEquiv (p := p) K a).toMulEquiv)
 
-@[simp]
-theorem cyclotomicUnitEquiv_one_apply (u : CyclotomicUnitGroup K) :
-    cyclotomicUnitEquiv (p := p) K 1 u = u :=
-  Units.ext <| cyclotomicRingOfIntegersEquiv_one_apply (p := p) (K := K) (u : 𝓞 K)
 
-theorem cyclotomicUnitEquiv_mul_apply
-    (a b : CyclotomicUnitDelta p) (u : CyclotomicUnitGroup K) :
-    cyclotomicUnitEquiv (p := p) K (a * b) u =
-      cyclotomicUnitEquiv (p := p) K a
-        (cyclotomicUnitEquiv (p := p) K b u) :=
-  Units.ext <| cyclotomicRingOfIntegersEquiv_mul_apply (p := p) (K := K) a b (u : 𝓞 K)
 
-/-- The subgroup of `p^N`-th powers is stable under the actual cyclotomic
-action on units. -/
-theorem cyclotomicUnitPowerSubgroup_map (a : CyclotomicUnitDelta p) :
-    (CyclotomicUnitPowerSubgroup (p := p) (N := N) K).map
-        (cyclotomicUnitEquiv (p := p) K a).toMonoidHom =
-      CyclotomicUnitPowerSubgroup (p := p) (N := N) K := by
-  ext x
-  constructor
-  · rintro ⟨y, ⟨z, rfl⟩, rfl⟩
-    exact ⟨cyclotomicUnitEquiv (p := p) K a z, by simp [map_pow]⟩
-  · intro hx
-    obtain ⟨z, rfl⟩ := hx
-    refine ⟨(cyclotomicUnitEquiv (p := p) K a).symm z ^ (p ^ N), ?_, ?_⟩
-    · exact ⟨(cyclotomicUnitEquiv (p := p) K a).symm z, rfl⟩
-    · rw [map_pow]
-      change cyclotomicUnitEquiv (p := p) K a
-          ((cyclotomicUnitEquiv (p := p) K a).symm z) ^ (p ^ N) =
-        z ^ (p ^ N)
-      rw [MulEquiv.apply_symm_apply]
 
-/-- The actual cyclotomic action on the quotient `E/E^(p^N)`. -/
-noncomputable def cyclotomicUnitPowerQuotientEquiv (a : CyclotomicUnitDelta p) :
-    CyclotomicUnitPowerQuotient (p := p) (N := N) K ≃*
-      CyclotomicUnitPowerQuotient (p := p) (N := N) K :=
-  QuotientGroup.congr
-    (CyclotomicUnitPowerSubgroup (p := p) (N := N) K)
-    (CyclotomicUnitPowerSubgroup (p := p) (N := N) K)
-    (cyclotomicUnitEquiv (p := p) K a)
-    (cyclotomicUnitPowerSubgroup_map (p := p) (N := N) (K := K) a)
 
-@[simp]
-theorem cyclotomicUnitPowerQuotientEquiv_mk
-    (a : CyclotomicUnitDelta p) (u : CyclotomicUnitGroup K) :
-    cyclotomicUnitPowerQuotientEquiv (p := p) (N := N) K a
-        (cyclotomicUnitPowerClass (p := p) (N := N) K u) =
-      cyclotomicUnitPowerClass (p := p) (N := N) K
-        (cyclotomicUnitEquiv (p := p) K a u) :=
-  rfl
 
-/-- The actual `Delta` action on `E/E^(p^N)`. -/
-noncomputable def cyclotomicUnitPowerQuotientDeltaAction :
-    CyclotomicUnitQuotientDeltaAction (p := p) (N := N) K where
-  toMulAut :=
-    { toFun := cyclotomicUnitPowerQuotientEquiv (p := p) (N := N) K
-      map_one' := by
-        ext x
-        refine QuotientGroup.induction_on x ?_
-        intro u
-        change cyclotomicUnitPowerQuotientEquiv (p := p) (N := N) K 1
-            (cyclotomicUnitPowerClass (p := p) (N := N) K u) =
-          cyclotomicUnitPowerClass (p := p) (N := N) K u
-        rw [cyclotomicUnitPowerQuotientEquiv_mk, cyclotomicUnitEquiv_one_apply]
-      map_mul' := by
-        intro a b
-        ext x
-        refine QuotientGroup.induction_on x ?_
-        intro u
-        change cyclotomicUnitPowerQuotientEquiv (p := p) (N := N) K (a * b)
-            (cyclotomicUnitPowerClass (p := p) (N := N) K u) =
-          cyclotomicUnitPowerQuotientEquiv (p := p) (N := N) K a
-            (cyclotomicUnitPowerQuotientEquiv (p := p) (N := N) K b
-              (cyclotomicUnitPowerClass (p := p) (N := N) K u))
-        rw [cyclotomicUnitPowerQuotientEquiv_mk, cyclotomicUnitPowerQuotientEquiv_mk,
-          cyclotomicUnitPowerQuotientEquiv_mk, cyclotomicUnitEquiv_mul_apply] }
 
-/-- The actual `Delta` action on `E/E^p`. -/
-noncomputable abbrev cyclotomicUnitModPDeltaAction :
-    CyclotomicUnitQuotientDeltaAction (p := p) (N := 1) K :=
-  cyclotomicUnitPowerQuotientDeltaAction (p := p) (N := 1) K
 
-@[simp]
-theorem cyclotomicUnitPowerQuotientDeltaAction_act_mk
-    (a : CyclotomicUnitDelta p) (u : CyclotomicUnitGroup K) :
-    (cyclotomicUnitPowerQuotientDeltaAction (p := p) (N := N) K).act a
-        (cyclotomicUnitPowerClass (p := p) (N := N) K u) =
-      cyclotomicUnitPowerClass (p := p) (N := N) K
-        (cyclotomicUnitEquiv (p := p) K a u) :=
-  rfl
 
 end BernoulliRegular
 

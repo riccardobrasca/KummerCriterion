@@ -51,27 +51,13 @@ variable (p : ℕ) [Fact p.Prime]
 
 
 
-@[simp]
-theorem one_mem_principalUnitSubgroup (n : ℕ) :
-    (1 : localCyclotomicUnitGroup p K) ∈ principalUnitSubgroup p K n :=
-  (principalUnitSubgroup p K n).one_mem
 
 
 
 
 
 
-/-- The subgroup of `q`-th powers of `U_n`. -/
-def principalUnitPowerSubgroup (q n : ℕ) :
-    Subgroup (localCyclotomicUnitGroup p K) :=
-  (principalUnitSubgroup p K n).map (powMonoidHom q)
 
-@[simp]
-theorem mem_principalUnitPowerSubgroup_iff {q n : ℕ}
-    {u : localCyclotomicUnitGroup p K} :
-    u ∈ principalUnitPowerSubgroup p K q n ↔
-      ∃ v, v ∈ principalUnitSubgroup p K n ∧ v ^ q = u := by
-  rfl
 
 
 

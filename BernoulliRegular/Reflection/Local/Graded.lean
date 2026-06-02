@@ -40,21 +40,8 @@ section CyclotomicSetup
 variable (p : ℕ) [Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-/-- The localized uniformizer `zeta_p - 1` at `lambda`. -/
-noncomputable def localCyclotomicUniformizer : localCyclotomicRing p K :=
-  algebraMap (𝓞 K) (localCyclotomicRing p K)
-    ((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger - 1)
 
-theorem localCyclotomicMaximalIdeal_eq_span_uniformizer :
-    localCyclotomicMaximalIdeal p K = Ideal.span {localCyclotomicUniformizer p K} := by
-  rw [← localCyclotomicMaximalIdeal_eq_map p K]
-  simp [localCyclotomicUniformizer, cyclotomicLambda, zetaPrime, Ideal.map_span]
 
-theorem localCyclotomicMaximalIdeal_isPrincipal :
-    Submodule.IsPrincipal (localCyclotomicMaximalIdeal p K) := by
-  rw [localCyclotomicMaximalIdeal_eq_span_uniformizer]
-  rw [Submodule.isPrincipal_iff]
-  exact ⟨localCyclotomicUniformizer p K, rfl⟩
 
 /-- The global cyclotomic prime `lambda` is maximal. -/
 theorem cyclotomicLambda_isMaximal :

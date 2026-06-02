@@ -45,58 +45,9 @@ For `𝔭 ⊂ 𝓞 R'` lying over `P ⊂ 𝓞 K` (i.e., `𝔭.comap algebraMap =
 the algebra map `𝓞 K → 𝓞 R'` factors through the residue fields,
 giving an injection `𝓞 K / P → 𝓞 R' / 𝔭`. -/
 
-/-- **Residue-field embedding** induced by a prime `𝔭` of `𝓞 R'` lying
-over `P ⊂ 𝓞 K`. -/
-noncomputable def residueFieldEmbedding
-    {K : Type*} [Field K] [NumberField K]
-    {R' : Type*} [Field R'] [NumberField R']
-    [Algebra K R'] [IsScalarTower ℚ K R']
-    {P : Ideal (𝓞 K)} {𝔭 : Ideal (𝓞 R')}
-    (h_over : 𝔭.comap (algebraMap (𝓞 K) (𝓞 R')) = P) :
-    𝓞 K ⧸ P →+* 𝓞 R' ⧸ 𝔭 :=
-  Ideal.quotientMap 𝔭 (algebraMap (𝓞 K) (𝓞 R')) h_over.symm.le
 
-@[simp] theorem residueFieldEmbedding_mk
-    {K : Type*} [Field K] [NumberField K]
-    {R' : Type*} [Field R'] [NumberField R']
-    [Algebra K R'] [IsScalarTower ℚ K R']
-    {P : Ideal (𝓞 K)} {𝔭 : Ideal (𝓞 R')}
-    (h_over : 𝔭.comap (algebraMap (𝓞 K) (𝓞 R')) = P)
-    (x : 𝓞 K) :
-    residueFieldEmbedding h_over (Ideal.Quotient.mk P x) =
-      Ideal.Quotient.mk 𝔭 (algebraMap (𝓞 K) (𝓞 R') x) := by
-  unfold residueFieldEmbedding
-  exact Ideal.quotientMap_mk
 
-/-- **Injectivity of the residue-field embedding**: `𝓞 K / P → 𝓞 R' / 𝔭`
-is injective when `𝔭` lies over `P` (i.e., the comap is exactly `P`). -/
-theorem residueFieldEmbedding_injective
-    {K : Type*} [Field K] [NumberField K]
-    {R' : Type*} [Field R'] [NumberField R']
-    [Algebra K R'] [IsScalarTower ℚ K R']
-    {P : Ideal (𝓞 K)} {𝔭 : Ideal (𝓞 R')}
-    (h_over : 𝔭.comap (algebraMap (𝓞 K) (𝓞 R')) = P) :
-    Function.Injective (residueFieldEmbedding h_over) := by
-  unfold residueFieldEmbedding
-  -- Ideal.quotientMap is injective when the comap equals the source ideal.
-  rw [injective_iff_map_eq_zero]
-  intro x hx
-  -- Lift x to 𝓞 K, use that quotientMap_mk maps to algebraMap mod 𝔭.
-  obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective x
-  rw [Ideal.quotientMap_mk] at hx
-  -- hx: Ideal.Quotient.mk 𝔭 (algebraMap a) = 0, so algebraMap a ∈ 𝔭, so a ∈ comap = P.
-  rw [Ideal.Quotient.eq_zero_iff_mem] at hx
-  rw [Ideal.Quotient.eq_zero_iff_mem]
-  rw [← h_over]
-  exact hx
 
-/-- Prime-over data for a source prime, including the split residue-field
-condition needed by the canonical quotient map. -/
-structure Ref18SourcePrimeOverData
-    (ℓ p : ℕ)
-    (K : Type*) [Field K] [NumberField K]
-    (R' : Type*) [Field R'] [NumberField R'] [Algebra K R']
-    (P : Ideal (𝓞 K)) [P.IsMaximal] where
 
 namespace Ref18SourcePrimeOverData
 

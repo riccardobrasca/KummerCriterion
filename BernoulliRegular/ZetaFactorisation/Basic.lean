@@ -542,13 +542,6 @@ lemma primesOver_inertiaDeg_eq_one_at_p (P : Ideal (𝓞 K))
     simpa [rationalPrimeIdeal] using hP.2
   simpa [rationalPrimeIdeal] using IsCyclotomicExtension.Rat.inertiaDeg_eq_of_prime p K P
 
-lemma primesOver_ramificationIdx_eq_prime_sub_one_at_p (P : Ideal (𝓞 K))
-    (hP : P ∈ Ideal.primesOver (rationalPrimeIdeal p) (𝓞 K)) :
-    (rationalPrimeIdeal p).ramificationIdx P = p - 1 := by
-  haveI : P.IsPrime := hP.1
-  haveI : P.LiesOver (Ideal.span {(p : ℤ)}) := by
-    simpa [rationalPrimeIdeal] using hP.2
-  simpa [rationalPrimeIdeal] using IsCyclotomicExtension.Rat.ramificationIdx_eq_of_prime p K P
 
 
 lemma primesOver_inertiaDeg_eq_localResidueDegree {ℓ : ℕ} [Fact ℓ.Prime]

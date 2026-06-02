@@ -111,15 +111,7 @@ theorem evenFunctionDescend_apply_mk {R : Type*} (f : CyclotomicUnitDelta p → 
         ((QuotientGroup.mk a) : CyclotomicEvenDelta p) = f a := by
   rfl
 
-/-- A character of `Delta` is even when it is trivial on complex conjugation. -/
-def IsEvenDeltaCharacter {R : Type*} [CommMonoidWithZero R]
-    (χ : MulChar (CyclotomicUnitDelta p) R) : Prop :=
-  χ (-1 : CyclotomicUnitDelta p) = 1
 
-@[simp]
-theorem isEvenDeltaCharacter_one {R : Type*} [CommMonoidWithZero R] :
-    IsEvenDeltaCharacter (p := p) (1 : MulChar (CyclotomicUnitDelta p) R) :=
-  MulChar.one_apply (Group.isUnit (-1 : CyclotomicUnitDelta p))
 
 /-- Pull a character of `Delta / {±1}` back to an even character of `Delta`. -/
 def evenDeltaCharacterPullback {R : Type*} [CommMonoidWithZero R]
