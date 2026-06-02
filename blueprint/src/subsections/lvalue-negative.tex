@@ -1,0 +1,125 @@
+This chapter records the special values of Dirichlet $L$-functions needed for
+the analytic formula for $\hminus$.
+
+\section{The value at \texorpdfstring{$s=0$}{s=0}}
+
+For an odd Dirichlet character $\chi$ modulo $p$ one has the finite Hurwitz
+expansion
+\[
+  L(s,\chi)
+  = \sum_{a\in \Z/p\Z}\chi(a)\,\zeta_H^{-}\!\left(\frac{a}{p},s\right),
+\]
+where \(\zeta_H^{-}(x,s)\) denotes the odd Hurwitz zeta function. The
+functional equation for \(\zeta_H^{-}\), evaluated at $s=0$, gives
+\[
+  \zeta_H^{-}(x,0) = \frac12 - x
+  \qquad (0<x<1).
+\]
+Substituting this identity immediately yields the desired special value.
+
+\begin{theorem}[Special value at zero]
+  \label{thm:L0-eq-neg-B1}
+  \lean{BernoulliRegular.odd_LFunction_zero_eq_neg_BernoulliGen_one}
+  \leanok
+  \uses{lem:gen-bernoulli-one-intermediate, prop:gen-bernoulli-zero}
+Let $p$ be an odd prime and let $\chi$ be a non-trivial odd Dirichlet
+character modulo $p$. Then
+\[
+  L(0,\chi) = -\Bgen{1}{\chi}.
+\]
+\end{theorem}
+
+\begin{proof}\leanok
+Using the Hurwitz expansion and the value of \(\zeta_H^{-}(x,0)\), we obtain
+\[
+  L(0,\chi)
+  = \sum_{a\in \Z/p\Z}\chi(a)\left(\frac12-\frac{a}{p}\right)
+  = \frac12\sum_a \chi(a) - \sum_a \chi(a)\frac{a}{p}.
+\]
+The first sum vanishes because $\chi$ is non-trivial. The second sum is the
+expression for $\Bgen{1}{\chi}$ given by
+\cref{lem:gen-bernoulli-one-intermediate}. Hence
+\(
+  L(0,\chi) = -\Bgen{1}{\chi}.
+\)
+\end{proof}
+
+\section{The value at \texorpdfstring{$s=1$}{s=1}}
+
+For a primitive odd character $\chi$ modulo $p$, define the completed
+$L$-function by
+\[
+  \Lambda(s,\chi)
+  := \left(\frac{p}{\pi}\right)^{(s+1)/2}
+     \Gamma\!\left(\frac{s+1}{2}\right)L(s,\chi).
+\]
+Its functional equation is
+\[
+  \Lambda(1-s,\chi)
+  = \frac{\tau(\chi)}{i\sqrt p}\,\Lambda(s,\chi^{-1}),
+\]
+where
+\[
+  \tau(\chi)=\sum_{a\in \Z/p\Z}\chi(a)e^{2\pi i a/p}
+\]
+is the Gauss sum of $\chi$.
+
+\begin{proposition}\label{thm:fe-reduction}
+  \lean{BernoulliRegular.odd_LFunction_one_eq_oddLValueRhs_of_LFunction_inv_zero}
+  \leanok
+  \uses{def:gauss-sum, def:gen-bernoulli, def:even-odd}
+Let $p$ be an odd prime and let $\chi$ be a primitive odd Dirichlet
+character modulo $p$. If
+\(
+  L(0,\chi^{-1}) = -\Bgen{1}{\chi^{-1}},
+\)
+then
+\[
+  L(1,\chi) = \frac{\pi i\,\tau(\chi)}{p}\,\Bgen{1}{\chi^{-1}}.
+\]
+\end{proposition}
+
+\begin{proof}\leanok
+Set $s=0$ in the functional equation. Since
+\[
+  \Lambda(1,\chi)=\frac{p}{\pi}L(1,\chi)
+\]
+and
+\[
+  \Lambda(0,\chi^{-1})
+  = \left(\frac{p}{\pi}\right)^{1/2}\Gamma\!\left(\frac12\right)L(0,\chi^{-1})
+  = \sqrt p\,L(0,\chi^{-1}),
+\]
+we get
+\[
+  \frac{p}{\pi}L(1,\chi)
+  = \frac{\tau(\chi)}{i\sqrt p}\cdot \sqrt p\,L(0,\chi^{-1})
+  = -i\,\tau(\chi)L(0,\chi^{-1}).
+\]
+Substituting the hypothesis
+\(
+  L(0,\chi^{-1})=-\Bgen{1}{\chi^{-1}}
+\)
+gives the stated formula.
+\end{proof}
+
+\begin{corollary}[Odd character formula at \texorpdfstring{$s=1$}{s=1}]
+  \label{cor:L1-odd}
+  \lean{BernoulliRegular.odd_LFunction_one_eq_oddLValueRhs}
+  \leanok
+  \uses{thm:L0-eq-neg-B1, thm:fe-reduction}
+Let $p$ be an odd prime and let $\chi$ be a non-trivial odd Dirichlet
+character modulo $p$. Then
+\[
+  L(1,\chi) = \frac{\pi i\,\tau(\chi)}{p}\,\Bgen{1}{\chi^{-1}}.
+\]
+\end{corollary}
+
+\begin{proof}\leanok
+Because $p$ is prime, every non-trivial character modulo $p$ is primitive.
+Applying \cref{thm:fe-reduction} and then
+\cref{thm:L0-eq-neg-B1} to $\chi^{-1}$ gives the result.
+\end{proof}
+
+This is the form of the special-value formula needed in the proof of the
+analytic class number formula for $\hminus$.

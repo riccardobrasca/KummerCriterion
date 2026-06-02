@@ -1,0 +1,139 @@
+% Top-level content for the online blueprint.
+
+\blueprintfrontmatter
+
+\begin{abstract}
+This document gives a proof of \textbf{Kummer's criterion}. It develops the
+class-number, Bernoulli, and cyclotomic-unit ingredients needed to prove the
+final equivalence
+\[
+  p \text{ is regular}
+  \quad\Longleftrightarrow\quad
+  \forall k,\ 1 \le k,\ 2k \le p - 3,\quad
+  p \nmid (B_{2k})_{\mathrm{num}}
+\]
+for every odd prime $p$.
+
+The first part of the argument proves the classical formula for the relative
+class number
+\[
+  h^- = \frac{h\bigl(\Q(\zeta_p)\bigr)}{h\bigl(\Q(\zeta_p)^+\bigr)}.
+\]
+The second part uses the minus class-number criterion, the $p$-adic logarithm
+determinant of real cyclotomic units, and the prime-conductor cyclotomic-unit
+index theorem to compare the plus and minus class-number divisibilities. The
+final proof chapter assembles these results into Kummer's criterion.
+
+\smallskip
+\noindent\textbf{Outline of the argument.}
+
+We begin with the CM extension
+\(
+  \Q(\zeta_p) / \Q(\zeta_p)^+
+\)
+and prove that the class number of the maximal real subfield divides the full
+class number. This allows one to define the relative class number $h^-$
+honestly by division; see \cref{ch:cm}.
+
+Next we introduce Dirichlet characters modulo $p$ and the associated
+generalised Bernoulli numbers $B_{n,\chi}$; see
+\cref{ch:characters} and \cref{ch:bernoulli}. The basic properties needed later are the
+vanishing of $B_{1,\chi}$ for non-trivial even characters, the $p$-integrality
+of the classical Bernoulli numbers below the boundary $p-1$, and the
+description of the boundary term attached to $\omega^{-1}$.
+
+In \cref{ch:lvalue-negative} we compute the odd special values
+\(
+  L(0,\chi)
+\)
+and
+\(
+  L(1,\chi)
+\)
+in terms of generalised Bernoulli numbers and Gauss sums.
+
+Finally, in \cref{ch:hminus-formula}, we factor the Dedekind zeta functions of
+\(\Q(\zeta_p)\) and \(\Q(\zeta_p)^+\), compare their residues at $s=1$, and
+obtain the analytic class number formula
+\[
+  h^- = 2p \prod_{\chi\text{ odd}}
+  \left(-\frac12 B_{1,\chi^{-1}}\right).
+\]
+
+The cyclotomic-unit chapter then introduces the real cyclotomic units in
+$\Q(\zeta_p)^+$, the subgroups they generate, exact $p$-saturation, and the
+Kummer logarithm determinant. Its main output is that non-divisibility of all
+Bernoulli numerators in Kummer's range implies
+\[
+  p \nmid [(\mathcal O_{\Q(\zeta_p)^+})^\times : C^+].
+\]
+
+The final proof chapter combines this index non-divisibility with the
+prime-conductor index theorem
+\[
+  p \mid [(\mathcal O_{\Q(\zeta_p)^+})^\times : C^+]
+  \quad\Longleftrightarrow\quad
+  p \mid h^+
+\]
+and with the minus class-number criterion. This proves
+$p \mid h \Longleftrightarrow p$ divides one of the relevant Bernoulli
+numerators, and hence Kummer's criterion.
+
+The next chapter applies Kummer's criterion and the full divided Kummer
+congruence to Carlitz's construction.  It proves that for every finite set of
+candidate primes there is an irregular prime outside the set, and therefore
+that there are infinitely many irregular primes.
+
+The final chapter records the reflection route that was developed but not used
+in the main proof.  That route tries to
+obtain the plus-to-minus implication from the reflection theorem rather than
+from cyclotomic-unit index computations.
+\end{abstract}
+
+\clearpage
+\setcounter{page}{2}
+\tableofcontents
+
+\blueprintmainmatter
+\chapter{The CM field and the class number splitting}\label{ch:cm}
+\input{subsections/cm-splitting}
+
+\pagebreak
+\chapter{Characters of the cyclotomic Galois group}\label{ch:characters}
+\input{subsections/characters}
+
+\pagebreak
+\chapter{Generalised Bernoulli numbers}\label{ch:bernoulli}
+\input{subsections/bernoulli}
+
+\pagebreak
+\chapter{Gauss sums and Stickelberger}\label{ch:gauss-stickelberger}
+\input{subsections/gauss-stickelberger}
+
+\pagebreak
+\chapter{$L$-values at non-positive integers}\label{ch:lvalue-negative}
+\input{subsections/lvalue-negative}
+
+\pagebreak
+\chapter{The relative class number $\hminus$}\label{ch:hminus-formula}
+\input{subsections/hminus-formula}
+
+\pagebreak
+\chapter{Cyclotomic units and the plus class number}\label{ch:cyclotomic-units}
+\input{subsections/cyclotomic-units}
+
+\pagebreak
+\chapter{The final proof of Kummer's criterion}\label{ch:kummer-final}
+\input{subsections/final}
+
+\pagebreak
+\chapter{Infinitely many irregular primes}\label{ch:irregular-primes-carlitz}
+\input{subsections/irregular-primes-carlitz}
+
+\pagebreak
+\chapter{The abandoned reflection route}\label{ch:abandoned-route}
+\input{subsections/abandoned-route}
+
+\pagebreak
+\chapter{Fermat's Last Theorem for exponent 37}\label{ch:flt37}
+\input{subsections/flt37}
