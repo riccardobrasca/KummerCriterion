@@ -1,6 +1,6 @@
 import KummerCriterion.LValueAtOne.Even
 import KummerCriterion.GaussSum.Basic
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.DetBridge.Part1
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge.Part1
 import Mathlib.NumberTheory.LSeries.Nonvanishing
 import KummerCriterion.CyclotomicUnits.DeletedFourier
 
@@ -9,7 +9,7 @@ import KummerCriterion.CyclotomicUnits.DeletedFourier
 
 This file specializes the abstract deleted Fourier determinant identity to
 `CyclotomicEvenDelta p = (ZMod p)ˣ / {±1}` and identifies the `hk` convention
-with the existing `FLT37.Sinnott.quotientEigenvalue` normalization.
+with the existing `LehmerVandiver.Sinnott.quotientEigenvalue` normalization.
 -/
 
 noncomputable section
@@ -31,8 +31,8 @@ noncomputable def cyclotomicEvenNontrivCharEquivNonidentity (hp_two : 2 < p) :
   letI : Fintype (MulChar (CyclotomicEvenDelta p) ℂ) := Fintype.ofFinite _
   letI : DecidableEq (MulChar (CyclotomicEvenDelta p) ℂ) := Classical.decEq _
   refine Fintype.equivOfCardEq ?_
-  have hχ := FLT37.Sinnott.card_nontriv_mulChar_eq p hp_two
-  have hG := FLT37.Sinnott.fintype_card_nonTrivialCE_eq p hp_two
+  have hχ := LehmerVandiver.Sinnott.card_nontriv_mulChar_eq p hp_two
+  have hG := LehmerVandiver.Sinnott.fintype_card_nonTrivialCE_eq p hp_two
   rw [hχ, hG]
   have hp_odd : Odd p := (Fact.out : p.Prime).odd_of_ne_two (by omega)
   rcases hp_odd with ⟨k, hk⟩
@@ -46,23 +46,23 @@ theorem det_cyclotomicEven_logNorm_deletedMulAtReindexed_sq_eq_prod_quotientEige
     haveI : DecidableEq (MulChar (CyclotomicEvenDelta p) ℂ) := Classical.decEq _
     (deletedConvolutionMulMatrixAtReindexed
       (G := CyclotomicEvenDelta p) h₀
-      (FLT37.Sinnott.convolutionLogNormDescended p)).det ^ 2 =
+      (LehmerVandiver.Sinnott.convolutionLogNormDescended p)).det ^ 2 =
       (∏ ξ ∈ (Finset.univ : Finset (MulChar (CyclotomicEvenDelta p) ℂ)).erase 1,
-        FLT37.Sinnott.quotientEigenvalue p ξ) ^ 2 := by
+        LehmerVandiver.Sinnott.quotientEigenvalue p ξ) ^ 2 := by
   classical
   letI : Fintype (MulChar (CyclotomicEvenDelta p) ℂ) := Fintype.ofFinite _
   rw [det_deletedConvolutionMulMatrixAtReindexed_sq_eq_prod_deletedFourierCoeffMul_sq
     (G := CyclotomicEvenDelta p)
     (cyclotomicEvenNontrivCharEquivNonidentity (p := p) hp_two) h₀
-    (FLT37.Sinnott.convolutionLogNormDescended p)]
+    (LehmerVandiver.Sinnott.convolutionLogNormDescended p)]
   congr 1
   rw [Finset.prod_subtype
     (p := fun ξ : MulChar (CyclotomicEvenDelta p) ℂ => ξ ≠ 1)
     (s := (Finset.univ : Finset (MulChar (CyclotomicEvenDelta p) ℂ)).erase 1)
-    (f := fun ξ => FLT37.Sinnott.quotientEigenvalue p ξ)]
+    (f := fun ξ => LehmerVandiver.Sinnott.quotientEigenvalue p ξ)]
   · refine Finset.prod_congr rfl ?_
     intro ξ _
-    unfold deletedFourierCoeffMul FLT37.Sinnott.quotientEigenvalue
+    unfold deletedFourierCoeffMul LehmerVandiver.Sinnott.quotientEigenvalue
     rfl
   · intro ξ
     simp [Finset.mem_erase]

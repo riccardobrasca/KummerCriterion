@@ -106,7 +106,7 @@ theorem algebraMap_kummerLogRealCyclotomicUnit
     (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) :
     algebraMap (𝓞 K⁺) (𝓞 K)
         (kummerLogRealCyclotomicUnit (p := p) (K := K) hp_three a : 𝓞 K⁺) =
-      FLT37.realCyclotomicUnit p K
+      LehmerVandiver.realCyclotomicUnit p K
         (kummerLogColumnIndex (p := p) hp_three a) :=
   algebraMap_realCyclotomicUnit (p := p) (K := K)
     (kummerLogColumnIndex (p := p) hp_three a)
@@ -128,13 +128,13 @@ theorem kummerLogValuedCyclotomicUnit_coe
     (kummerLogValuedCyclotomicUnit (p := p) (K := K) hp_three a :
         ValuedIntegerRing p K) =
       algebraMap (𝓞 K) (ValuedIntegerRing p K)
-        (FLT37.realCyclotomicUnit p K
+        (LehmerVandiver.realCyclotomicUnit p K
           (kummerLogColumnIndex (p := p) hp_three a)) := by
   change algebraMap (𝓞 K) (ValuedIntegerRing p K)
       (algebraMap (𝓞 K⁺) (𝓞 K)
         (kummerLogRealCyclotomicUnit (p := p) (K := K) hp_three a : 𝓞 K⁺)) =
     algebraMap (𝓞 K) (ValuedIntegerRing p K)
-      (FLT37.realCyclotomicUnit p K
+      (LehmerVandiver.realCyclotomicUnit p K
         (kummerLogColumnIndex (p := p) hp_three a))
   rw [algebraMap_kummerLogRealCyclotomicUnit]
 
@@ -178,13 +178,13 @@ theorem kummerLogValuedCyclotomicUnit_sub_natCast_sq_mem_lambdaIdeal
       lambdaIdeal p K := by
   let k : ℕ := kummerLogColumnIndex (p := p) hp_three a
   have hglobal :
-      FLT37.realCyclotomicUnit p K k - (k : 𝓞 K) ^ 2 ∈
+      LehmerVandiver.realCyclotomicUnit p K k - (k : 𝓞 K) ^ 2 ∈
         Reflection.Local.cyclotomicLambda p K := by
     rw [Reflection.Local.cyclotomicLambda, zetaPrime, Ideal.mem_span_singleton]
-    exact FLT37.zetaSubOne_dvd_realCyclotomicUnit_sub_sq (p := p) (K := K) k
+    exact LehmerVandiver.zetaSubOne_dvd_realCyclotomicUnit_sub_sq (p := p) (K := K) k
   have hmap :
       algebraMap (𝓞 K) (ValuedIntegerRing p K)
-          (FLT37.realCyclotomicUnit p K k - (k : 𝓞 K) ^ 2) ∈
+          (LehmerVandiver.realCyclotomicUnit p K k - (k : 𝓞 K) ^ 2) ∈
         Ideal.map (algebraMap (𝓞 K) (ValuedIntegerRing p K))
           (Reflection.Local.cyclotomicLambda p K) :=
     Ideal.mem_map_of_mem (algebraMap (𝓞 K) (ValuedIntegerRing p K)) hglobal
@@ -568,11 +568,11 @@ theorem kummerLogValuedCyclotomicUnit_complexConj
   have hp_two : 2 < p := by omega
   have hconj :
       ringOfIntegersComplexConj K
-          (FLT37.realCyclotomicUnit p K
+          (LehmerVandiver.realCyclotomicUnit p K
             (kummerLogColumnIndex (p := p) hp_three a)) =
-        FLT37.realCyclotomicUnit p K
+        LehmerVandiver.realCyclotomicUnit p K
           (kummerLogColumnIndex (p := p) hp_three a) :=
-    FLT37.realCyclotomicUnit_complexConj p K
+    LehmerVandiver.realCyclotomicUnit_complexConj p K
       (kummerLogColumnIndex (p := p) hp_three a)
   rw [kummerLogValuedCyclotomicUnit_coe]
   rw [Conjugation.valuedIntegerComplexConj_algebraMap_ringOfIntegers

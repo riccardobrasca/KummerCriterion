@@ -1,13 +1,13 @@
 import KummerCriterion.CyclotomicUnits.Subgroup
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.LogEmbedding
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.IndexFormula
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LogEmbedding
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.IndexFormula
 
 /-!
 # P-primary cyclotomic-unit index formula
 
 This file records the p-primary form of Sinnott's cyclotomic-unit index formula
 for the real prime-conductor cyclotomic-unit family. The hard analytic input is
-kept explicit as `FLT37.Sinnott.KummerDirichletDeterminant`.
+kept explicit as `LehmerVandiver.Sinnott.KummerDirichletDeterminant`.
 -/
 
 @[expose] public section
@@ -30,7 +30,7 @@ cyclotomic units, together with torsion in `K⁺`. -/
 def cyclotomicUnitIndexSubgroup (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) :
     Subgroup (𝓞 K⁺)ˣ :=
   Subgroup.closure
-      (Set.range (FLT37.Sinnott.cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three)) ⊔
+      (Set.range (LehmerVandiver.Sinnott.cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three)) ⊔
     NumberField.Units.torsion K⁺
 
 theorem prime_not_dvd_two_pow (hp_odd : p ≠ 2) (r : ℕ) : ¬ p ∣ 2 ^ r := by
@@ -53,10 +53,10 @@ theorem prime_dvd_two_pow_mul_iff_dvd (hp_odd : p ≠ 2) (r n : ℕ) :
 the existing explicit Sinnott index formula. -/
 theorem cyclotomicUnitIndex_primeConductor_pPrimary_of_sinnottIndexFormula
     (hp_odd : p ≠ 2) (hp_three : 3 ≤ p)
-    (hSinnott : FLT37.Sinnott.SinnottIndexFormula p K hp_odd hp_three) :
+    (hSinnott : LehmerVandiver.Sinnott.SinnottIndexFormula p K hp_odd hp_three) :
     p ∣ (cyclotomicUnitIndexSubgroup (p := p) (K := K) hp_odd hp_three).index ↔
       p ∣ hPlus K := by
-  have hindex := FLT37.Sinnott.index_eq_twoPow_mul_hPlus_of_sinnottIndexFormula
+  have hindex := LehmerVandiver.Sinnott.index_eq_twoPow_mul_hPlus_of_sinnottIndexFormula
     p K hp_odd hp_three hSinnott
   change (cyclotomicUnitIndexSubgroup (p := p) (K := K) hp_odd hp_three).index =
       2 ^ ((p - 3) / 2) * hPlus K at hindex
@@ -71,14 +71,14 @@ The determinant input gives the squared-family index
 using `p ≠ 2`. -/
 theorem cyclotomicUnitIndex_primeConductor_pPrimary_of_kummerDirichletDeterminant
     (hp_odd : p ≠ 2) (hp_three : 3 ≤ p)
-    (hdet : FLT37.Sinnott.KummerDirichletDeterminant p K hp_odd hp_three) :
+    (hdet : LehmerVandiver.Sinnott.KummerDirichletDeterminant p K hp_odd hp_three) :
     p ∣ (cyclotomicUnitIndexSubgroup (p := p) (K := K) hp_odd hp_three).index ↔
       p ∣ hPlus K := by
-  have hreg : FLT37.Sinnott.SinnottRegulatorIdentity p K hp_odd hp_three :=
-    (FLT37.Sinnott.sinnottRegulatorIdentity_iff_kummerDirichletDeterminant
+  have hreg : LehmerVandiver.Sinnott.SinnottRegulatorIdentity p K hp_odd hp_three :=
+    (LehmerVandiver.Sinnott.sinnottRegulatorIdentity_iff_kummerDirichletDeterminant
       (p := p) (K := K) hp_odd hp_three).1 hdet
-  have hSinnott : FLT37.Sinnott.SinnottIndexFormula p K hp_odd hp_three :=
-    FLT37.Sinnott.sinnottIndexFormula_of_regulatorIdentity
+  have hSinnott : LehmerVandiver.Sinnott.SinnottIndexFormula p K hp_odd hp_three :=
+    LehmerVandiver.Sinnott.sinnottIndexFormula_of_regulatorIdentity
       p K hp_odd hp_three hreg
   exact cyclotomicUnitIndex_primeConductor_pPrimary_of_sinnottIndexFormula
     (p := p) (K := K) hp_odd hp_three hSinnott

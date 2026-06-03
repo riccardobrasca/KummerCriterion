@@ -2,16 +2,16 @@ module
 
 public import KummerCriterion.CyclotomicUnits.KummerLogMatrix
 public import Mathlib.LinearAlgebra.SModEq.Pow
-public import KummerCriterion.FLT37.PrimaryUnits.Part1
-public import KummerCriterion.FLT37.PrimaryUnits.Part2
-public import KummerCriterion.FLT37.PrimaryUnits.Part3
+public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part1
+public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
+public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3
 public import Mathlib.FieldTheory.Finite.Basic
 public import Mathlib.GroupTheory.SpecificGroups.Cyclic
 public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
 public import Mathlib.NumberTheory.NumberField.Basic
 public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
-public import KummerCriterion.FLT37.Primary
+public import KummerCriterion.LehmerVandiver.Primary
 public import KummerCriterion.UnitQuotient.DeltaAction
 public import Mathlib.NumberTheory.NumberField.Ideal.Basic
 public import Mathlib.RingTheory.Ideal.Int

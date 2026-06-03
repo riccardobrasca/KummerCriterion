@@ -85,7 +85,7 @@ noncomputable def kummerLogValuedCyclotomicQuotientDenUnit
     (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) :
     (ValuedIntegerRing p K)ˣ :=
   Units.map (algebraMap (𝓞 K) (ValuedIntegerRing p K)).toMonoidHom
-    (FLT37.cyclotomicUnitUnit p K
+    (LehmerVandiver.cyclotomicUnitUnit p K
       (kummerLogColumnIndex (p := p) hp_three a)
       (kummerLogColumnIndex_coprime (p := p) hp_three a)
       (Fact.out : Nat.Prime p).two_le)
@@ -97,8 +97,8 @@ theorem kummerLogValuedCyclotomicQuotientDenUnit_coe
     (kummerLogValuedCyclotomicQuotientDenUnit (p := p) (K := K) hp_three a :
         ValuedIntegerRing p K) =
       algebraMap (𝓞 K) (ValuedIntegerRing p K)
-        (FLT37.cyclotomicUnit p K (kummerLogColumnIndex (p := p) hp_three a)) := by
-  simp [kummerLogValuedCyclotomicQuotientDenUnit, FLT37.cyclotomicUnitUnit_val]
+        (LehmerVandiver.cyclotomicUnit p K (kummerLogColumnIndex (p := p) hp_three a)) := by
+  simp [kummerLogValuedCyclotomicQuotientDenUnit, LehmerVandiver.cyclotomicUnitUnit_val]
 
 omit [NumberField.IsCMField K] in
 theorem kummerLogValuedCyclotomicQuotientDenUnit_sub_natCast_mem_lambdaIdeal
@@ -109,13 +109,13 @@ theorem kummerLogValuedCyclotomicQuotientDenUnit_sub_natCast_mem_lambdaIdeal
       lambdaIdeal p K := by
   let k : ℕ := kummerLogColumnIndex (p := p) hp_three a
   have hglobal :
-      FLT37.cyclotomicUnit p K k - (k : 𝓞 K) ∈
+      LehmerVandiver.cyclotomicUnit p K k - (k : 𝓞 K) ∈
         Reflection.Local.cyclotomicLambda p K := by
     rw [Reflection.Local.cyclotomicLambda, zetaPrime, Ideal.mem_span_singleton]
-    exact FLT37.zetaSubOne_dvd_cyclotomicUnit_sub_natCast (p := p) (K := K) k
+    exact LehmerVandiver.zetaSubOne_dvd_cyclotomicUnit_sub_natCast (p := p) (K := K) k
   have hmap :
       algebraMap (𝓞 K) (ValuedIntegerRing p K)
-          (FLT37.cyclotomicUnit p K k - (k : 𝓞 K)) ∈
+          (LehmerVandiver.cyclotomicUnit p K k - (k : 𝓞 K)) ∈
         Ideal.map (algebraMap (𝓞 K) (ValuedIntegerRing p K))
           (Reflection.Local.cyclotomicLambda p K) :=
     Ideal.mem_map_of_mem (algebraMap (𝓞 K) (ValuedIntegerRing p K)) hglobal
@@ -201,13 +201,13 @@ theorem kummerLogNormalizedUnitFiniteLogArg_mem_lambdaIdeal
       rw [normalizedCyclotomicUnitKOfRange_val]
       let e := normalizedCyclotomicUnitExponent p k
       let ζ : 𝓞 K := ((zeta_spec p ℚ K).unit' : 𝓞 K)
-      let c : 𝓞 K := FLT37.cyclotomicUnit p K k
+      let c : 𝓞 K := LehmerVandiver.cyclotomicUnit p K k
       have hc : ζ - 1 ∣ c - (k : 𝓞 K) :=
         by simpa [ζ, c] using
-          FLT37.zetaSubOne_dvd_cyclotomicUnit_sub_natCast (p := p) (K := K) k
+          LehmerVandiver.zetaSubOne_dvd_cyclotomicUnit_sub_natCast (p := p) (K := K) k
       have hz : ζ - 1 ∣ ζ ^ e - 1 :=
         by simpa [ζ] using
-          FLT37.zetaSubOne_dvd_zeta_pow_sub_one (p := p) (K := K) e
+          LehmerVandiver.zetaSubOne_dvd_zeta_pow_sub_one (p := p) (K := K) e
       have hsplit : ζ ^ e * c - (k : 𝓞 K) =
           (ζ ^ e - 1) * c + (c - (k : 𝓞 K)) := by ring
       change ζ - 1 ∣ ζ ^ e * c - (k : 𝓞 K)
@@ -465,7 +465,7 @@ theorem kummerLogNormalizedUnitFiniteLog_eq_denUnitPowPredFiniteLog
         rfl
       have hcmap :
           algebraMap (𝓞 K) (ValuedIntegerRing p K)
-              (FLT37.cyclotomicUnit p K
+              (LehmerVandiver.cyclotomicUnit p K
                 (kummerLogColumnIndex (p := p) hp_three a)) = c := by
         simp [c]
       calc
@@ -480,7 +480,7 @@ theorem kummerLogNormalizedUnitFiniteLog_eq_denUnitPowPredFiniteLog
         _ =
           algebraMap (𝓞 K) (ValuedIntegerRing p K)
             (((zeta_spec p ℚ K).unit' : 𝓞 K) ^ e *
-              FLT37.cyclotomicUnit p K
+              LehmerVandiver.cyclotomicUnit p K
                 (kummerLogColumnIndex (p := p) hp_three a)) := by
             simp [normalizedCyclotomicUnitKOfRange_val, e]
         _ = ζ ^ e * c := by
@@ -744,8 +744,8 @@ theorem kummerLogDworkArtinHasseQuotientDenUnit_mul_exp_sub_one
   have hk_val : ((k : ZMod p).val) = k := ZMod.val_natCast_of_lt hk_lt
   let ζi : 𝓞 K := ((zeta_spec p ℚ K).unit' : 𝓞 K)
   have hglobal' :
-      FLT37.cyclotomicUnit p K k * (ζi - 1) = ζi ^ k - 1 := by
-    have h := FLT37.zeta_sub_one_mul_cyclotomicUnit (p := p) (K := K) k
+      LehmerVandiver.cyclotomicUnit p K k * (ζi - 1) = ζi ^ k - 1 := by
+    have h := LehmerVandiver.zeta_sub_one_mul_cyclotomicUnit (p := p) (K := K) k
     simpa [ζi, mul_comm, mul_left_comm, mul_assoc] using h
   let R : Type _ := ValuedIntegerRing p K
   let S : Type _ := DworkCompleteIntegerRing p K
@@ -755,7 +755,7 @@ theorem kummerLogDworkArtinHasseQuotientDenUnit_mul_exp_sub_one
   rw [hk_val]
   change
     algebraMap R S
-        (algebraMap (𝓞 K) R (FLT37.cyclotomicUnit p K k)) *
+        (algebraMap (𝓞 K) R (LehmerVandiver.cyclotomicUnit p K k)) *
         ((AdicCompletion.of (lambdaIdeal p K) R)
           (valuedCyclotomicZetaInteger p K ^ (1 : ZMod p).val) - 1) =
       (AdicCompletion.of (lambdaIdeal p K) R)

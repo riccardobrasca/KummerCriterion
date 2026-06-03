@@ -1,6 +1,6 @@
 import KummerCriterion.CyclotomicUnits.Basic
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.KummerLift.CharacterIdentification
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
+import KummerCriterion.LehmerVandiver.PlusCoprime.KummerLift.CharacterIdentification
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
 import Mathlib.Data.ZMod.Units
 
 /-!
@@ -74,15 +74,15 @@ separate from that condition so algebraic identities can be reused with any
 chosen representative. -/
 noncomputable def normalizedCyclotomicUnitKWithExponent (a e : ℕ)
     (ha : a.Coprime p) (hp_two : 2 ≤ p) : (𝓞 K)ˣ :=
-  (zeta_spec p ℚ K).unit' ^ e * FLT37.cyclotomicUnitUnit p K a ha hp_two
+  (zeta_spec p ℚ K).unit' ^ e * LehmerVandiver.cyclotomicUnitUnit p K a ha hp_two
 
 omit [IsCMField K] in
 @[simp]
 theorem normalizedCyclotomicUnitKWithExponent_val (a e : ℕ)
     (ha : a.Coprime p) (hp_two : 2 ≤ p) :
     (normalizedCyclotomicUnitKWithExponent (p := p) (K := K) a e ha hp_two : 𝓞 K) =
-      ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ e * FLT37.cyclotomicUnit p K a := by
-  simp [normalizedCyclotomicUnitKWithExponent, FLT37.cyclotomicUnitUnit_val]
+      ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ e * LehmerVandiver.cyclotomicUnit p K a := by
+  simp [normalizedCyclotomicUnitKWithExponent, LehmerVandiver.cyclotomicUnitUnit_val]
 
 /-- The canonical normalized cyclotomic unit in `𝓞 K`. -/
 noncomputable def normalizedCyclotomicUnitK (a : ℕ)
@@ -96,7 +96,7 @@ theorem normalizedCyclotomicUnitK_val (a : ℕ)
     (ha : a.Coprime p) :
     (normalizedCyclotomicUnitK (p := p) (K := K) a ha : 𝓞 K) =
       ((zeta_spec p ℚ K).unit' : 𝓞 K) ^
-          normalizedCyclotomicUnitExponent p a * FLT37.cyclotomicUnit p K a := by
+          normalizedCyclotomicUnitExponent p a * LehmerVandiver.cyclotomicUnit p K a := by
   simp [normalizedCyclotomicUnitK]
 
 omit [IsCMField K] in
@@ -104,9 +104,9 @@ theorem normalizedCyclotomicUnitKWithExponent_sq_val (a e : ℕ)
     (ha : a.Coprime p) (hp_two : 2 ≤ p) :
     (normalizedCyclotomicUnitKWithExponent (p := p) (K := K) a e ha hp_two ^ 2 : 𝓞 K) =
       ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ (2 * e) *
-        (FLT37.cyclotomicUnit p K a) ^ 2 := by
+        (LehmerVandiver.cyclotomicUnit p K a) ^ 2 := by
   let ζ : 𝓞 K := ((zeta_spec p ℚ K).unit' : 𝓞 K)
-  let c : 𝓞 K := FLT37.cyclotomicUnit p K a
+  let c : 𝓞 K := LehmerVandiver.cyclotomicUnit p K a
   change (ζ ^ e * c) ^ 2 = ζ ^ (2 * e) * c ^ 2
   rw [pow_two, pow_two]
   calc
@@ -121,18 +121,18 @@ The exponent is represented as `p + 1 - a`, which is congruent to `1 - a`
 modulo `p` in the range `1 ≤ a ≤ p`. -/
 theorem ringOfIntegersComplexConj_cyclotomicUnit_eq_zeta_pow_mul_self
     (a : ℕ) (_ha_pos : 1 ≤ a) (ha_le : a ≤ p) :
-    ringOfIntegersComplexConj K (FLT37.cyclotomicUnit p K a) =
+    ringOfIntegersComplexConj K (LehmerVandiver.cyclotomicUnit p K a) =
       ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ (p + 1 - a) *
-        FLT37.cyclotomicUnit p K a := by
+        LehmerVandiver.cyclotomicUnit p K a := by
   let ζ : 𝓞 K := ((zeta_spec p ℚ K).unit' : 𝓞 K)
-  let c : ℕ → 𝓞 K := FLT37.cyclotomicUnit p K
+  let c : ℕ → 𝓞 K := LehmerVandiver.cyclotomicUnit p K
   have hζp : ζ ^ p = 1 :=
     (zeta_spec p ℚ K).unit'_coe.pow_eq_one
-  have hσ := FLT37.Sinnott.cyclotomicUnit_pred_mul_complexConj_cyclotomicUnit_eq
+  have hσ := LehmerVandiver.Sinnott.cyclotomicUnit_pred_mul_complexConj_cyclotomicUnit_eq
     (p := p) (K := K) a ha_le
   change c (p - 1) * ringOfIntegersComplexConj K (c a) = c (p - a) at hσ
   have hpred : c (p - 1) = -ζ ^ (p - 1) := by
-    simpa [c, ζ] using FLT37.cyclotomicUnit_p_sub_one (p := p) (K := K)
+    simpa [c, ζ] using LehmerVandiver.cyclotomicUnit_p_sub_one (p := p) (K := K)
   rw [hpred] at hσ
   have hσ' : ζ ^ (p - 1) * ringOfIntegersComplexConj K (c a) = -c (p - a) := by
     linear_combination -hσ
@@ -146,7 +146,7 @@ theorem ringOfIntegersComplexConj_cyclotomicUnit_eq_zeta_pow_mul_self
       _ = -ζ * c (p - a) := by rw [hσ']; ring
   have hpair : c a = -ζ ^ a * c (p - a) := by
     simpa [c, ζ] using
-      FLT37.cyclotomicUnit_eq_neg_zeta_pow_mul_cyclotomicUnit_p_sub
+      LehmerVandiver.cyclotomicUnit_eq_neg_zeta_pow_mul_cyclotomicUnit_p_sub
         (p := p) (K := K) a ha_le
   rw [hconj]
   change -ζ * c (p - a) = ζ ^ (p + 1 - a) * c a
@@ -172,7 +172,7 @@ theorem unitsComplexConj_normalizedCyclotomicUnitKWithExponent
         (normalizedCyclotomicUnitKWithExponent (p := p) (K := K) a e ha hp_two) =
       normalizedCyclotomicUnitKWithExponent (p := p) (K := K) a e ha hp_two := by
   let ζ : 𝓞 K := ((zeta_spec p ℚ K).unit' : 𝓞 K)
-  let c : 𝓞 K := FLT37.cyclotomicUnit p K a
+  let c : 𝓞 K := LehmerVandiver.cyclotomicUnit p K a
   apply Units.ext
   change ringOfIntegersComplexConj K
       (ζ ^ e * c) = ζ ^ e * c
@@ -233,7 +233,7 @@ theorem normalizedCyclotomicUnitKOfRange_val (a : ℕ)
     (ha_two : 2 ≤ a) (ha_le : a ≤ (p - 1) / 2) :
     (normalizedCyclotomicUnitKOfRange (p := p) (K := K) a ha_two ha_le : 𝓞 K) =
       ((zeta_spec p ℚ K).unit' : 𝓞 K) ^
-          normalizedCyclotomicUnitExponent p a * FLT37.cyclotomicUnit p K a := by
+          normalizedCyclotomicUnitExponent p a * LehmerVandiver.cyclotomicUnit p K a := by
   simp [normalizedCyclotomicUnitKOfRange]
 
 theorem unitsComplexConj_normalizedCyclotomicUnitKOfRange
@@ -326,10 +326,10 @@ theorem normalizedCyclotomicUnitKOfRange_sq_val_eq_realCyclotomicUnit
     (hp_odd : p ≠ 2) (a : ℕ)
     (ha_two : 2 ≤ a) (ha_le : a ≤ (p - 1) / 2) :
     (normalizedCyclotomicUnitKOfRange (p := p) (K := K) a ha_two ha_le ^ 2 : 𝓞 K) =
-      FLT37.realCyclotomicUnit p K a := by
+      LehmerVandiver.realCyclotomicUnit p K a := by
   let e := normalizedCyclotomicUnitExponent p a
   let ζ : 𝓞 K := ((zeta_spec p ℚ K).unit' : 𝓞 K)
-  let c : 𝓞 K := FLT37.cyclotomicUnit p K a
+  let c : 𝓞 K := LehmerVandiver.cyclotomicUnit p K a
   have ha_le_p : a ≤ p := by
     have hhalf : (p - 1) / 2 ≤ p := by omega
     omega
@@ -344,7 +344,7 @@ theorem normalizedCyclotomicUnitKOfRange_sq_val_eq_realCyclotomicUnit
     simpa [ζ] using zeta_pow_eq_of_zmod_eq (p := p) (K := K) hmod
   unfold normalizedCyclotomicUnitKOfRange normalizedCyclotomicUnitK
   rw [normalizedCyclotomicUnitKWithExponent_sq_val]
-  unfold FLT37.realCyclotomicUnit
+  unfold LehmerVandiver.realCyclotomicUnit
   change ζ ^ (2 * e) * c ^ 2 = c * ringOfIntegersComplexConj K c
   rw [ringOfIntegersComplexConj_cyclotomicUnit_eq_zeta_pow_mul_self
     (p := p) (K := K) a (by omega) ha_le_p]

@@ -28,13 +28,13 @@ local notation3 "K⁺" => NumberField.maximalRealSubfield K
 theorem CPlusGenerator_eq_cyclotomicUnitFamilyKplus
     (hp_three : 3 ≤ p) (i : Fin ((p - 3) / 2)) :
     CPlusGenerator (p := p) (K := K) hp_three i =
-      FLT37.Sinnott.cyclotomicUnitFamilyKplus p K hp_three i := by
+      LehmerVandiver.Sinnott.cyclotomicUnitFamilyKplus p K hp_three i := by
   apply Units.ext
-  simp [CPlusGenerator, realCyclotomicUnit, FLT37.Sinnott.cyclotomicUnitFamilyKplus]
+  simp [CPlusGenerator, realCyclotomicUnit, LehmerVandiver.Sinnott.cyclotomicUnitFamilyKplus]
 
 theorem cyclotomicUnitFamilyKplus_mem_CPlus
     (hp_three : 3 ≤ p) (i : Fin ((p - 3) / 2)) :
-    FLT37.Sinnott.cyclotomicUnitFamilyKplus p K hp_three i ∈
+    LehmerVandiver.Sinnott.cyclotomicUnitFamilyKplus p K hp_three i ∈
       CPlus (p := p) (K := K) hp_three := by
   rw [← CPlusGenerator_eq_cyclotomicUnitFamilyKplus
     (p := p) (K := K) hp_three i]
@@ -42,17 +42,17 @@ theorem cyclotomicUnitFamilyKplus_mem_CPlus
 
 theorem range_cyclotomicUnitFamilyKplusFinRank_eq
     (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) :
-    Set.range (FLT37.Sinnott.cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three) =
-      Set.range (FLT37.Sinnott.cyclotomicUnitFamilyKplus p K hp_three) := by
+    Set.range (LehmerVandiver.Sinnott.cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three) =
+      Set.range (LehmerVandiver.Sinnott.cyclotomicUnitFamilyKplus p K hp_three) := by
   classical
   ext x
   constructor
   · rintro ⟨i, rfl⟩
-    unfold FLT37.Sinnott.cyclotomicUnitFamilyKplusFinRank
+    unfold LehmerVandiver.Sinnott.cyclotomicUnitFamilyKplusFinRank
     exact ⟨i.cast ((NumberField.IsCMField.units_rank_eq_units_rank (K := K)).trans
       (units_rank_eq_prime_sub_three_div_two (p := p) (K := K))), rfl⟩
   · rintro ⟨i, rfl⟩
-    unfold FLT37.Sinnott.cyclotomicUnitFamilyKplusFinRank
+    unfold LehmerVandiver.Sinnott.cyclotomicUnitFamilyKplusFinRank
     refine ⟨i.cast (((NumberField.IsCMField.units_rank_eq_units_rank (K := K)).trans
       (units_rank_eq_prime_sub_three_div_two (p := p) (K := K))).symm), ?_⟩
     simp
@@ -74,7 +74,7 @@ theorem torsionKplus_le_CPlus (hp_three : 3 ≤ p) :
 theorem closure_cyclotomicUnitFamilyKplus_le_CPlus
     (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) :
     Subgroup.closure
-        (Set.range (FLT37.Sinnott.cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three)) ≤
+        (Set.range (LehmerVandiver.Sinnott.cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three)) ≤
       CPlus (p := p) (K := K) hp_three := by
   rw [Subgroup.closure_le, range_cyclotomicUnitFamilyKplusFinRank_eq
     (p := p) (K := K) hp_odd hp_three]
@@ -116,19 +116,19 @@ theorem cyclotomicUnitIndexSubgroup_eq_CPlus
 
 set_option maxHeartbeats 20000000 in
 -- The composed determinant-to-regulator bridge unfolds large matrix identities
--- from the FLT37 Sinnott pipeline.
+-- from the LehmerVandiver Sinnott pipeline.
 set_option backward.isDefEq.respectTransparency false in
 open Classical in
 theorem kummerDirichletDeterminant_of_deletedFourier
     (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) (hp_two : 2 < p) (hp_ge_five : 5 ≤ p) :
-    FLT37.Sinnott.KummerDirichletDeterminant p K hp_odd hp_three := by
+    LehmerVandiver.Sinnott.KummerDirichletDeterminant p K hp_odd hp_three := by
   have hdetAB :=
     CyclotomicUnits.detASubBSqEqProdNontrivialQeSq_of_deletedFourier
       (p := p) (K := K) hp_odd hp_three hp_two hp_ge_five
   have hreg :=
-    FLT37.Sinnott.regOfFamilySqEqProdNontrivialQeSq_of_detASubBSqEqProdQeSq
+    LehmerVandiver.Sinnott.regOfFamilySqEqProdNontrivialQeSq_of_detASubBSqEqProdQeSq
       (p := p) K hp_odd hp_three hp_two hdetAB
-  exact FLT37.Sinnott.KummerDirichletDeterminant_of_regOfFamilySqEqProdNontrivialQeSq
+  exact LehmerVandiver.Sinnott.KummerDirichletDeterminant_of_regOfFamilySqEqProdNontrivialQeSq
     (p := p) K hp_odd hp_three hp_two hreg
 
 theorem cyclotomicUnitIndex_primeConductor_pPrimary_aux

@@ -1,13 +1,13 @@
 module
 
-public import KummerCriterion.FLT37.PrimaryUnits.Part1
-public import KummerCriterion.FLT37.PrimaryUnits.Part2
-public import KummerCriterion.FLT37.PrimaryUnits.Part3
+public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part1
+public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
+public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3
 
 /-!
 # Real cyclotomic units
 
-This file gives the cyclotomic-unit route a stable, non-FLT37-facing name for
+This file gives the cyclotomic-unit route a stable, non-LehmerVandiver-facing name for
 the standard real cyclotomic units in `K⁺`.
 -/
 
@@ -42,11 +42,11 @@ theorem realCyclotomicUnit_index_coprime {a : ℕ}
 `2 ≤ a ≤ (p - 1) / 2`.
 
 This wraps the existing descended unit
-`FLT37.realCyclotomicUnitPlusUnit p K a`, with the index coprimality proved
+`LehmerVandiver.realCyclotomicUnitPlusUnit p K a`, with the index coprimality proved
 from the standard prime-conductor range. -/
 noncomputable def realCyclotomicUnit (a : ℕ)
     (ha_two : 2 ≤ a) (ha_le : a ≤ (p - 1) / 2) : (𝓞 K⁺)ˣ :=
-  FLT37.realCyclotomicUnitPlusUnit p K a
+  LehmerVandiver.realCyclotomicUnitPlusUnit p K a
     (realCyclotomicUnit_index_coprime (p := p) ha_two ha_le)
     (Fact.out : Nat.Prime p).two_le
 
@@ -54,9 +54,9 @@ noncomputable def realCyclotomicUnit (a : ℕ)
 theorem realCyclotomicUnit_val (a : ℕ)
     (ha_two : 2 ≤ a) (ha_le : a ≤ (p - 1) / 2) :
     (realCyclotomicUnit (p := p) (K := K) a ha_two ha_le : 𝓞 K⁺) =
-      FLT37.realCyclotomicUnitPlus p K a := by
+      LehmerVandiver.realCyclotomicUnitPlus p K a := by
   unfold realCyclotomicUnit
-  rw [FLT37.realCyclotomicUnitPlusUnit_val]
+  rw [LehmerVandiver.realCyclotomicUnitPlusUnit_val]
 
 /-- The image of the real cyclotomic unit in `𝓞 K` is the σ-fixed product
 `cyclotomicUnit a * σ(cyclotomicUnit a)`. -/
@@ -64,8 +64,8 @@ theorem algebraMap_realCyclotomicUnit (a : ℕ)
     (ha_two : 2 ≤ a) (ha_le : a ≤ (p - 1) / 2) :
     algebraMap (𝓞 K⁺) (𝓞 K)
         (realCyclotomicUnit (p := p) (K := K) a ha_two ha_le : 𝓞 K⁺) =
-      FLT37.realCyclotomicUnit p K a := by
-  rw [realCyclotomicUnit_val, FLT37.algebraMap_realCyclotomicUnitPlus]
+      LehmerVandiver.realCyclotomicUnit p K a := by
+  rw [realCyclotomicUnit_val, LehmerVandiver.algebraMap_realCyclotomicUnitPlus]
 
 end KummerCriterion
 

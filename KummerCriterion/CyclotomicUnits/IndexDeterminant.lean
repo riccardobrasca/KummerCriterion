@@ -1,11 +1,11 @@
 import KummerCriterion.CyclotomicUnits.DeletedFourierCyclotomic
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.DetBridge.Part1
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge.Part1
 
 /-!
 # Deleted Fourier determinant for Sinnott's cyclotomic-unit matrix
 
 This file connects the CU-08 deleted Fourier determinant with the matrix
-`sinnottMatrixA - sinnottMatrixB` used by the existing FLT37 Sinnott pipeline.
+`sinnottMatrixA - sinnottMatrixB` used by the existing LehmerVandiver Sinnott pipeline.
 The point is to prove the determinant input from the concrete deleted Fourier
 identity, instead of assuming the named determinant source proposition.
 -/
@@ -54,10 +54,10 @@ noncomputable def kplusPlaceStarEquivNonidentityShifted
       Nonidentity (CyclotomicEvenDelta p) := by
   classical
   let e :=
-    FLT37.Sinnott.KplusInfinitePlaceEquivCyclotomicEvenDelta_shifted
+    LehmerVandiver.Sinnott.KplusInfinitePlaceEquivCyclotomicEvenDelta_shifted
       (p := p) K hp_two
   have h_w₀ : e NumberField.Units.dirichletUnitTheorem.w₀ = 1 :=
-    FLT37.Sinnott.KplusInfinitePlaceEquivCyclotomicEvenDelta_shifted_apply_w₀
+    LehmerVandiver.Sinnott.KplusInfinitePlaceEquivCyclotomicEvenDelta_shifted_apply_w₀
       (p := p) K hp_two
   exact e.subtypeEquiv (fun v => by
     constructor
@@ -74,7 +74,7 @@ theorem kplusPlaceStarEquivNonidentityShifted_apply
     (hp_two : 2 < p)
     (w : {w : InfinitePlace K⁺ // w ≠ NumberField.Units.dirichletUnitTheorem.w₀}) :
     (kplusPlaceStarEquivNonidentityShifted (p := p) (K := K) hp_two w).val =
-      FLT37.Sinnott.kplusEmbeddingIndexQuotientShifted (p := p) K w.val := by
+      LehmerVandiver.Sinnott.kplusEmbeddingIndexQuotientShifted (p := p) K w.val := by
   rfl
 
 /-- Sinnott's `(A - B)` determinant is the CU-08 deleted Fourier determinant,
@@ -94,13 +94,13 @@ theorem detASubB_sq_eq_deletedFourier_sq
         w ≠ NumberField.Units.dirichletUnitTheorem.w₀)
     haveI : DecidableEq {w : InfinitePlace K⁺ //
         w ≠ NumberField.Units.dirichletUnitTheorem.w₀} := fun a b => a.instDecidableEq b
-    (((((FLT37.Sinnott.sinnottMatrixA p K -
-      FLT37.Sinnott.sinnottMatrixB p K).det : ℝ) : ℂ)) ^ 2 : ℂ) =
+    (((((LehmerVandiver.Sinnott.sinnottMatrixA p K -
+      LehmerVandiver.Sinnott.sinnottMatrixB p K).det : ℝ) : ℂ)) ^ 2 : ℂ) =
       (deletedConvolutionMulMatrixAtReindexed
         (G := CyclotomicEvenDelta p)
-        (FLT37.Sinnott.kplusEmbeddingIndexQuotient (p := p) K
+        (LehmerVandiver.Sinnott.kplusEmbeddingIndexQuotient (p := p) K
           NumberField.Units.dirichletUnitTheorem.w₀)
-        (FLT37.Sinnott.convolutionLogNormDescended p)).det ^ 2 := by
+        (LehmerVandiver.Sinnott.convolutionLogNormDescended p)).det ^ 2 := by
   classical
   letI : DecidableEq (InfinitePlace K⁺) := Classical.decEq _
   letI : DecidablePred (fun w : InfinitePlace K⁺ =>
@@ -114,28 +114,28 @@ theorem detASubB_sq_eq_deletedFourier_sq
   let rowEquiv :=
     kplusPlaceStarEquivNonidentityShifted (p := p) (K := K) hp_two
   let colEquiv :=
-    FLT37.Sinnott.familyIndexAsCEnotOneEquiv
+    LehmerVandiver.Sinnott.familyIndexAsCEnotOneEquiv
       (p := p) K hp_odd hp_three hp_ge_five hp_two
   let D :=
     deletedConvolutionMulMatrixAtReindexed
       (G := CyclotomicEvenDelta p)
-      (FLT37.Sinnott.kplusEmbeddingIndexQuotient (p := p) K
+      (LehmerVandiver.Sinnott.kplusEmbeddingIndexQuotient (p := p) K
         NumberField.Units.dirichletUnitTheorem.w₀)
-      (FLT37.Sinnott.convolutionLogNormDescended p)
+      (LehmerVandiver.Sinnott.convolutionLogNormDescended p)
   have hcast :
-      (((FLT37.Sinnott.sinnottMatrixA p K -
-          FLT37.Sinnott.sinnottMatrixB p K).det : ℝ) : ℂ) =
+      (((LehmerVandiver.Sinnott.sinnottMatrixA p K -
+          LehmerVandiver.Sinnott.sinnottMatrixB p K).det : ℝ) : ℂ) =
         (Matrix.of fun
           (i : {w : InfinitePlace K⁺ //
               w ≠ NumberField.Units.dirichletUnitTheorem.w₀})
           (w : {w : InfinitePlace K⁺ //
               w ≠ NumberField.Units.dirichletUnitTheorem.w₀}) =>
-            (((FLT37.Sinnott.sinnottMatrixA p K -
-              FLT37.Sinnott.sinnottMatrixB p K) i w : ℝ) : ℂ)).det := by
-    rw [show (((FLT37.Sinnott.sinnottMatrixA p K -
-        FLT37.Sinnott.sinnottMatrixB p K).det : ℝ) : ℂ) =
-        (Complex.ofRealHom ((FLT37.Sinnott.sinnottMatrixA p K -
-          FLT37.Sinnott.sinnottMatrixB p K).det) : ℂ) from rfl]
+            (((LehmerVandiver.Sinnott.sinnottMatrixA p K -
+              LehmerVandiver.Sinnott.sinnottMatrixB p K) i w : ℝ) : ℂ)).det := by
+    rw [show (((LehmerVandiver.Sinnott.sinnottMatrixA p K -
+        LehmerVandiver.Sinnott.sinnottMatrixB p K).det : ℝ) : ℂ) =
+        (Complex.ofRealHom ((LehmerVandiver.Sinnott.sinnottMatrixA p K -
+          LehmerVandiver.Sinnott.sinnottMatrixB p K).det) : ℂ) from rfl]
     rw [Complex.ofRealHom.map_det]
     rfl
   have hmatrix :
@@ -144,18 +144,18 @@ theorem detASubB_sq_eq_deletedFourier_sq
               w ≠ NumberField.Units.dirichletUnitTheorem.w₀})
           (i : {w : InfinitePlace K⁺ //
               w ≠ NumberField.Units.dirichletUnitTheorem.w₀}) =>
-            (((FLT37.Sinnott.sinnottMatrixA p K -
-              FLT37.Sinnott.sinnottMatrixB p K) i w : ℝ) : ℂ)) =
+            (((LehmerVandiver.Sinnott.sinnottMatrixA p K -
+              LehmerVandiver.Sinnott.sinnottMatrixB p K) i w : ℝ) : ℂ)) =
         D.submatrix rowEquiv colEquiv := by
     ext w i
     rw [Matrix.of_apply, Matrix.submatrix_apply]
-    rw [FLT37.Sinnott.sinnottMatrix_A_sub_B_apply_eq_sub_shifted
+    rw [LehmerVandiver.Sinnott.sinnottMatrix_A_sub_B_apply_eq_sub_shifted
       (p := p) K hp_odd hp_three i w]
-    simp only [FLT37.Sinnott.convolutionMatrixLogNormEven, Matrix.of_apply, D,
+    simp only [LehmerVandiver.Sinnott.convolutionMatrixLogNormEven, Matrix.of_apply, D,
       deletedConvolutionMulMatrixAtReindexed]
     rw [kplusPlaceStarEquivNonidentityShifted_apply
       (p := p) (K := K) hp_two w]
-    rw [FLT37.Sinnott.familyIndexAsCEnotOneEquiv_apply
+    rw [LehmerVandiver.Sinnott.familyIndexAsCEnotOneEquiv_apply
       (p := p) K hp_odd hp_three hp_ge_five hp_two i]
     congr 2
     · simp [mul_comm]
@@ -168,8 +168,8 @@ theorem detASubB_sq_eq_deletedFourier_sq
           w ≠ NumberField.Units.dirichletUnitTheorem.w₀})
       (i : {w : InfinitePlace K⁺ //
           w ≠ NumberField.Units.dirichletUnitTheorem.w₀}) =>
-        (((FLT37.Sinnott.sinnottMatrixA p K -
-          FLT37.Sinnott.sinnottMatrixB p K) i w : ℝ) : ℂ)).det ^ 2 =
+        (((LehmerVandiver.Sinnott.sinnottMatrixA p K -
+          LehmerVandiver.Sinnott.sinnottMatrixB p K) i w : ℝ) : ℂ)).det ^ 2 =
       D.det ^ 2
   rw [hmatrix]
   exact det_submatrix_equiv_equiv_sq rowEquiv colEquiv D
@@ -187,7 +187,7 @@ theorem detASubBSqEqProdNontrivialQeSq_of_deletedFourier
         w ≠ NumberField.Units.dirichletUnitTheorem.w₀)
     haveI : DecidableEq {w : InfinitePlace K⁺ //
         w ≠ NumberField.Units.dirichletUnitTheorem.w₀} := fun a b => a.instDecidableEq b
-    FLT37.Sinnott.DetASubBSqEqProdNontrivialQeSq (p := p) K := by
+    LehmerVandiver.Sinnott.DetASubBSqEqProdNontrivialQeSq (p := p) K := by
   classical
   letI : DecidableEq (InfinitePlace K⁺) := Classical.decEq _
   letI : DecidablePred (fun w : InfinitePlace K⁺ =>
@@ -198,12 +198,12 @@ theorem detASubBSqEqProdNontrivialQeSq_of_deletedFourier
       w ≠ NumberField.Units.dirichletUnitTheorem.w₀)
   letI : DecidableEq {w : InfinitePlace K⁺ //
       w ≠ NumberField.Units.dirichletUnitTheorem.w₀} := fun a b => a.instDecidableEq b
-  unfold FLT37.Sinnott.DetASubBSqEqProdNontrivialQeSq
+  unfold LehmerVandiver.Sinnott.DetASubBSqEqProdNontrivialQeSq
   rw [detASubB_sq_eq_deletedFourier_sq
     (p := p) (K := K) hp_odd hp_three hp_two hp_ge_five]
   exact det_cyclotomicEven_logNorm_deletedMulAtReindexed_sq_eq_prod_quotientEigenvalue_sq
     (p := p) hp_two
-    (FLT37.Sinnott.kplusEmbeddingIndexQuotient (p := p) K
+    (LehmerVandiver.Sinnott.kplusEmbeddingIndexQuotient (p := p) K
       NumberField.Units.dirichletUnitTheorem.w₀)
 
 end CyclotomicUnits

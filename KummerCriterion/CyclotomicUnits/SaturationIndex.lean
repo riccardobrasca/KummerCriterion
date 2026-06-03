@@ -83,17 +83,17 @@ theorem CPlus_index_ne_zero (hp_three : 3 ≤ p) :
     have hp_odd : p ≠ 2 := by omega
     have hp_two : 2 < p := by omega
     have hdet :
-        FLT37.Sinnott.KummerDirichletDeterminant p K hp_odd hp_three :=
+        LehmerVandiver.Sinnott.KummerDirichletDeterminant p K hp_odd hp_three :=
       kummerDirichletDeterminant_of_deletedFourier
         (p := p) (K := K) hp_odd hp_three hp_two hp_five
-    have hreg : FLT37.Sinnott.SinnottRegulatorIdentity p K hp_odd hp_three :=
-      (FLT37.Sinnott.sinnottRegulatorIdentity_iff_kummerDirichletDeterminant
+    have hreg : LehmerVandiver.Sinnott.SinnottRegulatorIdentity p K hp_odd hp_three :=
+      (LehmerVandiver.Sinnott.sinnottRegulatorIdentity_iff_kummerDirichletDeterminant
         (p := p) (K := K) hp_odd hp_three).1 hdet
-    have hsinnott : FLT37.Sinnott.SinnottIndexFormula p K hp_odd hp_three :=
-      FLT37.Sinnott.sinnottIndexFormula_of_regulatorIdentity
+    have hsinnott : LehmerVandiver.Sinnott.SinnottIndexFormula p K hp_odd hp_three :=
+      LehmerVandiver.Sinnott.sinnottIndexFormula_of_regulatorIdentity
         p K hp_odd hp_three hreg
     have hindex :=
-      FLT37.Sinnott.index_eq_twoPow_mul_hPlus_of_sinnottIndexFormula
+      LehmerVandiver.Sinnott.index_eq_twoPow_mul_hPlus_of_sinnottIndexFormula
         p K hp_odd hp_three hsinnott
     change (cyclotomicUnitIndexSubgroup (p := p) (K := K) hp_odd hp_three).index =
       2 ^ ((p - 3) / 2) * hPlus K at hindex
