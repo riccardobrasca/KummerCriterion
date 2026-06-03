@@ -1,5 +1,5 @@
 name = "KummerCriterion"
-defaultTargets = ["KummerCriterion"]
+defaultTargets = ["KummerCriterion", "Challenge", "Solution"]
 
 [leanOptions]
 pp.unicode.fun = true
