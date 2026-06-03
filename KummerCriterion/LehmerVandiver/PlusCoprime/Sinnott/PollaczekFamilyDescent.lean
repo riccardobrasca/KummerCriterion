@@ -1,5 +1,5 @@
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.IndexFormula
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.IndexFormula
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
 
 /-!
 # `PollaczekInFamily` — Pollaczek descent to the family subgroup
@@ -24,7 +24,7 @@ open NumberField NumberField.IsCMField
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 namespace Sinnott
 
@@ -68,17 +68,17 @@ theorem algebraMap_cyclotomicUnitFamilyKplus
         ((cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three j :
           (𝓞 (NumberField.maximalRealSubfield K))ˣ) :
           𝓞 (NumberField.maximalRealSubfield K)) =
-      FLT37.realCyclotomicUnit p K
+      LehmerVandiver.realCyclotomicUnit p K
         ((j.cast ((NumberField.IsCMField.units_rank_eq_units_rank (K := K)).trans
           (KummerCriterion.units_rank_eq_prime_sub_three_div_two
             (p := p) (K := K)))) + 2) := by
   unfold cyclotomicUnitFamilyKplusFinRank cyclotomicUnitFamilyKplus
   rw [realCyclotomicUnitPlusUnit_val]
-  exact FLT37.algebraMap_realCyclotomicUnitPlus p K _
+  exact LehmerVandiver.algebraMap_realCyclotomicUnitPlus p K _
 
 end Sinnott
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

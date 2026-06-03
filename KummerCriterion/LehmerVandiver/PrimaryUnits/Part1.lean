@@ -1,6 +1,6 @@
 module
 
-public import KummerCriterion.FLT37.PrimaryConj
+public import KummerCriterion.LehmerVandiver.PrimaryConj
 public import KummerCriterion.TotallyRealSubfield.ZetaPrime
 public import KummerCriterion.HMinus.KplusPrimeArithmetic
 public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
@@ -33,7 +33,7 @@ open scoped NumberField
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 section PrimaryPlus
 
@@ -172,7 +172,7 @@ theorem zetaSubOne_dvd_zeta_pow_sub_one (k : ℕ) :
 
 end CyclotomicUnits
 end PrimaryPlus
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

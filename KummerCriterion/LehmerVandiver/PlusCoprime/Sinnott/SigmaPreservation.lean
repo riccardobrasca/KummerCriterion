@@ -1,6 +1,6 @@
-import KummerCriterion.FLT37.PrimaryUnits.Part1
-import KummerCriterion.FLT37.PrimaryUnits.Part2
-import KummerCriterion.FLT37.PrimaryUnits.Part3
+import KummerCriterion.LehmerVandiver.PrimaryUnits.Part1
+import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
+import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3
 import Mathlib.NumberTheory.NumberField.CMField
 import KummerCriterion.TotallyRealSubfield.ZetaPrime
 
@@ -33,7 +33,7 @@ open NumberField NumberField.IsCMField IsCyclotomicExtension
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 namespace Sinnott
 
@@ -152,7 +152,7 @@ theorem cyclotomicUnit_pred_mul_complexConj_cyclotomicUnit_eq
 
 end Sinnott
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

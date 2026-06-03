@@ -1,11 +1,11 @@
 module
 
-public import KummerCriterion.FLT37.PrimaryConj
+public import KummerCriterion.LehmerVandiver.PrimaryConj
 public import KummerCriterion.TotallyRealSubfield.ZetaPrime
 public import KummerCriterion.HMinus.KplusPrimeArithmetic
 public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
 public import FltRegular.NumberTheory.Cyclotomic.MoreLemmas
-public import KummerCriterion.FLT37.PrimaryUnits.Part2
+public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
 
 /-!
 # Primary units of `𝓞 K⁺`
@@ -34,7 +34,7 @@ open scoped NumberField
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 section PrimaryPlus
 
@@ -110,7 +110,7 @@ end RealCyclotomicUnits
 
 end PrimaryPlus
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

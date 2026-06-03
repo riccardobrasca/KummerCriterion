@@ -1,4 +1,4 @@
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part7
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part7
 
 /-!
 # Bridge from substantive matrix content to RegOf-squared form
@@ -17,7 +17,7 @@ noncomputable section
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 namespace Sinnott
 
@@ -248,7 +248,7 @@ indexed by `{w ≠ w₀}` on both sides, enabling `Matrix.det`. -/
 
 end Sinnott
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

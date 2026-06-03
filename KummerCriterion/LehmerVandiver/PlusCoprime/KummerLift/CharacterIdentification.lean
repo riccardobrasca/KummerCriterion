@@ -1,8 +1,8 @@
 module
 
-public import KummerCriterion.FLT37.PrimaryUnits.Part1
-public import KummerCriterion.FLT37.PrimaryUnits.Part2
-public import KummerCriterion.FLT37.PrimaryUnits.Part3
+public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part1
+public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
+public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3
 public import KummerCriterion.UnitQuotient.DeltaAction
 
 /-!
@@ -23,7 +23,7 @@ open scoped NumberField
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 variable (p : ℕ) [hp : Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
@@ -102,7 +102,7 @@ theorem cyclotomicUnit_eq_neg_zeta_pow_mul_cyclotomicUnit_p_sub
 
 end PairUp
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

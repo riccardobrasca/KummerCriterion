@@ -1,5 +1,5 @@
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.PollaczekFamilyDescent
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.PollaczekFamilyDescent
 import Mathlib.NumberTheory.NumberField.Units.DirichletTheorem
 
 /-!
@@ -25,7 +25,7 @@ open NumberField NumberField.IsCMField NumberField.InfinitePlace
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 namespace Sinnott
 
@@ -88,7 +88,7 @@ theorem infinitePlace_cyclotomicUnitFamilyKplus_eq_realCyclotomicUnit
         (𝓞 (NumberField.maximalRealSubfield K))ˣ) :
         NumberField.maximalRealSubfield K) =
       ((NumberField.IsCMField.equivInfinitePlace K).symm w)
-        ((FLT37.realCyclotomicUnit p K
+        ((LehmerVandiver.realCyclotomicUnit p K
           ((j.cast ((NumberField.IsCMField.units_rank_eq_units_rank
               (K := K)).trans
             (KummerCriterion.units_rank_eq_prime_sub_three_div_two
@@ -119,7 +119,7 @@ theorem logEmbedding_cyclotomicUnitFamilyKplus_apply
         (Additive.ofMul (cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three j)) w =
       Real.log
         (((NumberField.IsCMField.equivInfinitePlace K).symm w.val)
-          ((FLT37.realCyclotomicUnit p K
+          ((LehmerVandiver.realCyclotomicUnit p K
             ((j.cast ((NumberField.IsCMField.units_rank_eq_units_rank
                 (K := K)).trans
               (KummerCriterion.units_rank_eq_prime_sub_three_div_two
@@ -156,7 +156,7 @@ theorem regOfFamily_cyclotomicUnitFamilyKplus_eq_det
             w ≠ NumberField.Units.dirichletUnitTheorem.w₀}) =>
         Real.log
           (((NumberField.IsCMField.equivInfinitePlace K).symm w.val)
-            ((FLT37.realCyclotomicUnit p K
+            ((LehmerVandiver.realCyclotomicUnit p K
               ((((NumberField.Units.equivFinRank
                   (NumberField.maximalRealSubfield K)).symm i).cast
                 ((NumberField.IsCMField.units_rank_eq_units_rank
@@ -179,7 +179,7 @@ theorem regOfFamily_cyclotomicUnitFamilyKplus_eq_det
 
 From the geometric-series identity
 `cyclotomicUnit k · (ζ - 1) = ζ^k - 1`
-(shipped in `FLT37/PrimaryUnits.lean`) and the multiplicativity of
+(shipped in `LehmerVandiver/PrimaryUnits.lean`) and the multiplicativity of
 infinite places, we get
 `w(cyclotomicUnit k) · w(ζ - 1) = w(ζ^k - 1)`
 for any infinite place `w` of K. This is the key step for the matrix
@@ -191,12 +191,12 @@ omit [IsCMField K] in
 /-- **PF-1-helper.** Multiplicativity of `w` applied to
 `zeta_sub_one_mul_cyclotomicUnit`. -/
 theorem norm_cyclotomicUnit_mul_zeta_sub_one (k : ℕ) (w : InfinitePlace K) :
-    w ((FLT37.cyclotomicUnit p K k : 𝓞 K) : K) *
+    w ((LehmerVandiver.cyclotomicUnit p K k : 𝓞 K) : K) *
         w ((((IsCyclotomicExtension.zeta_spec p ℚ K).unit' : 𝓞 K) : K) - 1) =
       w ((((IsCyclotomicExtension.zeta_spec p ℚ K).unit' : 𝓞 K) : K) ^ k - 1) := by
   rw [mul_comm, ← map_mul]
   congr 1
-  exact_mod_cast FLT37.zeta_sub_one_mul_cyclotomicUnit p K k
+  exact_mod_cast LehmerVandiver.zeta_sub_one_mul_cyclotomicUnit p K k
 
 set_option backward.isDefEq.respectTransparency false in
 omit [IsCMField K] in
@@ -222,8 +222,8 @@ Direct from `isUnit_cyclotomicUnit` (unit is non-zero) +
 algebraMap-of-nonzero is non-zero. -/
 theorem cyclotomicUnit_ne_zero_K
     (k : ℕ) (hk : k.Coprime p) (hp_two : 2 ≤ p) :
-    ((FLT37.cyclotomicUnit p K k : 𝓞 K) : K) ≠ 0 := by
-  have hU := FLT37.isUnit_cyclotomicUnit p K k hk hp_two
+    ((LehmerVandiver.cyclotomicUnit p K k : 𝓞 K) : K) ≠ 0 := by
+  have hU := LehmerVandiver.isUnit_cyclotomicUnit p K k hk hp_two
   intro h
   apply hU.ne_zero
   have h_inj : Function.Injective (algebraMap (𝓞 K) K) :=
@@ -243,12 +243,12 @@ unit (hence non-zero in K). The non-zero condition for `ζ - 1`
 is shipped as `zeta_sub_one_ne_zero_K`. -/
 theorem log_norm_cyclotomicUnit_eq_sub
     (k : ℕ) (hk : k.Coprime p) (hp_two : 2 ≤ p) (w : InfinitePlace K) :
-    Real.log (w ((FLT37.cyclotomicUnit p K k : 𝓞 K) : K)) =
+    Real.log (w ((LehmerVandiver.cyclotomicUnit p K k : 𝓞 K) : K)) =
       Real.log
         (w ((((IsCyclotomicExtension.zeta_spec p ℚ K).unit' : 𝓞 K) : K) ^ k - 1)) -
         Real.log
           (w ((((IsCyclotomicExtension.zeta_spec p ℚ K).unit' : 𝓞 K) : K) - 1)) := by
-  have h_w_cycU : w ((FLT37.cyclotomicUnit p K k : 𝓞 K) : K) ≠ 0 := by
+  have h_w_cycU : w ((LehmerVandiver.cyclotomicUnit p K k : 𝓞 K) : K) ≠ 0 := by
     refine (InfinitePlace.pos_iff.mpr ?_).ne'
     exact cyclotomicUnit_ne_zero_K p K k hk hp_two
   have h_w_zsub :
@@ -256,7 +256,7 @@ theorem log_norm_cyclotomicUnit_eq_sub
     refine (InfinitePlace.pos_iff.mpr ?_).ne'
     exact zeta_sub_one_ne_zero_K p K hp_two
   have h_prod := norm_cyclotomicUnit_mul_zeta_sub_one p K k w
-  have h_log_prod : Real.log (w ((FLT37.cyclotomicUnit p K k : 𝓞 K) : K)) +
+  have h_log_prod : Real.log (w ((LehmerVandiver.cyclotomicUnit p K k : 𝓞 K) : K)) +
       Real.log
         (w ((((IsCyclotomicExtension.zeta_spec p ℚ K).unit' : 𝓞 K) : K) - 1)) =
         Real.log
@@ -282,12 +282,12 @@ set_option backward.isDefEq.respectTransparency false in
 Proof: σ-symmetrization + `infinitePlace_complexConj` + `Real.log_pow`. -/
 theorem log_infinitePlace_realCyclotomicUnit
     (k : ℕ) (w : InfinitePlace K) :
-    Real.log (w ((FLT37.realCyclotomicUnit p K k : 𝓞 K) : K)) =
-      2 * Real.log (w ((FLT37.cyclotomicUnit p K k : 𝓞 K) : K)) := by
-  have h_eq : ((FLT37.realCyclotomicUnit p K k : 𝓞 K) : K) =
-      ((FLT37.cyclotomicUnit p K k : 𝓞 K) : K) *
-        complexConj K ((FLT37.cyclotomicUnit p K k : 𝓞 K) : K) := by
-    unfold FLT37.realCyclotomicUnit
+    Real.log (w ((LehmerVandiver.realCyclotomicUnit p K k : 𝓞 K) : K)) =
+      2 * Real.log (w ((LehmerVandiver.cyclotomicUnit p K k : 𝓞 K) : K)) := by
+  have h_eq : ((LehmerVandiver.realCyclotomicUnit p K k : 𝓞 K) : K) =
+      ((LehmerVandiver.cyclotomicUnit p K k : 𝓞 K) : K) *
+        complexConj K ((LehmerVandiver.cyclotomicUnit p K k : 𝓞 K) : K) := by
+    unfold LehmerVandiver.realCyclotomicUnit
     push_cast
     rw [← coe_ringOfIntegersComplexConj]
   rw [h_eq, map_mul, infinitePlace_complexConj, ← sq, Real.log_pow]
@@ -303,7 +303,7 @@ This is the per-entry form of the matrix decomposition `M = 2·A - 2·B`
 for the log-embedding matrix of `cyclotomicUnitFamilyKplus`. -/
 theorem log_realCyclotomicUnit_eq_sub_decomp
     (k : ℕ) (hk : k.Coprime p) (hp_two : 2 ≤ p) (w : InfinitePlace K) :
-    Real.log (w ((FLT37.realCyclotomicUnit p K k : 𝓞 K) : K)) =
+    Real.log (w ((LehmerVandiver.realCyclotomicUnit p K k : 𝓞 K) : K)) =
       2 * Real.log
           (w ((((IsCyclotomicExtension.zeta_spec p ℚ K).unit' : 𝓞 K) : K) ^ k - 1)) -
         2 * Real.log
@@ -318,7 +318,7 @@ theorem log_realCyclotomicUnit_at_Kplus_place_eq_sub_decomp
     (k : ℕ) (hk : k.Coprime p) (hp_two : 2 ≤ p)
     (w : InfinitePlace (NumberField.maximalRealSubfield K)) :
     Real.log (((NumberField.IsCMField.equivInfinitePlace K).symm w)
-        ((FLT37.realCyclotomicUnit p K k : 𝓞 K) : K)) =
+        ((LehmerVandiver.realCyclotomicUnit p K k : 𝓞 K) : K)) =
       2 * Real.log (((NumberField.IsCMField.equivInfinitePlace K).symm w)
           ((((IsCyclotomicExtension.zeta_spec p ℚ K).unit' : 𝓞 K) : K) ^ k - 1)) -
         2 * Real.log (((NumberField.IsCMField.equivInfinitePlace K).symm w)
@@ -376,7 +376,7 @@ theorem sinnottRegulatorIdentity_iff_kummerDirichletDeterminant
 
 end Sinnott
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

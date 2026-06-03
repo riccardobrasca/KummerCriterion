@@ -1,11 +1,11 @@
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
-import KummerCriterion.FLT37.PrimaryConj
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
+import KummerCriterion.LehmerVandiver.PrimaryConj
 import FltRegular.CaseII.AuxLemmas
 import KummerCriterion.HMinus.KplusPrimeArithmetic
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
-import KummerCriterion.FLT37.PrimaryUnits.Part1
-import KummerCriterion.FLT37.PrimaryUnits.Part2
-import KummerCriterion.FLT37.PrimaryUnits.Part3
+import KummerCriterion.LehmerVandiver.PrimaryUnits.Part1
+import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
+import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3
 import KummerCriterion.HMinus.ClassNumberFormula
 import Mathlib.NumberTheory.NumberField.Units.Regulator
 
@@ -39,7 +39,7 @@ open NumberField NumberField.IsCMField
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 namespace Sinnott
 
@@ -96,7 +96,7 @@ and `2 ≤ p`. The inverse exists in 𝓞 K and is real (σ-fixed), hence
 descends to `𝓞 K⁺`. -/
 theorem isUnit_realCyclotomicUnitPlus
     {a : ℕ} (ha : a.Coprime p) (_ha_lt : a < p) (hp_two : 2 ≤ p) :
-    IsUnit (FLT37.realCyclotomicUnitPlus p K a) := by
+    IsUnit (LehmerVandiver.realCyclotomicUnitPlus p K a) := by
   -- The K-side unit form has σ-fixed inverse, descending to 𝓞 K⁺.
   have h_real_unit : ∃ inv_u : (𝓞 K)ˣ,
       unitsComplexConj K inv_u = inv_u ∧
@@ -117,19 +117,19 @@ theorem isUnit_realCyclotomicUnitPlus
   refine ⟨(v_inv : 𝓞 (NumberField.maximalRealSubfield K)), ?_, ?_⟩
   · apply FaithfulSMul.algebraMap_injective
       (𝓞 (NumberField.maximalRealSubfield K)) (𝓞 K)
-    rw [map_mul, map_one, FLT37.algebraMap_realCyclotomicUnitPlus, hv_inv]
-    have h_u_eq : FLT37.realCyclotomicUnit p K a =
+    rw [map_mul, map_one, LehmerVandiver.algebraMap_realCyclotomicUnitPlus, hv_inv]
+    have h_u_eq : LehmerVandiver.realCyclotomicUnit p K a =
         ((cyclotomicRealUnit p K ha hp_two : (𝓞 K)ˣ) : 𝓞 K) := by
-      unfold cyclotomicRealUnit FLT37.realCyclotomicUnit
+      unfold cyclotomicRealUnit LehmerVandiver.realCyclotomicUnit
       rw [Units.val_mul, cyclotomicUnitUnit_val]
       rfl
     rw [h_u_eq, ← Units.val_mul, h_mul, Units.val_one]
   · apply FaithfulSMul.algebraMap_injective
       (𝓞 (NumberField.maximalRealSubfield K)) (𝓞 K)
-    rw [map_mul, map_one, FLT37.algebraMap_realCyclotomicUnitPlus, hv_inv]
-    have h_u_eq : FLT37.realCyclotomicUnit p K a =
+    rw [map_mul, map_one, LehmerVandiver.algebraMap_realCyclotomicUnitPlus, hv_inv]
+    have h_u_eq : LehmerVandiver.realCyclotomicUnit p K a =
         ((cyclotomicRealUnit p K ha hp_two : (𝓞 K)ˣ) : 𝓞 K) := by
-      unfold cyclotomicRealUnit FLT37.realCyclotomicUnit
+      unfold cyclotomicRealUnit LehmerVandiver.realCyclotomicUnit
       rw [Units.val_mul, cyclotomicUnitUnit_val]
       rfl
     rw [h_u_eq, ← Units.val_mul]
@@ -151,7 +151,7 @@ theorem realCyclotomicUnitPlusUnit_val
     {a : ℕ} (ha : a.Coprime p) (ha_lt : a < p) (hp_two : 2 ≤ p) :
     (realCyclotomicUnitPlusUnit p K ha ha_lt hp_two :
       𝓞 (NumberField.maximalRealSubfield K)) =
-    FLT37.realCyclotomicUnitPlus p K a :=
+    LehmerVandiver.realCyclotomicUnitPlus p K a :=
   IsUnit.unit_spec _
 
 /-! ## Fin-indexed family
@@ -242,7 +242,7 @@ theorem regOfFamily_cyclotomicUnitFamilyKplus_div_regulator (hp_odd : p ≠ 2)
 
 end Sinnott
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

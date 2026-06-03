@@ -1,4 +1,4 @@
-% Curated, human-readable FLT37 chapter.
+% Curated, human-readable LehmerVandiver chapter.
 
 \section{Background: irregular primes and Vandiver's Theorem III}
 
@@ -26,7 +26,7 @@ $\ell = 37$.
 
 \begin{definition}
   \label{def:isIrregularIndex}
-  \lean{KummerCriterion.FLT37.IsIrregularIndex}\leanok
+  \lean{KummerCriterion.LehmerVandiver.IsIrregularIndex}\leanok
   An \emph{irregular index of $\ell$} is a positive integer $k$ with
   $1 \le k$ and $2k \le \ell - 3$ such that
   $\ell \mid \mathrm{num}(B_{2k})$.
@@ -34,7 +34,7 @@ $\ell = 37$.
 
 \begin{definition}
   \label{def:vandiverIIIHypothesis}
-  \lean{KummerCriterion.FLT37.VandiverIIIHypothesis}\leanok
+  \lean{KummerCriterion.LehmerVandiver.VandiverIIIHypothesis}\leanok
   \uses{def:isIrregularIndex}
   The \emph{Vandiver III parity hypothesis} for $\ell$ asserts:
   $\ell \equiv 1 \pmod 4$, and every irregular index $k$ of $\ell$
@@ -43,7 +43,7 @@ $\ell = 37$.
 
 \begin{theorem}
   \label{thm:vandiverIIIHypothesis_thirtyseven}
-  \lean{KummerCriterion.FLT37.vandiverIIIHypothesis_thirtyseven}\leanok
+  \lean{KummerCriterion.LehmerVandiver.vandiverIIIHypothesis_thirtyseven}\leanok
   \uses{def:vandiverIIIHypothesis}
   The prime $\ell = 37$ satisfies the Vandiver III parity hypothesis.
 \end{theorem}
@@ -62,7 +62,7 @@ that pulls a common factor out of $(a,b,c)$.
 
 \begin{definition}
   \label{def:vandiverIII}
-  \lean{KummerCriterion.FLT37.VandiverIII}\leanok
+  \lean{KummerCriterion.LehmerVandiver.VandiverIII}\leanok
   \uses{def:vandiverIIIHypothesis}
   $\mathrm{VandiverIII}$ asserts: every prime $\ell$ satisfying the parity
   hypothesis satisfies $\mathrm{FermatLastTheoremFor}\ \ell$.
@@ -70,7 +70,7 @@ that pulls a common factor out of $(a,b,c)$.
 
 \begin{definition}
   \label{def:vandiverIIICaseI}
-  \lean{KummerCriterion.FLT37.VandiverIIICaseI}\leanok
+  \lean{KummerCriterion.LehmerVandiver.VandiverIIICaseI}\leanok
   \uses{def:vandiverIIIHypothesis}
   $\mathrm{VandiverIIICaseI}$ asserts: under the parity hypothesis, if
   $\ell \nmid abc$ then $a^\ell + b^\ell \neq c^\ell$.
@@ -78,7 +78,7 @@ that pulls a common factor out of $(a,b,c)$.
 
 \begin{definition}
   \label{def:vandiverIIICaseII}
-  \lean{KummerCriterion.FLT37.VandiverIIICaseII}\leanok
+  \lean{KummerCriterion.LehmerVandiver.VandiverIIICaseII}\leanok
   \uses{def:vandiverIIIHypothesis}
   $\mathrm{VandiverIIICaseII}$ asserts: under the parity hypothesis, if
   $a,b,c$ are coprime and $\ell \mid abc$, then $a^\ell + b^\ell \neq c^\ell$.
@@ -86,7 +86,7 @@ that pulls a common factor out of $(a,b,c)$.
 
 \begin{theorem}
   \label{thm:vandiverIII_of_caseI_caseII}
-  \lean{KummerCriterion.FLT37.vandiverIII_of_caseI_caseII}\leanok
+  \lean{KummerCriterion.LehmerVandiver.vandiverIII_of_caseI_caseII}\leanok
   \uses{def:vandiverIII, def:vandiverIIICaseI, def:vandiverIIICaseII}
   $\mathrm{VandiverIIICaseI} \land \mathrm{VandiverIIICaseII}
     \;\Longrightarrow\; \mathrm{VandiverIII}$.
@@ -102,7 +102,7 @@ that pulls a common factor out of $(a,b,c)$.
 
 \begin{theorem}
   \label{thm:fermatLastTheoremFor_thirtyseven_of_caseI_caseII}
-  \lean{KummerCriterion.FLT37.fermatLastTheoremFor_thirtyseven_of_caseI_caseII}\leanok
+  \lean{KummerCriterion.LehmerVandiver.fermatLastTheoremFor_thirtyseven_of_caseI_caseII}\leanok
   \uses{thm:vandiverIIIHypothesis_thirtyseven, thm:vandiverIII_of_caseI_caseII}
   $\mathrm{VandiverIIICaseI} \land \mathrm{VandiverIIICaseII}
     \;\Longrightarrow\; \mathrm{FermatLastTheoremFor}\ 37$.
@@ -139,14 +139,14 @@ increasing strength.
 
 \begin{definition}
   \label{def:mirimanoffPolynomialVanishing}
-  \lean{KummerCriterion.FLT37.MirimanoffPolynomialVanishing}\leanok
+  \lean{KummerCriterion.LehmerVandiver.MirimanoffPolynomialVanishing}\leanok
   $\mathrm{MirimanoffPolynomialVanishing}$ asserts: for every $n$ with
   $2 \le n \le p - 3$, $\varphi_n(t) \equiv 0 \pmod p$.
 \end{definition}
 
 \begin{definition}
   \label{def:mirimanoffBernoulliIdentity}
-  \lean{KummerCriterion.FLT37.MirimanoffBernoulliIdentity}\leanok
+  \lean{KummerCriterion.LehmerVandiver.MirimanoffBernoulliIdentity}\leanok
   $\mathrm{MirimanoffBernoulliIdentity}$ asserts the product congruence
   $\varphi_n(t) \cdot B_{p-n} \equiv 0 \pmod p$ for every odd $n$ with
   $2 \le n \le p - 3$.
@@ -154,7 +154,7 @@ increasing strength.
 
 \begin{definition}
   \label{def:mirimanoffBernoulliConclusion}
-  \lean{KummerCriterion.FLT37.MirimanoffBernoulliConclusion}\leanok
+  \lean{KummerCriterion.LehmerVandiver.MirimanoffBernoulliConclusion}\leanok
   $\mathrm{MirimanoffBernoulliConclusion}$ asserts: for every $n$ with
   $2 \le n \le p - 3$ such that $t^n \not\equiv 1 \pmod p$,
   $p \mid \mathrm{num}(B_{p-n})$.
@@ -170,7 +170,7 @@ Bernoulli-divisibility conclusion ($\mathrm{MBC}$).
 
 \begin{theorem}
   \label{thm:caseI_thirtyseven_of_bernoulli_conclusion}
-  \lean{KummerCriterion.FLT37.caseI_thirtyseven_of_bernoulli_conclusion}\leanok
+  \lean{KummerCriterion.LehmerVandiver.caseI_thirtyseven_of_bernoulli_conclusion}\leanok
   \uses{def:mirimanoffBernoulliConclusion, thm:vandiverIIIHypothesis_thirtyseven}
   At $\ell = 37$, $\mathrm{MirimanoffBernoulliConclusion}\ 37\ a\ b$ for a
   case-I solution $(a,b,c)$ produces a contradiction (i.e.\ no such
@@ -195,8 +195,8 @@ Sinnott's index formula combined with a direct Bernoulli-table
 computation at the irregular index~$32$.
 
 \begin{theorem}
-  \label{thm:flt37_not_dvd_hPlus}
-  \lean{KummerCriterion.FLT37.Sinnott.flt37_not_dvd_hPlus}\leanok
+  \label{thm:lehmer_vandiver_not_dvd_hPlus}
+  \lean{KummerCriterion.LehmerVandiver.Sinnott.lehmer_vandiver_not_dvd_hPlus}\leanok
   $37 \nmid h^+(\mathbb Q(\zeta_{37}))$.
 \end{theorem}
 
@@ -220,14 +220,14 @@ regularity-free structural input needed for the Washington 9.4 descent.
 
 \begin{definition}
   \label{def:vandiverLemma1Thirtyseven}
-  \lean{KummerCriterion.FLT37.VandiverLemma1Thirtyseven}\leanok
+  \lean{KummerCriterion.LehmerVandiver.VandiverLemma1Thirtyseven}\leanok
   $\mathrm{VandiverLemma1Thirtyseven}$ asserts: for any coprime
   integers $a,b,c$ with $37 \mid abc$, $a^{37} + b^{37} \neq c^{37}$.
 \end{definition}
 
 \begin{theorem}
   \label{thm:caseII_thirtyseven_of_vandiverLemma1}
-  \lean{KummerCriterion.FLT37.caseII_thirtyseven_of_vandiverLemma1}\leanok
+  \lean{KummerCriterion.LehmerVandiver.caseII_thirtyseven_of_vandiverLemma1}\leanok
   \uses{def:vandiverLemma1Thirtyseven, def:vandiverIIICaseII}
   $\mathrm{VandiverLemma1Thirtyseven}$ implies $\mathrm{VandiverIIICaseII}$
   at $\ell = 37$.
@@ -236,7 +236,7 @@ regularity-free structural input needed for the Washington 9.4 descent.
 \subsection*{Where $\mathrm{VandiverLemma1Thirtyseven}$ comes from}
 
 The Lehmer--Vandiver machinery in
-\texttt{KummerCriterion/FLT37/LehmerVandiver/} formalises the
+\texttt{KummerCriterion/LehmerVandiver/} formalises the
 Washington 9.4 descent in the $\sigma$-stable product form recommended
 by the 2026-05-27 expert review.  The descent proceeds as follows.
 
@@ -279,11 +279,11 @@ the only remaining mathematical input.
 
 \begin{theorem}
   \label{thm:fermatLastTheoremFor_thirtyseven_of_conclusion_and_vandiverLemma1}
-  \lean{KummerCriterion.FLT37.fermatLastTheoremFor_thirtyseven_of_conclusion_and_vandiverLemma1}\leanok
+  \lean{KummerCriterion.LehmerVandiver.fermatLastTheoremFor_thirtyseven_of_conclusion_and_vandiverLemma1}\leanok
   \uses{thm:caseI_thirtyseven_of_bernoulli_conclusion,
         thm:caseII_thirtyseven_of_vandiverLemma1,
         thm:fermatLastTheoremFor_thirtyseven_of_caseI_caseII,
-        thm:flt37_not_dvd_hPlus}
+        thm:lehmer_vandiver_not_dvd_hPlus}
   If
   \begin{enumerate}
     \item every case-I solution $(a,b,c)$ at $\ell = 37$ satisfies
@@ -297,7 +297,7 @@ the only remaining mathematical input.
 
 This section records the principal named theorems developed in the
 project — \emph{including} pieces that were not used on the critical path
-to the FLT37 statement above.  They are part of the project's
+to the LehmerVandiver statement above.  They are part of the project's
 deliverable formalisation of cyclotomic-field arithmetic and are
 referenced from multiple chapters of the wider blueprint.
 
@@ -305,7 +305,7 @@ referenced from multiple chapters of the wider blueprint.
 
 \begin{theorem}
   \label{thm:sinnottIndexFormula_of_regulatorIdentity}
-  \lean{KummerCriterion.FLT37.Sinnott.sinnottIndexFormula_of_regulatorIdentity}\leanok
+  \lean{KummerCriterion.LehmerVandiver.Sinnott.sinnottIndexFormula_of_regulatorIdentity}\leanok
   Under the Kummer--Dirichlet regulator identity (the analytic input,
   proved via the deleted-Fourier formula), Sinnott's index formula holds:
   \[
@@ -394,7 +394,7 @@ referenced from multiple chapters of the wider blueprint.
 \section{Outlook}
 
 Modulo the unconditional $37 \nmid h^+$
-(\cref{thm:flt37_not_dvd_hPlus}), the proof of
+(\cref{thm:lehmer_vandiver_not_dvd_hPlus}), the proof of
 $\mathrm{FLT}_{37}$ in this project reduces to two named hypotheses:
 
 \begin{enumerate}

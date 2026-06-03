@@ -1,4 +1,4 @@
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part4
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part4
 
 @[expose] public section
 
@@ -9,7 +9,7 @@ open scoped NumberField
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 namespace Sinnott
 
@@ -101,7 +101,7 @@ theorem KummerDirichletDeterminant_of_regOfFamilySqEqProdNontrivialQeSq
     [NumberField.IsCMField K]
     (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) (hp_two : 2 < p)
     (h : RegOfFamilySqEqProdNontrivialQeSq (p := p) K hp_odd hp_three) :
-    KummerCriterion.FLT37.Sinnott.KummerDirichletDeterminant p K hp_odd hp_three :=
+    KummerCriterion.LehmerVandiver.Sinnott.KummerDirichletDeterminant p K hp_odd hp_three :=
   KummerDirichletDeterminant_of_MatrixRestrictionToSinnott (p := p) K hp_odd
     hp_three hp_two
     (matrixRestrictionToSinnott_of_regOfFamily_sq_eq_prod_nontrivial_qe_sq
@@ -793,7 +793,7 @@ theorem familyIndexAsUnit_ne_one_and_neg_one
 
 end Sinnott
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

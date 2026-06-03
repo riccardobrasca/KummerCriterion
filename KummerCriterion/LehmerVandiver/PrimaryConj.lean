@@ -1,9 +1,9 @@
 module
 
-public import KummerCriterion.FLT37.Primary
+public import KummerCriterion.LehmerVandiver.Primary
 
 /-!
-# Complex conjugation preserves primarity (ticket FLT37b2b)
+# Complex conjugation preserves primarity (ticket LehmerVandiverb2b)
 
 For a CM cyclotomic field `K = ℚ(ζ_p)`, complex conjugation `σ` sends `ζ` to
 `ζ^{p-1}`. Hence `σ(ζ - 1) = ζ^{p-1} - 1 = -ζ^{p-1}(ζ - 1)`, and `σ(ζ - 1)`
@@ -31,7 +31,7 @@ open scoped NumberField nonZeroDivisors
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 section ConjSetup
 
@@ -85,7 +85,7 @@ theorem associated_complexConj_zetaSubOne [IsCMField K] :
 
 end ConjSetup
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

@@ -1,4 +1,4 @@
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part6
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part6
 
 @[expose] public section
 
@@ -9,7 +9,7 @@ open scoped NumberField
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 namespace Sinnott
 
@@ -67,7 +67,7 @@ theorem det_sinnottMatrix_eq_pow_two_mul_det
             w ≠ NumberField.Units.dirichletUnitTheorem.w₀}) =>
         Real.log
           (((NumberField.IsCMField.equivInfinitePlace K).symm w.val)
-            ((FLT37.realCyclotomicUnit p K
+            ((LehmerVandiver.realCyclotomicUnit p K
               ((((NumberField.Units.equivFinRank
                   (NumberField.maximalRealSubfield K)).symm i).cast
                 ((NumberField.IsCMField.units_rank_eq_units_rank
@@ -83,7 +83,7 @@ theorem det_sinnottMatrix_eq_pow_two_mul_det
 
 end Sinnott
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

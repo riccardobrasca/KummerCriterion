@@ -1,4 +1,4 @@
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part3
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part3
 
 @[expose] public section
 
@@ -9,7 +9,7 @@ open scoped NumberField
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 namespace Sinnott
 
@@ -271,7 +271,7 @@ theorem KummerDirichletDeterminant_of_MatrixRestrictionToSinnott
     [NumberField.IsCMField K]
     (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) (hp_two : 2 < p)
     (h_matrix : MatrixRestrictionToSinnott (p := p) K hp_odd hp_three) :
-    KummerCriterion.FLT37.Sinnott.KummerDirichletDeterminant p K hp_odd hp_three :=
+    KummerCriterion.LehmerVandiver.Sinnott.KummerDirichletDeterminant p K hp_odd hp_three :=
   KummerDirichletDeterminant_of_FrobeniusDetIdentity (p := p) K hp_odd hp_three
     (FrobeniusDetIdentity_of_MatrixRestrictionToSinnott (p := p) K hp_odd
       hp_three hp_two h_matrix)
@@ -351,7 +351,7 @@ theorem sinnottMatrix_entry_decomp
         w ≠ NumberField.Units.dirichletUnitTheorem.w₀}) :
     Real.log
         (((NumberField.IsCMField.equivInfinitePlace K).symm w.val)
-          ((FLT37.realCyclotomicUnit p K
+          ((LehmerVandiver.realCyclotomicUnit p K
             ((((NumberField.Units.equivFinRank
                 (NumberField.maximalRealSubfield K)).symm i).cast
               ((NumberField.IsCMField.units_rank_eq_units_rank
@@ -473,7 +473,7 @@ theorem sinnottMatrix_eq_two_A_sub_two_B
             w ≠ NumberField.Units.dirichletUnitTheorem.w₀}) =>
         Real.log
           (((NumberField.IsCMField.equivInfinitePlace K).symm w.val)
-            ((FLT37.realCyclotomicUnit p K
+            ((LehmerVandiver.realCyclotomicUnit p K
               ((((NumberField.Units.equivFinRank
                   (NumberField.maximalRealSubfield K)).symm i).cast
                 ((NumberField.IsCMField.units_rank_eq_units_rank
@@ -500,7 +500,7 @@ theorem sinnottMatrix_eq_two_smul_A_sub_B
             w ≠ NumberField.Units.dirichletUnitTheorem.w₀}) =>
         Real.log
           (((NumberField.IsCMField.equivInfinitePlace K).symm w.val)
-            ((FLT37.realCyclotomicUnit p K
+            ((LehmerVandiver.realCyclotomicUnit p K
               ((((NumberField.Units.equivFinRank
                   (NumberField.maximalRealSubfield K)).symm i).cast
                 ((NumberField.IsCMField.units_rank_eq_units_rank
@@ -558,7 +558,7 @@ theorem det_convolutionMatrixLogNormEven_sq_eq_qe_one_sq_mul_prod_nontrivial_qe_
 
 end Sinnott
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

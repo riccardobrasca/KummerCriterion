@@ -1,4 +1,4 @@
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part2
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part2
 
 @[expose] public section
 
@@ -9,7 +9,7 @@ open scoped NumberField
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 namespace Sinnott
 
@@ -44,8 +44,8 @@ theorem KummerDirichletDeterminant_of_FrobeniusDetIdentity
     [NumberField.IsCMField K]
     (hp_odd : p ≠ 2) (hp_three : 3 ≤ p)
     (h_frob : FrobeniusDetIdentity (p := p) K hp_odd hp_three) :
-    FLT37.Sinnott.KummerDirichletDeterminant p K hp_odd hp_three := by
-  unfold FLT37.Sinnott.KummerDirichletDeterminant
+    LehmerVandiver.Sinnott.KummerDirichletDeterminant p K hp_odd hp_three := by
+  unfold LehmerVandiver.Sinnott.KummerDirichletDeterminant
   unfold FrobeniusDetIdentity at h_frob
   -- h_frob : ↑regOfFamily ^ 2 = (∏ DLS χ⁻¹)² in ℂ
   have h_analytic := hPlus_mul_regulator_sq_eq (p := p) K hp_odd hp_three
@@ -90,7 +90,7 @@ theorem KummerDirichletDeterminant_of_FrobeniusDetIdentity
   -- Positivity: regOfFamily ≥ 0 and 2^((p-3)/2) · hPlus · regulator > 0.
   have h_reg_nonneg : (0 : ℝ) ≤ NumberField.Units.regOfFamily
       (cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three) := by
-    rw [KummerCriterion.FLT37.Sinnott.regOfFamily_cyclotomicUnitFamilyKplus_eq_det
+    rw [KummerCriterion.LehmerVandiver.Sinnott.regOfFamily_cyclotomicUnitFamilyKplus_eq_det
       (p := p) (K := K) hp_odd hp_three]
     exact abs_nonneg _
   have h_rhs_nonneg : (0 : ℝ) ≤ (2 : ℝ) ^ ((p - 3) / 2) *
@@ -527,7 +527,7 @@ theorem det_convolutionMatrixLogNormEven_sq_eq_log_p_sq_mul_nontrivial_DLS_sq
 
 end Sinnott
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

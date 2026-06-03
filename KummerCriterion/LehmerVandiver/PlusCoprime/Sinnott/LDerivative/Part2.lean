@@ -1,4 +1,4 @@
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part1
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part1
 
 @[expose] public section
 
@@ -9,7 +9,7 @@ open scoped NumberField
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 namespace Sinnott
 
@@ -581,7 +581,7 @@ theorem hPlus_mul_regulator_sq_eq
 
 end Sinnott
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

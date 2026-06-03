@@ -1,4 +1,4 @@
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part5
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part5
 
 @[expose] public section
 
@@ -9,7 +9,7 @@ open scoped NumberField
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 namespace Sinnott
 
@@ -365,7 +365,7 @@ theorem KplusInfinitePlaceEquivCyclotomicEvenDelta_shifted_apply_w₀
 
 end Sinnott
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

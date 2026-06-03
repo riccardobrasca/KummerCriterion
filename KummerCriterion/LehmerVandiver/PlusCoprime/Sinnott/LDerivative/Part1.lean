@@ -1,4 +1,4 @@
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.Determinant
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.Determinant
 import KummerCriterion.LValueAtOne.Defs
 import KummerCriterion.HMinus.KplusLocalCharacters
 import KummerCriterion.HMinus.LValueReduction.LValues
@@ -46,7 +46,7 @@ open scoped NumberField
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 namespace Sinnott
 
@@ -656,7 +656,7 @@ theorem two_mul_quotientEigenvalue_trivial_eq_sum_logNorm (hp_two : 2 < p) :
 
 end Sinnott
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

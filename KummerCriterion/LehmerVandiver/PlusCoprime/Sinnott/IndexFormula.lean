@@ -1,10 +1,10 @@
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
-import KummerCriterion.FLT37.PrimaryUnits.Part1
-import KummerCriterion.FLT37.PrimaryUnits.Part2
-import KummerCriterion.FLT37.PrimaryUnits.Part3
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
+import KummerCriterion.LehmerVandiver.PrimaryUnits.Part1
+import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
+import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3
 import Mathlib.NumberTheory.NumberField.CMField
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.KummerLift.CharacterIdentification
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
+import KummerCriterion.LehmerVandiver.PlusCoprime.KummerLift.CharacterIdentification
 import Mathlib.RingTheory.Ideal.Quotient.Basic
 import Mathlib.GroupTheory.SpecificGroups.Cyclic
 import Mathlib.RingTheory.IntegralDomain
@@ -49,7 +49,7 @@ open NumberField NumberField.IsCMField
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 namespace Sinnott
 
@@ -194,7 +194,7 @@ This is the structural form of the Cor 8.19 contrapositive engine. -/
 
 end Sinnott
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

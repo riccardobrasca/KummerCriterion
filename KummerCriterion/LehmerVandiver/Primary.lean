@@ -33,7 +33,7 @@ open scoped NumberField nonZeroDivisors
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 section CyclotomicSetup
 
@@ -50,7 +50,7 @@ noncomputable def zetaSubOne : 𝓞 K :=
 
 end CyclotomicSetup
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 

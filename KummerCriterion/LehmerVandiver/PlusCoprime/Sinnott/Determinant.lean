@@ -1,4 +1,4 @@
-import KummerCriterion.FLT37.LehmerVandiver.PlusCoprime.Sinnott.LogEmbedding
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LogEmbedding
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 
 /-!
@@ -31,7 +31,7 @@ open Complex Real
 
 namespace KummerCriterion
 
-namespace FLT37
+namespace LehmerVandiver
 
 namespace Sinnott
 
@@ -86,7 +86,7 @@ theorem norm_one_sub_exp_two_pi_I_mul (q : ℝ) :
 
 end Sinnott
 
-end FLT37
+end LehmerVandiver
 
 end KummerCriterion
 
