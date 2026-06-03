@@ -49,7 +49,7 @@ theorem rationalToLambdaCompletionRingHom_le_one_iff
             Valued.v.restrict x ≤ 1} :=
         Valued.isClopen_closedBall
           (R := (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ)
-          (r := 1) (by exact one_ne_zero)
+          (r := 1) one_ne_zero
       have hA : IsClopen A := by
         convert hA' using 1
         ext x
@@ -59,7 +59,7 @@ theorem rationalToLambdaCompletionRingHom_le_one_iff
             Valued.v.restrict (f x) ≤ 1} :=
         (Valued.isClopen_closedBall
           (R := LambdaValuedCompletion p K) (r := 1)
-          (by exact one_ne_zero)).preimage
+          one_ne_zero).preimage
           (continuous_algebraMap_rationalCompletionToLambdaAlgebra (p := p) (K := K))
       have hB : IsClopen B := by
         convert hB' using 1
@@ -454,7 +454,7 @@ theorem exists_completion_fin_valuation_sub_le_exp_neg_one_of_valuation_le_one
       valuedCyclotomicLambda_valuation (p := p) (K := K)
   have hA' : IsClopen {x : ValuedCompletion p K | Valued.v.restrict x ≤ 1} :=
     Valued.isClopen_closedBall
-      (R := ValuedCompletion p K) (r := 1) (by exact one_ne_zero)
+      (R := ValuedCompletion p K) (r := 1) one_ne_zero
   have hA : IsClopen A := by
     convert hA' using 1
     ext x

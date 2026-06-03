@@ -85,14 +85,6 @@ theorem zeta_sub_one_mul_cyclotomicUnit (k : ℕ) :
   have h := one_sub_zeta_mul_cyclotomicUnit p K k
   linear_combination -h
 
-/-- **Conjugation unit value: `u = -ζ^{p-1}` in `𝓞 K`.** -/
-private theorem zetaSubOneConjUnit_val_eq [IsCMField K] :
-    ((zetaSubOneConjUnit p K : (𝓞 K)ˣ) : 𝓞 K) =
-      -((zeta_spec p ℚ K).unit' : 𝓞 K) ^ (p - 1) := by
-  unfold zetaSubOneConjUnit
-  push_cast
-  ring
-
 /-- `cyclotomicUnit k ≡ k (mod ζ - 1)` in `𝓞 K`: the difference
 `cyclotomicUnit k - k` is divisible by `ζ - 1`. -/
 theorem zetaSubOne_dvd_cyclotomicUnit_sub_natCast (k : ℕ) :

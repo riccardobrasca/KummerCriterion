@@ -347,11 +347,6 @@ noncomputable def samePrimeFiniteArtinHasseLogTerm (N r : ℕ)
   Ideal.Quotient.mk ((lambdaIdeal p K) ^ (N + 1))
     (samePrimeArtinHasseLogTermNumerator (p := p) (K := K) r x hx)
 
-private theorem quotientNatCastInv_one (N : ℕ) (h : Nat.Coprime 1 p) :
-    quotientNatCastInv (p := p) (K := K) N 1 h = 1 :=
-  quotientNatCastInv_eq_of_mul_right_eq_one
-    (p := p) (K := K) (N := N) (m := 1) h (by simp)
-
 theorem samePrimeNatDivEval_prime_pow_zero_eq_finiteArtinHasseLogTerm
     (N r : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K)
     (hmem : x ^ (p ^ r) ∈

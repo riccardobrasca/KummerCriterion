@@ -240,10 +240,9 @@ theorem lambdaValuation_isEquiv_comap_cyclotomicSigma
     (a : CyclotomicUnitDelta p) :
     ((lambdaHeightOneSpectrum p K).valuation K).IsEquiv
       (((lambdaHeightOneSpectrum p K).valuation K).comap
-        (cyclotomicSigmaOfUnit (p := p) K a).toRingHom) := by
-  apply Valuation.isEquiv_of_val_le_one
-  intro x
-  exact (lambdaValuation_cyclotomicSigma_le_one_iff (p := p) (K := K) a x).symm
+        (cyclotomicSigmaOfUnit (p := p) K a).toRingHom) :=
+  Valuation.isEquiv_of_val_le_one fun x =>
+    (lambdaValuation_cyclotomicSigma_le_one_iff (p := p) (K := K) a x).symm
 
 omit [NumberField K] in
 theorem valuedCompletion_withValCongrComap_le_one_iff
@@ -597,27 +596,25 @@ theorem dworkCompleteComplexConj_evalIntegralPowerSeries_inverse
       evalIntegralPowerSeries p K (integralInverseSeries p K)
         (dworkCompleteComplexConj (p := p) K x)
         (by
-          rw [evalₐ_dworkCompleteComplexConj, hx, map_zero]) := by
-  apply AdicCompletion.ext_evalₐ
-  intro N
-  rw [evalₐ_dworkCompleteComplexConj, evalIntegralPowerSeries_evalₐ,
-    evalIntegralPowerSeries_evalₐ]
-  exact quotientMap_evalIntegralPowerSeriesMod_complexConj (p := p) (K := K)
-    (integralInverseSeries p K)
-    (integralInverseSeries_map_valuedIntegerComplexConj (p := p) (K := K))
-    x N
+          rw [evalₐ_dworkCompleteComplexConj, hx, map_zero]) :=
+  AdicCompletion.ext_evalₐ fun N => by
+    rw [evalₐ_dworkCompleteComplexConj, evalIntegralPowerSeries_evalₐ,
+      evalIntegralPowerSeries_evalₐ]
+    exact quotientMap_evalIntegralPowerSeriesMod_complexConj (p := p) (K := K)
+      (integralInverseSeries p K)
+      (integralInverseSeries_map_valuedIntegerComplexConj (p := p) (K := K))
+      x N
 
 theorem dworkCompleteComplexConj_dworkParameter :
     dworkCompleteComplexConj (p := p) K (dworkParameter p K) =
       dworkConjugateParameter p K := by
   rw [dworkParameter_eq_evalIntegralPowerSeries_lambda (p := p) (K := K)]
   rw [dworkCompleteComplexConj_evalIntegralPowerSeries_inverse]
-  apply AdicCompletion.ext_evalₐ
-  intro N
-  rw [evalIntegralPowerSeries_evalₐ, dworkConjugateParameter_evalₐ]
-  exact congrArg (fun y : DworkCompleteIntegerRing p K =>
-    evalIntegralPowerSeriesMod p K (integralInverseSeries p K) y N)
-      (dworkCompleteComplexConj_dworkCompleteLambda (p := p) (K := K))
+  exact AdicCompletion.ext_evalₐ fun N => by
+    rw [evalIntegralPowerSeries_evalₐ, dworkConjugateParameter_evalₐ]
+    exact congrArg (fun y : DworkCompleteIntegerRing p K =>
+      evalIntegralPowerSeriesMod p K (integralInverseSeries p K) y N)
+        (dworkCompleteComplexConj_dworkCompleteLambda (p := p) (K := K))
 
 theorem dworkCompleteComplexConj_dworkParameter_eq_neg (hp_two : 2 < p) :
     dworkCompleteComplexConj (p := p) K (dworkParameter p K) =

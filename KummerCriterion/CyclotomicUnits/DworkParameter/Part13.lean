@@ -55,7 +55,7 @@ instance instCompleteSpaceRationalPadicIntegerRing :
         Valued.v.restrict x ≤ 1} :=
     Valued.isClopen_closedBall
       (R := (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ)
-      (r := 1) (by exact one_ne_zero)
+      (r := 1) one_ne_zero
   have hA : IsClosed A := by
     convert hA'.1 using 1
     ext x

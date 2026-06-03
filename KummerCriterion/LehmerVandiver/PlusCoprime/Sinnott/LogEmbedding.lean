@@ -206,10 +206,8 @@ theorem zeta_sub_one_ne_zero_K (hp_two : 2 ≤ p) :
   intro h
   have h_inj : Function.Injective (algebraMap (𝓞 K) K) :=
     FaithfulSMul.algebraMap_injective (𝓞 K) K
-  have h_OK_zero : ((IsCyclotomicExtension.zeta_spec p ℚ K).unit' : 𝓞 K) - 1 = 0 := by
-    apply h_inj
-    rw [map_zero, map_sub, map_one]
-    exact h
+  have h_OK_zero : ((IsCyclotomicExtension.zeta_spec p ℚ K).unit' : 𝓞 K) - 1 = 0 :=
+    h_inj (by simpa [map_sub, map_one] using h)
   exact (IsCyclotomicExtension.zeta_spec p ℚ K).unit'_coe.sub_one_ne_zero (by omega) h_OK_zero
 
 set_option backward.isDefEq.respectTransparency false in
@@ -227,9 +225,7 @@ theorem cyclotomicUnit_ne_zero_K
   apply hU.ne_zero
   have h_inj : Function.Injective (algebraMap (𝓞 K) K) :=
     FaithfulSMul.algebraMap_injective (𝓞 K) K
-  apply h_inj
-  rw [map_zero]
-  exact h
+  exact h_inj (by simpa using h)
 
 set_option backward.isDefEq.respectTransparency false in
 omit [IsCMField K] in

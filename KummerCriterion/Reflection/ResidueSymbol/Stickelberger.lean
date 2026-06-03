@@ -117,24 +117,6 @@ trace formula `ψ_q(x) = ζ_q^{Tr(x)}` and is deferred to
 together with the prime-ideal factorisation work.
 -/
 
-/-- Generic lemma: if `y` is integral over `ℤ` and `x ∈ Subring.closure {y}`,
-then `x` is integral over `ℤ`. The integral closure is itself a subring,
-containing `y`, hence contains `Subring.closure {y}`. -/
-private theorem isIntegral_of_mem_closure_singleton
-    {R' : Type*} [CommRing R'] {y : R'} (hy : IsIntegral ℤ y)
-    {x : R'} (hx : x ∈ Subring.closure {y}) :
-    IsIntegral ℤ x := by
-  refine Subring.closure_induction
-    (p := fun x _ => IsIntegral ℤ x) ?_ ?_ ?_ ?_ ?_ ?_ hx
-  · intro z hz
-    rw [Set.mem_singleton_iff] at hz
-    exact hz ▸ hy
-  · exact isIntegral_zero
-  · exact isIntegral_one
-  · exact fun _ _ _ _ ha hb => ha.add hb
-  · exact fun _ _ ha => ha.neg
-  · exact fun _ _ _ _ ha hb => ha.mul hb
-
 /-!
 ### Stickelberger weight
 
@@ -184,15 +166,6 @@ Combined with `gaussSum_mem_ideal_of_addChar_sub_one_mem`,
 this gives the concrete instantiation: `g(χ_q) ∈ Q` for `Q` above `q`,
 when the additive character `ψ_q` has the form `ψ_q(x) = ζ^{Tr(x)}`.
 -/
-
-/-- **Membership preservation under associated elements.** In a commutative
-ring, two associated elements lie in the same ideals. -/
-private theorem _root_.Associated.mem_ideal_of_mem
-    {R : Type*} [CommRing R] {a b : R} (h : Associated a b)
-    {I : Ideal R} (ha : a ∈ I) :
-    b ∈ I := by
-  obtain ⟨u, rfl⟩ := h
-  exact Ideal.mul_mem_right (u : R) I ha
 
 end Furtwaengler
 

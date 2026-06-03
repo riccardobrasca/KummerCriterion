@@ -558,15 +558,14 @@ theorem dworkCompleteCyclotomicEquiv_evalIntegralPowerSeries_inverse
       evalIntegralPowerSeries p K (integralInverseSeries p K)
         (dworkCompleteCyclotomicEquiv (p := p) K a x)
         (by
-          rw [evalₐ_dworkCompleteCyclotomicEquiv, hx, map_zero]) := by
-  apply AdicCompletion.ext_evalₐ
-  intro N
-  rw [evalₐ_dworkCompleteCyclotomicEquiv, evalIntegralPowerSeries_evalₐ,
-    evalIntegralPowerSeries_evalₐ]
-  exact quotientMap_evalIntegralPowerSeriesMod_cyclotomic (p := p) (K := K) a
-    (integralInverseSeries p K)
-    (integralInverseSeries_map_valuedIntegerCyclotomicEquiv (p := p) (K := K) a)
-    x N
+          rw [evalₐ_dworkCompleteCyclotomicEquiv, hx, map_zero]) :=
+  AdicCompletion.ext_evalₐ fun N => by
+    rw [evalₐ_dworkCompleteCyclotomicEquiv, evalIntegralPowerSeries_evalₐ,
+      evalIntegralPowerSeries_evalₐ]
+    exact quotientMap_evalIntegralPowerSeriesMod_cyclotomic (p := p) (K := K) a
+      (integralInverseSeries p K)
+      (integralInverseSeries_map_valuedIntegerCyclotomicEquiv (p := p) (K := K) a)
+      x N
 
 theorem dworkCompleteCyclotomicEquiv_dworkParameter_as_inverse
     (a : CyclotomicUnitDelta p) :

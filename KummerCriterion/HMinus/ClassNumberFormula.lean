@@ -157,10 +157,10 @@ lemma maximalRealSubfield_torsion_eq_one_or_neg_one
     hφ.coe_embedding_apply (u : L)
   have hu_fin : IsOfFinOrder u := (CommGroup.mem_torsion _ u).1 x.prop
   obtain ⟨n, hn, hu_pow⟩ := isOfFinOrder_iff_pow_eq_one.mp hu_fin
-  have hnorm : ‖φ (u : L)‖ = 1 := by
-    apply Complex.norm_eq_one_of_pow_eq_one
-    · simpa [map_pow] using congrArg (fun z : (𝓞 L)ˣ => φ (z : L)) hu_pow
-    · exact Nat.ne_of_gt hn
+  have hnorm : ‖φ (u : L)‖ = 1 :=
+    Complex.norm_eq_one_of_pow_eq_one
+      (by simpa [map_pow] using congrArg (fun z : (𝓞 L)ˣ => φ (z : L)) hu_pow)
+      (Nat.ne_of_gt hn)
   have hr_norm : ‖(r : ℂ)‖ = 1 := by
     rwa [← hur] at hnorm
   have hr_abs : |r| = 1 := by
@@ -240,10 +240,8 @@ lemma zeta_not_mem_maximalRealSubfield (hp_odd' : p ≠ 2) :
   have hstar : star (φ ζ) = φ ζ := hfix φ
   have hpow : (φ ζ) ^ p = 1 := by
     simpa [map_pow] using congrArg φ hζ.pow_eq_one
-  have hnorm : ‖φ ζ‖ = 1 := by
-    apply Complex.norm_eq_one_of_pow_eq_one
-    · exact hpow
-    · exact hp.out.ne_zero
+  have hnorm : ‖φ ζ‖ = 1 :=
+    Complex.norm_eq_one_of_pow_eq_one hpow hp.out.ne_zero
   have him : (φ ζ).im = 0 := by
     simpa [RCLike.star_def] using (Complex.conj_eq_iff_im.mp hstar)
   let r : ℝ := (φ ζ).re

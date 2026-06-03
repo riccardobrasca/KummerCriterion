@@ -154,8 +154,7 @@ theorem complexCharacterMulEquivUnits_quadraticCharComplex (hp₂ : p ≠ 2) :
       (p := p) (χ := quadraticCharComplex p) (quadraticCharComplex_inv (p := p)).symm with hχ | hχ
   · exfalso
     apply quadraticCharComplex_ne_one (p := p) hp₂
-    apply (complexCharacterMulEquivUnits (p := p)).injective
-    simpa using hχ
+    exact (complexCharacterMulEquivUnits (p := p)).injective (by simpa using hχ)
   · exact hχ
 
 /-- A self-inverse complex Dirichlet character is either trivial or quadratic. -/
@@ -164,15 +163,14 @@ theorem selfInverse_character_eq_one_or_quadratic (hp₂ : p ≠ 2)
     χ = 1 ∨ χ = quadraticCharComplex p := by
   rcases selfInverse_character_image_units_eq_one_or_neg_one (p := p) (χ := χ) hχself with hχ | hχ
   · left
-    apply (complexCharacterMulEquivUnits (p := p)).injective
-    simpa using hχ
+    exact (complexCharacterMulEquivUnits (p := p)).injective (by simpa using hχ)
   · right
-    apply (complexCharacterMulEquivUnits (p := p)).injective
-    calc
-      complexCharacterMulEquivUnits (p := p) χ = (-1 : (ZMod p)ˣ) := hχ
-      _ = complexCharacterMulEquivUnits (p := p) (quadraticCharComplex p) := by
-            symm
-            exact complexCharacterMulEquivUnits_quadraticCharComplex (p := p) hp₂
+    exact (complexCharacterMulEquivUnits (p := p)).injective (by
+      calc
+        complexCharacterMulEquivUnits (p := p) χ = (-1 : (ZMod p)ˣ) := hχ
+        _ = complexCharacterMulEquivUnits (p := p) (quadraticCharComplex p) := by
+              symm
+              exact complexCharacterMulEquivUnits_quadraticCharComplex (p := p) hp₂)
 
 /-- The only nontrivial self-inverse complex Dirichlet character mod `p` is the
 quadratic character. -/

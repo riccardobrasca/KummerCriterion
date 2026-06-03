@@ -279,7 +279,7 @@ theorem fourierCyclotomicSingleDifferenceProduct_eq_weightedPairProduct
   rw [hreflect, ← Finset.prod_mul_distrib]
   have hhalf : (n + n) / 2 = n := by
     have htwo : 2 * ((n + n) / 2) = n + n :=
-      Nat.two_mul_div_two_of_even (show Even (n + n) by exact ⟨n, by simp⟩)
+      Nat.two_mul_div_two_of_even ⟨n, by simp⟩
     omega
   rw [hhalf]
 

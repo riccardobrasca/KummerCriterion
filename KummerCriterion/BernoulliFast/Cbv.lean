@@ -195,55 +195,6 @@ private theorem toRat_mulF {f₁ f₂ : Frac} (h₁ : f₁.2 ≠ 0) (h₂ : f₂
   rw [toRat_simplify (f := (p₁ * p₂, q₁ * q₂)) (Nat.mul_ne_zero h₁ h₂)]
   simp [toRat, Rat.mkRat_mul_mkRat]
 
-private theorem mulN_den_ne_zero {f : Frac} (hf : f.2 ≠ 0) (c : Nat) :
-    (mulN f c).2 ≠ 0 := by
-  rcases f with ⟨p, q⟩
-  dsimp at hf
-  simp only [mulN]
-  let g := Nat.gcd c q
-  have hqg : q / g ≠ 0 :=
-    (Nat.div_pos (Nat.gcd_le_right c (Nat.pos_of_ne_zero hf))
-      (Nat.gcd_pos_of_pos_right c (Nat.pos_of_ne_zero hf))).ne'
-  have hsimp : (simplify (p * ((c / g) : Int), q / g)).2 =
-      (q / g) / Nat.gcd (p * ((c / g) : Int)).natAbs (q / g) := by
-    simp [simplify]
-  rw [hsimp]
-  have hqgPos : 0 < q / g := Nat.pos_of_ne_zero hqg
-  exact (Nat.div_pos
-    (Nat.gcd_le_right _ hqgPos)
-    (Nat.gcd_pos_of_pos_right _ hqgPos)).ne'
-
-private theorem toRat_mulN {f : Frac} (hf : f.2 ≠ 0) (c : Nat) :
-    toRat (mulN f c) = toRat f * (c : ℚ) := by
-  rcases f with ⟨p, q⟩
-  dsimp at hf
-  simp only [mulN]
-  let g := Nat.gcd c q
-  have hg0 : g ≠ 0 := Nat.gcd_ne_zero_right hf
-  have hqg : q / g ≠ 0 :=
-    (Nat.div_pos (Nat.gcd_le_right c (Nat.pos_of_ne_zero hf))
-      (Nat.gcd_pos_of_pos_right c (Nat.pos_of_ne_zero hf))).ne'
-  change toRat (simplify (p * ((c / g) : Int), q / g)) = toRat (p, q) * (c : ℚ)
-  rw [toRat_simplify (f := (p * ((c / g) : Int), q / g)) hqg]
-  simp only [toRat]
-  rw [show (c : ℚ) = mkRat (c : Int) 1 by
-    rw [Rat.mkRat_eq_div]
-    norm_num]
-  rw [Rat.mkRat_mul_mkRat]
-  simp only [Nat.mul_one]
-  have hnum : p * ((c / g) : Int) * (g : Int) = p * (c : Int) := by
-    have hc : ((c : Int) / (g : Int)) * (g : Int) = (c : Int) :=
-      Int.ediv_mul_cancel (Int.ofNat_dvd.2 (Nat.gcd_dvd_left c q))
-    calc
-      p * ((c / g) : Int) * (g : Int)
-          = p * (((c : Int) / (g : Int)) * (g : Int)) := by ring_nf
-      _ = p * (c : Int) := by rw [hc]
-  have hden : (q / g) * g = q := by
-    rw [Nat.div_mul_cancel (Nat.gcd_dvd_right c q)]
-  have h := Rat.mkRat_mul_right (n := p * ((c / g) : Int)) (d := q / g) hg0
-  rw [hnum, hden] at h
-  exact h.symm
-
 private theorem mulZ_den_ne_zero {f : Frac} (hf : f.2 ≠ 0) (z : Int) :
     (mulZ f z).2 ≠ 0 := by
   rcases f with ⟨p, q⟩

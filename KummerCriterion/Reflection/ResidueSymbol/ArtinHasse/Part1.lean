@@ -616,40 +616,6 @@ theorem artinHasseExpSeries_coeff_isRIntegral
     simpa [hquot] using rescale_exp_sub_one_coeff_rMultiple r n hn
   exact hps n
 
-private theorem rescale_exp_coeff_mul_eq_choose_mul_coeff
-    (r : ℕ) [Fact (Nat.Prime r)] (i j : ℕ) :
-    (PowerSeries.coeff (R := ℚ) i)
-        (PowerSeries.rescale (r : ℚ) (PowerSeries.exp ℚ)) *
-      (PowerSeries.coeff (R := ℚ) j)
-        (PowerSeries.rescale (r : ℚ) (PowerSeries.exp ℚ)) =
-      ((Nat.choose (i + j) i : ℕ) : ℚ) *
-        (PowerSeries.coeff (R := ℚ) (i + j))
-          (PowerSeries.rescale (r : ℚ) (PowerSeries.exp ℚ)) := by
-  rw [PowerSeries.coeff_rescale, PowerSeries.coeff_rescale,
-    PowerSeries.coeff_rescale, PowerSeries.coeff_exp, PowerSeries.coeff_exp,
-    PowerSeries.coeff_exp]
-  have hr : (r : ℚ) ≠ 0 := Nat.cast_ne_zero.mpr (Fact.out : Nat.Prime r).ne_zero
-  have hi : ((i.factorial : ℕ) : ℚ) ≠ 0 :=
-    Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero i)
-  have hj : ((j.factorial : ℕ) : ℚ) ≠ 0 :=
-    Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero j)
-  have hij : (((i + j).factorial : ℕ) : ℚ) ≠ 0 :=
-    Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero (i + j))
-  have hfact :
-      ((Nat.choose (i + j) i : ℕ) : ℚ) *
-          ((i.factorial : ℕ) : ℚ) * ((j.factorial : ℕ) : ℚ) =
-        (((i + j).factorial : ℕ) : ℚ) := by
-    have hfact_nat :
-        Nat.choose (i + j) i * i.factorial * j.factorial = (i + j).factorial := by
-      simpa [Nat.add_comm, Nat.mul_comm, Nat.mul_left_comm, Nat.mul_assoc] using
-        Nat.add_choose_mul_factorial_mul_factorial j i
-    exact_mod_cast hfact_nat
-  simp only [Algebra.algebraMap_self, RingHom.id_apply]
-  field_simp [hr, hi, hj, hij]
-  rw [pow_add]
-  rw [← hfact]
-  ring
-
 end Furtwaengler
 
 end KummerCriterion

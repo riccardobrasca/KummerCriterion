@@ -389,7 +389,7 @@ lemma localPrimeCountPlus_mul_localResidueDegreePlus
       by_contra hc_not_even
       have hc_odd : Odd c := Nat.not_even_iff_odd.mp hc_not_even
       have hlhs_odd : Odd (c * (2 * k + 1)) :=
-        hc_odd.mul (show Odd (2 * k + 1) by exact ⟨k, rfl⟩)
+        hc_odd.mul ⟨k, rfl⟩
       have h_lhs_even : Even (c * (2 * k + 1)) := by
         simpa [hprod'] using h_rhs_even
       exact (Nat.not_even_iff_odd.mpr hlhs_odd) h_lhs_even
@@ -460,10 +460,8 @@ lemma prod_even_characters_eval_eq_pow_localResidueDegreePlus
     exact orderOf_eq_card_of_forall_mem_zpowers hg_zpow
   have hfin_g : IsOfFinOrder g := isOfFinOrder_iff_pow_eq_one.mpr
     ⟨n, hn_pos, by rw [← hg_order]; exact pow_orderOf_eq_one g⟩
-  have hgcd2 : n.gcd 2 = 2 := by
-    apply Nat.dvd_antisymm
-    · exact Nat.gcd_dvd_right n 2
-    · exact Nat.dvd_gcd ⟨n2, hn2'⟩ dvd_rfl
+  have hgcd2 : n.gcd 2 = 2 :=
+    Nat.dvd_antisymm (Nat.gcd_dvd_right n 2) (Nat.dvd_gcd ⟨n2, hn2'⟩ dvd_rfl)
   have hω : IsPrimitiveRoot (Complex.exp (2 * Real.pi * Complex.I / n)) n :=
     Complex.isPrimitiveRoot_exp n hn_pos.ne'
   set ω : ℂ := Complex.exp (2 * Real.pi * Complex.I / n)

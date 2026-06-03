@@ -118,19 +118,6 @@ theorem artinHasseExpSeries_mapTo_subst_inverse
     _ = 1 + (PowerSeries.X : PowerSeries A) := by
           simp
 
-private theorem exists_inverse_mod_pow_of_not_mem_maximal
-    {A : Type*} [CommRing A] {I : Ideal A} [I.IsMaximal] {x : A} {e : ℕ}
-    (he : e ≠ 0) (hx : x ∉ I) :
-    ∃ y : A, x * y - 1 ∈ I ^ e := by
-  have hunit : IsUnit (Ideal.Quotient.mk (I ^ e) x) :=
-    (Ideal.Quotient.isUnit_mk_pow_iff_notMem (I := I) (n := e) he).2 hx
-  rcases isUnit_iff_exists.mp hunit with ⟨u, hxu, _hux⟩
-  rcases Ideal.Quotient.mk_surjective u with ⟨y, rfl⟩
-  refine ⟨y, ?_⟩
-  have hzero : Ideal.Quotient.mk (I ^ e) (x * y - 1) = 0 := by
-    rw [map_sub, map_mul, hxu, map_one, sub_self]
-  exact Ideal.Quotient.eq_zero_iff_mem.mp hzero
-
 end Furtwaengler
 
 end KummerCriterion
