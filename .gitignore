@@ -1,0 +1,29 @@
+.lake/
+blueprint/web/
+blueprint/print/
+blueprint/src/web.bbl
+
+# In order to avoid having to gitignore each new build folder added by lake,
+# we ignore all folders called 'build' in the entire project.
+build
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.pdf
+*.synctex.gz
+*.toc
+.mathlib-quality/.status_server.pid
+.mathlib-quality/.status_annotations.json
+.mathlib-quality/beastmode_active
+.mathlib-quality/.beastmode_stop_state
+__pycache__/
+.claude/worktrees/
+# Blueprint build outputs
+blueprint/src/web/
+blueprint/src/print/
+*.paux

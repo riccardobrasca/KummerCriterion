@@ -1,0 +1,99 @@
+\section{\texorpdfstring{The implication from $h^+$ to $h^-$}{The implication from h-plus to h-minus}}
+
+\begin{theorem}\label{thm:bernoulli-nonzero-index}
+  \lean{KummerCriterion.not_dvd_cyclotomicUnitIndex_of_bernoulli_nonzero}\leanok
+  \uses{thm:kummer-log-det-bernoulli, thm:kummer-log-det-saturation,
+  thm:not-dvd-index-of-pSaturated}
+Let $p$ be an odd prime.  Suppose that
+\[
+  \forall j,\ 1\le j,\ 2j\le p-3,\quad
+  p\nmid\operatorname{num}(B_{2j}).
+\]
+Then
+\[
+  p\nmid[(\mathcal O_{K^+})^\times:C^+].
+\]
+\end{theorem}
+\begin{proof}\leanok
+If $p=3$, the group $C^+$ is the full unit group, and the index is $1$.  For
+$p\ge5$, \cref{thm:kummer-log-det-bernoulli} identifies the Bernoulli
+nonvanishing hypothesis with nonvanishing of the Kummer logarithm determinant.
+By \cref{thm:kummer-log-det-saturation}, the subgroup $C^+$ is then
+$p$-saturated in the full unit group.  The index nondivisibility follows from
+\cref{thm:not-dvd-index-of-pSaturated}.
+\end{proof}
+
+\begin{theorem}\label{thm:not-dvd-hplus-of-not-dvd-hminus-units}
+  \lean{KummerCriterion.not_dvd_hPlus_of_not_dvd_hMinus_units}\leanok
+  \uses{thm:hminus-nondiv-to-bernoulli-nondiv, thm:bernoulli-nonzero-index,
+  thm:sinnott-index-pprimary, thm:CPlus-normalized-index}
+If $p\nmid h^-(K)$, then $p\nmid h^+(K)$.
+\end{theorem}
+\begin{proof}\leanok
+By \cref{thm:hminus-nondiv-to-bernoulli-nondiv}, the hypothesis
+$p\nmid h^-(K)$ implies that no Bernoulli numerator in Kummer's range is
+divisible by $p$.  Hence \cref{thm:bernoulli-nonzero-index} gives
+\[
+  p\nmid[(\mathcal O_{K^+})^\times:C^+].
+\]
+If $p\mid h^+(K)$, then the prime-conductor index theorem
+\cref{thm:sinnott-index-pprimary} gives divisibility of the normalized
+cyclotomic-unit index.  By \cref{thm:CPlus-normalized-index}, this is
+equivalent to divisibility of the ordinary $C^+$ index, a contradiction.
+\end{proof}
+
+\begin{theorem}\label{thm:hplus-to-hminus-units}
+  \lean{KummerCriterion.weakReflection_dvd_hMinus_of_dvd_hPlus_units}\leanok
+  \uses{thm:not-dvd-hplus-of-not-dvd-hminus-units}
+If $p\mid h^+(K)$, then $p\mid h^-(K)$.
+\end{theorem}
+\begin{proof}\leanok
+This is the contrapositive of
+\cref{thm:not-dvd-hplus-of-not-dvd-hminus-units}.  Indeed, if
+$p\nmid h^-(K)$, then that theorem gives $p\nmid h^+(K)$.
+\end{proof}
+
+\section{The total class-number criterion}
+
+\begin{theorem}\label{thm:dvd-h-iff-bernoulli-units}
+  \lean{KummerCriterion.dvd_h_iff_exists_dvd_bernoulli_units}\leanok
+  \uses{thm:dvd-h-iff-dvd-hminus-from-plus-to-minus,
+  thm:hplus-to-hminus-units, thm:hminus-bernoulli-final}
+For an odd prime $p$ and the $p$th cyclotomic field $K$,
+\[
+  p\mid h(K)
+  \quad\Longleftrightarrow\quad
+  \exists k,\ 1\le k,\ 2k\le p-3,\quad
+  p\mid\operatorname{num}(B_{2k}).
+\]
+\end{theorem}
+\begin{proof}\leanok
+The implication $p\mid h^+(K)\Rightarrow p\mid h^-(K)$ is
+\cref{thm:hplus-to-hminus-units}.  Therefore
+\cref{thm:dvd-h-iff-dvd-hminus-from-plus-to-minus} rewrites $p\mid h(K)$ as
+$p\mid h^-(K)$.  The result follows from the minus class-number criterion
+\cref{thm:hminus-bernoulli-final}.
+\end{proof}
+
+\section{Kummer's criterion}
+
+\begin{theorem}\label{thm:kummer-criterion}
+  \lean{KummerCriterion}\leanok
+  \uses{thm:dvd-h-iff-bernoulli-units}
+Let $p$ be an odd prime.  Then
+\[
+  p\ \text{is regular}
+  \quad\Longleftrightarrow\quad
+  \forall k,\ 1\le k,\ 2k\le p-3,\quad
+  p\nmid\operatorname{num}(B_{2k}).
+\]
+\end{theorem}
+\begin{proof}\leanok
+By definition, $p$ is regular if and only if $p$ is coprime to the class
+number of the $p$th cyclotomic field.  Since $p$ is prime, this is equivalent
+to $p\nmid h(K)$.  Applying \cref{thm:dvd-h-iff-bernoulli-units}, the
+negation of $p\mid h(K)$ is exactly the assertion that there is no
+$k$ in the range $1\le k$, $2k\le p-3$ for which
+$p\mid\operatorname{num}(B_{2k})$.  This is the displayed universal
+nondivisibility condition.
+\end{proof}

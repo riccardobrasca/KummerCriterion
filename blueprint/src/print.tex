@@ -1,0 +1,23 @@
+% PDF entry point.  This is a print rendering of the same online blueprint.
+
+\documentclass[a4paper]{report}
+
+\usepackage{amssymb, amsthm, amsmath}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{expl3}
+\usepackage[capitalize,noabbrev]{cleveref}
+
+\input{macros/common}
+\input{macros/print}
+
+\title{Kummer's Criterion}
+\author{Chris Birkbeck and Riccardo Brasca}
+
+\begin{document}
+\hypersetup{pageanchor=false}
+\maketitle
+\clearpage
+\hypersetup{pageanchor=true}
+\input{content}
+\end{document}

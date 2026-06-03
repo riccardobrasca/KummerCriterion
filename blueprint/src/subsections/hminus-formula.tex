@@ -1,0 +1,256 @@
+\section{Characters and Bernoulli factors}
+
+\begin{definition}\label{def:dirichlet-character}
+  \lean{DirichletCharacter}\leanok
+Dirichlet characters modulo $p$ are used as the character side of the
+cyclotomic zeta factorisation and of the Teichmuller congruence.
+\end{definition}
+
+\begin{definition}\label{def:generalized-bernoulli}
+  \lean{KummerCriterion.BernoulliGen}\leanok
+  \uses{def:dirichlet-character}
+For a Dirichlet character $\chi$, the generalized Bernoulli number
+is denoted
+\[
+  B_{n,\chi}.
+\]
+The final class-number formula only needs the values $B_{1,\chi^{-1}}$ for
+odd characters.
+\end{definition}
+
+\begin{definition}\label{def:teichmuller}
+  \lean{KummerCriterion.teichmullerCharQp}\leanok
+  \uses{def:dirichlet-character}
+For a prime $p$, the Teichmuller character valued in $\Q_p$ is written
+\[
+  \omega:\left(\Z/p\Z\right)^\times\to\Q_p^\times.
+\]
+\end{definition}
+
+\begin{theorem}\label{thm:bernoulli-padicInt-below}
+  \lean{KummerCriterion.bernoulli_mem_padicInt_of_lt_sub_one}\leanok
+For $0<n<p-1$, the classical Bernoulli number $B_n$ is $p$-adically integral.
+\end{theorem}
+\begin{proof}\leanok
+The proof uses the von Staudt--Clausen denominator description: the only
+possible prime divisors of the denominator of $B_n$ are primes $q$ with
+$q-1\mid n$.  Since $n<p-1$, the prime $p$ cannot occur.
+\end{proof}
+
+\begin{theorem}\label{thm:bernoulli-den-coprime}
+  \lean{KummerCriterion.prime_not_dvd_bernoulli_den_of_lt_sub_one}\leanok
+  \uses{thm:bernoulli-padicInt-below}
+For $0<n<p-1$, the prime $p$ does not divide the denominator of $B_n$.
+\end{theorem}
+\begin{proof}\leanok
+This is the denominator form of \cref{thm:bernoulli-padicInt-below}.  Lean
+passes between $p$-adic integrality and the rational denominator condition.
+\end{proof}
+
+\begin{lemma}\label{lem:padic-bernoulli-factor}
+  \lean{KummerCriterion.exists_padicInt_bernoulli_factor}\leanok
+  \uses{thm:bernoulli-den-coprime}
+For $0<n<p-1$, the factor $B_n/n$ has a representative in $\Z_p$, and that
+representative is a $p$-adic unit exactly when $p$ does not divide the
+numerator of $B_n$.
+\end{lemma}
+\begin{proof}\leanok
+The denominator is prime to $p$ by \cref{thm:bernoulli-den-coprime}, so the
+rational number $B_n/n$ lies in $\Z_p$.  In $\Z_p$, non-units are precisely
+the elements with norm $<1$, equivalently elements divisible by $p$; this is
+translated back to divisibility of the Bernoulli numerator.
+\end{proof}
+
+\begin{theorem}\label{thm:teichmuller-bernoulli-congruence}
+  \lean{KummerCriterion.bernoulliGen_teichmuller_pow_sModEq_div}\leanok
+  \uses{def:generalized-bernoulli, def:teichmuller}
+For the odd Teichmuller powers used in the relative class-number formula,
+\[
+  B_{1,\omega^j}
+  \equiv \frac{B_{j+1}}{j+1}\pmod p.
+\]
+\end{theorem}
+\begin{proof}\leanok
+This is the bridge from generalized Bernoulli values to classical
+Bernoulli numbers.  The proof uses the Kummer congruence machinery and checks
+the range hypotheses ensuring that $j+1$ is neither divisible by $p$ nor by
+$p-1$.
+\end{proof}
+
+\section{The relative class-number formula}
+
+\begin{theorem}\label{thm:hplus-even-lvalues}
+  \lean{KummerCriterion.hPlus_formula_of_evenLValues}\leanok
+  \uses{def:dirichlet-character}
+The class number $h^+$ is expressed by the even part of the cyclotomic
+$L$-product with the explicit cyclotomic $K^+$ factor:
+\[
+  h^+(K)=
+  \operatorname{factor}_{K^+}
+  \prod_{\chi\ \mathrm{even},\ \chi\ne1} L(1,\chi).
+\]
+\end{theorem}
+\begin{proof}\leanok
+The proof rewrites the analytic class-number formula for the maximal
+real subfield using the product over even non-trivial characters.
+\end{proof}
+
+\begin{theorem}\label{thm:raw-gauss-product}
+  \lean{KummerCriterion.rawGaussProduct}\leanok
+  \uses{def:dirichlet-character}
+The product of the Gauss sums over odd characters has the explicit value used
+to cancel the analytic constants in the relative class-number formula.
+\end{theorem}
+\begin{proof}\leanok
+The proof splits into the cases $p\equiv1\pmod4$ and $p\equiv3\pmod4$.
+Non-quadratic odd characters are paired with their inverses, using the usual
+identity for a Gauss sum times its inverse.  The possible quadratic odd
+character contributes the classical quadratic Gauss sum.
+\end{proof}
+
+\begin{theorem}\label{thm:cyclotomic-gauss-goal}
+  \lean{KummerCriterion.cyclotomicHGaussGoal_holds}\leanok
+  \uses{thm:raw-gauss-product}
+The explicit Gauss-product formula satisfies the packaged Gauss hypothesis
+needed by the relative class-number assembly theorem.
+\end{theorem}
+\begin{proof}\leanok
+The raw product identity is rewritten into the Gauss-product hypothesis needed
+by the relative class-number formula.
+\end{proof}
+
+\begin{theorem}\label{thm:hminus-formula-from-inputs}
+  \lean{KummerCriterion.hMinus_formula_of_residue_and_hPlus_cyclotomic_and_gauss}\leanok
+  \uses{thm:hplus-even-lvalues, thm:cyclotomic-gauss-goal}
+Assume the cyclotomic residue factorisation, the $h^+$ even-value formula, and
+the packaged Gauss-product identity.  Then
+\[
+  h^-(K)
+  =
+  2p\prod_{\chi\ \mathrm{odd}}
+    \left(-\frac12 B_{1,\chi^{-1}}\right).
+\]
+\end{theorem}
+\begin{proof}\leanok
+The proof divides the full cyclotomic class-number formula by the $K^+$
+formula, uses the residue factorisation to leave only the odd $L$-values, and
+then substitutes the odd $L(1,\chi)$ formula.  The Gauss product cancels the
+remaining analytic constants, leaving exactly the product of generalized
+Bernoulli factors.
+\end{proof}
+
+\begin{theorem}\label{thm:hminus-formula}
+  \lean{KummerCriterion.hMinus_formula}\leanok
+  \uses{thm:hminus-formula-from-inputs, thm:hplus-even-lvalues,
+  thm:cyclotomic-gauss-goal}
+For an odd prime cyclotomic field,
+\[
+  h^-(K)
+  =
+  2p\prod_{\chi\ \mathrm{odd}}
+    \left(-\frac12 B_{1,\chi^{-1}}\right).
+\]
+\end{theorem}
+\begin{proof}\leanok
+The proof supplies the three inputs of
+\cref{thm:hminus-formula-from-inputs}: the Dedekind-zeta residue factorisation
+into even and odd $L$-products, \cref{thm:hplus-even-lvalues}, and
+\cref{thm:cyclotomic-gauss-goal}.
+\end{proof}
+
+\section{\texorpdfstring{From $h^-$ to Bernoulli numerators}{From h-minus to Bernoulli numerators}}
+
+\begin{theorem}\label{thm:hminus-teichmuller-mod-p}
+  \lean{KummerCriterion.hMinus_formula_teichmuller_mod_p}\leanok
+  \uses{thm:hminus-formula, def:teichmuller}
+There exists $z\in\Z_p$ such that
+\[
+  h^-(K)
+  =
+  \prod_{\substack{j<p-2\\ j\ \mathrm{odd}}}
+    \left(-\frac12 B_{1,\omega^j}\right)
+  + pz
+\]
+inside $\Q_p$.
+\end{theorem}
+\begin{proof}\leanok
+Starting from \cref{thm:hminus-formula}, the proof indexes the odd
+characters by powers of the Teichmuller character.  The boundary character
+$\omega^{p-2}$ contributes a factor congruent to $1$ modulo $p$, so it can be
+absorbed into the error term $pz$.
+\end{proof}
+
+\begin{theorem}\label{thm:hminus-bernoulli-mod-p}
+  \lean{KummerCriterion.hMinus_formula_bernoulli_mod_p}\leanok
+  \uses{thm:hminus-teichmuller-mod-p, thm:teichmuller-bernoulli-congruence,
+  lem:padic-bernoulli-factor}
+There exists $z\in\Z_p$ such that
+\[
+  h^-(K)
+  =
+  \prod_{\substack{j<p-2\\ j\ \mathrm{odd}}}
+    \left(-\frac12\frac{B_{j+1}}{j+1}\right)
+  + pz
+\]
+inside $\Q_p$.
+\end{theorem}
+\begin{proof}\leanok
+Replace every generalized Bernoulli factor in
+\cref{thm:hminus-teichmuller-mod-p} by the congruent classical factor from
+\cref{thm:teichmuller-bernoulli-congruence}.  The integrality statement
+\cref{lem:padic-bernoulli-factor} keeps each replacement inside $\Z_p$ and
+collects all errors into one multiple of $p$.
+\end{proof}
+
+\begin{lemma}\label{lem:odd-index-to-k}
+  \lean{KummerCriterion.exists_odd_index_iff_exists_k}\leanok
+The odd index range $j<p-2$ is equivalent to the classical even Bernoulli range:
+\[
+  \exists j,\ j<p-2,\ j\ \mathrm{odd},\ Q(j+1)
+  \quad\Longleftrightarrow\quad
+  \exists k,\ 1\le k,\ 2k\le p-3,\ Q(2k).
+\]
+\end{lemma}
+\begin{proof}\leanok
+If $j$ is odd, write $j=2k-1$, so $j+1=2k$.  Conversely, an even index $2k$
+in the Kummer range corresponds to $j=2k-1$.  The remaining inequalities are
+elementary arithmetic in natural numbers.
+\end{proof}
+
+\begin{theorem}\label{thm:hminus-bernoulli-final}
+  \lean{KummerCriterion.p_dvd_hMinus_iff_p_dvd_some_bernoulli}\leanok
+  \uses{thm:hminus-bernoulli-mod-p, lem:padic-bernoulli-factor,
+  lem:odd-index-to-k}
+For $p$ odd,
+\[
+  p\mid h^-(K)
+  \quad\Longleftrightarrow\quad
+  \exists k,\ 1\le k,\ 2k\le p-3,\quad
+  p\mid\operatorname{num}(B_{2k}).
+\]
+\end{theorem}
+\begin{proof}\leanok
+By \cref{thm:hminus-bernoulli-mod-p}, $h^-$ is congruent modulo $p$ to a
+finite product of $p$-adic integers
+\[
+  -\frac12\frac{B_{j+1}}{j+1}.
+\]
+The factor $-1/2$ and the denominator $j+1$ are $p$-adic units in the range.
+Thus the product is divisible by $p$ exactly when at least one Bernoulli
+numerator is divisible by $p$.  Finally \cref{lem:odd-index-to-k} rewrites
+$j+1$ as $2k$ and gives the usual range $1\le k$, $2k\le p-3$.
+\end{proof}
+
+\begin{theorem}\label{thm:hminus-nondiv-to-bernoulli-nondiv}
+  \lean{KummerCriterion.bernoulli_nonzero_of_not_dvd_hMinus}\leanok
+  \uses{thm:hminus-bernoulli-final}
+If $p\nmid h^-(K)$, then for every $k$ with $1\le k$ and $2k\le p-3$,
+\[
+  p\nmid\operatorname{num}(B_{2k}).
+\]
+\end{theorem}
+\begin{proof}\leanok
+This is the contrapositive direction of
+\cref{thm:hminus-bernoulli-final}.  If some numerator were divisible by $p$,
+then the theorem would imply $p\mid h^-(K)$.
+\end{proof}

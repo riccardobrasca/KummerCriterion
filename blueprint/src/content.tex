@@ -1,0 +1,70 @@
+% Top-level content for the online blueprint.
+
+\blueprintfrontmatter
+
+\begin{abstract}
+This document gives a proof of \textbf{Kummer's criterion}:
+\[
+  p \text{ is regular}
+  \quad\Longleftrightarrow\quad
+  \forall k,\ 1 \le k,\ 2k \le p - 3,\quad
+  p \nmid \operatorname{num}(B_{2k})
+\]
+for every odd prime $p$.
+
+The proof has four steps.  First, for a prime cyclotomic CM field $K$ and its
+maximal real subfield $K^+$, extension of ideals gives an injective class-group
+map
+\[
+  \Cl(\mathcal O_{K^+}) \longrightarrow \Cl(\mathcal O_K).
+\]
+This proves $h^+ \mid h$ and allows the relative class number
+\[
+  h^- := h/h^+
+\]
+to be used as an actual natural number.
+
+Second, the relative class-number formula is reduced to a $p$-adic congruence
+and then to the Bernoulli numerator criterion:
+\[
+  p \mid h^- \quad\Longleftrightarrow\quad
+  \exists k,\ 1 \le k,\ 2k \le p-3,\quad
+  p \mid \operatorname{num}(B_{2k}).
+\]
+
+Third, the real cyclotomic units form a subgroup $C^+$ of the full unit group
+of $K^+$.  The Kummer logarithm matrix proves that Bernoulli numerator
+non-divisibility forces $C^+$ to be $p$-saturated, hence
+\[
+  p \nmid [\mathcal O_{K^+}^{\times}:C^+].
+\]
+The prime-conductor cyclotomic-unit index theorem identifies the odd-primary
+part of this index with $h^+$.
+
+Finally, these ingredients show that $p \mid h$ is equivalent to divisibility
+of one Bernoulli numerator in Kummer's range.  The definition of regular prime
+then gives the stated criterion.
+
+The Lean declaration corresponding to the final theorem is
+\texttt{KummerCriterion}.
+\end{abstract}
+
+\clearpage
+\setcounter{page}{2}
+\tableofcontents
+
+\blueprintmainmatter
+\chapter{Class numbers of the cyclotomic CM field}\label{ch:cm}
+\input{subsections/cm-splitting}
+
+\pagebreak
+\chapter{The minus class-number criterion}\label{ch:hminus-formula}
+\input{subsections/hminus-formula}
+
+\pagebreak
+\chapter{Cyclotomic units and Kummer logarithms}\label{ch:cyclotomic-units}
+\input{subsections/cyclotomic-units}
+
+\pagebreak
+\chapter{Final assembly}\label{ch:kummer-final}
+\input{subsections/final}

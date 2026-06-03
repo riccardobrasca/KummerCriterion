@@ -1,0 +1,97 @@
+# formalization.yaml (v0.2): repo-root metadata for formalization projects.
+# [required] fields should be filled; everything else is optional.
+
+version: "v0.2"
+
+# project - the formalization itself (not the source).
+project:
+  name: "KummerCriterion"        # [required]
+  authors:                       # [required] who did the formalization
+    - "Chris Birkbeck"
+    - "Riccardo Brasca"
+  license: "Apache-2.0"          # [required]
+
+# sources - what was formalized. List of papers/textbooks/blueprints.
+# title+authors required, others optional.
+sources:                         # [required] list of sources
+  - title: "Fermat's Last Theorem for regular primes"   # [required]
+    authors:                     # [required]
+      - "J. P. Diekmann"
+    id: "Master's thesis, University Duisburg-Essen, 2023; local file docs/diekmann_2023_flt_regular_primes.pdf"   # [required]
+    type: "thesis"
+    license: ""
+    author_contacted: "n/a"
+    prior_work: ""
+  - title: "Introduction to Cyclotomic Fields"
+    authors:
+      - "Lawrence C. Washington"
+    id: "local file docs/washington_cyclotomic_fields.pdf"
+    type: "textbook"
+    license: ""
+    author_contacted: "n/a"
+    prior_work: ""
+  - title: "Note on irregular primes"
+    authors:
+      - "Leonard Carlitz"
+    id: "Proc. Amer. Math. Soc. 5 (1954), 329-331"
+    type: "paper"
+    license: ""
+    author_contacted: "n/a"
+    prior_work: ""
+  - title: "A Classical Introduction to Modern Number Theory"
+    authors:
+      - "Kenneth Ireland"
+      - "Michael Rosen"
+    id: "Graduate Texts in Mathematics 84, Springer"
+    type: "textbook"
+    license: ""
+    author_contacted: "n/a"
+    prior_work: ""
+
+# how it was produced
+automation:
+  method: "agent"                # [required] manual | copilot | mixed | agent | autonomous
+  models:                        # e.g. ["claude-opus-4-7", "gpt-5"]
+    - "gpt-5"
+    - "claude-opus-4.7"
+  framework: "Codex CLI and Claude Code with Lean LSP tooling"
+  cost:
+    wall_time: "one month"
+    spend_usd: "$400 API spend"
+    hardware: "our laptops"
+  notes: "The Lean formalization work was carried out automatically by agents, with detailed human guidance on the mathematical strategy and decomposition. The main theorem is verified with comparator."
+
+# project status
+status:
+  scope: "Kummer's criterion: an odd prime p is regular iff p does not divide the numerator of any Bernoulli number B_2, B_4, ..., B_{p-3}. Built on top of the flt-regular project."
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:                        # list all axioms used (including standard axioms such as `Quot.sound`)
+    - "propext"
+    - "Classical.choice"
+    - "Quot.sound"
+  main_results:                  # list the main results of the project
+    - declaration: "KummerCriterion.fermatLastTheoremFor_le100_of_ne_irregular"
+      file: "KummerCriterion/BernoulliFast/FermatLastTheoremUpTo100.lean"
+      sorry_count: 0
+      axioms:
+        - "propext"
+        - "Classical.choice"
+        - "Quot.sound"
+
+# fidelity
+fidelity:
+  divergences: ""                # places the formalization deviates from sources
+
+# review status
+review:
+  status: "author-verified"      # [required] unchecked | agent-reviewed | self-assessed | peer-reviewed | author-verified
+  reviewers:
+    - "Chris Birkbeck"
+    - "Riccardo Brasca"
+  notes: ""
+
+# alignment - freeform yaml: how source statements map to formal declarations.
+# e.g. a blueprint link, or a per-statement table.
+alignment:
+  blueprint: "https://cbirkbeck.github.io/flt-regular-bernoulli/blueprint/"

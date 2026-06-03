@@ -1,0 +1,53 @@
+% Common macros for the online blueprint.
+
+% THEOREMS
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{hypothesis}[theorem]{Hypothesis}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{question}[theorem]{Question}
+\newtheorem{remark}[theorem]{Remark}
+
+% NUMBER SYSTEMS
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\F}{\mathbb{F}}
+
+% NUMBER-THEORETIC OBJECTS
+\newcommand{\OK}{\mathcal{O}_K}                  % Ring of integers of K
+\newcommand{\Ocirc}{\mathcal{O}}                 % Generic ring of integers
+\newcommand{\zetap}{\zeta_p}                     % Primitive p-th root of unity
+\newcommand{\Qzetap}{\Q(\zeta_p)}                % p-th cyclotomic field
+\newcommand{\Qzetapplus}{\Q(\zeta_p)^+}          % Maximal real subfield
+\newcommand{\Cl}[1]{\mathrm{Cl}(#1)}             % Class group
+\newcommand{\hp}{h(\Q(\zeta_p))}                 % Class number of Q(zeta_p)
+\newcommand{\hplus}{h^+}                          % Plus part of class number
+\newcommand{\hminus}{h^-}                         % Minus part of class number
+\newcommand{\Gal}[1]{\mathrm{Gal}(#1)}            % Galois group
+\newcommand{\Bk}{B}                               % Bernoulli number
+\newcommand{\Bgen}[2]{B_{#1,#2}}                  % Generalised Bernoulli
+\newcommand{\Norm}[1]{\mathrm{N}(#1)}             % Field norm
+
+% L-functions and zeta
+\newcommand{\Lfn}[2]{L(#1, #2)}                   % Generic L-value
+\newcommand{\zetaK}[1]{\zeta_{#1}}                 % Dedekind zeta of K
+\newcommand{\sinZeta}{\mathrm{sinZeta}}            % Hurwitz sine zeta
+\newcommand{\zetaodd}{\zeta^{\mathrm{odd}}}        % Hurwitz odd zeta
+
+% DELIMITERS
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+\newcommand{\setof}[2]{\left\{ #1 \;\middle|\; #2 \right\}}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\ang}[1]{\left\langle #1 \right\rangle}
+
+% MISC
+\newcommand{\todo}[1]{{\color{red}{\textbf{TODO: #1}}}}
