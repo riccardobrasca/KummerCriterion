@@ -1,7 +1,7 @@
 module
 
 public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
-import KummerCriterion.TotallyRealSubfield.Basic
+import KummerCriterion.TotallyRealSubfield.ClassGroup
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!

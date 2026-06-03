@@ -1,6 +1,6 @@
 module
 
-public import KummerCriterion.UnitQuotient.Components
+public import KummerCriterion.UnitQuotient.DeltaAction
 public import Mathlib.FieldTheory.Finite.Basic
 public import Mathlib.NumberTheory.MulChar.Basic
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic

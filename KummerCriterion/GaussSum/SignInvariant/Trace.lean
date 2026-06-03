@@ -3,7 +3,6 @@ module
 public import KummerCriterion.GaussSum.Basic
 public import Mathlib.Analysis.Fourier.ZMod
 public import Mathlib.NumberTheory.MulChar.Duality
-import Mathlib.NumberTheory.MulChar.Duality
 
 /-!
 # Finite-Fourier sign invariants for quadratic Gauss sums

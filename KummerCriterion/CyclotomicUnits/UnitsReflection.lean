@@ -1,10 +1,8 @@
 module
 
-public import KummerCriterion.CyclotomicUnits.Subgroup
+public import KummerCriterion.CyclotomicUnits.Saturation
 public import KummerCriterion.TotallyRealSubfield.ClassGroup
 public import Mathlib.NumberTheory.Bernoulli
-import KummerCriterion.CyclotomicUnits.ClassNumber
-import KummerCriterion.CyclotomicUnits.HMinusCriterion
 import KummerCriterion.CyclotomicUnits.KummerLogDeterminant
 import KummerCriterion.CyclotomicUnits.LogDomain
 import KummerCriterion.CyclotomicUnits.NormalizedIndex
@@ -25,6 +23,74 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
+
+/-!
+# Class-number algebra for the cyclotomic-unit route
+
+This file isolates the class-number step needed to plug a cyclotomic-unit proof
+of `p ∣ h⁺ → p ∣ h⁻` into Kummer's criterion.
+-/
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField
+
+namespace KummerCriterion
+
+/-- A cyclotomic-unit implication `p ∣ hPlus K → p ∣ hMinus K` identifies
+total and relative class-number divisibility. -/
+theorem dvd_h_iff_dvd_hMinus_of_dvd_hPlus_imp
+    {p : ℕ} [hp : Fact p.Prime] (hp_odd : p ≠ 2)
+    {K : Type*} [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
+    [IsCMField K]
+    (hplus_to_hminus : (p : ℕ) ∣ hPlus K → (p : ℕ) ∣ hMinus K) :
+    (p : ℕ) ∣ h K ↔ (p : ℕ) ∣ hMinus K := by
+  constructor
+  · intro hpH
+    rw [h_eq_hPlus_mul_hMinus p hp_odd K] at hpH
+    rcases hp.out.dvd_mul.mp hpH with hplus | hminus
+    · exact hplus_to_hminus hplus
+    · exact hminus
+  · intro hminus
+    rw [h_eq_hPlus_mul_hMinus p hp_odd K]
+    exact dvd_mul_of_dvd_right hminus (hPlus K)
+
+end KummerCriterion
+
+end
+
+/-!
+# Minus class-number criterion for the cyclotomic-unit route
+
+This file records the `h⁻`/Bernoulli-numerator API in the direction used by the
+cyclotomic-unit proof of weak reflection.
+-/
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField
+
+namespace KummerCriterion
+
+/-- Contrapositive form of `p_dvd_hMinus_iff_p_dvd_some_bernoulli`. -/
+theorem bernoulli_nonzero_of_not_dvd_hMinus
+    {p : ℕ} [Fact p.Prime]
+    {K : Type*} [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
+    [IsCMField K] (hp_odd : p ≠ 2)
+    (hminus : ¬ (p : ℕ) ∣ hMinus K) :
+    ∀ k, 1 ≤ k → 2 * k ≤ p - 3 →
+      ¬ (p : ℤ) ∣ (bernoulli (2 * k)).num := fun k hk hk_range hnum =>
+  hminus <|
+    (p_dvd_hMinus_iff_p_dvd_some_bernoulli (p := p) (K := K) hp_odd).2
+      ⟨k, hk, hk_range, hnum⟩
+
+end KummerCriterion
+
+end
 
 /-!
 # Cyclotomic-unit route to weak reflection

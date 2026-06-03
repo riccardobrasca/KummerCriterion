@@ -5,10 +5,9 @@ Authors: Bernoulli-Regular project contributors
 -/
 module
 
-public import KummerCriterion.BernoulliFast.Computation
+public import KummerCriterion.BernoulliFast.Correctness
 public meta import Lean.Meta.Sym.LitValues
 public import Mathlib.NumberTheory.Bernoulli
-import KummerCriterion.BernoulliFast.Correctness
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.NormNum.BigOperators
 import Mathlib.Tactic.NormNum.Irrational

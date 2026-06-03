@@ -4,9 +4,165 @@ public import KummerCriterion.KummerCongruence.BernoulliGeneralized
 public import FltRegular.NumberTheory.Cyclotomic.CyclRat
 public import KummerCriterion.TotallyRealSubfield.ClassGroup
 public import KummerCriterion.ZetaFactorisation.Basic
-import KummerCriterion.GaussSum.SignInvariant.BlockDecomposition
-import KummerCriterion.HMinus.LValueReduction.Final
+import KummerCriterion.GaussSum.SignInvariant.BlockDeterminant
 import KummerCriterion.HMinus.LValueReduction.LValues
+public import Mathlib.NumberTheory.NumberField.DedekindZeta
+import KummerCriterion.ZetaFactorisation.EulerProduct
+public import KummerCriterion.HMinus.LValueReduction.GaussGoal
+public import KummerCriterion.LValueAtOne.Odd
+import KummerCriterion.HMinus.LValueReduction.Assembly
+import KummerCriterion.HMinus.LValueReduction.GaussProduct
+
+/-!
+# Residue statements for cyclotomic zeta factorisation
+
+This module packages the `s = 1` residue consequences of the Euler-product
+factorisation used downstream in `HMinus`.
+-/
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField
+open scoped Topology nonZeroDivisors
+
+namespace KummerCriterion
+
+section ZetaFactorisation
+
+variable (p : ℕ) [hp : Fact p.Prime]
+  (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
+
+/-! ### Residue-ready statements -/
+
+/-- Residue of `(s - 1) · ζ(s) · nontrivialLProduct p s` at `s = 1`: equals
+`nontrivialLProduct p 1`, since `lim (s - 1)ζ(s) = 1` (residue of Riemann zeta)
+and the nontrivial L-product is continuous at `s = 1`. -/
+theorem tendsto_sub_one_mul_riemannZeta_mul_nontrivialLProduct :
+    Filter.Tendsto
+      (fun s : ℝ ↦ (s - 1) * (riemannZeta (s : ℂ) * nontrivialLProduct p (s : ℂ)))
+      (𝓝[>] 1)
+      (𝓝 (nontrivialLProduct p (1 : ℂ))) := by
+  classical
+  have h_cont : Continuous (nontrivialLProduct p) :=
+    continuous_finsetProd _ fun χ hχ =>
+      (DirichletCharacter.differentiable_LFunction (Finset.mem_erase.mp hχ).1).continuous
+  have h_embed :
+      Filter.Tendsto (fun s : ℝ ↦ (s : ℂ)) (𝓝[>] (1 : ℝ)) (𝓝[≠] (1 : ℂ)) :=
+    tendsto_nhdsWithin_iff.mpr
+      ⟨(Complex.continuous_ofReal.tendsto 1).mono_left nhdsWithin_le_nhds,
+        by
+          filter_upwards [self_mem_nhdsWithin] with s hs h
+          exact absurd (Complex.ofReal_injective h) (ne_of_gt hs)⟩
+  have h_zeta : Filter.Tendsto (fun s : ℝ => ((s : ℂ) - 1) * riemannZeta (s : ℂ))
+      (𝓝[>] (1 : ℝ)) (𝓝 1) :=
+    riemannZeta_residue_one.comp h_embed
+  have h_lprod : Filter.Tendsto (fun s : ℝ => nontrivialLProduct p (s : ℂ))
+      (𝓝[>] (1 : ℝ)) (𝓝 (nontrivialLProduct p 1)) :=
+    (h_cont.tendsto 1).comp (h_embed.mono_right nhdsWithin_le_nhds)
+  have h_prod := h_zeta.mul h_lprod
+  rw [one_mul] at h_prod
+  refine (Filter.tendsto_congr' ?_).mp h_prod
+  filter_upwards [self_mem_nhdsWithin] with s _
+  ring
+
+/-- Using the Washington identity `ζ_K = ζ · nontrivialLProduct`, the
+residue of `ζ_K` at `s = 1` equals `nontrivialLProduct p 1`. -/
+theorem tendsto_sub_one_mul_dedekindZeta_via_LProducts :
+    Filter.Tendsto
+      (fun s : ℝ ↦ (s - 1) * NumberField.dedekindZeta K (s : ℂ))
+      (𝓝[>] 1)
+      (𝓝 (nontrivialLProduct p (1 : ℂ))) := by
+  refine (Filter.tendsto_congr' ?_).mp (tendsto_sub_one_mul_riemannZeta_mul_nontrivialLProduct p)
+  filter_upwards [self_mem_nhdsWithin] with s hs
+  rw [dedekindZeta_eq_riemannZeta_mul_nontrivialLProduct_of_one_lt_re p K (by exact_mod_cast hs)]
+
+end ZetaFactorisation
+
+end KummerCriterion
+
+/-!
+# Final `hMinus` formulas
+
+This file combines the residue, `hPlus`, and Gauss-product packages into
+Diekmann Theorem 43 for `hMinus`.
+-/
+
+@[expose] public section
+
+noncomputable section
+
+open NumberField
+open scoped BigOperators
+
+namespace KummerCriterion
+
+section Final
+
+variable (p : ℕ) [hp : Fact p.Prime]
+  (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K] [IsCMField K]
+
+theorem hMinus_formula_of_residue_and_hPlus_cyclotomic_and_gauss
+    (hp_odd' : p ≠ 2)
+    (hres :
+      ((NumberField.dedekindZeta_residue K : ℝ) : ℂ) =
+        Finset.prod (evenNontrivialCharacters (p := p)) (fun χ => evenLValueRhs p χ) *
+          Finset.prod (oddCharacters (p := p)) (fun χ => DirichletCharacter.LFunction χ 1))
+    (hplus :
+      ((hPlus K : ℕ) : ℂ) =
+        cyclotomicHPlusFactor (K := K) *
+          Finset.prod (evenNontrivialCharacters (p := p)) (fun χ => evenLValueRhs p χ))
+    (hgauss : cyclotomicHGaussGoal (p := p) K) :
+    ((hMinus K : ℕ) : ℂ) =
+      (2 * p : ℂ) *
+        Finset.prod (oddCharacters (p := p)) (fun χ =>
+          (-(1 / 2 : ℂ)) * BernoulliGen χ⁻¹ 1) := by
+  apply hMinus_formula_of_residue_and_hPlus_and_gauss (p := p) (K := K) hp_odd'
+    (coefficient := cyclotomicRelativeLValueCoefficient (p := p) (K := K))
+    (plusFactor := cyclotomicHPlusFactor (K := K))
+  · calc
+      ((h K : ℕ) : ℂ) =
+          ((NumberField.dedekindZeta_residue K : ℝ) : ℂ) *
+            cyclotomicClassNumberFactor (p := p) (K := K) :=
+            h_formula_cyclotomic_complex (p := p) (K := K) hp_odd'
+      _ = ((NumberField.dedekindZeta_residue K : ℝ) : ℂ) *
+            (cyclotomicRelativeLValueCoefficient (p := p) (K := K) *
+              cyclotomicHPlusFactor (K := K)) := by
+            rw [cyclotomicClassNumberFactor_eq_relative_coefficient_mul_hPlusFactor
+              (p := p) (K := K)]
+  · exact hres
+  · exact hplus
+  · exact hgauss
+
+/-- Diekmann Theorem 43 for the relative class number of a cyclotomic field of prime conductor. -/
+theorem hMinus_formula (hp_odd' : p ≠ 2) :
+    ((hMinus K : ℕ) : ℂ) =
+      (2 * p : ℂ) *
+        Finset.prod (oddCharacters (p := p)) fun χ =>
+          (-(1 / 2 : ℂ)) * BernoulliGen χ⁻¹ 1 := by
+  apply hMinus_formula_of_residue_and_hPlus_cyclotomic_and_gauss
+    (p := p) (K := K) hp_odd'
+  · calc
+      ((NumberField.dedekindZeta_residue K : ℝ) : ℂ) =
+          nontrivialLProduct p (1 : ℂ) :=
+            tendsto_nhds_unique
+              (NumberField.tendsto_sub_one_mul_dedekindZeta_nhdsGT K)
+              (tendsto_sub_one_mul_dedekindZeta_via_LProducts p K)
+      _ = evenLProduct p (1 : ℂ) * oddLProduct p (1 : ℂ) := by
+            rw [nontrivialLProduct_eq_even_mul_odd]
+      _ =
+          Finset.prod (evenNontrivialCharacters (p := p)) (fun χ => evenLValueRhs p χ) *
+            Finset.prod (oddCharacters (p := p))
+              (fun χ => DirichletCharacter.LFunction χ 1) := by
+            rw [evenLProduct_one_eq_prod_evenLValueRhs (p := p)]
+            rfl
+  · exact hPlus_formula_of_evenLValues (p := p) (K := K) hp_odd'
+  · exact cyclotomicHGaussGoal_holds (p := p) (K := K) hp_odd'
+
+end Final
+
+end KummerCriterion
 
 /-!
 # Teichmüller reindexing for `hMinus`

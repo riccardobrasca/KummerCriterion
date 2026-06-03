@@ -2,7 +2,7 @@ module
 
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
 public import KummerCriterion.HMinus.KplusLocalCharacters
-public import KummerCriterion.TotallyRealSubfield.Basic
+public import KummerCriterion.TotallyRealSubfield.ClassGroup
 public import KummerCriterion.TotallyRealSubfield.ZetaPrime
 import Mathlib.RingTheory.Flat.TorsionFree
 

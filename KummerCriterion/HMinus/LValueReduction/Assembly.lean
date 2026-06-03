@@ -1,6 +1,6 @@
 module
 
-public import KummerCriterion.LValueAtOne.Defs
+public import KummerCriterion.LValueAtOne.Odd
 public import KummerCriterion.TotallyRealSubfield.ClassGroup
 public import KummerCriterion.ZetaFactorisation.Basic
 public import Mathlib.NumberTheory.NumberField.DedekindZeta

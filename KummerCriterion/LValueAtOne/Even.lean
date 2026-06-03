@@ -1,6 +1,6 @@
 module
 
-public import KummerCriterion.LValueAtOne.Defs
+public import KummerCriterion.LValueAtOne.Odd
 import KummerCriterion.LValueAtOne.Cosine
 
 /-!

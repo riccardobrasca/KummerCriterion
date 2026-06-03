@@ -1,7 +1,7 @@
 module
 
 public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
-public import KummerCriterion.TotallyRealSubfield.Basic
+public import KummerCriterion.TotallyRealSubfield.ClassGroup
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!

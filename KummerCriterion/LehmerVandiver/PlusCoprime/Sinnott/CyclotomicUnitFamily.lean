@@ -2,7 +2,6 @@ module
 
 public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3
 public import KummerCriterion.HMinus.ClassNumberFormula
-import KummerCriterion.HMinus.ClassNumberFormula
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!

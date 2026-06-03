@@ -1,9 +1,9 @@
 module
 
-public import KummerCriterion.CyclotomicUnits.Basic
+public import KummerCriterion.CyclotomicUnits.Saturation
 import KummerCriterion.LehmerVandiver.PlusCoprime.CharacterIdentification
 import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
-import KummerCriterion.TotallyRealSubfield.Basic
+import KummerCriterion.TotallyRealSubfield.ClassGroup
 import KummerCriterion.TotallyRealSubfield.ZetaPrime
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 

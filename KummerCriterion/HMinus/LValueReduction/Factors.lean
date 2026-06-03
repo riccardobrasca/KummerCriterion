@@ -1,6 +1,6 @@
 module
 
-public import KummerCriterion.TotallyRealSubfield.Basic
+public import KummerCriterion.TotallyRealSubfield.ClassGroup
 public import Mathlib.NumberTheory.NumberField.DedekindZeta
 import KummerCriterion.HMinus.ClassNumberFormula
 import Mathlib.Analysis.SpecialFunctions.Bernstein

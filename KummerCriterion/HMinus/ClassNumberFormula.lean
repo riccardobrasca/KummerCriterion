@@ -1,6 +1,6 @@
 module
 
-public import KummerCriterion.TotallyRealSubfield.Basic
+public import KummerCriterion.TotallyRealSubfield.ClassGroup
 public import KummerCriterion.TotallyRealSubfield.ZetaPrime
 public import Mathlib.NumberTheory.NumberField.DedekindZeta
 import FltRegular.NumberTheory.Cyclotomic.UnitLemmas

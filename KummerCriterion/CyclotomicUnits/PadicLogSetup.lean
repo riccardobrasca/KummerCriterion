@@ -1,10 +1,209 @@
 module
 
-public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseGlobalDecomposition
-public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseValuationTrace
 public import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part1
 import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part2
 import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part2
+public import KummerCriterion.Reflection.Local.DeltaAction
+import Mathlib.RingTheory.Henselian
+public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseCompletionMap
+
+/-!
+# Singular Kummer: localization at a height-one prime
+
+This file provides the localization target. For a height-one prime
+`v`, the local units are represented inside `Kˣ` as the elements with
+`v`-adic valuation one. After choosing a uniformizer, every global field
+class in `Kˣ / Kˣ^p` has a normalized representative in this local-unit
+subgroup, giving a homomorphism
+
+```text
+ Kˣ / Kˣ^p -> U_v / U_v^p.
+```
+
+Composing this with the singular-pair generator gives the localization map
+from the singular group `S` to the local-unit quotient.
+-/
+
+@[expose] public section
+
+noncomputable section
+
+open scoped NumberField
+
+namespace KummerCriterion
+namespace Reflection
+namespace SingularKummer
+
+namespace SingularPair
+
+section Cyclotomic
+
+variable (p : ℕ) [Fact p.Prime]
+variable (F : Type*) [Field F] [NumberField F] [IsCyclotomicExtension {p} ℚ F]
+
+/-- The distinguished cyclotomic lambda prime as a height-one prime. -/
+def cyclotomicLambdaHeightOne : IsDedekindDomain.HeightOneSpectrum (𝓞 F) where
+  asIdeal := Local.cyclotomicLambda p F
+  isPrime := zetaPrime_isPrime p F
+  ne_bot := zetaPrime_ne_bot p F
+
+end Cyclotomic
+
+end SingularPair
+
+end SingularKummer
+end Reflection
+end KummerCriterion
+
+end
+
+/-!
+# Global lambda decomposition for the Kummer--Artin--Hasse correction
+
+The full explicit local correction is only consumed by the global product
+formula on elements of `Kˣ`. This file gives the decomposition API for those
+global field units at the distinguished cyclotomic prime:
+
+* normalize by the explicit uniformizer `pi = zeta_p - 1`;
+* convert the resulting lambda-local unit into the localized ring and then
+ into the completed local unit group;
+* split the completed unit into its Teichmuller residue factor and a
+ principal-unit factor.
+
+This avoids assuming that the adic completed integer ring is already known to
+Lean as a DVR.
+-/
+
+@[expose] public section
+
+noncomputable section
+
+open scoped NumberField nonZeroDivisors WithZero
+open NumberField IsCyclotomicExtension IsDedekindDomain
+
+namespace KummerCriterion
+
+open Reflection.SingularKummer.SingularPair
+
+namespace Furtwaengler
+namespace KummerArtinHasse
+
+variable (p : ℕ) [Fact p.Prime]
+variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
+
+/-- The global integral cyclotomic uniformizer `pi = zeta_p - 1`. -/
+def lambdaPiIntegral
+    (p : ℕ) [Fact p.Prime]
+    (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K] :
+    𝓞 K :=
+  (zeta_spec p ℚ K).toInteger - 1
+
+@[simp]
+theorem lambdaPiIntegral_ne_zero
+    (p : ℕ) [Fact p.Prime]
+    (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K] :
+    lambdaPiIntegral p K ≠ 0 := by
+  change (zeta_spec p ℚ K).toInteger - 1 ≠ 0
+  exact (zeta_spec p ℚ K).zeta_sub_one_prime'.ne_zero
+
+/-- The explicit cyclotomic uniformizer as a global field unit. -/
+def lambdaPiFieldUnit
+    (p : ℕ) [Fact p.Prime]
+    (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K] :
+    Kˣ :=
+  Units.mk0 (algebraMap (𝓞 K) K (lambdaPiIntegral p K))
+    ((FaithfulSMul.algebraMap_injective (𝓞 K) K).ne
+      (lambdaPiIntegral_ne_zero (p := p) (K := K)))
+
+@[simp]
+theorem lambdaPiFieldUnit_val
+    (p : ℕ) [Fact p.Prime]
+    (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K] :
+    (lambdaPiFieldUnit p K : K) =
+      algebraMap (𝓞 K) K (lambdaPiIntegral p K) :=
+  rfl
+
+/-- The distinguished lambda prime as a height-one prime. -/
+abbrev lambdaHeightOne
+    (p : ℕ) [Fact p.Prime]
+    (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K] :
+    HeightOneSpectrum (𝓞 K) :=
+  Reflection.SingularKummer.SingularPair.cyclotomicLambdaHeightOne (p := p) K
+
+/-- The explicit cyclotomic uniformizer has normalized lambda valuation
+`exp (-1)`. -/
+theorem lambdaPiFieldUnit_valuation
+    (p : ℕ) [Fact p.Prime]
+    (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K] :
+    (lambdaHeightOne p K).valuation K (lambdaPiFieldUnit p K : K) =
+      WithZero.exp (-1 : ℤ) := by
+  rw [lambdaPiFieldUnit_val]
+  rw [HeightOneSpectrum.valuation_of_algebraMap]
+  have hspan :
+      (lambdaHeightOne p K).asIdeal =
+        Ideal.span ({lambdaPiIntegral p K} : Set (𝓞 K)) := rfl
+  exact (lambdaHeightOne p K).intValuation_singleton
+    (lambdaPiIntegral_ne_zero (p := p) (K := K)) hspan
+
+end KummerArtinHasse
+end Furtwaengler
+end KummerCriterion
+
+/-!
+# Valuation-completion trace source for the Kummer--Artin--Hasse `A` term
+
+The earlier local logarithm files are written in the project's adic completed
+integer ring `LambdaLocalIntegerRing`. The trace needed for the explicit
+Kummer--Artin--Hasse correction, however, is the finite `Q_p`-linear trace on
+the valuation completion of `K` at `lambda`.
+
+This file makes the trace-source API use the valuation-completion model from
+the start. The old adic logarithm stack remains useful infrastructure, but it
+is not the final source of the `A` term consumed by reciprocity.
+
+The `< p` truncated logarithm is kept as a named summand. The active finite
+approximation to the full p-adic logarithm for the Kummer--Artin--Hasse
+`A`-term is `log_≤p(u) = log_<p(u) + (u - 1)^p / p`; the missing `n = p`
+term is essential on the `μ_p` torsion direction in `U_1`.
+-/
+
+@[expose] public section
+
+noncomputable section
+
+open scoped NumberField
+
+namespace KummerCriterion
+namespace Furtwaengler
+namespace KummerArtinHasse
+
+variable (p : ℕ) [Fact p.Prime]
+variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
+
+/-- The cyclotomic uniformizer `pi = zeta_p - 1` in the valuation-completion
+integer ring. -/
+def lambdaValuedPiInteger : LambdaValuedIntegerRing p K :=
+  algebraMap (𝓞 K) (LambdaValuedIntegerRing p K)
+    ((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger - 1)
+
+/-- The cyclotomic uniformizer `pi = zeta_p - 1` in the valuation-completion
+field. -/
+def lambdaValuedPi : LambdaValuedCompletion p K :=
+  (lambdaValuedPiInteger p K : LambdaValuedCompletion p K)
+
+/-- The distinguished `p`-th root of unity in the valuation-completion integer
+ring. -/
+def lambdaValuedZetaInteger : LambdaValuedIntegerRing p K :=
+  algebraMap (𝓞 K) (LambdaValuedIntegerRing p K)
+    (IsCyclotomicExtension.zeta_spec p ℚ K).toInteger
+
+/-- The distinguished `p`-th root of unity in the valuation-completion field. -/
+def lambdaValuedZeta : LambdaValuedCompletion p K :=
+  (lambdaValuedZetaInteger p K : LambdaValuedCompletion p K)
+
+end KummerArtinHasse
+end Furtwaengler
+end KummerCriterion
 
 /-!
 # Local `p`-adic setup for the cyclotomic-unit route

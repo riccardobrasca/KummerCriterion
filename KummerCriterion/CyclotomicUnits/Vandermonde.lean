@@ -1,6 +1,6 @@
 module
 
-public import KummerCriterion.CyclotomicUnits.Subgroup
+public import KummerCriterion.CyclotomicUnits.Saturation
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
