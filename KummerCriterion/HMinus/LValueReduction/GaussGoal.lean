@@ -29,7 +29,8 @@ input for the final `hMinus` assembly theorem. -/
 def cyclotomicHGaussGoal : Prop :=
   cyclotomicRelativeLValueCoefficient (p := p) (K := K) *
       Finset.prod (oddCharacters (p := p)) (fun χ =>
-        ((((Real.pi : ℝ) : ℂ) * Complex.I) * gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ))) =
+        ((((Real.pi : ℝ) : ℂ) * Complex.I) *
+          gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ))) =
     (2 * p : ℂ) *
       Finset.prod (oddCharacters (p := p))
         (fun _ : DirichletCharacter ℂ p => (-(1 / 2 : ℂ)))
@@ -86,7 +87,8 @@ theorem cyclotomicHGaussGoal_iff_rawGaussProduct
     have hp_pow_ne : (p : ℂ) ^ n ≠ 0 :=
       pow_ne_zero _ hp_ne
     rw [Complex.ofReal_div, Complex.ofReal_mul, Complex.ofReal_pow, div_pow, mul_pow]
-    rw [show (((2 * Real.pi : ℝ) : ℂ)) = (2 : ℂ) * (((Real.pi : ℝ) : ℂ)) by norm_num, mul_pow]
+    rw [show (((2 * Real.pi : ℝ) : ℂ)) =
+        (2 : ℂ) * (((Real.pi : ℝ) : ℂ)) by norm_num, mul_pow]
     rw [← hS_sq]
     field_simp [hS_ne, hp_pow_ne, hpi_pow_ne, htwo_pow_ne]
     simp [S, mul_assoc, mul_comm]

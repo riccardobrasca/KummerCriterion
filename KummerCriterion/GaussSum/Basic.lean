@@ -57,13 +57,10 @@ theorem gaussSum_mul_gaussSum_inv_stdAddChar
     ZMod.isPrimitive_stdAddChar p
   have h_card : (Fintype.card (ZMod p) : ℂ) = p := by
     rw [ZMod.card]
-  -- Mathlib's Gauss sum identity: τ(χ) · τ(χ⁻¹)|_{ψ⁻¹} = card.
   have h1 : gaussSum χ (ZMod.stdAddChar (N := p)) *
       gaussSum χ⁻¹ (ZMod.stdAddChar (N := p))⁻¹ = (p : ℂ) := by
     rw [← h_card]; exact gaussSum_mul_gaussSum_eq_card hχ h_prim
-  -- Bridge between `ψ` and `ψ⁻¹` via `χ⁻¹(-1) · τ(χ⁻¹)|_{ψ⁻¹} = τ(χ⁻¹)|_ψ`.
   have h2 := mul_gaussSum_inv_eq_gaussSum χ⁻¹ (ZMod.stdAddChar (N := p))
-  -- Simplify `χ⁻¹(-1) = χ(-1)` via `χ(-1)² = 1`.
   have h_neg_unit : IsUnit (-1 : ZMod p) := isUnit_one.neg
   have h_sq : χ (-1) * χ (-1) = 1 := by
     rw [← map_mul, show (-1 : ZMod p) * -1 = 1 from by ring, MulChar.map_one]
@@ -74,7 +71,6 @@ theorem gaussSum_mul_gaussSum_inv_stdAddChar
       rw [← MulChar.mul_apply, MulChar.inv_mul, MulChar.one_apply h_neg_unit]
     exact mul_right_cancel₀ h_ne (h_inv_mul.trans h_sq.symm)
   rw [h_inv_neg_one] at h2
-  -- Multiply `h1` by `χ(-1)` and use `h2` to replace `ψ⁻¹` by `ψ` on the right.
   have h3 : χ (-1) * (gaussSum χ (ZMod.stdAddChar (N := p)) *
       gaussSum χ⁻¹ (ZMod.stdAddChar (N := p))⁻¹) = χ (-1) * p := by rw [h1]
   rw [show χ (-1) * (gaussSum χ (ZMod.stdAddChar (N := p)) *

@@ -74,7 +74,8 @@ theorem torsionKplus_le_CPlus (hp_three : 3 ≤ p) :
 theorem closure_cyclotomicUnitFamilyKplus_le_CPlus
     (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) :
     Subgroup.closure
-        (Set.range (LehmerVandiver.Sinnott.cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three)) ≤
+        (Set.range
+          (LehmerVandiver.Sinnott.cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three)) ≤
       CPlus (p := p) (K := K) hp_three := by
   rw [Subgroup.closure_le, range_cyclotomicUnitFamilyKplusFinRank_eq
     (p := p) (K := K) hp_odd hp_three]
@@ -114,10 +115,6 @@ theorem cyclotomicUnitIndexSubgroup_eq_CPlus
     (cyclotomicUnitIndexSubgroup_le_CPlus (p := p) (K := K) hp_odd hp_three)
     (CPlus_le_cyclotomicUnitIndexSubgroup (p := p) (K := K) hp_odd hp_three)
 
-set_option maxHeartbeats 20000000 in
--- The composed determinant-to-regulator bridge unfolds large matrix identities
--- from the LehmerVandiver Sinnott pipeline.
-set_option backward.isDefEq.respectTransparency false in
 open Classical in
 theorem kummerDirichletDeterminant_of_deletedFourier
     (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) (hp_two : 2 < p) (hp_ge_five : 5 ≤ p) :
@@ -203,7 +200,7 @@ theorem cyclotomicUnitIndex_primeConductor_pPrimary_of_five_le (hp_ge_five : 5 �
   cyclotomicUnitIndex_primeConductor_pPrimary_aux
     (p := p) (K := K) (by omega) (by omega) (by omega) hp_ge_five
 
-/-- the prime-conductor cyclotomic-unit index theorem for the TeX
+/-- The prime-conductor cyclotomic-unit index theorem for the TeX
 normalized subgroup `C⁺ = <-1, ε₂,..., ε_g>`, in odd-primary form. -/
 theorem cyclotomicUnitIndex_primeConductor_pPrimary (hp_odd : p ≠ 2) :
     p ∣ (normalizedCPlus (p := p) (K := K) hp_odd

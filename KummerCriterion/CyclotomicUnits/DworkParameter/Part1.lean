@@ -18,11 +18,9 @@ public import Mathlib.RingTheory.Flat.TorsionFree
 /-!
 # The corrected Dwork parameter
 
-This file starts. The first layer is the coefficient map sending
-`p`-integral rational Artin-Hasse coefficients into the valuation-completion
-integer ring at `lambda = zeta_p - 1`.
-
-The actual completed element `G_p(lambda)` is not constructed here yet.
+This file defines the first coefficient maps sending `p`-integral rational
+Artin-Hasse coefficients into the valuation-completion integer ring at
+`lambda = zeta_p - 1`.
 -/
 
 @[expose] public section
@@ -208,9 +206,7 @@ theorem integralInverseSeries_subst_integralExpMinusOneSeries :
     _ = (PowerSeries.X : PowerSeries (ValuedIntegerRing p K)) := by
             simp [φ]
 
-/-- The inverse series over the completed local integer ring starts with `T`.
-This is the finite-polynomial form needed for the eventual congruence
-`G_p(lambda) == lambda mod lambda^2`. -/
+/-- The inverse series over the completed local integer ring starts with `T`. -/
 theorem integralInverseSeries_trunc_two :
     PowerSeries.trunc 2 (integralInverseSeries p K) =
       PowerSeries.trunc 2
@@ -240,9 +236,7 @@ theorem integralExpSeries_trunc_two :
       simp [integralExpSeries, hcoeff, rIntegralRatToValuedInteger]
   · simp [hn]
 
-/-- Finite truncation approximations to the corrected Dwork parameter
-`G_p(lambda)`. remaining analytic step is to prove that these
-approximations converge in the completed local ring. -/
+/-- Finite truncation approximations to the corrected Dwork parameter `G_p(lambda)`. -/
 def dworkParameterApprox (N : ℕ) : ValuedIntegerRing p K :=
   (PowerSeries.trunc N (integralInverseSeries p K)).eval₂
     (RingHom.id (ValuedIntegerRing p K)) (valuedCyclotomicLambdaInteger p K)
@@ -254,9 +248,7 @@ theorem dworkParameterApprox_two :
   rw [integralInverseSeries_trunc_two]
   simp
 
-/-- The principal `lambda`-adic ideal in the valuation integer ring. This is
-the ideal used for the honest inverse-limit construction below; it avoids
-assuming an adic-completeness instance for `ValuedIntegerRing p K`. -/
+/-- The principal `lambda`-adic ideal in the valuation integer ring. -/
 abbrev lambdaIdeal : Ideal (ValuedIntegerRing p K) :=
   Ideal.span ({valuedCyclotomicLambdaInteger p K} : Set (ValuedIntegerRing p K))
 

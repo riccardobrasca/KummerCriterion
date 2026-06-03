@@ -47,12 +47,6 @@ namespace Furtwaengler
 
 namespace DieudonneDwork
 
-/-! ### `r`-integrality predicate on rationals
-
-A rational `q` is `r`-integral if its denominator (in lowest terms) is coprime
-to `r`. This is exactly membership in the localization `ℤ_(r) ⊂ ℚ` of `ℤ` at
-the prime ideal `(r)`. -/
-
 namespace IsRIntegralPS
 
 theorem mapTo_pow {r : ℕ} {A : Type*} [CommSemiring A]

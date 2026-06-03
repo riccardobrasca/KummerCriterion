@@ -86,8 +86,6 @@ theorem matrixRestrictionToSinnott_of_regOfFamily_sq_eq_prod_nontrivial_qe_sq
   unfold MatrixRestrictionToSinnott
   unfold RegOfFamilySqEqProdNontrivialQeSq at h
   rw [det_convolutionMatrixLogNormEven_sq_eq_qe_one_sq_mul_prod_nontrivial_qe_sq p hp_two]
-  -- Goal: 2^(p-3) · qe(1)² · (∏ qe)² = qe(1)² · regOfFamily²
-  -- From h: regOfFamily² = 2^(p-3) · (∏ qe)², so substitute on RHS.
   rw [h]
   ring
 
@@ -127,33 +125,26 @@ theorem exists_embedding_index
   classical
   haveI hp_prime : Nat.Prime p := hp.out
   haveI : NeZero p := ⟨hp_prime.ne_zero⟩
-  -- `cyclotomicZetaInteger` is a primitive p-th root in 𝓞 K.
   have h_zeta_OK : IsPrimitiveRoot
       (KummerCriterion.cyclotomicZetaInteger (p := p) K) p :=
     KummerCriterion.cyclotomicZetaInteger_isPrimitiveRoot (p := p) K
-  -- Push to K via the algebraMap (𝓞 K → K), which is injective.
   have h_zeta_K : IsPrimitiveRoot
       ((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K) p := by
     have h_inj : Function.Injective (algebraMap (𝓞 K) K) :=
       FaithfulSMul.algebraMap_injective (𝓞 K) K
     exact h_zeta_OK.map_of_injective h_inj
-  -- Push to ℂ via w.embedding, which is injective (it's a ring hom on a field).
   have h_emb_inj : Function.Injective (w.embedding) :=
     (w.embedding).injective
   have h_zeta_C : IsPrimitiveRoot
       (w.embedding (((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K))) p :=
     h_zeta_K.map_of_injective h_emb_inj
-  -- Extract the explicit form via Complex.isPrimitiveRoot_iff.
   obtain ⟨a, ha_lt, ha_cop, ha_eq⟩ :=
     (Complex.isPrimitiveRoot_iff
       (w.embedding (((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K)))
       p hp_prime.ne_zero).mp h_zeta_C
-  -- Convert to (ZMod p)ˣ via ZMod.unitOfCoprime, then express stdAddChar via stdAddChar_coe.
   refine ⟨ZMod.unitOfCoprime a ha_cop, ?_⟩
   rw [← ha_eq]
-  -- Goal: exp(2πI · (a/p)) = stdAddChar (↑(unitOfCoprime a ha_cop): ZMod p)
   rw [ZMod.coe_unitOfCoprime]
-  -- Now: exp(2πI · (a/p)) = stdAddChar (a: ZMod p).
   have h_coe : ((a : ZMod p) : ZMod p) = ((a : ℤ) : ZMod p) := by push_cast; rfl
   rw [show ((a : ℕ) : ZMod p) = ((a : ℤ) : ZMod p) from by push_cast; rfl]
   rw [ZMod.stdAddChar_coe (a : ℤ)]
@@ -206,14 +197,11 @@ theorem sinnottMatrixA_apply_eq_log_stdAddChar
   intro k_idx
   unfold sinnottMatrixA
   rw [Matrix.of_apply]
-  -- The K-place corresponding to w.
   set w_K : NumberField.InfinitePlace K :=
     (NumberField.IsCMField.equivInfinitePlace K).symm w.val with hw_K_def
-  -- Identify zeta_spec.unit' with cyclotomicZetaInteger at the K-element level.
   have h_zeta_eq : ((((IsCyclotomicExtension.zeta_spec p ℚ K).unit' : (𝓞 K)ˣ) : 𝓞 K) : K) =
       ((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K) := rfl
   rw [h_zeta_eq]
-  -- Apply norm_embedding_eq + ring-hom commutativity.
   rw [← NumberField.InfinitePlace.norm_embedding_eq w_K]
   rw [map_sub, map_pow, map_one]
   rw [embeddingIndex_spec (p := p) K w_K]
@@ -252,7 +240,6 @@ theorem sinnottMatrixB_apply_eq_log_stdAddChar
   rw [Matrix.of_apply]
   set w_K : NumberField.InfinitePlace K :=
     (NumberField.IsCMField.equivInfinitePlace K).symm w.val with hw_K_def
-  -- Identify zeta_spec.unit' with cyclotomicZetaInteger at the K-element level.
   have h_zeta_eq : ((((IsCyclotomicExtension.zeta_spec p ℚ K).unit' : (𝓞 K)ˣ) : 𝓞 K) : K) =
       ((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K) := rfl
   rw [h_zeta_eq]
@@ -397,7 +384,6 @@ theorem sinnottMatrixA_apply_eq_convolutionMatrixLogNormEven
   rw [sinnottMatrixA_apply_eq_convolutionLogNormDescended p K hp_odd hp_three i w]
   unfold convolutionMatrixLogNormEven kplusEmbeddingIndexQuotient
   rw [Matrix.of_apply]
-  -- q(a * b) = q(a) * q(b), where q is the quotient (a group hom).
   rw [(KummerCriterion.cyclotomicEvenDeltaQuotient p).map_mul]
 
 /-- **Sinnott B-matrix entry as a `convolutionMatrixLogNormEven` value at index `1`**:
@@ -470,56 +456,42 @@ theorem embeddingIndex_eq_iff_embedding_eq
   haveI : NeZero p := ⟨hp_prime.ne_zero⟩
   constructor
   · intro h_eq
-    -- Use PowerBasis.algHom_ext: AlgHoms agree iff agree on ζ_K.
-    -- Both embeddings send ζ_K to stdAddChar(embIdx _), which are equal.
-    -- First, identify w.embedding as a ℚ-algebra hom (uniqueness of ℚ → ℂ).
     have h_emb :
         w₁.embedding
           (((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K)) =
         w₂.embedding (((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K)) := by
       rw [embeddingIndex_spec, embeddingIndex_spec, h_eq]
-    -- Convert to AlgHom form using uniqueness ℚ →+* ℂ.
-    -- w.embedding: K →+* ℂ. Lift to K →ₐ[ℚ] ℂ.
-    -- For NumberField K, K is a ℚ-algebra, ℂ is a ℚ-algebra, and any ring hom is ℚ-algebra.
     have h_pb : IsPrimitiveRoot
         (((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K)) p := by
       have h_OK := KummerCriterion.cyclotomicZetaInteger_isPrimitiveRoot (p := p) K
       have h_inj : Function.Injective (algebraMap (𝓞 K) K) :=
         FaithfulSMul.algebraMap_injective (𝓞 K) K
       exact h_OK.map_of_injective h_inj
-    -- Lift each w.embedding to a ℚ-algebra hom.
     let φ₁ : K →ₐ[ℚ] ℂ := { w₁.embedding with commutes' := fun r => by simp }
     let φ₂ : K →ₐ[ℚ] ℂ := { w₂.embedding with commutes' := fun r => by simp }
-    -- φ₁ and φ₂ have the same underlying ring hom, so we'll show φ₁ = φ₂.
     have h_phi_eq : φ₁ = φ₂ := by
       apply (h_pb.powerBasis ℚ).algHom_ext
       simp only [φ₁, φ₂]
       change w₁.embedding (h_pb.powerBasis ℚ).gen = w₂.embedding (h_pb.powerBasis ℚ).gen
       rw [IsPrimitiveRoot.powerBasis_gen]
       exact h_emb
-    -- Extract the ring hom equality.
     ext x
     have := congrArg (fun (f : K →ₐ[ℚ] ℂ) => f x) h_phi_eq
     simp only [φ₁, φ₂] at this
     exact this
   · intro h_eq
-    -- Same embedding image on ζ_K gives the same embedding index.
     have h_zeta_eq :
         w₁.embedding
           (((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K)) =
         w₂.embedding (((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K)) := by
       rw [h_eq]
-    -- Combine with embeddingIndex_spec to extract the equality.
     have h_spec_one := embeddingIndex_spec (p := p) K w₁
     have h_spec_two := embeddingIndex_spec (p := p) K w₂
     rw [h_spec_one, h_spec_two] at h_zeta_eq
-    -- Now: stdAddChar (embIdx w₁) = stdAddChar (embIdx w₂)
-    -- stdAddChar is injective on (ZMod p) → ℂ.
     have h_inj := ZMod.injective_stdAddChar (N := p)
     have h_zmod_eq : ((embeddingIndex (p := p) K w₁ : ZMod p)) =
         ((embeddingIndex (p := p) K w₂ : ZMod p)) :=
       h_inj h_zeta_eq
-    -- Lift to units.
     exact Units.ext h_zmod_eq
 
 /-- **`embeddingIndex` is injective**: two K-places have the same embedding-index
@@ -543,13 +515,10 @@ And `stdAddChar(-a) = (stdAddChar(a))⁻¹` (it's an AddChar). -/
 theorem stdAddChar_neg_eq_conj [NeZero p] (a : ZMod p) :
     ZMod.stdAddChar (N := p) (-a) =
       (starRingEnd ℂ) (ZMod.stdAddChar (N := p) a) := by
-  -- stdAddChar(-a) = stdAddChar(a)⁻¹ via map_neg_eq_inv
   rw [AddChar.map_neg_eq_inv]
-  -- For z = stdAddChar(a) with |z| = 1, z⁻¹ = conj(z)
   have h_norm : ‖ZMod.stdAddChar (N := p) a‖ = 1 := by
     rw [ZMod.stdAddChar_apply]
     exact Circle.norm_coe _
-  -- z⁻¹ = z̄/|z|² = z̄/1 = z̄ when |z|=1
   exact (Complex.inv_eq_conj h_norm).symm ▸ rfl
 
 /-- **Embedding-indices that are negatives give the same place**: if
@@ -570,7 +539,6 @@ theorem embeddingIndex_neg_implies_place_eq
   classical
   haveI hp_prime : Nat.Prime p := hp.out
   haveI : NeZero p := ⟨hp_prime.ne_zero⟩
-  -- Step 1: w₁.embedding ζ_K = conj(w₂.embedding ζ_K).
   have h_zeta_K_eq : w₁.embedding
       (((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K)) =
         (starRingEnd ℂ) (w₂.embedding
@@ -584,14 +552,12 @@ theorem embeddingIndex_neg_implies_place_eq
       rw [Units.val_neg]
     rw [h_cast]
     exact stdAddChar_neg_eq_conj p _
-  -- Step 2: Use power basis to extend agreement on ζ_K to agreement everywhere.
   have h_pb : IsPrimitiveRoot
       (((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K)) p := by
     have h_OK := KummerCriterion.cyclotomicZetaInteger_isPrimitiveRoot (p := p) K
     have h_inj : Function.Injective (algebraMap (𝓞 K) K) :=
       FaithfulSMul.algebraMap_injective (𝓞 K) K
     exact h_OK.map_of_injective h_inj
-  -- Lift both ring homs to ℚ-AlgHoms.
   let φ₁ : K →ₐ[ℚ] ℂ := w₁.embedding.toRatAlgHom
   let φ₂_conj : K →ₐ[ℚ] ℂ := ((starRingEnd ℂ).comp w₂.embedding).toRatAlgHom
   have h_phi_eq : φ₁ = φ₂_conj := by
@@ -600,7 +566,6 @@ theorem embeddingIndex_neg_implies_place_eq
       (starRingEnd ℂ) (w₂.embedding (h_pb.powerBasis ℚ).gen)
     rw [IsPrimitiveRoot.powerBasis_gen]
     exact h_zeta_K_eq
-  -- Extract w₁.embedding = ComplexEmbedding.conjugate w₂.embedding.
   have h_emb_eq : w₁.embedding =
       NumberField.ComplexEmbedding.conjugate w₂.embedding := by
     ext x
@@ -623,14 +588,12 @@ theorem embeddingIndex_quotient_eq_implies_place_eq
             (embeddingIndex (p := p) K w₂)) :
     w₁ = w₂ := by
   classical
-  -- q a = q b ↔ a⁻¹ · b ∈ ⟨-1⟩ = {1, -1}.
   have h_qg : (QuotientGroup.mk (embeddingIndex (p := p) K w₁) :
       KummerCriterion.CyclotomicEvenDelta p) =
       QuotientGroup.mk (embeddingIndex (p := p) K w₂) := h
   rw [QuotientGroup.eq] at h_qg
   rw [KummerCriterion.CyclotomicEvenDeltaSubgroup, Subgroup.mem_zpowers_iff] at h_qg
   obtain ⟨k, hk⟩ := h_qg
-  -- hk: (-1)^k = (embIdx w₁)⁻¹ * embIdx w₂. So embIdx w₂ = embIdx w₁ * (-1)^k.
   have h_sq : ((-1 : KummerCriterion.CyclotomicUnitDelta p)) ^ (2 : ℕ) = 1 := by
     rw [sq, neg_one_mul, neg_neg]
   rw [zpow_eq_zpow_emod' k h_sq] at hk
@@ -655,7 +618,6 @@ theorem embeddingIndex_quotient_eq_implies_place_eq
         rw [← hk]
       rw [← mul_assoc, mul_inv_cancel, one_mul, mul_neg_one] at this
       exact this
-    -- Need embIdx w₁ = -embIdx w₂, but we have embIdx w₂ = -embIdx w₁.
     have h_neg' : embeddingIndex (p := p) K w₁ = -embeddingIndex (p := p) K w₂ := by
       rw [h_neg, neg_neg]
     exact embeddingIndex_neg_implies_place_eq (p := p) K w₁ w₂ h_neg'
@@ -692,8 +654,6 @@ theorem kplusEmbeddingIndexQuotient_bijective
     Fintype.ofFinite _
   refine (Fintype.bijective_iff_injective_and_card _).mpr
     ⟨kplusEmbeddingIndexQuotient_injective (p := p) K, ?_⟩
-  -- Use the shipped non-canonical bijection `KplusInfinitePlaceEquivCyclotomicEvenDelta`
-  -- to establish the cardinality equality.
   exact Fintype.card_congr (KplusInfinitePlaceEquivCyclotomicEvenDelta (p := p) K hp_two)
 
 /-- **Canonical bijection `InfinitePlace K⁺ ≃ CyclotomicEvenDelta p`** via
@@ -735,7 +695,6 @@ theorem familyIndexAsUnit_val_in_range
       j.val + 2 := by
     have h_val_spec :=
       familyIndexAsUnit_val (p := p) (K := K) hp_odd hp_three i
-    -- h_val_spec: ((familyIndexAsUnit i: ZMod p)) = ((j.val + 2: ℕ): ZMod p)
     rw [h_val_spec, ZMod.val_natCast, Nat.mod_eq_of_lt h_lt_p]
   refine ⟨?_, ?_⟩
   · rw [h_val_eq]; omega

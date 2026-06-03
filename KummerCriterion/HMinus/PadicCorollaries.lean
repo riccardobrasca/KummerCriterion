@@ -15,20 +15,9 @@ public import KummerCriterion.HMinus.LValueReduction.Final
 public import KummerCriterion.HMinus.LValueReduction.Teichmuller
 
 /-!
-# `h⁻` mod `p` corollaries (Diekmann page 51)
+# `h⁻` mod `p` corollaries
 
-The two displayed congruences on page 51 of Diekmann 2023, used directly in
-the proof of Theorem 42:
-
-* `hMinus_formula_teichmuller_mod_p` — separating the boundary factor `j = p - 2`
- gives `h⁻ ≡ ∏_{1 ≤ j ≤ p-4, odd j} (-1/2) · B_{1,ω^j} (mod p)`.
-* `hMinus_formula_bernoulli_mod_p` — substituting Corollary 34 gives
- `h⁻ ≡ ∏_{1 ≤ j ≤ p-4, odd j} (-1/2) · B_{j+1} / (j+1) (mod p)`.
-
-Both are proved on top of `hMinus_formula_teichmuller`
-(`KummerCriterion.HMinus.LValueReduction`), now fully proved in the
-completed chain. These corollaries are therefore established on a
-completed base.
+Congruence forms of the relative class-number formula used in the Bernoulli criterion.
 -/
 
 @[expose] public section
@@ -39,8 +28,6 @@ open NumberField
 open scoped BigOperators
 
 namespace KummerCriterion
-
-section PadicCorollaries
 
 variable (p : ℕ) [hp : Fact p.Prime] (hp_odd : p ≠ 2)
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K] [IsCMField K]
@@ -56,14 +43,18 @@ lemma neg_one_half_mem_padicInt (hp_odd' : p ≠ 2) :
     rw [PadicInt.isUnit_iff, PadicInt.norm_natCast_eq_one_iff]
     simpa [Nat.coprime_comm] using hp'.coprime_iff_not_dvd.mpr h2_not_dvd
   let c : ℤ_[p] := -((h2_unit.unit⁻¹ : (ℤ_[p])ˣ).val)
-  have hunit_mul : ((((h2_unit.unit⁻¹ : (ℤ_[p])ˣ).val : ℤ_[p]) : ℚ_[p])) * (2 : ℚ_[p]) = 1 := by
+  have hunit_mul :
+      ((((h2_unit.unit⁻¹ : (ℤ_[p])ˣ).val : ℤ_[p]) : ℚ_[p])) *
+        (2 : ℚ_[p]) = 1 := by
     have h2_spec : ((h2_unit.unit : (ℤ_[p])ˣ) : ℤ_[p]) = 2 := h2_unit.unit_spec
-    have h2_specQ : ((((h2_unit.unit : (ℤ_[p])ˣ).val : ℤ_[p]) : ℚ_[p])) = (2 : ℚ_[p]) :=
+    have h2_specQ :
+        ((((h2_unit.unit : (ℤ_[p])ˣ).val : ℤ_[p]) : ℚ_[p])) = (2 : ℚ_[p]) :=
       congrArg (fun x : ℤ_[p] => (x : ℚ_[p])) h2_spec
     rw [← h2_specQ]
     change (((((h2_unit.unit⁻¹ : (ℤ_[p])ˣ) * h2_unit.unit).val : ℤ_[p]) : ℚ_[p])) = 1
     simp
-  have hhalf : ((((h2_unit.unit⁻¹ : (ℤ_[p])ˣ).val : ℤ_[p]) : ℚ_[p])) = (1 / 2 : ℚ_[p]) :=
+  have hhalf :
+      ((((h2_unit.unit⁻¹ : (ℤ_[p])ˣ).val : ℤ_[p]) : ℚ_[p])) = (1 / 2 : ℚ_[p]) :=
     eq_one_div_of_mul_eq_one_left hunit_mul
   refine ⟨c, ?_⟩
   simp [c, hhalf]
@@ -73,7 +64,8 @@ lemma prod_eq_prod_add_p_mul
     (hfg : ∀ a ∈ s, ∃ z : ℤ_[p],
       f a = (g a : ℚ_[p]) + (p : ℚ_[p]) * (z : ℚ_[p])) :
     ∃ z : ℤ_[p],
-      (∏ a ∈ s, f a) = ((∏ a ∈ s, g a : ℤ_[p]) : ℚ_[p]) + (p : ℚ_[p]) * (z : ℚ_[p]) := by
+      (∏ a ∈ s, f a) =
+        ((∏ a ∈ s, g a : ℤ_[p]) : ℚ_[p]) + (p : ℚ_[p]) * (z : ℚ_[p]) := by
   classical
   induction s using Finset.induction_on with
   | empty =>
@@ -99,17 +91,8 @@ lemma prod_eq_prod_add_p_mul
               (p : ℚ_[p]) * (w : ℚ_[p]) := by
                 simp [ha]
 
-/-- Diekmann page 51, first displayed congruence after equation (32): after
-separating off the boundary factor `j = p - 2`, the relative class number is
-congruent modulo `p` to the product over the remaining odd Teichmüller
-characters.
-
-Equivalently, there is some `z ∈ ℤ_p` such that
-
-`h⁻ = ∏_{1 ≤ j ≤ p-4, odd j} (-1/2) · B_{1,ω^j} + pz`.
-
-This is the form obtained by combining `hMinus_formula_teichmuller` with the
-boundary-factor congruence from Diekmann's page 51. -/
+/-- Diekmann page 51: the Teichmüller-product congruence for the relative class
+number. -/
 theorem hMinus_formula_teichmuller_mod_p (hp_odd' : p ≠ 2) :
     ∃ z : ℤ_[p],
       ((hMinus K : ℕ) : ℚ_[p]) =
@@ -161,7 +144,8 @@ theorem hMinus_formula_teichmuller_mod_p (hp_odd' : p ≠ 2) :
     calc
       (A : ℚ_[p]) = ∏ j ∈ S, ((a j : ℤ_[p]) : ℚ_[p]) := by
         dsimp [A]
-        change (algebraMap ℤ_[p] ℚ_[p]) (∏ j ∈ S, a j) = ∏ j ∈ S, (algebraMap ℤ_[p] ℚ_[p]) (a j)
+        change (algebraMap ℤ_[p] ℚ_[p]) (∏ j ∈ S, a j) =
+          ∏ j ∈ S, (algebraMap ℤ_[p] ℚ_[p]) (a j)
         rw [map_prod]
       _ = Finset.prod S (fun j =>
             (-(1 / 2 : ℚ_[p])) * BernoulliGen ((teichmullerCharQp p) ^ j) 1) := by
@@ -210,16 +194,8 @@ theorem hMinus_formula_teichmuller_mod_p (hp_odd' : p ≠ 2) :
           (-(1 / 2 : ℚ_[p])) * BernoulliGen ((teichmullerCharQp p) ^ j) 1) +
           (p : ℚ_[p]) * ((A * z₀ : ℤ_[p]) : ℚ_[p]) := by rw [hA_cast]
 
-/-- Diekmann page 51, second displayed congruence: substituting Corollary 34
-into the preceding formula gives a product indexed by the classical Bernoulli
-numbers.
-
-Equivalently, there is some `z ∈ ℤ_p` such that
-
-`h⁻ = ∏_{1 ≤ j ≤ p-4, odd j} (-1/2) · B_{j+1}/(j+1) + pz`.
-
-This is the product form used to read off the divisibility criterion in
-Theorem 42. -/
+/-- Diekmann page 51: the Bernoulli-number product congruence for the relative
+class number. -/
 theorem hMinus_formula_bernoulli_mod_p (hp_odd' : p ≠ 2) :
     ∃ z : ℤ_[p],
       ((hMinus K : ℕ) : ℚ_[p]) =
@@ -311,7 +287,4 @@ theorem hMinus_formula_bernoulli_mod_p (hp_odd' : p ≠ 2) :
             rw [hA_cast]
             push_cast
             ring
-
-end PadicCorollaries
-
 end KummerCriterion

@@ -40,7 +40,6 @@ theorem samePrimeFiniteArtinHasseLog_eq_sum_range_of_le {N M : ℕ} (hNM : N ≤
   exact samePrimeFiniteArtinHasseLogTerm_eq_zero_of_succ_le_index
     (p := p) (K := K) hx hNr
 
-set_option linter.style.longLine false in
 theorem samePrimeFiniteArtinHasseExpCoordLogHomogeneousTerm_eq_zero_of_not_mem_support
     (N n d : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K)
     (hd : d ∉ ((samePrimeFiniteArtinHasseExpCoordPoly (p := p) (K := K) N x) ^ n).support) :
@@ -156,7 +155,6 @@ theorem samePrimeFiniteArtinHasseLogTerm_eq_zero_of_cutoff_le_pow
   exact samePrimeFiniteArtinHasseExpCoordLogHomogeneousDegreeSum_eq_zero_of_cutoff_le
     (p := p) (K := K) N (p ^ r) hx hcut
 
-set_option linter.style.longLine false in
 theorem samePrimeFiniteLogTerm_finiteArtinHasseExpCoord_eq_homogeneous_cutoff_sum
     (N n : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) :
     samePrimeFiniteLogTerm (p := p) (K := K) N n
@@ -209,7 +207,6 @@ theorem samePrimeFiniteLogTerm_finiteArtinHasseExpCoord_eq_homogeneous_cutoff_su
     _ = ∑ d ∈ (P ^ n).support ∪ Finset.range C, f d := hsupport_union
     _ = ∑ d ∈ Finset.range C, f d := hrange_union.symm
 
-set_option linter.style.longLine false in
 theorem samePrimeFiniteLog_finiteArtinHasseExpCoord_eq_homogeneous_degree_sum_range
     (N : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) :
     samePrimeFiniteLog (p := p) (K := K) N
@@ -290,7 +287,6 @@ private theorem le_p_pow_self (r : ℕ) : r ≤ p ^ r := by
   have hpow : 2 ^ r ≤ p ^ r := Nat.pow_le_pow_left htwo r
   exact (Nat.le_of_lt r.lt_two_pow_self).trans hpow
 
-set_option linter.style.longLine false in
 theorem samePrimeFiniteArtinHasseLog_eq_homogeneous_degree_sum_range
     (N : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) :
     samePrimeFiniteArtinHasseLog (p := p) (K := K) N x hx =
@@ -362,7 +358,6 @@ theorem samePrimeFiniteArtinHasseLog_eq_homogeneous_degree_sum_range
     _ = ∑ d ∈ powSet.image (fun r : ℕ => p ^ r), degreeTerm d := himage_sum
     _ = ∑ d ∈ Finset.range C, degreeTerm d := himage_to_range
 
-set_option linter.style.longLine false in
 theorem samePrimeFiniteLog_finiteArtinHasseExpCoord_eq_finiteArtinHasseLog
     (N : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) :
     samePrimeFiniteLog (p := p) (K := K) N

@@ -29,7 +29,6 @@ theorem familyIndexAsUnit_quotient_ne_one
         (familyIndexAsUnit p K hp_odd hp_three i) ≠ 1 := by
   classical
   intro h
-  -- q(a) = 1 iff a ∈ kernel = CyclotomicEvenDeltaSubgroup = ⟨-1⟩.
   have h_mem : familyIndexAsUnit p K hp_odd hp_three i ∈
       KummerCriterion.CyclotomicEvenDeltaSubgroup p := by
     rw [← QuotientGroup.eq_one_iff]
@@ -59,7 +58,6 @@ theorem familyIndexAsUnit_injective
     Function.Injective (familyIndexAsUnit p K hp_odd hp_three) := by
   classical
   intro i₁ i₂ h_eq
-  -- Same unit → same val → same idx → same Fin → same i.
   have h_val_eq : ((familyIndexAsUnit p K hp_odd hp_three i₁ : (ZMod p)ˣ) : ZMod p).val =
       ((familyIndexAsUnit p K hp_odd hp_three i₂ : (ZMod p)ˣ) : ZMod p).val := by
     rw [h_eq]
@@ -97,8 +95,6 @@ theorem familyIndexAsUnit_injective
   rw [h_v1, h_v2] at h_val_eq
   have h_fin_eq : j₁.val = j₂.val := by omega
   have h_fin : j₁ = j₂ := Fin.ext h_fin_eq
-  -- j₁ = Fin.cast _ (eqFR.symm i₁), and similarly for j₂.
-  -- Since cast is injective: eqFR.symm i₁ = eqFR.symm i₂.
   have h_symm_eq : (NumberField.Units.equivFinRank
       (NumberField.maximalRealSubfield K)).symm i₁ =
       (NumberField.Units.equivFinRank
@@ -132,7 +128,6 @@ theorem familyIndexAsUnit_quotient_injective
   classical
   intro i₁ i₂ h_eq
   simp only at h_eq
-  -- The familyIndexAsUnit values are equal in the quotient.
   have h_div : familyIndexAsUnit p K hp_odd hp_three i₁ /
       familyIndexAsUnit p K hp_odd hp_three i₂ ∈
       KummerCriterion.CyclotomicEvenDeltaSubgroup p :=
@@ -160,7 +155,6 @@ theorem familyIndexAsUnit_quotient_injective
       rwa [inv_mul_cancel_right, one_mul] at this
     exact familyIndexAsUnit_injective (p := p) K hp_odd hp_three h_a_eq
   · -- Case 2: a₁ * a₂⁻¹ = -1. So a₁ = -a₂. But val(a₁), val(a₂) ∈ [2, (p-1)/2],
-    -- val(-a₂) = p - val(a₂) ∈ [(p+1)/2, p-2], disjoint range. Contradiction.
     rw [h1, zpow_one] at hk
     have h_neg : familyIndexAsUnit p K hp_odd hp_three i₁ =
         -familyIndexAsUnit p K hp_odd hp_three i₂ := by
@@ -169,7 +163,6 @@ theorem familyIndexAsUnit_quotient_injective
             familyIndexAsUnit p K hp_odd hp_three i₂ =
           -1 * familyIndexAsUnit p K hp_odd hp_three i₂ := by rw [hk]
       rwa [inv_mul_cancel_right, neg_one_mul] at this
-    -- val of (-a₂) is p - val(a₂).
     have h_p_prime : Nat.Prime p := hp.out
     haveI : NeZero p := ⟨h_p_prime.ne_zero⟩
     haveI : NeZero ((familyIndexAsUnit p K hp_odd hp_three i₂ : (ZMod p)ˣ) : ZMod p) := by
@@ -187,7 +180,6 @@ theorem familyIndexAsUnit_quotient_injective
         p - ((familyIndexAsUnit p K hp_odd hp_three i₂ : (ZMod p)ˣ) : ZMod p).val
       exact ZMod.val_neg_of_ne_zero _
     rw [h_v_neg] at h_v_eq
-    -- `v₁ = p - v₂`, while both indices lie in incompatible half ranges.
     omega
 
 /-- **Row-side bijection** (cardinality form): the family-index set
@@ -205,15 +197,10 @@ noncomputable def familyIndexEquivNonTrivialCE
       {c : KummerCriterion.CyclotomicEvenDelta p // c ≠ 1} := by
   classical
   refine Fintype.equivOfCardEq ?_
-  -- Use the canonical bijection InfinitePlace K⁺ ≃ CyclotomicEvenDelta p
-  -- and reduce the subtype cardinalities to (p-1)/2 - 1 = (p-3)/2 each.
   have h_bij : NumberField.InfinitePlace (NumberField.maximalRealSubfield K) ≃
       KummerCriterion.CyclotomicEvenDelta p :=
     KplusInfinitePlaceEquivCyclotomicEvenDelta_canonical
       (p := p) K hp_two
-  -- LHS = # InfinitePlace K⁺ - 1
-  -- RHS = # CyclotomicEvenDelta p - 1
-  -- Equal because both ambient cardinalities are equal via h_bij.
   rw [Fintype.card_subtype_compl (p := fun w =>
     w = NumberField.Units.dirichletUnitTheorem.w₀)]
   rw [Fintype.card_subtype_compl (p := fun c => c = 1)]
@@ -268,7 +255,6 @@ noncomputable def familyIndexAsCEnotOneEquiv
     (familyIndexAsCEnotOne (p := p) K hp_odd hp_three hp_ge_five) ?_
   refine (Fintype.bijective_iff_injective_and_card _).mpr
     ⟨familyIndexAsCEnotOne_injective (p := p) K hp_odd hp_three hp_ge_five, ?_⟩
-  -- Cardinality equality from the shipped familyIndexEquivNonTrivialCE.
   exact Fintype.card_congr
     (familyIndexEquivNonTrivialCE (p := p) K hp_odd hp_three hp_two)
 
@@ -333,8 +319,6 @@ theorem kplusEmbeddingIndexQuotientShifted_bijective
     [NumberField.IsCMField K] (hp_two : 2 < p) :
     Function.Bijective (kplusEmbeddingIndexQuotientShifted (p := p) K) := by
   classical
-  -- Compose the shipped column-side bijection with right-multiplication
-  -- by (k(w₀))⁻¹ in the abelian group CyclotomicEvenDelta p.
   set kw₀_inv : KummerCriterion.CyclotomicEvenDelta p :=
     (kplusEmbeddingIndexQuotient (p := p) K
       NumberField.Units.dirichletUnitTheorem.w₀)⁻¹ with h_kw₀_inv

@@ -42,7 +42,6 @@ variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
   [IsCMField K]
 
 set_option backward.isDefEq.respectTransparency false in
-set_option backward.isDefEq.respectTransparency false in
 /-- **σ-conjugate of `(ζ - 1)`**: `σ(ζ - 1) = ζ^{p-1} - 1`.
 
 Direct from `complexConj_apply_zeta`. -/
@@ -75,19 +74,15 @@ Computation in `𝓞 K`: `(p-1)·k = pk - k`, and `ζ^{pk} = (ζ^p)^k = 1^k = 1`
 theorem zeta_pow_pred_pow_eq (k : ℕ) (hk_le : k ≤ p) :
     (((zeta_spec p ℚ K).unit' : 𝓞 K) ^ (p - 1)) ^ k =
       ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ (p - k) := by
-  -- Multiply both sides by ζ^k.
   have hp_pow : ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ p = 1 := by
     have := (zeta_spec p ℚ K).unit'_pow
     exact congrArg (fun u : (𝓞 K)ˣ => (u : 𝓞 K)) this
-  -- (ζ^{p-1})^k · ζ^k = ζ^{(p-1)k + k} = ζ^{pk} = 1.
   have h1 : (((zeta_spec p ℚ K).unit' : 𝓞 K) ^ (p - 1)) ^ k *
       ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ k = 1 := by
     rw [← mul_pow, ← pow_succ, Nat.sub_add_cancel hp.out.one_le, hp_pow, one_pow]
-  -- ζ^{p-k} · ζ^k = ζ^p = 1.
   have h2 : ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ (p - k) *
       ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ k = 1 := by
     rw [← pow_add, Nat.sub_add_cancel hk_le, hp_pow]
-  -- Both equal (ζ^k)^{-1}; cancel.
   have hzeta_unit : IsUnit (((zeta_spec p ℚ K).unit' : 𝓞 K) ^ k) :=
     ((zeta_spec p ℚ K).unit'.isUnit).pow k
   exact mul_right_cancel₀ hzeta_unit.ne_zero (h1.trans h2.symm)
@@ -108,19 +103,16 @@ theorem zeta_sub_one_mul_cyclotomicUnit_pred_mul_complexConj_cyclotomicUnit_eq
     (((zeta_spec p ℚ K).unit' : 𝓞 K) - 1) * cyclotomicUnit p K (p - 1) *
         ringOfIntegersComplexConj K (cyclotomicUnit p K k) =
       (((zeta_spec p ℚ K).unit' : 𝓞 K) - 1) * cyclotomicUnit p K (p - k) := by
-  -- LHS = (ζ^{p-1} - 1) · σ(cyclotomicUnit k).
   have hLHS : (((zeta_spec p ℚ K).unit' : 𝓞 K) - 1) * cyclotomicUnit p K (p - 1) *
       ringOfIntegersComplexConj K (cyclotomicUnit p K k) =
         (((zeta_spec p ℚ K).unit' : 𝓞 K) ^ (p - 1) - 1) *
           ringOfIntegersComplexConj K (cyclotomicUnit p K k) := by
     rw [zeta_sub_one_mul_cyclotomicUnit]
   rw [hLHS]
-  -- (ζ^{p-1} - 1) · σ(cycl k) = σ((ζ-1) · cycl k) = σ(ζ^k - 1) = (ζ^{p-1})^k - 1.
   rw [← ringOfIntegersComplexConj_zeta_sub_one (p := p) (K := K),
       ← map_mul, zeta_sub_one_mul_cyclotomicUnit,
       ringOfIntegersComplexConj_zeta_pow_sub_one,
       zeta_pow_pred_pow_eq (p := p) (K := K) k hk_le]
-  -- RHS = (ζ-1) · cyclotomicUnit(p-k) = ζ^{p-k} - 1.
   rw [zeta_sub_one_mul_cyclotomicUnit]
 
 set_option backward.isDefEq.respectTransparency false in
@@ -141,8 +133,6 @@ theorem cyclotomicUnit_pred_mul_complexConj_cyclotomicUnit_eq
     (zeta_spec p ℚ K).zeta_sub_one_prime'.ne_zero
   have h_eq := zeta_sub_one_mul_cyclotomicUnit_pred_mul_complexConj_cyclotomicUnit_eq
     (p := p) (K := K) k hk_le
-  -- h_eq: (ζ-1) * cycl(p-1) * σ(cycl k) = (ζ-1) * cycl(p-k).
-  -- We have (ζ-1) * (cycl(p-1) * σ(cycl k)) = (ζ-1) * cycl(p-k); cancel (ζ-1).
   have h_eq' : (((zeta_spec p ℚ K).unit' : 𝓞 K) - 1) *
       (cyclotomicUnit p K (p - 1) *
         ringOfIntegersComplexConj K (cyclotomicUnit p K k)) =

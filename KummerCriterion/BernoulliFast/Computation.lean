@@ -8,32 +8,8 @@ import Mathlib.NumberTheory.Bernoulli
 /-!
 # Fast computable Bernoulli numbers
 
-This module defines a fully computable version of the Bernoulli sequence
-`bernoulliCompute: ℕ → ℚ` that agrees with Mathlib's noncomputable
-`bernoulli` and evaluates efficiently once unfolded by `norm_num`.
-
-## Key design choices
-
-* **No `Nat.choose`:** The standard Pascal-triangle recursion for `Nat.choose`
- is exponential in the kernel (no memoisation). Instead, binomial
- coefficients are computed *incrementally in `ℚ`* via the identity
- `C(m, k+1) = C(m, k) · (m − k) / (k + 1)`, giving O(1) per coefficient.
-
-* **Sequential list traversal:** `binomSum` pattern-matches on the list
- head, so the kernel never needs random access into an `Array` or `List`.
-
-* **Memoisation via `let`:** `bernoulliList n` calls `bernoulliList (n−1)`
- once; the result is shared through a `let` binding, so total work is
- O(n²) rational operations.
-
-## Main declarations
-
-* `KummerCriterion.BernoulliFast.binomSum` — O(n) computation of
- `∑_{k<|bs|} C(m,k) · bs[k]` with incremental binom coefficients.
-* `KummerCriterion.BernoulliFast.bernoulliList` — `[B₀, …, Bₙ]`
- computed iteratively from the recurrence.
-* `KummerCriterion.BernoulliFast.bernoulliCompute` — `Bₙ` extracted
- from the list.
+This module defines `bernoulliCompute : ℕ → ℚ`, using an incremental binomial
+sum and an iterative list recurrence for efficient concrete evaluation.
 -/
 
 set_option linter.unusedVariables false
@@ -41,8 +17,6 @@ set_option linter.unusedVariables false
 namespace KummerCriterion.BernoulliFast
 
 open Finset
-
-/-! ### Incremental binomial-coefficient summation -/
 
 /-- Inner loop for `binomSum`.
 
@@ -64,8 +38,6 @@ The binomial coefficient `C(m, k)` is tracked as a running `ℚ` value
 updated via `C(m, k+1) = C(m,k) · (m−k)/(k+1)`. -/
 def binomSum (bs : List ℚ) (m : ℕ) : ℚ :=
   binomSum.loop m bs 0 1 0
-
-/-! ### Iterative Bernoulli table -/
 
 /-- `bernoulliList n` returns the list `[B₀, B₁, …, Bₙ]`.
 

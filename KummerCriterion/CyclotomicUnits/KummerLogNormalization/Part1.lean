@@ -1,5 +1,5 @@
-import KummerCriterion.CyclotomicUnits.KummerLogTrace
 import KummerCriterion.CyclotomicUnits.DworkParameter.Part18
+import KummerCriterion.CyclotomicUnits.KummerLogTrace
 import KummerCriterion.CyclotomicUnits.NormalizedUnits
 
 /-!
@@ -72,7 +72,7 @@ theorem kummerLogValuedNormalizedUnit_sq_eq_kummerLogValuedCyclotomicUnit
   ext
   have hsq :=
     normalizedCyclotomicUnitKOfRange_sq_val_eq_realCyclotomicUnit
-    (p := p) (K := K) (by omega : p ≠ 2)
+    (p := p) (K := K) (by lia : p ≠ 2)
     (kummerLogColumnIndex (p := p) hp_three a)
     (kummerLogColumnIndex_two_le (p := p) hp_three a)
     (kummerLogColumnIndex_le_half (p := p) hp_three a)
@@ -294,7 +294,7 @@ theorem kummerLogColumnFiniteLog_eq_normalizedUnit_square
       _ = (((u : ValuedIntegerRing p K) ^ (p - 1)) ^ 2 - 1) := by
             rw [← pow_mul, ← pow_mul]
             congr 2
-            omega
+            lia
   exact samePrimeFiniteLog_eq_of_eq (p := p) (K := K) (N := N) harg
     (kummerLogColumnFiniteLogArg_mem_lambdaIdeal (p := p) (K := K) hp_three a)
     (by
@@ -309,10 +309,6 @@ theorem kummerLogColumnFiniteLog_eq_normalizedUnit_square
       simp [samePrimeFiniteLogProductCoord, kummerLogNormalizedUnitFiniteLogArg, u]
       ring)
 
-set_option maxHeartbeats 800000 in
--- The final rewrite unfolds the finite-log additivity proof and the
--- normalized-unit argument proof; the larger heartbeat budget keeps this
--- wrapper theorem deterministic without changing the proof source.
 /-- Since the implemented columns use the squared real family, the finite
 logarithm of a Kummer column is twice the finite logarithm of the normalized
 cyclotomic unit. -/
@@ -728,8 +724,8 @@ quotient:
 
 `den(a) * (E_p(varpi) - 1) = E_p(omega(a) * varpi) - 1`.
 
-This is the concrete bridge from the cyclotomic quotient denominator of 
-to the Artin-Hasse endpoint. -/
+This is the concrete bridge from the cyclotomic quotient denominator to
+the Artin-Hasse endpoint. -/
 theorem kummerLogDworkArtinHasseQuotientDenUnit_mul_exp_sub_one
     (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) :
     (kummerLogDworkArtinHasseQuotientDenUnit
@@ -740,7 +736,7 @@ theorem kummerLogDworkArtinHasseQuotientDenUnit_mul_exp_sub_one
   let k : ℕ := kummerLogColumnIndex (p := p) hp_three a
   have hk_lt : k < p := by
     have hk_le := kummerLogColumnIndex_le_half (p := p) hp_three a
-    omega
+    lia
   have hk_val : ((k : ZMod p).val) = k := ZMod.val_natCast_of_lt hk_lt
   let ζi : 𝓞 K := ((zeta_spec p ℚ K).unit' : 𝓞 K)
   have hglobal' :
@@ -750,8 +746,8 @@ theorem kummerLogDworkArtinHasseQuotientDenUnit_mul_exp_sub_one
   let R : Type _ := ValuedIntegerRing p K
   let S : Type _ := DworkCompleteIntegerRing p K
   have hmap := congrArg (algebraMap (𝓞 K) S) hglobal'
-  rw [artinHasseExp_eval_scaledDworkParameter_eq_zeta_pow]
-  rw [artinHasseExp_eval_scaledDworkParameter_eq_zeta_pow]
+  rw [artinHasseExp_eval_scaledDworkParameter_eq_zeta_pow,
+    artinHasseExp_eval_scaledDworkParameter_eq_zeta_pow]
   rw [hk_val]
   change
     algebraMap R S

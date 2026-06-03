@@ -7,8 +7,7 @@ public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3
 /-!
 # Real cyclotomic units
 
-This file gives the cyclotomic-unit route a stable, non-LehmerVandiver-facing name
-the standard real cyclotomic units in `K⁺`.
+This file gives the standard real cyclotomic units in `K⁺` a route-level name.
 -/
 
 @[expose] public section
@@ -38,12 +37,7 @@ theorem realCyclotomicUnit_index_coprime {a : ℕ}
     exact (not_le_of_gt ha_lt) (Nat.le_of_dvd ha_pos hpa)
   exact (hp_prime.coprime_iff_not_dvd.mpr hnot).symm
 
-/-- The real cyclotomic unit in `𝓞 K⁺` attached to
-`2 ≤ a ≤ (p - 1) / 2`.
-
-This wraps the existing descended unit
-`LehmerVandiver.realCyclotomicUnitPlusUnit p K a`, with the index coprimality proved
-from the standard prime-conductor range. -/
+/-- The real cyclotomic unit in `𝓞 K⁺` attached to `2 ≤ a ≤ (p - 1) / 2`. -/
 noncomputable def realCyclotomicUnit (a : ℕ)
     (ha_two : 2 ≤ a) (ha_le : a ≤ (p - 1) / 2) : (𝓞 K⁺)ˣ :=
   LehmerVandiver.realCyclotomicUnitPlusUnit p K a

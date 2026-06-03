@@ -101,58 +101,18 @@ theorem sinnottIndexFormula_of_regulatorIdentity
     (h : SinnottRegulatorIdentity p K hp_odd hp_three) :
     SinnottIndexFormula p K hp_odd hp_three := by
   unfold SinnottIndexFormula SinnottRegulatorIdentity at *
-  -- regOfFamily(family) / regulator(K⁺) = [E⁺: ⟨family⟩ ⊔ torsion] (mathlib).
   have h_div := regOfFamily_cyclotomicUnitFamilyKplus_div_regulator
     p K hp_odd hp_three
-  -- regulator K⁺ ≠ 0 (positive).
   have h_reg_pos : 0 < NumberField.Units.regulator
       (NumberField.maximalRealSubfield K) :=
     NumberField.Units.regulator_pos _
   rw [h] at h_div
-  -- h_div: 2^((p-3)/2) · h⁺ · R / R = (index: ℝ)
   rw [show (2 : ℝ) ^ ((p - 3) / 2) * (hPlus K : ℝ) *
         NumberField.Units.regulator (NumberField.maximalRealSubfield K) /
         NumberField.Units.regulator (NumberField.maximalRealSubfield K) =
       2 ^ ((p - 3) / 2) * (hPlus K : ℝ) from by
     field_simp] at h_div
-  -- h_div: 2^((p-3)/2) · h⁺ = (index: ℝ)
   exact_mod_cast h_div.symm
-
-set_option backward.isDefEq.respectTransparency false in
-/-! ## Connection to the analytic CNF for K⁺
-
-The analytic CNF for K⁺ (already shipped as `hPlus_formula`) gives
-
- `(hPlus K: ℝ) · regulator K⁺ = dedekindZeta_residue K⁺ ·
- (torsionOrder · √|disc K⁺|) / (2^r · (2π)^c)`
-
-where the RHS is purely analytic (no `hPlus`, no `regulator`).
-
-Therefore `SinnottRegulatorIdentity` is equivalent to the (purely
-analytic) claim that `regOfFamily(family)` equals this same expression.
-This isolates the substantive analytic content as a comparison with
-the analytic CNF. -/
-
-set_option backward.isDefEq.respectTransparency false in
-/-! ## Connection to `Cor8_19Bridge`
-
-Once `SinnottIndexFormula` is established, the **structural contrapositive
-engine** (step F) reduces `Cor8_19Bridge` to a "p-saturation" check:
-
- Under `¬ p ∣ h⁺`, the family-generated subgroup `⟨family⟩ ⊔ torsion`
- has index coprime to p in `(𝓞 K⁺)ˣ`. Hence the inclusion
- `⟨family⟩ ⊔ torsion ↪ (𝓞 K⁺)ˣ` is "p-saturated", i.e., a unit is a
- p-th power in `(𝓞 K⁺)ˣ` iff it is a p-th power in
- `⟨family⟩ ⊔ torsion` (when the unit lies in the latter).
-
-For `pollaczekUnitPlus ∈ ⟨family⟩ ⊔ torsion` (extending step E to the
-family-version), the contrapositive form of the local certificate gives
-the bridge.
-
-This requires the additional fact `pollaczekUnitPlus ∈ ⟨family⟩ ⊔ torsion`,
-which strengthens `pollaczekUnitPlus ∈ cyclotomicUnitsPlus` to
-membership in the FAMILY-GENERATED subgroup (mathematically the same
-under Sinnott's full theorem, but a separate step in the formal chain). -/
 
 set_option backward.isDefEq.respectTransparency false in
 /-- **Sinnott formula bridge target**: under `SinnottIndexFormula` (step C/D),
@@ -167,30 +127,6 @@ theorem index_eq_twoPow_mul_hPlus_of_sinnottIndexFormula
         (Set.range (cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three)) ⊔
       NumberField.Units.torsion (NumberField.maximalRealSubfield K)).index =
     2 ^ ((p - 3) / 2) * hPlus K := h
-
-/-! ## The "Pollaczek-in-family" hypothesis
-
-For Cor 8.19's contrapositive engine, we need the family-generated
-subgroup `⟨family⟩ ⊔ torsion` to contain `pollaczekUnitPlus`. This is
-mathematically equivalent (by Sinnott) to `pollaczekUnitPlus ∈ C⁺`,
-already proven, but as a formal Lean fact requires showing the family
-generates `C⁺ ⊔ torsion`.
-
-We package this as a separate Prop. -/
-
-/-! ## Cor8_19 bridge from Sinnott + Pollaczek-in-family
-
-Under `SinnottIndexFormula` and `PollaczekInFamily`, the "p-saturation"
-argument gives `Cor8_19Bridge`:
-
-* `¬ p ∣ h⁺` (target conclusion).
-* `[E⁺: ⟨family⟩ ⊔ torsion] = h⁺` (Sinnott).
-* So `p ∤ [E⁺: ⟨family⟩ ⊔ torsion]`.
-* For `α^p = pollaczekUnitPlus` in `E⁺` with α: (𝓞 K)ˣ — the descent
- of α to a family-or-torsion element exists by p-saturation, giving the
- contrapositive: `¬IsPthPower(pollaczekUnitPlus in E⁺) → ¬p∣h⁺`.
-
-This is the structural form of the Cor 8.19 contrapositive engine. -/
 
 end Sinnott
 

@@ -1,9 +1,6 @@
 module
 
-public import KummerCriterion.Reflection.Local.Basic
 public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseCompletionMap
-public import Mathlib.RingTheory.Trace.Defs
-import Mathlib.Tactic
 
 /-!
 # Valuation-completion trace source for the Kummer--Artin--Hasse `A` term
@@ -13,7 +10,7 @@ integer ring `LambdaLocalIntegerRing`. The trace needed for the explicit
 Kummer--Artin--Hasse correction, however, is the finite `Q_p`-linear trace on
 the valuation completion of `K` at `lambda`.
 
-This file makes the trace-source API use the valuation-completion model
+This file makes the trace-source API use the valuation-completion model from
 the start. The old adic logarithm stack remains useful infrastructure, but it
 is not the final source of the `A` term consumed by reciprocity.
 

@@ -14,32 +14,9 @@ public import KummerCriterion.ZetaFactorisation.EulerProduct
 public import KummerCriterion.ZetaFactorisation.Residue
 
 /-!
-# `K⁺` local even-character data 
+# `K⁺` local even-character data
 
-Character-side local input for the maximal real subfield package:
-
-- `localResidueDegreePlus` and `localPrimeCountPlus` — the residue degree and
- number of primes of `K⁺ = maximalRealSubfield K` above a rational prime
- `ℓ ≠ p`, expressed purely in terms of the cyclotomic-side invariants
- `localResidueDegree` and `localPrimeCount` together with the sign dichotomy
- `-1 ∈ ⟨ℓ⟩ mod p`.
-- Elementary power-equal-one / order-divides lemmas for even Dirichlet
- characters evaluated at `unitOfPrimeNe`.
-- Cardinality identities `card_even_characters_kplus` and
- `card_evenNontrivialCharacters`.
-- `localPrimeCountPlus_mul_localResidueDegreePlus`, the numerical identity
- matching the `K⁺` degree count with the even-character count.
-- `prod_even_characters_eval_eq_pow_localResidueDegreePlus`, the orbit-product
- formula collapsing the full even-character product at `ℓ ≠ p` to a single
- Euler factor.
-- `trivial_mul_evenCharLocalFactor_eq_pow_localResidueDegreePlus`, the final
- unramified character-side local factor theorem in the shape later matched
- against the `K⁺` Dedekind local factor.
-
-This file is the character half of the old monolithic
-`KummerCriterion.HMinus.KplusLocalResidue`; the prime-ideal / contraction /
-`K⁺` inertia lemmas now live in
-`KummerCriterion.HMinus.KplusPrimeArithmetic`.
+Residue-degree and local-factor identities for the maximal real subfield side.
 -/
 
 @[expose] public section
@@ -144,8 +121,6 @@ lemma prod_pow_primRoot_eq_pow_kplus {n : ℕ} (hn : 0 < n) (a : ℕ)
         rw [Finset.prod_image h_inj]
     _ = ∏ ζ ∈ Polynomial.nthRootsFinset d (1 : ℂ), (1 - ζ * T) := by rw [h_image]
     _ = 1 - T ^ d := prod_nthRootsFinset_one_sub_mul d hd_pos T
-
-section KplusLocalCharacters
 
 variable (p : ℕ) [hp : Fact p.Prime]
 
@@ -365,7 +340,9 @@ lemma localPrimeCountPlus_mul_localResidueDegreePlus
     have hkdiv : (k + k) / 2 = k := by
       omega
     have hlhs :
-        localPrimeCountPlus (p := p) ℓ hℓp * localResidueDegreePlus (p := p) ℓ hℓp = c * k := by
+        localPrimeCountPlus (p := p) ℓ hℓp *
+            localResidueDegreePlus (p := p) ℓ hℓp =
+          c * k := by
       simp [localPrimeCountPlus, localResidueDegreePlus, d, hk, hkdiv, ← hc]
     have hck : c * k = m := by
       have hdouble : c * k + c * k = m + m := by
@@ -664,7 +641,4 @@ lemma trivial_mul_evenCharLocalFactor_eq_pow_localResidueDegreePlus
                   rw [Complex.cpow_mul_nat]]
             congr 1
             ring
-
-end KplusLocalCharacters
-
 end KummerCriterion

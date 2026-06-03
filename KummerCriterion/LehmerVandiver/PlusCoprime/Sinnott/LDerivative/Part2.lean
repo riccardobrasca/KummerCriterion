@@ -166,7 +166,6 @@ theorem DirichletLogSum_principal_eq_neg_log :
   haveI : NeZero p := ⟨hp.out.ne_zero⟩
   have hp_pos : 0 < p := hp.out.pos
   unfold DirichletLogSum
-  -- Step 1: replace (1: DirichletCharacter) a with 1 for a ∈ Ico 1 p.
   have h_eval : ∑ a ∈ Finset.Ico 1 p,
         ((1 : DirichletCharacter ℂ p) ((a : ℕ) : ZMod p)) *
         ((Real.log (2 * |Real.sin (Real.pi * a / p)|) : ℝ) : ℂ) =
@@ -182,7 +181,6 @@ theorem DirichletLogSum_principal_eq_neg_log :
       exact absurd (Nat.le_of_dvd ha.1 h) (by omega)
     rw [MulChar.one_apply h_unit, one_mul]
   rw [h_eval]
-  -- Step 2: each sin factor is positive on Ico 1 p.
   have h_pos : ∀ a ∈ Finset.Ico 1 p,
       (0 : ℝ) < 2 * |Real.sin (Real.pi * a / p)| := by
     intro a ha
@@ -203,8 +201,6 @@ theorem DirichletLogSum_principal_eq_neg_log :
       Real.sin_pos_of_pos_of_lt_pi h_arg_pos h_arg_lt
     rw [abs_of_pos h_sin_pos]
     positivity
-  -- Step 3: cast the ℂ sum to a cast of an ℝ sum, then convert sum-of-logs
-  -- to log-of-product.
   have h_real_sum : ∑ a ∈ Finset.Ico 1 p,
         ((Real.log (2 * |Real.sin (Real.pi * a / p)|) : ℝ) : ℂ) =
       ((∑ a ∈ Finset.Ico 1 p,
@@ -220,7 +216,6 @@ theorem DirichletLogSum_principal_eq_neg_log :
       (f := fun a => 2 * |Real.sin (Real.pi * a / p)|)
       (fun a ha => (h_pos a ha).ne')).symm
   rw [h_sum_log]
-  -- Step 4: the product equals p via the cyclotomic norm identity.
   have h_prod_eq : (∏ a ∈ Finset.Ico 1 p,
         (2 * |Real.sin (Real.pi * a / p)| : ℝ)) = (p : ℝ) := by
     have h_complex := prod_one_sub_stdAddChar_eq_p (p := p)
@@ -281,8 +276,6 @@ theorem gaussSum_mul_gaussSum_inv_eq_p
   have h_primitive : (ZMod.stdAddChar (N := p)).IsPrimitive :=
     ZMod.isPrimitive_stdAddChar p
   have h_card := gaussSum_mul_gaussSum_eq_card hχ_ne h_primitive
-  -- h_card: gaussSum χ ψ * gaussSum χ⁻¹ ψ⁻¹ = Fintype.card (ZMod p)
-  -- Use mul_gaussSum_inv_eq_gaussSum to relate gaussSum χ⁻¹ ψ⁻¹ to gaussSum χ⁻¹ ψ.
   have h_χinv_neg_one : χ⁻¹ ((-1 : ZMod p)) = 1 := by
     rw [MulChar.inv_apply_eq_inv']
     rw [DirichletCharacter.Even] at hχ_even
@@ -307,7 +300,6 @@ theorem prod_gaussSum_mul_gaussSum_inv_eq_p_pow (hp_odd' : p ≠ 2) :
           gaussSum χ⁻¹ (ZMod.stdAddChar (N := p))) =
       (p : ℂ) ^ ((p - 3) / 2) := by
   classical
-  -- Each factor equals p.
   have h_per_χ : ∀ χ ∈ KummerCriterion.evenNontrivialCharacters (p := p),
       gaussSum χ (ZMod.stdAddChar (N := p)) *
           gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)) =
@@ -398,7 +390,6 @@ theorem hPlus_eq_factor_gaussSum_inv_mul_prod_DirichletLogSum
         ∏ χ ∈ KummerCriterion.evenNontrivialCharacters (p := p),
           DirichletLogSum p χ⁻¹ := by
   rw [KummerCriterion.hPlus_formula_of_evenLValues (p := p) (K := K) hp_odd']
-  -- ↑hPlus = cyclotomicHPlusFactor · ∏ evenLValueRhs
   have h_rhs : ∀ χ ∈ KummerCriterion.evenNontrivialCharacters (p := p),
       KummerCriterion.evenLValueRhs p χ =
         (gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)))⁻¹ * DirichletLogSum p χ⁻¹ :=
@@ -502,10 +493,7 @@ theorem prefactor_sq_eq_inv_two_pow (hp_odd' : p ≠ 2) (hp_ge : 3 ≤ p) :
   have hp_real : (0 : ℝ) ≤ p := by positivity
   have hp_pow_real : (0 : ℝ) ≤ (p : ℝ) ^ ((p - 1) / 2) := by positivity
   have hp_pow_nat : (0 : ℝ) ≤ (p : ℝ) ^ ((p - 3) / 2) := by positivity
-  -- Step 1: expand the square.
   rw [mul_pow]
-  -- Step 2: simplify the squared first factor:
-  -- (2 · √(p^((p-3)/2)) / 2^((p-1)/2))^2 = 4 · p^((p-3)/2) / 2^(p-1)
   have h_first_sq : (((2 * Real.sqrt ((p : ℝ) ^ ((p - 3) / 2)) /
         2 ^ ((p - 1) / 2) : ℝ) : ℂ)) ^ 2 =
       ((4 * (p : ℝ) ^ ((p - 3) / 2) / 2 ^ (p - 1) : ℝ) : ℂ) := by
@@ -526,14 +514,12 @@ theorem prefactor_sq_eq_inv_two_pow (hp_odd' : p ≠ 2) (hp_ge : 3 ≤ p) :
     push_cast
     ring
   rw [h_first_sq]
-  -- Step 3: substitute the Gauss sum squared identity.
   rw [show (∏ χ ∈ KummerCriterion.evenNontrivialCharacters (p := p),
         gaussSum χ (ZMod.stdAddChar (N := p)))⁻¹ ^ 2 =
       ((∏ χ ∈ KummerCriterion.evenNontrivialCharacters (p := p),
           gaussSum χ (ZMod.stdAddChar (N := p))) ^ 2)⁻¹ from
       inv_pow _ _]
   rw [prod_gaussSum_sq_eq_p_pow (p := p) hp_odd']
-  -- Step 4: simplify `4 / 2^(p-1) = 1 / 2^(p-3)`.
   have h_p_ne : (p : ℂ) ≠ 0 := by exact_mod_cast hp.out.ne_zero
   have h_p_pow_ne : (p : ℂ) ^ ((p - 3) / 2) ≠ 0 := pow_ne_zero _ h_p_ne
   have h_two_ne : (2 : ℂ) ≠ 0 := by norm_num

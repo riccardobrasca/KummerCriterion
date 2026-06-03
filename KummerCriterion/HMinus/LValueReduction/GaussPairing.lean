@@ -185,7 +185,8 @@ theorem quadraticCharComplex_mem_oddCharacters_of_mod_four_eq_three
     quadraticCharComplex p ∈ oddCharacters (p := p) := by
   classical
   exact Finset.mem_filter.mpr
-    ⟨Finset.mem_univ _, quadraticCharComplex_odd_of_mod_four_eq_three_lvalue (p := p) hp_odd' hp₄⟩
+    ⟨Finset.mem_univ _,
+      quadraticCharComplex_odd_of_mod_four_eq_three_lvalue (p := p) hp_odd' hp₄⟩
 
 theorem card_oddCharactersWithoutQuadratic_of_mod_four_eq_three
     (hp_odd' : p ≠ 2) (hp₄ : p % 4 = 3) :

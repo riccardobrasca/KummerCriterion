@@ -6,7 +6,8 @@ public import KummerCriterion.ZetaFactorisation.NumberFieldEulerProduct
 /-!
 # `K⁺` Euler product and residue bridge
 
-This module closes the analytic `K⁺` side of the chain.
+Euler-product comparison between the zeta function of `K⁺` and even Dirichlet
+`L`-products.
 -/
 
 @[expose] public section
@@ -17,8 +18,6 @@ open NumberField
 open scoped BigOperators Topology nonZeroDivisors
 
 namespace KummerCriterion
-
-section KplusEulerProduct
 
 variable (p : ℕ) [hp : Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
@@ -215,13 +214,15 @@ lemma normalizedFactors_card_mul_localResidueDegreePlus_of_absNorm_prime_pow
       map_prod]
     calc
       ∏ PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ), Ideal.absNorm (PPlus ^ m.count PPlus)
-          = ∏ PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ), ((q : ℕ) ^ d) ^ m.count PPlus := by
+          = ∏ PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ),
+              ((q : ℕ) ^ d) ^ m.count PPlus := by
               apply Finset.prod_congr rfl
               intro PPlus hPPlus
               rw [map_pow]
               rw [absNorm_eq_q_pow_localResidueDegreePlus_of_mem_primesOverFinsetPlus
                 (p := p) (K := K) hp_odd hq hPPlus, hd]
-      _ = (q : ℕ) ^ (d * ∑ PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ), m.count PPlus) := by
+      _ = (q : ℕ) ^
+          (d * ∑ PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ), m.count PPlus) := by
               rw [Finset.prod_pow_eq_pow_sum]
               simp [Nat.pow_mul]
       _ = (q : ℕ) ^ (d * m.card) := by rw [hsum_count]
@@ -254,7 +255,8 @@ lemma idealNormMultiplicityNF_prime_pow_mul_localResidueDegreePlus_eq_card_sym
         PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ)} n) := by
   classical
   set d := localResidueDegreePlus (p := p) (q : ℕ) hq with hd
-  let α : Type _ := {PPlus : Ideal (𝓞 K⁺) // PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ)}
+  let α : Type _ :=
+    {PPlus : Ideal (𝓞 K⁺) // PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ)}
   letI : Fintype α := Fintype.ofFinset (primesOverFinsetPlus (K := K) (q : ℕ)) fun PPlus => by
     simp
   let β : Type _ := {I : NonzeroIdealNF K⁺ // Ideal.absNorm I.1 = (q : ℕ) ^ (d * n)}
@@ -272,7 +274,8 @@ lemma idealNormMultiplicityNF_prime_pow_mul_localResidueDegreePlus_eq_card_sym
   have hpmap_val :
       ∀ {m : Multiset (Ideal (𝓞 K⁺))}
         (H : ∀ PPlus, PPlus ∈ m → PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ)),
-        (Multiset.pmap (fun PPlus hPPlus => (⟨PPlus, hPPlus⟩ : α)) m H).map Subtype.val = m := by
+        Multiset.map Subtype.val
+          (Multiset.pmap (fun PPlus hPPlus => (⟨PPlus, hPPlus⟩ : α)) m H) = m := by
     intro m H
     rw [Multiset.map_pmap, Multiset.pmap_eq_map, Multiset.map_id']
   let toSym : β → Sym α n := fun ⟨⟨I, hI_ne⟩, hI_norm⟩ =>
@@ -318,24 +321,27 @@ lemma idealNormMultiplicityNF_prime_pow_mul_localResidueDegreePlus_eq_card_sym
           ∑ PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ), m.count PPlus = m.card :=
         Multiset.sum_count_eq_card fun PPlus hPPlus =>
           hm_subset (Multiset.mem_toFinset.2 hPPlus)
-      rw [Finset.prod_multiset_count_of_subset m (primesOverFinsetPlus (K := K) (q : ℕ)) hm_subset,
-        map_prod]
+      rw [Finset.prod_multiset_count_of_subset m
+        (primesOverFinsetPlus (K := K) (q : ℕ)) hm_subset, map_prod]
       calc
         ∏ PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ), Ideal.absNorm (PPlus ^ m.count PPlus)
-            = ∏ PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ), ((q : ℕ) ^ d) ^ m.count PPlus := by
+            = ∏ PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ),
+                ((q : ℕ) ^ d) ^ m.count PPlus := by
                 apply Finset.prod_congr rfl
                 intro PPlus hPPlus
                 rw [map_pow]
                 rw [absNorm_eq_q_pow_localResidueDegreePlus_of_mem_primesOverFinsetPlus
                   (p := p) (K := K) hp_odd hq hPPlus, hd]
-        _ = (q : ℕ) ^ (d * ∑ PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ), m.count PPlus) := by
+        _ = (q : ℕ) ^
+            (d * ∑ PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ), m.count PPlus) := by
                 rw [Finset.prod_pow_eq_pow_sum]
                 simp [Nat.pow_mul]
         _ = (q : ℕ) ^ (d * m.card) := by rw [hsum_count]
         _ = (q : ℕ) ^ (d * n) := by rw [hm_card]
     ⟨⟨m.prod, hm_prod_ne⟩, hm_norm⟩
   have htoSym_map_val :
-      ∀ b : β, (toSym b).1.map Subtype.val = UniqueFactorizationMonoid.normalizedFactors b.1.1 := by
+      ∀ b : β,
+        (toSym b).1.map Subtype.val = UniqueFactorizationMonoid.normalizedFactors b.1.1 := by
     rintro ⟨⟨I, hI_ne⟩, hI_norm⟩
     dsimp [toSym]
     let m := UniqueFactorizationMonoid.normalizedFactors I
@@ -498,7 +504,8 @@ lemma dedekind_prime_power_series_eq_localFactorPlus
           Fintype.card_of_finset' (primesOverFinsetPlus (K := K) (q : ℕ)) fun PPlus => by simp
         _ = localPrimeCountPlus (p := p) (q : ℕ) hq := hcard_finset
     have hf_hasSum' : HasSum f ((dedekindLocalFactor K⁺ (q : ℕ) s)⁻¹) := by
-      rw [dedekindLocalFactor_eq_pow_localResidueDegreePlus (p := p) (K := K) hp_odd hq, ← inv_pow]
+      rw [dedekindLocalFactor_eq_pow_localResidueDegreePlus
+        (p := p) (K := K) hp_odd hq, ← inv_pow]
       simpa [z, hd, hα_card] using hf_hasSum
     simpa [f] using hf_hasSum'.tsum_eq
 
@@ -609,7 +616,8 @@ theorem tendsto_sub_one_mul_riemannZeta_mul_evenLProduct :
   have h_cont : Continuous (evenLProduct p) :=
     continuous_finsetProd _ fun χ hχ =>
       (DirichletCharacter.differentiable_LFunction (Finset.mem_filter.mp hχ).2.2).continuous
-  have h_embed : Filter.Tendsto (fun s : ℝ => (s : ℂ)) (𝓝[>] (1 : ℝ)) (𝓝[≠] (1 : ℂ)) :=
+  have h_embed :
+      Filter.Tendsto (fun s : ℝ => (s : ℂ)) (𝓝[>] (1 : ℝ)) (𝓝[≠] (1 : ℂ)) :=
     tendsto_nhdsWithin_iff.mpr
       ⟨(Complex.continuous_ofReal.tendsto 1).mono_left nhdsWithin_le_nhds,
         by
@@ -642,7 +650,4 @@ theorem complex_maximalRealSubfield_residue_eq_evenLProduct_one (hp_odd : p ≠ 
     ((NumberField.dedekindZeta_residue K⁺ : ℝ) : ℂ) = evenLProduct p (1 : ℂ) :=
   tendsto_nhds_unique (NumberField.tendsto_sub_one_mul_dedekindZeta_nhdsGT K⁺)
     (tendsto_sub_one_mul_dedekindZetaPlus_via_evenLProducts (p := p) (K := K) hp_odd)
-
-end KplusEulerProduct
-
 end KummerCriterion

@@ -65,7 +65,8 @@ theorem odd_LFunction_one_eq_oddLValueRhs_of_LFunction_inv_zero
     rw [DirichletCharacter.LFunction_eq_completed_div_gammaFactor (χ := χ⁻¹) (s := 0)
         (Or.inr hp_ne_one), hχinv_odd.gammaFactor_def]
     simp
-  have hfe := DirichletCharacter.IsPrimitive.completedLFunction_one_sub (χ := χ) hχ_prim (0 : ℂ)
+  have hfe :=
+    DirichletCharacter.IsPrimitive.completedLFunction_one_sub (χ := χ) hχ_prim (0 : ℂ)
   rw [DirichletCharacter.rootNumber, if_neg hχ_odd.not_even, pow_one,
     ← mul_comm_div, ← mul_comm_div, ← Complex.cpow_sub _ _ hp_ne_zero, sub_sub, add_halves,
     hL0, hχ0] at hfe
@@ -79,8 +80,8 @@ theorem odd_LFunction_one_eq_oddLValueRhs_of_LFunction_inv_zero
     _ = ((Real.pi : ℝ) : ℂ) *
           (((p : ℂ) ^ (-1 : ℂ)) * Complex.I * gaussSum χ (ZMod.stdAddChar (N := p)) *
             BernoulliGen χ⁻¹ 1) := by rw [hfe']
-    _ = ((((Real.pi : ℝ) : ℂ) * Complex.I) * gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ)) *
-          BernoulliGen χ⁻¹ 1 := by
+    _ = ((((Real.pi : ℝ) : ℂ) * Complex.I) * gaussSum χ (ZMod.stdAddChar (N := p)) /
+            (p : ℂ)) * BernoulliGen χ⁻¹ 1 := by
       simp [Complex.cpow_neg_one, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm]
     _ = oddLValueRhs p χ := rfl
 

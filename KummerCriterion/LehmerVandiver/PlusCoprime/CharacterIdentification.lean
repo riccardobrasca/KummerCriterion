@@ -49,11 +49,9 @@ theorem zeta_pow_mul_cyclotomicUnit_p_sub_eq_neg
   set ζ : 𝓞 K := ((zeta_spec p ℚ K).unit' : 𝓞 K)
   have hζ_sub_one_ne_zero : (ζ - 1 : 𝓞 K) ≠ 0 :=
     (zeta_spec p ℚ K).zeta_sub_one_prime'.ne_zero
-  -- ζ^p = 1.
   have hζ_p : ζ ^ p = 1 := by
     have hζ_prim : IsPrimitiveRoot ζ p := (zeta_spec p ℚ K).unit'_coe
     exact hζ_prim.pow_eq_one
-  -- Multiply both sides by (ζ - 1) and cancel.
   refine mul_right_cancel₀ hζ_sub_one_ne_zero ?_
   calc ζ ^ c * cyclotomicUnit p K (p - c) * (ζ - 1)
       = ζ ^ c * ((ζ - 1) * cyclotomicUnit p K (p - c)) := by ring
@@ -83,14 +81,9 @@ theorem cyclotomicUnit_eq_neg_zeta_pow_mul_cyclotomicUnit_p_sub
   have hζ_p : ζ ^ p = 1 := by
     have hζ_prim : IsPrimitiveRoot ζ p := (zeta_spec p ℚ K).unit'_coe
     exact hζ_prim.pow_eq_one
-  -- Apply zeta_pow_mul_cyclotomicUnit_p_sub_eq_neg with c = p - d.
   have h := zeta_pow_mul_cyclotomicUnit_p_sub_eq_neg
     (p := p) (K := K) (p - d) (Nat.sub_le _ _)
-  -- h: ζ^{p-d} · cyclotomicUnit (p - (p-d)) = -cyclotomicUnit (p-d).
-  -- p - (p - d) = d (using d ≤ p).
   rw [show p - (p - d) = d from Nat.sub_sub_self hd] at h
-  -- h: ζ^{p-d} · cyclotomicUnit d = -cyclotomicUnit (p-d).
-  -- Multiply both sides by ζ^d, use ζ^d · ζ^{p-d} = ζ^p = 1.
   have h_pow : ζ ^ d * ζ ^ (p - d) = 1 := by
     rw [← pow_add, Nat.add_sub_cancel' hd, hζ_p]
   calc cyclotomicUnit p K d

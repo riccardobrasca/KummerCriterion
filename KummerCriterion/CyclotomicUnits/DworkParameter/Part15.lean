@@ -21,7 +21,7 @@ variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 namespace Conjugation
 
 set_option maxHeartbeats 800000 in
--- Expanding the completion automorphism exposes two nested completion maps.
+-- Needed for nested completion-map continuity reductions.
 theorem continuous_valuedCompletionCyclotomicEquiv
     (a : CyclotomicUnitDelta p) :
     Continuous (valuedCompletionCyclotomicEquiv (p := p) K a) := by
@@ -45,7 +45,7 @@ theorem continuous_valuedCompletionCyclotomicEquiv
   exact UniformSpace.Completion.continuous_map.comp UniformSpace.Completion.continuous_map
 
 set_option maxHeartbeats 800000 in
--- The closed-set induction compares two continuous maps out of a completion.
+-- Needed for completion induction over the rational embedding.
 theorem valuedCompletionCyclotomicEquiv_rationalToLambdaCompletionRingHom
     (a : CyclotomicUnitDelta p)
     (x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) :
@@ -132,7 +132,7 @@ def dworkSignedCoefficients
   fun i => (-1 : RationalPadicIntegerRing p) ^ (i : ℕ) * a i
 
 set_option maxHeartbeats 800000 in
--- The proof normalizes nested algebra maps from the rational integer ring.
+-- Needed for normalizing nested rational-integer algebra maps.
 theorem dworkCompleteComplexConj_powerLinearMap
     (hp_two : 2 < p)
     (a : Fin (p - 1) → RationalPadicIntegerRing p) :
@@ -203,8 +203,7 @@ theorem dworkParameterPowerLinearMap_odd_coeff_eq_zero_of_fixed
     (rationalPadicInteger_two_ne_zero (p := p))
 
 set_option synthInstance.maxHeartbeats 80000 in
--- Register the fixed subalgebra instances once so later linear maps do not
--- repeatedly unfold the conjugation predicate during typeclass search.
+-- Needed for the fixed-subalgebra inherited additive-monoid instance.
 instance instAddCommMonoidDworkFixedSubalgebra :
     AddCommMonoid (dworkFixedSubalgebra p K) :=
   inferInstance
@@ -236,8 +235,7 @@ theorem dworkSignedCoefficients_evenCoeffExtend
   · simp [dworkSignedCoefficients, dworkEvenCoeffExtend, hi]
 
 set_option synthInstance.maxHeartbeats 80000 in
--- The codomain is a predicate subtype, so instance search needs the local
--- fixed-subalgebra instance above.
+-- Needed for bundled linear-map instance synthesis over the fixed subalgebra.
 /-- The even-power expansion map into the fixed subalgebra. -/
 def dworkEvenPowerLinearMap (hp_two : 2 < p) :
     (dworkEvenPowerIndex p → RationalPadicIntegerRing p) →ₗ[RationalPadicIntegerRing p]

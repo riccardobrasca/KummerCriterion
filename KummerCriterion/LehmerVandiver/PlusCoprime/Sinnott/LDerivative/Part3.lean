@@ -47,11 +47,7 @@ theorem KummerDirichletDeterminant_of_FrobeniusDetIdentity
     LehmerVandiver.Sinnott.KummerDirichletDeterminant p K hp_odd hp_three := by
   unfold LehmerVandiver.Sinnott.KummerDirichletDeterminant
   unfold FrobeniusDetIdentity at h_frob
-  -- h_frob: ↑regOfFamily ^ 2 = (∏ DLS χ⁻¹)² in ℂ
   have h_analytic := hPlus_mul_regulator_sq_eq (p := p) K hp_odd hp_three
-  -- h_analytic: (↑hPlus · ↑regulator)² = (∏ DLS χ⁻¹)² / 2^(p-3) in ℂ
-  -- Combine: regOfFamily² = (∏ DLS)² = 2^(p-3) · (hPlus · regulator)²
-  -- = (2^((p-3)/2) · hPlus · regulator)²
   have h_sq_eq_C : ((NumberField.Units.regOfFamily
       (cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three) : ℝ) : ℂ) ^ 2 =
       (((2 : ℝ) ^ ((p - 3) / 2) : ℝ) : ℂ) ^ 2 *
@@ -65,7 +61,6 @@ theorem KummerDirichletDeterminant_of_FrobeniusDetIdentity
             DirichletLogSum p χ⁻¹) ^ 2 / (2 : ℂ) ^ (p - 3)) from by
       field_simp]
     rw [← h_analytic]
-    -- Goal: 2^(p-3) · (hPlus · R)² = (2^((p-3)/2))² · (hPlus · R)²
     have h_pow_eq : (((2 : ℝ) ^ ((p - 3) / 2) : ℝ) : ℂ) ^ 2 = (2 : ℂ) ^ (p - 3) := by
       push_cast
       rw [← pow_mul]
@@ -74,7 +69,6 @@ theorem KummerDirichletDeterminant_of_FrobeniusDetIdentity
       rcases h_p_odd with ⟨k, hk⟩
       omega
     rw [h_pow_eq]
-  -- Cast h_sq_eq_C to ℝ.
   have h_sq_eq_R : (NumberField.Units.regOfFamily
       (cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three)) ^ 2 =
       ((2 : ℝ) ^ ((p - 3) / 2) * ((KummerCriterion.hPlus K : ℕ) : ℝ) *
@@ -87,7 +81,6 @@ theorem KummerDirichletDeterminant_of_FrobeniusDetIdentity
       push_cast at h_sq_eq_C
       linear_combination h_sq_eq_C
     exact_mod_cast h_cast
-  -- Positivity: regOfFamily ≥ 0 and 2^((p-3)/2) · hPlus · regulator > 0.
   have h_reg_nonneg : (0 : ℝ) ≤ NumberField.Units.regOfFamily
       (cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three) := by
     rw [KummerCriterion.LehmerVandiver.Sinnott.regOfFamily_cyclotomicUnitFamilyKplus_eq_det
@@ -99,19 +92,7 @@ theorem KummerDirichletDeterminant_of_FrobeniusDetIdentity
     refine mul_nonneg (mul_nonneg ?_ ?_) (NumberField.Units.regulator_pos _).le
     · positivity
     · exact Nat.cast_nonneg _
-  -- Conclude: a² = b² with a, b ≥ 0 implies a = b.
   exact (sq_eq_sq₀ h_reg_nonneg h_rhs_nonneg).mp h_sq_eq_R
-
-/-! ## Character matrix infrastructure for the Frobenius determinant formula
-
-The Frobenius determinant formula for cyclic groups says that for a function
-`f: G → ℂ` on a finite cyclic group `G` and the matrix `M[a, b] = f(a · b)`,
-`det M = ∏_χ (∑_a χ(a) · f(a))`. Specialised to `G = (ZMod p)ˣ` for prime `p`,
-this is the key identity behind `FrobeniusDetIdentity`.
-
-The proof uses the **character matrix** `F[χ, a] = χ(a)` and the
-multiplicative-action eigenvalue formula `(F · M)[χ, b] = χ(b)⁻¹ · λ_χ`,
-where `λ_χ = ∑_a χ(a) · f(a)`. -/
 
 /-- **Helper**: for a Dirichlet character ψ mod p, the sum over units of
 ψ at the unit cast to `ZMod p` equals the sum over all of `ZMod p` of ψ.
@@ -122,13 +103,8 @@ of `ZMod p`. -/
 private theorem mulChar_sum_units_eq_sum_all (ψ : DirichletCharacter ℂ p) :
     ∑ a : (ZMod p)ˣ, ψ ((a : ZMod p)) = ∑ a : ZMod p, ψ a := by
   classical
-  -- Bridge via Finset.sum_attach style:
-  -- ∑ a: ZMod p, ψ a = (a=0 term ψ 0 = 0) + ∑_{a ≠ 0} ψ a
-  -- = ∑_{a ∈ Finset.univ.erase 0}, ψ a
-  -- = ∑_a: (ZMod p)ˣ, ψ ((a: ZMod p)) (bijection)
   rw [← Finset.sum_erase_add _ _ (Finset.mem_univ (0 : ZMod p))]
   rw [ψ.map_zero, add_zero]
-  -- Goal: ∑ a: (ZMod p)ˣ, ψ ((a: ZMod p)) = ∑ a ∈ Finset.univ.erase 0, ψ a
   refine Finset.sum_bij (fun (a : (ZMod p)ˣ) _ => (a : ZMod p)) ?_ ?_ ?_ ?_
   · -- mem: a unit, (a: ZMod p) ≠ 0
     intro a _
@@ -221,9 +197,6 @@ theorem sum_units_logNorm_eq_log_p :
           ((Real.log (2 * |Real.sin (Real.pi * n / p)|) : ℝ) : ℂ) := by
     refine Finset.sum_congr rfl (fun n hn => (h_eval n hn).symm)
   rw [h_sum_eq]
-  -- LHS: ∑ n, (1)(↑n) · log(2|sin|). RHS: log p.
-  -- h_dls: -∑ n, (1)(↑n) · log(2|sin|) = -log p
-  -- So ∑ n, (1)(↑n) · log(2|sin|) = log p.
   linear_combination -h_dls
 
 /-- **Dirichlet character extension of a `CyclotomicEvenDelta` character**:
@@ -265,14 +238,11 @@ the Dirichlet extension `dirichletOfQuotientChar p ξ` is an even character of
 theorem dirichletOfQuotientChar_even
     (ξ : MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :
     (dirichletOfQuotientChar p ξ).Even := by
-  -- (dirichletOfQuotientChar ξ).Even:= (dirichletOfQuotientChar ξ) (-1: ZMod p) = 1.
   change (dirichletOfQuotientChar p ξ) (-1 : ZMod p) = 1
-  -- Recast: (-1: ZMod p) = ↑((-1: (ZMod p)ˣ)). Then apply dirichletOfQuotientChar_apply_unit.
   have h_cast : (-1 : ZMod p) = ((-1 : (ZMod p)ˣ) : ZMod p) := by
     rw [Units.val_neg, Units.val_one]
   rw [h_cast]
   rw [dirichletOfQuotientChar_apply_unit p ξ (-1 : (ZMod p)ˣ)]
-  -- Now: ξ (q (-1)) = ξ 1 = 1.
   rw [KummerCriterion.cyclotomicEvenDeltaQuotient_neg_one]
   exact MulChar.map_one ξ
 
@@ -284,7 +254,6 @@ theorem dirichletOfQuotientChar_injective :
   intro ξ₁ ξ₂ h
   apply MulChar.ext
   intro ā
-  -- ā: (CyclotomicEvenDelta p)ˣ. Every element of CyclotomicEvenDelta is q(a) for some a.
   have h_repr : ∃ a : KummerCriterion.CyclotomicUnitDelta p,
       KummerCriterion.cyclotomicEvenDeltaQuotient p a =
         ((ā : KummerCriterion.CyclotomicEvenDelta p)) := by
@@ -293,7 +262,6 @@ theorem dirichletOfQuotientChar_injective :
     exact Quotient.out_eq _
   obtain ⟨a, ha⟩ := h_repr
   rw [← ha]
-  -- Want: ξ₁ (q a) = ξ₂ (q a). Use h at a.
   have h_at_a : dirichletOfQuotientChar p ξ₁ ((a : ZMod p)) =
       dirichletOfQuotientChar p ξ₂ ((a : ZMod p)) := by
     rw [h]
@@ -310,8 +278,6 @@ theorem dirichletOfQuotientChar_one :
   apply MulChar.ext
   intro u
   rw [dirichletOfQuotientChar_apply_unit]
-  -- LHS: 1 (q u) where q is the quotient map. = 1 since q u is a unit.
-  -- RHS: 1 (↑u) = 1 since u is a unit.
   rw [MulChar.one_apply u.isUnit]
   rw [MulChar.one_apply (Group.isUnit _)]
 
@@ -366,7 +332,6 @@ theorem frobenius_eigenvalue_eq_neg_DirichletLogSum
         ((Real.log ‖(1 : ℂ) - ZMod.stdAddChar (N := p) ((a : ZMod p))‖ : ℝ) : ℂ) =
       -DirichletLogSum p χ := by
   classical
-  -- Step 1: convert sum-over-units to sum-over-ZMod-p (extending by 0 at 0).
   have h_units_sum_eq : ∑ a : (ZMod p)ˣ,
         χ ((a : ZMod p)) *
           ((Real.log ‖(1 : ℂ) -
@@ -376,9 +341,7 @@ theorem frobenius_eigenvalue_eq_neg_DirichletLogSum
           ZMod.stdAddChar (N := p) a‖ : ℝ) : ℂ) := by
     haveI : NeZero p := ⟨hp.out.ne_zero⟩
     rw [← Finset.sum_erase_add _ _ (Finset.mem_univ (0 : ZMod p))]
-    -- a = 0 term: χ(0) · log‖1 - stdAddChar 0‖ = 0 · log 0 = 0
     rw [χ.map_zero, zero_mul, add_zero]
-    -- Sum over (ZMod p)ˣ = sum over univ.erase 0 (ZMod p). Bij a ↦ (a: ZMod p).
     refine Finset.sum_bij (fun (a : (ZMod p)ˣ) _ => (a : ZMod p)) ?_ ?_ ?_ ?_
     · intro a _
       rw [Finset.mem_erase]
@@ -403,7 +366,6 @@ theorem frobenius_eigenvalue_eq_neg_DirichletLogSum
       exact ZMod.natCast_zmod_val b
     · intro a _; rfl
   rw [h_units_sum_eq]
-  -- Step 2: convert ∑ a: ZMod p, χ(a) · log|...| to evenLValueLogSum p χ⁻¹.
   have h_sum_eq_evenL : ∑ a : ZMod p,
         χ a * ((Real.log ‖(1 : ℂ) -
           ZMod.stdAddChar (N := p) a‖ : ℝ) : ℂ) =

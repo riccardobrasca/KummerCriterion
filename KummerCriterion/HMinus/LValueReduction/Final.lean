@@ -56,11 +56,7 @@ theorem hMinus_formula_of_residue_and_hPlus_cyclotomic_and_gauss
   · exact hplus
   · exact hgauss
 
-/-- Diekmann Theorem 43: the relative class number of a cyclotomic field of
-prime conductor is the odd-character Bernoulli product.
-
-This is the explicit statement ultimately obtained by combining the cyclotomic
-class-number formula with the odd and even `L(1, χ)` evaluations. -/
+/-- Diekmann Theorem 43 for the relative class number of a cyclotomic field of prime conductor. -/
 theorem hMinus_formula (hp_odd' : p ≠ 2) :
     ((hMinus K : ℕ) : ℂ) =
       (2 * p : ℂ) *

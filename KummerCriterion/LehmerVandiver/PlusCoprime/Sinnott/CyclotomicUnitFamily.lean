@@ -81,23 +81,12 @@ theorem unitsComplexConj_cyclotomicRealUnit {a : ℕ} (ha : a.Coprime p) (hp_two
   rw [map_mul, unitsComplexConj_unitsComplexConj, mul_comm]
 
 set_option backward.isDefEq.respectTransparency false in
-/-! ## Indexed family of real cyclotomic units
-
-The standard family is indexed by `a ∈ {2, 3,..., (p-1)/2}` (cardinality
-`(p-3)/2 = rank K⁺`). Using a Fin-typed index lets us apply mathlib's
-`regOfFamily_div_regulator`. -/
-
-set_option backward.isDefEq.respectTransparency false in
-/-! ## Unit-form K⁺ cyclotomic units and Fin-indexed family -/
-
-set_option backward.isDefEq.respectTransparency false in
 /-- `realCyclotomicUnitPlus p K a` is a unit in `𝓞 K⁺` when `a.Coprime p`
 and `2 ≤ p`. The inverse exists in 𝓞 K and is real (σ-fixed), hence
 descends to `𝓞 K⁺`. -/
 theorem isUnit_realCyclotomicUnitPlus
     {a : ℕ} (ha : a.Coprime p) (_ha_lt : a < p) (hp_two : 2 ≤ p) :
     IsUnit (LehmerVandiver.realCyclotomicUnitPlus p K a) := by
-  -- The K-side unit form has σ-fixed inverse, descending to 𝓞 K⁺.
   have h_real_unit : ∃ inv_u : (𝓞 K)ˣ,
       unitsComplexConj K inv_u = inv_u ∧
       ((cyclotomicRealUnit p K ha hp_two : (𝓞 K)ˣ) *
@@ -107,7 +96,6 @@ theorem isUnit_realCyclotomicUnitPlus
     exact congrArg (·⁻¹)
       (unitsComplexConj_cyclotomicRealUnit (p := p) (K := K) ha hp_two)
   obtain ⟨inv_u, h_inv_real, h_mul⟩ := h_real_unit
-  -- inv_u ∈ realUnits K → descends to 𝓞 K⁺ via mem_realUnits_iff.
   have h_inv_mem : inv_u ∈ realUnits K := by
     rw [← unitsComplexConj_eq_self_iff (K := K)]
     exact h_inv_real
@@ -154,12 +142,6 @@ theorem realCyclotomicUnitPlusUnit_val
     LehmerVandiver.realCyclotomicUnitPlus p K a :=
   IsUnit.unit_spec _
 
-/-! ## Fin-indexed family
-
-The family `cyclotomicUnitFamilyKplus i:= realCyclotomicUnitPlusUnit (i+2)`
-for `i: Fin ((p-3)/2)`. Indexed by Fin to apply mathlib's
-`regOfFamily_div_regulator`. -/
-
 set_option backward.isDefEq.respectTransparency false in
 /-- For `i: Fin ((p-3)/2)`, the index `(i+2)` is coprime to `p` (and `< p`). -/
 theorem cyclotomicUnitFamily_index_coprime (hp_three : 3 ≤ p)
@@ -170,7 +152,6 @@ theorem cyclotomicUnitFamily_index_coprime (hp_three : 3 ≤ p)
     have h_half : (p - 3) / 2 ≤ p - 3 := Nat.div_le_self _ _
     omega
   have h_pos : 1 ≤ (i : ℕ) + 2 := by omega
-  -- p prime + 1 ≤ a < p ⟹ ¬p ∣ a ⟹ a.Coprime p.
   have h_not_dvd : ¬ p ∣ ((i : ℕ) + 2) := fun h => by
     have := Nat.le_of_dvd h_pos h
     omega
@@ -196,13 +177,6 @@ noncomputable def cyclotomicUnitFamilyKplus (hp_three : 3 ≤ p)
     (cyclotomicUnitFamily_index_coprime p hp_three i)
     (cyclotomicUnitFamily_index_lt p hp_three i)
     (Nat.Prime.two_le Fact.out)
-
-/-! ## Connection to `regOfFamily_div_regulator`
-
-The family `cyclotomicUnitFamilyKplus` lives in `Fin ((p-3)/2) → (𝓞 K⁺)ˣ`,
-and the unit rank of K⁺ is `(p-3)/2` (`units_rank_eq_prime_sub_three_div_two`),
-so we can package as `Fin (Units.rank K⁺) → (𝓞 K⁺)ˣ` after rewriting the
-index. -/
 
 set_option backward.isDefEq.respectTransparency false in
 /-- The cyclotomic-unit family at the `Fin (Units.rank K⁺)` index expected

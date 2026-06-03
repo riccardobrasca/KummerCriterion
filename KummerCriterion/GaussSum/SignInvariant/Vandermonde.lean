@@ -124,7 +124,8 @@ theorem fourierRootPowerDiff_eq_factor (i j : Fin p) (hij : i < j) :
   have hnat : (j : ℕ) = (i : ℕ) + ((j : ℕ) - (i : ℕ)) :=
     (Nat.add_sub_of_le hij').symm
   calc
-    ζ ^ (j : ℕ) - ζ ^ (i : ℕ) = ζ ^ ((i : ℕ) + ((j : ℕ) - (i : ℕ))) - ζ ^ (i : ℕ) := by
+    ζ ^ (j : ℕ) - ζ ^ (i : ℕ) =
+        ζ ^ ((i : ℕ) + ((j : ℕ) - (i : ℕ))) - ζ ^ (i : ℕ) := by
       conv_lhs => rw [hnat]
     _ = ζ ^ (i : ℕ) * ζ ^ ((j : ℕ) - (i : ℕ)) - ζ ^ (i : ℕ) := by
       rw [pow_add]
@@ -261,8 +262,10 @@ theorem finCyclotomicDifferenceProduct_eq_singleDifferenceProduct (n : ℕ) (ζ 
   | succ n ih =>
       rw [Fin.prod_univ_succ, Fin.prod_Ioi_zero]
       have hsucc :
-          (∏ i : Fin (n + 1), ∏ j ∈ Finset.Ioi i.succ, (ζ ^ ((j : ℕ) - (i.succ : ℕ)) - 1)) =
-            ∏ i : Fin (n + 1), ∏ j ∈ Finset.Ioi i, (ζ ^ ((j : ℕ) - (i : ℕ)) - 1) := by
+          (∏ i : Fin (n + 1),
+              ∏ j ∈ Finset.Ioi i.succ, (ζ ^ ((j : ℕ) - (i.succ : ℕ)) - 1)) =
+            ∏ i : Fin (n + 1),
+              ∏ j ∈ Finset.Ioi i, (ζ ^ ((j : ℕ) - (i : ℕ)) - 1) := by
         refine Finset.prod_congr rfl ?_
         intro i hi
         rw [Fin.prod_Ioi_succ]
@@ -277,14 +280,16 @@ theorem finCyclotomicDifferenceProduct_eq_singleDifferenceProduct (n : ℕ) (ζ 
           (Fin.prod_univ_eq_prod_range (f := fun d => (ζ ^ (d + 1) - 1)) (n := n + 1))
       have hfirst' :
           (∏ j : Fin (n + 1),
-              (ζ ^ (((j.succ : Fin (n + 2)) : ℕ) - (((0 : Fin (n + 2)) : Fin (n + 2)) : ℕ)) - 1)) =
+              (ζ ^ (((j.succ : Fin (n + 2)) : ℕ) - ((0 : Fin (n + 2)) : ℕ)) -
+                1)) =
             ∏ d ∈ Finset.range (n + 1), (ζ ^ (d + 1) - 1) := by
         simpa [Fin.val_succ] using hfirst
       rw [ih, hfirst', Finset.prod_range_succ]
       let a : ℕ → ℂ := fun d => ζ ^ (d + 1) - 1
       calc
         ((∏ d ∈ Finset.range n, a d) * a n) * (∏ d ∈ Finset.range n, a d ^ (n - d)) =
-            ((∏ d ∈ Finset.range n, a d) * (∏ d ∈ Finset.range n, a d ^ (n - d))) * a n := by
+            ((∏ d ∈ Finset.range n, a d) *
+              (∏ d ∈ Finset.range n, a d ^ (n - d))) * a n := by
               ac_rfl
         _ = (∏ d ∈ Finset.range n, a d ^ (n + 1 - d)) * a n := by
               rw [prod_range_singleDifference_mul_shiftedPowers (n := n) (ζ := ζ)]
@@ -336,8 +341,7 @@ theorem det_normalizedFourierMatrixFin_eq_scale_mul_fourierVandermondeProduct :
     det_fourierVandermonde_eq_fourierVandermondeProduct]
   simp
 
-/-- Packaged determinant skeleton: the remaining work is
-exactly the final simplification of the explicit cyclotomic product. -/
+/-- The determinant of `normalizedDft` is the scaled Fourier Vandermonde product. -/
 theorem det_normalizedDft_eq_scale_mul_fourierVandermondeProduct :
     LinearMap.det (normalizedDft p) =
       ((Real.sqrt p : ℂ)⁻¹) ^ p * fourierVandermondeProduct p := by
@@ -345,8 +349,7 @@ theorem det_normalizedDft_eq_scale_mul_fourierVandermondeProduct :
     det_normalizedFourierMatrix_eq_det_normalizedFourierMatrixFin (p := p)]
   exact det_normalizedFourierMatrixFin_eq_scale_mul_fourierVandermondeProduct (p := p)
 
-/-- Packaged determinant form after collapsing the weighted Fourier-root
-contribution to a single exponent. -/
+/-- The determinant of `normalizedDft` in weighted cyclotomic product form. -/
 theorem det_normalizedDft_eq_chooseThreeCyclotomicForm :
     LinearMap.det (normalizedDft p) =
       ((Real.sqrt p : ℂ)⁻¹) ^ p *
@@ -354,9 +357,8 @@ theorem det_normalizedDft_eq_chooseThreeCyclotomicForm :
   rw [det_normalizedDft_eq_scale_mul_fourierVandermondeProduct (p := p),
     fourierVandermondeProduct_eq_chooseThreeCyclotomicForm (p := p)]
 
-/-- Packaged determinant form with the cyclotomic-difference product grouped by
-the single difference `d = j - i`. This is the endpoint of the grouped product
-reduction. -/
+/-- The determinant of `normalizedDft` with the cyclotomic product grouped by
+the single difference `d = j - i`. -/
 theorem det_normalizedDft_eq_chooseThreeSingleDifferenceForm :
     LinearMap.det (normalizedDft p) =
       ((Real.sqrt p : ℂ)⁻¹) ^ p *

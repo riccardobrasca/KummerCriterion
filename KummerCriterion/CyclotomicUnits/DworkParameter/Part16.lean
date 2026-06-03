@@ -181,8 +181,7 @@ theorem scaledDworkParameter_evalₐ_one (a : ZMod p) :
   rw [scaledDworkParameter, map_mul, dworkParameter_evalₐ_one, mul_zero]
 
 set_option maxHeartbeats 800000 in
--- This congruence transports ideals through the rational and Dwork completions;
--- the higher limit keeps the nested completion abbreviations from timing out.
+-- Needed for transport through the rational and Dwork completions.
 theorem scaledDworkParameter_sub_natCast_mul_lambda_mem_sq
     (a : ZMod p) :
     scaledDworkParameter p K a -
@@ -482,12 +481,7 @@ theorem samePrimeFiniteLogTerm_pow_pred_eq_zero_of_prime_lt
     omega
   exact Ideal.pow_le_pow_right horder hy
 
-/-- Folded same-prime finite-log expansion at precision `lambda^(p - 1)`.
-
-The finite logarithm is the ordinary unit-denominator part through `n = p - 1`
-plus the single surviving same-prime term `n = p`. The latter is the API-level
-representative of `x^p / p`; its integral ramification-unit rewrite is a
-separate step. -/
+/-- Folded same-prime finite-log expansion at precision `lambda^(p - 1)`. -/
 theorem samePrimeFiniteLog_eq_sum_Icc_add_p_term_pow_pred
     (hp_three : 3 ≤ p)
     {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) :
@@ -705,8 +699,7 @@ theorem scaledDworkParameterFiniteArtinHasseLog_eq_zero
   rw [scaledDworkParameterFiniteArtinHasseLog_eq_teichmuller_mul,
     dworkParameterFiniteArtinHasseLog_eq_zero, mul_zero]
 
-/-- Completed Artin-Hasse exponential at the scaled Dwork parameter. 
-will identify this element with `zeta_p^a`. -/
+/-- Completed Artin-Hasse exponential at the scaled Dwork parameter. -/
 noncomputable def artinHasseExp_eval_scaledDworkParameter (a : ZMod p) :
     DworkCompleteIntegerRing p K :=
   evalIntegralPowerSeries p K (integralExpSeries p K)

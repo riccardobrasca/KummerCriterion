@@ -90,7 +90,8 @@ theorem generator_unit_eq_zeta_pow [IsCMField K]
           simpa [mul_assoc, mul_left_comm, mul_comm] using hcalc
         exact mul_left_cancel₀ (pow_ne_zero _ hπPrime.ne_zero) htmp
       have hγ_mul' : hζ.unit' ^ e * γ ^ e = 1 := by simpa [mul_comm] using hγ_mul
-      have hmult := congrArg (fun x : 𝓞 K => (((hζ.unit' ^ e : (𝓞 K)ˣ) : 𝓞 K) * x)) hcancel
+      have hmult :=
+        congrArg (fun x : 𝓞 K => (((hζ.unit' ^ e : (𝓞 K)ˣ) : 𝓞 K) * x)) hcancel
       have hγ_mul_coe : ((((hζ.unit' ^ e : (𝓞 K)ˣ) * γ ^ e : (𝓞 K)ˣ) : 𝓞 K)) = 1 :=
         congrArg (fun x : (𝓞 K)ˣ => (x : 𝓞 K)) hγ_mul'
       have hmult'' : ((((hζ.unit' ^ e : (𝓞 K)ˣ) * γ ^ e : (𝓞 K)ˣ) : 𝓞 K) *
@@ -103,7 +104,8 @@ theorem generator_unit_eq_zeta_pow [IsCMField K]
           ringOfIntegersComplexConj K b =
               ((((hζ.unit' ^ e : (𝓞 K)ˣ) * γ ^ e : (𝓞 K)ˣ) : 𝓞 K) *
                 ringOfIntegersComplexConj K b) := by rw [hγ_mul_coe]; simp
-          _ = ((((hζ.unit' ^ e : (𝓞 K)ˣ) * u : (𝓞 K)ˣ) : 𝓞 K) * b) := hmult''
+          _ =
+              ((((hζ.unit' ^ e : (𝓞 K)ˣ) * u : (𝓞 K)ˣ) : 𝓞 K) * b) := hmult''
       simpa [u', mul_assoc, mul_left_comm, mul_comm] using hmult'
     have hpow_sub : ∀ m : ℕ, (hζ.toInteger ^ m - 1 : 𝓞 K) ∈ P := by
       intro m
@@ -114,19 +116,24 @@ theorem generator_unit_eq_zeta_pow [IsCMField K]
     have hu'_class : u' = (-1 : (𝓞 K)ˣ) * hζ.unit' ^ (e + n) := by
       dsimp [u']
       calc
-        hζ.unit' ^ e * u = hζ.unit' ^ e * ((-1 : (𝓞 K)ˣ) * hζ.unit' ^ n) := by rw [hu_odd]
-        _ = (-1 : (𝓞 K)ˣ) * (hζ.unit' ^ e * hζ.unit' ^ n) := by simp [mul_left_comm, mul_comm]
+        hζ.unit' ^ e * u =
+            hζ.unit' ^ e * ((-1 : (𝓞 K)ˣ) * hζ.unit' ^ n) := by rw [hu_odd]
+        _ = (-1 : (𝓞 K)ˣ) * (hζ.unit' ^ e * hζ.unit' ^ n) := by
+          simp [mul_left_comm, mul_comm]
         _ = (-1 : (𝓞 K)ˣ) * hζ.unit' ^ (e + n) := by rw [← pow_add]
     have hu'_plus_mem : ((((u' : (𝓞 K)ˣ) : 𝓞 K) + 1) : 𝓞 K) ∈ P := by
       have hu'_plus_eq : (((u' : (𝓞 K)ˣ) : 𝓞 K) + 1 : 𝓞 K) =
           (1 - hζ.toInteger ^ e * hζ.toInteger ^ n : 𝓞 K) := by
         rw [hu'_class]
         simp only [Units.val_mul, Units.val_neg]
-        rw [show (((hζ.unit' ^ (e + n) : (𝓞 K)ˣ) : 𝓞 K)) = hζ.toInteger ^ (e + n) by rfl]
+        rw [show (((hζ.unit' ^ (e + n) : (𝓞 K)ˣ) : 𝓞 K)) =
+          hζ.toInteger ^ (e + n) by rfl]
         rw [pow_add]
         simp [sub_eq_add_neg, add_comm]
       have hpow_sub' : (1 - hζ.toInteger ^ e * hζ.toInteger ^ n : 𝓞 K) ∈ P := by
-        have : (1 - hζ.toInteger ^ e * hζ.toInteger ^ n : 𝓞 K) = -(hζ.toInteger ^ (e + n) - 1) := by
+        have :
+            (1 - hζ.toInteger ^ e * hζ.toInteger ^ n : 𝓞 K) =
+              -(hζ.toInteger ^ (e + n) - 1) := by
           rw [pow_add]
           ring
         rw [this]
@@ -175,7 +182,8 @@ theorem exists_conj_fixed_associate_of_zeta_pow [IsCMField K]
       dsimp [μ]
       simpa using conj_zeta_pow (p := p) (K := K) (hζ := hζ) m
     have hμcoe :
-        ringOfIntegersComplexConj K ((μ : (𝓞 K)ˣ) : 𝓞 K) = (((μ⁻¹ : (𝓞 K)ˣ)) : 𝓞 K) := by
+        ringOfIntegersComplexConj K ((μ : (𝓞 K)ˣ) : 𝓞 K) =
+          ((μ⁻¹ : (𝓞 K)ˣ) : 𝓞 K) := by
       apply RingOfIntegers.ext
       simpa [coe_ringOfIntegersComplexConj] using hμconj
     have huμinv : (hζ.unit' ^ n : (𝓞 K)ˣ) * μ⁻¹ = μ := by
@@ -183,14 +191,17 @@ theorem exists_conj_fixed_associate_of_zeta_pow [IsCMField K]
       simp [pow_two, mul_assoc]
     calc
       ringOfIntegersComplexConj K b =
-          ringOfIntegersComplexConj K a * ringOfIntegersComplexConj K ((μ : (𝓞 K)ˣ) : 𝓞 K) := by
+          ringOfIntegersComplexConj K a *
+            ringOfIntegersComplexConj K ((μ : (𝓞 K)ˣ) : 𝓞 K) := by
             dsimp [b]
             simp
       _ = ((hζ.unit' ^ n : (𝓞 K)ˣ) : 𝓞 K) * a * (((μ⁻¹ : (𝓞 K)ˣ)) : 𝓞 K) := by
             dsimp [b]
             simpa [mul_assoc, hμcoe] using congrArg
-              (fun x : 𝓞 K => x * ringOfIntegersComplexConj K (((μ : (𝓞 K)ˣ) : 𝓞 K))) hu
-      _ = ((((hζ.unit' ^ n : (𝓞 K)ˣ) * μ⁻¹ : (𝓞 K)ˣ) : (𝓞 K)) * a) := by
+              (fun x : 𝓞 K =>
+                x * ringOfIntegersComplexConj K (((μ : (𝓞 K)ˣ) : 𝓞 K))) hu
+      _ =
+          ((((hζ.unit' ^ n : (𝓞 K)ˣ) * μ⁻¹ : (𝓞 K)ˣ) : 𝓞 K) * a) := by
             simp [mul_assoc, mul_comm]
       _ = (μ : (𝓞 K)ˣ) * a := by rw [huμinv]
       _ = b := by dsimp [b]; simp [mul_comm]

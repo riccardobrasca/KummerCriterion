@@ -14,23 +14,8 @@ public import KummerCriterion.ZetaFactorisation.Residue
 /-!
 # Analytic class number formula for `K` and `K⁺`
 
-Rearrangements of mathlib's analytic class-number formula for the prime
-cyclotomic field `K = ℚ(ζ_p)` and its maximal real subfield
-`K⁺ = maximalRealSubfield K`, together with the cyclotomic specialization of
-each invariant (torsion order, unit rank, regulator ratio, discriminant).
-
-Outputs:
-
-- `h_formula` — `h K` as residue times discriminant/regulator factor.
-- `hPlus_formula` — the corresponding formula for `h⁺ K`.
-- `hMinus_eq_h_div_hPlus` — the relative class number as `h / h⁺`.
-- `hMinus_formula_via_residues` — `h⁻` expressed as a quotient of residue
- packages.
-- `h_formula_cyclotomic` — the prime-conductor specialization of `h_formula`
- with explicit cyclotomic invariants.
-
-See the sibling module `KummerCriterion.HMinus.LValueReduction` for the
-reduction of these residue expressions to character `L`-values.
+Rearranged analytic class-number formulas and cyclotomic invariant evaluations for
+`K = ℚ(ζ_p)` and its maximal real subfield.
 -/
 
 @[expose] public section
@@ -41,8 +26,6 @@ open NumberField
 open scoped BigOperators
 
 namespace KummerCriterion
-
-section ClassNumberFormula
 
 variable (p : ℕ) [hp : Fact p.Prime] (hp_odd : p ≠ 2)
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K] [IsCMField K]
@@ -183,8 +166,9 @@ lemma maximalRealSubfield_torsionOrder_eq_two :
     Units.torsionOrder (NumberField.maximalRealSubfield K) = 2 := by
   let L := NumberField.maximalRealSubfield K
   classical
-  refine (Finset.card_eq_two.2 ⟨1, ⟨-1, neg_one_mem_torsion⟩,
-    by simp [← Subtype.coe_ne_coe], Finset.ext fun x ↦ ⟨fun _ ↦ ?_, fun _ ↦ Finset.mem_univ _⟩⟩)
+  refine Finset.card_eq_two.2
+    ⟨1, ⟨-1, neg_one_mem_torsion⟩, by simp [← Subtype.coe_ne_coe],
+      Finset.ext fun x ↦ ⟨fun _ ↦ ?_, fun _ ↦ Finset.mem_univ _⟩⟩
   rw [Finset.mem_insert, Finset.mem_singleton, ← Subtype.val_inj, ← Subtype.val_inj]
   exact maximalRealSubfield_torsion_eq_one_or_neg_one (K := K) x
 
@@ -316,7 +300,6 @@ lemma zetaInteger_adjoin_eq_top_maximalRealSubfield (hp_odd' : p ≠ 2) :
   exact Algebra.adjoin_eq_top_of_primitive_element hzeta_alg hL
 
 set_option linter.unusedSectionVars false in
-set_option linter.unusedSectionVars false in
 lemma one_add_zetaInteger_isUnit (hp_odd' : p ≠ 2) :
     IsUnit (1 + ((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K)) := by
   let ζ : K := IsCyclotomicExtension.zeta p ℚ K
@@ -391,7 +374,8 @@ set_option linter.unusedSectionVars false in
 lemma zetaInteger_pow_eq_one :
     (((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) ^ p : 𝓞 K) = 1 := by
   simpa using
-    congrArg (fun u : (𝓞 K)ˣ => (u : 𝓞 K)) (IsCyclotomicExtension.zeta_spec p ℚ K).unit'_pow
+    congrArg (fun u : (𝓞 K)ˣ => (u : 𝓞 K))
+      (IsCyclotomicExtension.zeta_spec p ℚ K).unit'_pow
 
 set_option linter.unusedSectionVars false in
 lemma zetaInteger_pow_pred_mul_eq_one :
@@ -400,7 +384,8 @@ lemma zetaInteger_pow_pred_mul_eq_one :
   calc
     (((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) ^ (p - 1) *
         (IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K)
-    = (((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) ^ ((p - 1) + 1) : 𝓞 K) := by
+    = (((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) ^ ((p - 1) + 1) :
+        𝓞 K) := by
       rw [pow_succ]
   _ = (((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) ^ p : 𝓞 K) := by
       rw [Nat.sub_add_cancel hp.out.one_le]
@@ -471,7 +456,8 @@ lemma minpoly_maximalRealSubfield_zetaInteger_eq_quadratic (hp_odd' : p ≠ 2) :
   let ζi : 𝓞 K := (IsCyclotomicExtension.zeta_spec p ℚ K).toInteger
   have hint : IsIntegral A ζi := IsIntegralClosure.isIntegral A K ζi
   have hdeg :
-      (Polynomial.X ^ 2 + Polynomial.C (piPlus p K - 2) * Polynomial.X + 1 : Polynomial A).degree ≤
+      (Polynomial.X ^ 2 + Polynomial.C (piPlus p K - 2) * Polynomial.X + 1 :
+          Polynomial A).degree ≤
         (minpoly A ζi).degree := by
     have hnatdeg : 2 ≤ (minpoly A ζi).natDegree :=
       (minpoly.two_le_natDegree_iff hint).2
@@ -655,7 +641,4 @@ theorem h_formula_cyclotomic (hp_odd' : p ≠ 2) :
     cyclotomic_torsionOrder_eq_two_mul_prime (p := p) (K := K) hp_odd',
     abs_discr_cyclotomic_eq_pow (p := p) (K := K)]
   simp [mul_assoc, mul_comm]
-
-end ClassNumberFormula
-
 end KummerCriterion

@@ -44,10 +44,8 @@ noncomputable def zetaSubOneConjUnit : (𝓞 K)ˣ :=
   (-1 : (𝓞 K)ˣ) * (zeta_spec p ℚ K).unit' ^ (p - 1)
 
 omit [NumberField K] in
-/-- Helper: `((-1: (𝓞 K)ˣ): 𝓞 K) = -1`. -/
 private theorem coe_neg_one_unit : ((-1 : (𝓞 K)ˣ) : 𝓞 K) = -1 := rfl
 
-/-- Helper: `((zeta_spec p ℚ K).unit': 𝓞 K) = (zeta_spec p ℚ K).toInteger`. -/
 private theorem coe_unit'_eq_toInteger :
     ((zeta_spec p ℚ K).unit' : 𝓞 K) = (zeta_spec p ℚ K).toInteger :=
   rfl
@@ -64,12 +62,10 @@ theorem complexConj_zetaSubOne_eq [IsCMField K] :
   have key : ((zeta_spec p ℚ K).toInteger : 𝓞 K) ^ (p - 1) *
       (zeta_spec p ℚ K).toInteger = 1 := by
     rw [← pow_succ, hp1]; exact hζ_pow
-  -- Compute LHS: σ(ζ - 1) = ζ^(p-1) - 1
   have lhs_eq : ringOfIntegersComplexConj K (zetaSubOne p K) =
       ((zeta_spec p ℚ K).toInteger : 𝓞 K) ^ (p - 1) - 1 := by
     change ringOfIntegersComplexConj K ((zeta_spec p ℚ K).unit' - 1) = _
     rw [map_sub, map_one, coe_unit'_eq_toInteger, hconj_zeta]
-  -- Compute RHS: (-ζ^(p-1)) · (ζ - 1) = ζ^(p-1) - 1 (using ζ · ζ^(p-1) = 1)
   have rhs_eq : ((zetaSubOneConjUnit p K : (𝓞 K)ˣ) : 𝓞 K) * zetaSubOne p K =
       ((zeta_spec p ℚ K).toInteger : 𝓞 K) ^ (p - 1) - 1 := by
     change (((-1 : (𝓞 K)ˣ) * (zeta_spec p ℚ K).unit' ^ (p - 1) : (𝓞 K)ˣ) : 𝓞 K) *

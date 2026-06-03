@@ -128,13 +128,15 @@ theorem even_LFunction_one_eq_evenLValueRhs
                   · rw [cosZeta_toAddCircle_one_eq_boundary (p := p) ha]
                     have hlog :
                         ((Real.log ‖(1 : ℂ) - ZMod.stdAddChar (N := p) a‖ : ℝ) : ℂ) =
-                          ((Real.log (2 * Real.sin (Real.pi * (a.val / p : ℝ))) : ℝ) : ℂ) := by
+                          ((Real.log
+                            (2 * Real.sin (Real.pi * (a.val / p : ℝ))) : ℝ) : ℂ) := by
                       congr 1
                       rw [norm_one_sub_stdAddChar (p := p) ha]
                     rw [hlog]
                     rw [show
                       (((-Real.log (2 * Real.sin (Real.pi * (a.val / p : ℝ))) : ℝ) : ℂ)) =
-                        -(((Real.log (2 * Real.sin (Real.pi * (a.val / p : ℝ))) : ℝ) : ℂ)) by simp]
+                        -(((Real.log
+                          (2 * Real.sin (Real.pi * (a.val / p : ℝ))) : ℝ) : ℂ)) by simp]
                     exact mul_neg (χ⁻¹ a)
                       (((Real.log (2 * Real.sin (Real.pi * (a.val / p : ℝ))) : ℝ) : ℂ))
       _ = -∑ a : ZMod p,
@@ -143,7 +145,7 @@ theorem even_LFunction_one_eq_evenLValueRhs
                 (s := Finset.univ)
                 (f := fun a : ZMod p =>
                   χ⁻¹ a * ((Real.log ‖(1 : ℂ) - ZMod.stdAddChar (N := p) a‖ : ℝ) : ℂ))
-      _ = -evenLValueLogSum p χ := by rfl
+      _ = -evenLValueLogSum p χ := rfl
   have hcard_ne : (Fintype.card (ZMod p) : ℂ) ≠ 0 := by
     simpa [ZMod.card] using (show (p : ℂ) ≠ 0 by exact_mod_cast hp.out.ne_zero)
   have hgauss_ne : gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)) ≠ 0 :=

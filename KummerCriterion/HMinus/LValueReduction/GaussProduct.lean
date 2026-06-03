@@ -114,8 +114,7 @@ theorem rawGaussProduct_rhs_of_mod_four_eq_three
     _ = (Complex.I ^ n) * (((Real.sqrt ((p : ℝ) ^ n) : ℝ) : ℂ)) := by
           rw [hI, hsqrt]
 
-/-- Merge the two `mod 4` branches into the clean raw odd
-Gauss-product formula used downstream. -/
+/-- Merge the two `mod 4` branches into the raw odd Gauss-product formula. -/
 theorem rawGaussProduct
     (hp_odd' : p ≠ 2) :
     Finset.prod (oddCharacters (p := p))
@@ -134,9 +133,7 @@ theorem rawGaussProduct
     rw [rawGaussProduct_of_mod_four_eq_three (p := p) hp_odd' hp₄']
     exact rawGaussProduct_rhs_of_mod_four_eq_three (p := p) hp_odd' hp₄'
 
-/-- Package the raw odd Gauss-product formula as the exact
-cyclotomic `hgauss` hypothesis consumed by the final `hMinus` assembly
-theorem. -/
+/-- Package the raw odd Gauss-product formula as the cyclotomic `hgauss` hypothesis. -/
 theorem cyclotomicHGaussGoal_holds
     (hp_odd' : p ≠ 2) :
     cyclotomicHGaussGoal (p := p) K :=

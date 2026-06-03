@@ -166,7 +166,7 @@ theorem samePrimeFiniteLog_eq_of_sub_mem {N : ℕ}
     samePrimeFiniteLogTerm_eq_of_sub_mem (p := p) (K := K) hx hy hxy
 
 /-- The ordinary finite logarithm re-expressed through the degree-indexed
-localized evaluator. This form is used by the homogeneous additivity proof. -/
+localized evaluator. -/
 noncomputable def samePrimeFiniteLogLocalizedTerm (N n : ℕ)
     (x : ValuedIntegerRing p K) (hx : x ∈ lambdaIdeal p K) :
     ValuedIntegerRing p K ⧸ (lambdaIdeal p K) ^ (N + 1) :=
@@ -228,8 +228,7 @@ theorem samePrimeFiniteLogProductCoord_mem_lambdaIdeal
     (lambdaIdeal p K).mul_mem_right y hx
   exact (lambdaIdeal p K).add_mem ((lambdaIdeal p K).add_mem hx hy) hxy
 
-/-- Homogeneous bookkeeping polynomial for `x + y + x*y`, where `x` and `y`
-have degree `1` and `x*y` has degree `2`. -/
+/-- Homogeneous polynomial for `x + y + x*y`, with degrees `1`, `1`, and `2`. -/
 def samePrimeFiniteLogProductArgPoly
     (x y : ValuedIntegerRing p K) : Polynomial (ValuedIntegerRing p K) :=
   Polynomial.monomial 1 (x + y) + Polynomial.monomial 2 (x * y)

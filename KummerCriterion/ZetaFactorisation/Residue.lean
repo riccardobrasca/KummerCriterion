@@ -37,11 +37,13 @@ theorem tendsto_sub_one_mul_riemannZeta_mul_nontrivialLProduct :
   have h_cont : Continuous (nontrivialLProduct p) :=
     continuous_finsetProd _ fun χ hχ =>
       (DirichletCharacter.differentiable_LFunction (Finset.mem_erase.mp hχ).1).continuous
-  have h_embed : Filter.Tendsto (fun s : ℝ => (s : ℂ)) (𝓝[>] (1 : ℝ)) (𝓝[≠] (1 : ℂ)) :=
+  have h_embed :
+      Filter.Tendsto (fun s : ℝ ↦ (s : ℂ)) (𝓝[>] (1 : ℝ)) (𝓝[≠] (1 : ℂ)) :=
     tendsto_nhdsWithin_iff.mpr
       ⟨(Complex.continuous_ofReal.tendsto 1).mono_left nhdsWithin_le_nhds,
-        by filter_upwards [self_mem_nhdsWithin] with s hs h
-           exact absurd (Complex.ofReal_injective h) (ne_of_gt hs)⟩
+        by
+          filter_upwards [self_mem_nhdsWithin] with s hs h
+          exact absurd (Complex.ofReal_injective h) (ne_of_gt hs)⟩
   have h_zeta : Filter.Tendsto (fun s : ℝ => ((s : ℂ) - 1) * riemannZeta (s : ℂ))
       (𝓝[>] (1 : ℝ)) (𝓝 1) :=
     riemannZeta_residue_one.comp h_embed

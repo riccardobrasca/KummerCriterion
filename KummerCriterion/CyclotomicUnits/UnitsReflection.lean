@@ -6,12 +6,8 @@ import KummerCriterion.CyclotomicUnits.SaturationIndex
 /-!
 # Cyclotomic-unit route to weak reflection
 
-This file assembles the completed cyclotomic-unit route:
-
-* Bernoulli numerator nonvanishing gives Kummer-log determinant nonvanishing.
-* That determinant gives p-saturation of `CPlus`.
-* p-saturation gives p-nondivisibility of the cyclotomic-unit index.
-* The p-primary part of that index is identified with `hPlus`.
+This file assembles the cyclotomic-unit route from Bernoulli nonvanishing to
+weak reflection.
 -/
 
 @[expose] public section

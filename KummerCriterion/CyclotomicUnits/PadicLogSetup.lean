@@ -32,26 +32,11 @@ public import Mathlib.RingTheory.PowerSeries.Log
 /-!
 # Local `p`-adic setup for the cyclotomic-unit route
 
-This file exposes the completed local cyclotomic model already available in
-the Furtwängler development under route-level names for the cyclotomic-unit
-reflection proof.
+This file exposes the local cyclotomic model from the Furtwängler development
+under route-level names for the cyclotomic-unit reflection proof.
 
-The local model here uses the proved uniformizer `lambda = zeta_p - 1`. The
-formal Artin-Hasse inverse package below records the corrected Dwork
-normalization: the inverse of `E_p(T) - 1` has integral coefficients, starts
-with `T`, and satisfies the formal sign identity behind `c(varpi) = -varpi`.
-
-The originally advertised stronger Artin-Hasse/Dwork parameter package,
-
-```text
-varpi^(p - 1) = -p, E_p(varpi) = zeta_p, c(varpi) = -varpi,
-```
-
-is false for the standard Artin-Hasse normalization. The analytic step that
-is still missing is the construction of the completed local element
-`varpi = (E_p(T)-1)^{-1}(zeta_p - 1)` together with the real fixed-basis
-theorem. This file deliberately does not replace that missing construction
-by a bundled hypothesis.
+The formal Artin-Hasse inverse package records the corrected Dwork
+normalization for the inverse of `E_p(T) - 1` and its sign identity.
 -/
 
 @[expose] public section

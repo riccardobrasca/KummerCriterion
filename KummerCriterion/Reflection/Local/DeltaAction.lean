@@ -33,8 +33,7 @@ section CompletionLift
 
 variable {R : Type*} [CommRing R] (I : Ideal R)
 
-theorem evalₐ_factor_pow_le {m n : ℕ} (hmn : m ≤ n)
-    (x : AdicCompletion I R) :
+theorem evalₐ_factor_pow_le {m n : ℕ} (hmn : m ≤ n) (x : AdicCompletion I R) :
     Ideal.Quotient.factor (Ideal.pow_le_pow_right hmn) (AdicCompletion.evalₐ I n x) =
       AdicCompletion.evalₐ I m x := by
   simp only [AdicCompletion.evalₐ, AlgHom.coe_comp, Function.comp_apply,
@@ -80,8 +79,7 @@ theorem adicCompletionRingHomOfIdealMapEqFamily_compatible
       adicCompletionRingHomOfIdealMapEqFamily (I := I) e he m := by
   ext x
   simp only [RingHom.coe_comp, Function.comp_apply]
-  change
-    Ideal.Quotient.factor (Ideal.pow_le_pow_right hmn)
+  change Ideal.Quotient.factor (Ideal.pow_le_pow_right hmn)
         (Ideal.quotientMap (I ^ n) (e : R →+* R)
           (ideal_pow_le_comap_ringEquiv_of_map_eq (I := I) e he n)
           (AdicCompletion.evalₐ I n x)) =
@@ -215,8 +213,7 @@ theorem cyclotomicRingOfIntegersEquiv_zeta_sub_one_mem_lambda
   rw [cyclotomicSigmaOfUnit_smul_zetaInteger]
   exact hdiv
 
-theorem cyclotomicRingOfIntegersEquiv_map_lambda_le
-    (a : CyclotomicUnitDelta p) :
+theorem cyclotomicRingOfIntegersEquiv_map_lambda_le (a : CyclotomicUnitDelta p) :
     (cyclotomicLambda p K).map
         (cyclotomicRingOfIntegersEquiv (p := p) K a : 𝓞 K →+* 𝓞 K) ≤
       cyclotomicLambda p K := by
@@ -226,8 +223,7 @@ theorem cyclotomicRingOfIntegersEquiv_map_lambda_le
   subst hy
   exact cyclotomicRingOfIntegersEquiv_zeta_sub_one_mem_lambda (p := p) (K := K) a
 
-theorem cyclotomicRingOfIntegersEquiv_comap_lambda
-    (a : CyclotomicUnitDelta p) :
+theorem cyclotomicRingOfIntegersEquiv_comap_lambda (a : CyclotomicUnitDelta p) :
     cyclotomicLambda p K =
       (cyclotomicLambda p K).comap
         (cyclotomicRingOfIntegersEquiv (p := p) K a : 𝓞 K →+* 𝓞 K) := by

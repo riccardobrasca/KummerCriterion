@@ -633,10 +633,43 @@ theorem evalIntegralPowerSeries_expMinusOne_scaledDworkParameter_eq_zetaPowSubOn
   rw [AdicCompletion.evalₐ_of, AdicCompletion.evalₐ_of]
   simp [map_sub]
 
+private theorem integralInverseSeries_coeff_zero :
+    (PowerSeries.coeff (R := ValuedIntegerRing p K) 0) (integralInverseSeries p K) = 0 := by
+  rw [integralInverseSeries]
+  rw [Furtwaengler.DieudonneDwork.IsRIntegralPS.coeff_mapTo]
+  have hcoeff0 :
+      (PowerSeries.coeff (R := ℚ) 0) (FormalDwork.inverseSeries p) = 0 := by
+    rw [PowerSeries.coeff_zero_eq_constantCoeff_apply]
+    exact FormalDwork.inverseSeries_constantCoeff p
+  have hsubzero :
+      (⟨(PowerSeries.coeff (R := ℚ) 0) (FormalDwork.inverseSeries p),
+          FormalDwork.inverseSeries_isPIntegral p 0⟩ :
+        Furtwaengler.DieudonneDwork.rIntegralRatSubring p) = 0 := by
+    ext
+    exact hcoeff0
+  rw [hsubzero]
+  exact map_zero (rIntegralRatToValuedInteger p K)
+
+private theorem integralExpMinusOneSeries_coeff_zero :
+    (PowerSeries.coeff (R := ValuedIntegerRing p K) 0)
+      (integralExpMinusOneSeries p K) = 0 := by
+  rw [integralExpMinusOneSeries]
+  rw [Furtwaengler.DieudonneDwork.IsRIntegralPS.coeff_mapTo]
+  have hcoeff0 :
+      (PowerSeries.coeff (R := ℚ) 0) (FormalDwork.expMinusOneSeries p) = 0 := by
+    rw [PowerSeries.coeff_zero_eq_constantCoeff_apply]
+    exact FormalDwork.expMinusOneSeries_constantCoeff p
+  have hsubzero :
+      (⟨(PowerSeries.coeff (R := ℚ) 0) (FormalDwork.expMinusOneSeries p),
+          FormalDwork.expMinusOneSeries_isPIntegral p 0⟩ :
+        Furtwaengler.DieudonneDwork.rIntegralRatSubring p) = 0 := by
+    ext
+    exact hcoeff0
+  rw [hsubzero]
+  exact map_zero (rIntegralRatToValuedInteger p K)
+
 set_option maxHeartbeats 800000 in
--- The proof compares inverse formal series quotient-by-quotient through
--- truncated substitutions, which pushes simplification and instance search past
--- the default heartbeat budget.
+-- Needed for truncated inverse-series substitution over quotient rings.
 theorem evalIntegralPowerSeries_inverse_zetaPowSubOne_eq_scaledDworkParameter
     (a : ZMod p) :
     evalIntegralPowerSeries p K (integralInverseSeries p K)
@@ -700,66 +733,19 @@ theorem evalIntegralPowerSeries_inverse_zetaPowSubOne_eq_scaledDworkParameter
       have hG0 : PowerSeries.constantCoeff G = 0 := by
         rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply]
         rw [PowerSeries.coeff_map]
-        have hcoeff :
-            (PowerSeries.coeff (R := R) 0) (integralInverseSeries p K) = 0 := by
-          rw [integralInverseSeries]
-          rw [Furtwaengler.DieudonneDwork.IsRIntegralPS.coeff_mapTo]
-          have hcoeff0 :
-              (PowerSeries.coeff (R := ℚ) 0) (FormalDwork.inverseSeries p) = 0 := by
-            rw [PowerSeries.coeff_zero_eq_constantCoeff_apply]
-            exact FormalDwork.inverseSeries_constantCoeff p
-          have hsubzero :
-              (⟨(PowerSeries.coeff (R := ℚ) 0) (FormalDwork.inverseSeries p),
-                  FormalDwork.inverseSeries_isPIntegral p 0⟩ :
-                Furtwaengler.DieudonneDwork.rIntegralRatSubring p) = 0 := by
-            ext
-            exact hcoeff0
-          rw [hsubzero]
-          exact map_zero (rIntegralRatToValuedInteger p K)
-        rw [hcoeff]
+        rw [integralInverseSeries_coeff_zero]
         exact map_zero q
       have hH0 : PowerSeries.constantCoeff H = 0 := by
         rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply]
         rw [PowerSeries.coeff_map]
-        have hcoeff :
-            (PowerSeries.coeff (R := R) 0) (integralExpMinusOneSeries p K) = 0 := by
-          rw [integralExpMinusOneSeries]
-          rw [Furtwaengler.DieudonneDwork.IsRIntegralPS.coeff_mapTo]
-          have hcoeff0 :
-              (PowerSeries.coeff (R := ℚ) 0) (FormalDwork.expMinusOneSeries p) = 0 := by
-            rw [PowerSeries.coeff_zero_eq_constantCoeff_apply]
-            exact FormalDwork.expMinusOneSeries_constantCoeff p
-          have hsubzero :
-              (⟨(PowerSeries.coeff (R := ℚ) 0) (FormalDwork.expMinusOneSeries p),
-                  FormalDwork.expMinusOneSeries_isPIntegral p 0⟩ :
-                Furtwaengler.DieudonneDwork.rIntegralRatSubring p) = 0 := by
-            ext
-            exact hcoeff0
-          rw [hsubzero]
-          exact map_zero (rIntegralRatToValuedInteger p K)
-        rw [hcoeff]
+        rw [integralExpMinusOneSeries_coeff_zero]
         exact map_zero q
       have hseries : PowerSeries.subst H G = (PowerSeries.X : PowerSeries A) := by
         have h := congrArg (PowerSeries.map q)
           (integralInverseSeries_subst_integralExpMinusOneSeries (p := p) (K := K))
         have hH0R : PowerSeries.constantCoeff (integralExpMinusOneSeries p K) = 0 := by
           rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply]
-          exact
-            show (PowerSeries.coeff (R := R) 0) (integralExpMinusOneSeries p K) = 0 from by
-              rw [integralExpMinusOneSeries]
-              rw [Furtwaengler.DieudonneDwork.IsRIntegralPS.coeff_mapTo]
-              have hcoeff0 :
-                  (PowerSeries.coeff (R := ℚ) 0) (FormalDwork.expMinusOneSeries p) = 0 := by
-                rw [PowerSeries.coeff_zero_eq_constantCoeff_apply]
-                exact FormalDwork.expMinusOneSeries_constantCoeff p
-              have hsubzero :
-                  (⟨(PowerSeries.coeff (R := ℚ) 0) (FormalDwork.expMinusOneSeries p),
-                      FormalDwork.expMinusOneSeries_isPIntegral p 0⟩ :
-                    Furtwaengler.DieudonneDwork.rIntegralRatSubring p) = 0 := by
-                ext
-                exact hcoeff0
-              rw [hsubzero]
-              exact map_zero (rIntegralRatToValuedInteger p K)
+          exact integralExpMinusOneSeries_coeff_zero (p := p) (K := K)
         have hsubst :
             PowerSeries.HasSubst (integralExpMinusOneSeries p K) :=
           PowerSeries.HasSubst.of_constantCoeff_zero' hH0R

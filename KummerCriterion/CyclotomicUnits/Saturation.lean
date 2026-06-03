@@ -58,8 +58,7 @@ theorem pSaturated.mem_pPowerSubgroup_of_mem {G : Type*} [CommGroup G]
 
 theorem CPlus_le_EPlus (hp_three : 3 ≤ p) :
     CPlus (p := p) (K := K) hp_three ≤ EPlus (K := K) := by
-  intro x hx
-  trivial
+  simp [EPlus]
 
 /-- Integer-exponent product of the sign and the finite `CPlus` generators. -/
 noncomputable def CPlusExponentProduct (hp_three : 3 ≤ p) (s : ℤ)
@@ -161,7 +160,7 @@ theorem zpow_pow_eq_self_of_sq_eq_one_of_odd {G : Type*} [CommGroup G] {x : G}
     _ = ((x ^ s) ^ 2) ^ (n / 2) * x ^ s := by rw [pow_mul]
     _ = x ^ s := by rw [hxs_sq]; simp
 
-set_option linter.unusedSectionVars false in
+omit [NumberField K] [IsCyclotomicExtension {p} ℚ K] [IsCMField K] in
 theorem neg_one_zpow_pow_eq_self (hp_odd : p ≠ 2) (s : ℤ) :
     ((-1 : (𝓞 K⁺)ˣ) ^ s) ^ p = (-1 : (𝓞 K⁺)ˣ) ^ s := by
   have hp_mod : p % 2 = 1 :=
@@ -192,9 +191,7 @@ theorem CPlusExponentProduct_pow_of_exponents_eq_mul (hp_odd : p ≠ 2)
     _ = CPlusGenerator (p := p) (K := K) hp_three a ^ e a := by
           rw [hk a]
 
-/-- Concrete group-theoretic saturation criterion for `CPlus`. is
-intended to provide the exponent-vanishing hypothesis from the logarithm
-determinant; this theorem contains no p-adic logarithm input. -/
+/-- Concrete group-theoretic saturation criterion for `CPlus`. -/
 theorem CPlus_pSaturated_of_generator_exponents_modP_zero (hp_odd : p ≠ 2)
     (hp_three : 3 ≤ p)
     (h : ∀ (s : ℤ) (e : Fin ((p - 3) / 2) → ℤ),

@@ -17,17 +17,8 @@ open NumberField
 
 namespace KummerCriterion
 
-/-- If the cyclotomic-unit route proves `p ∣ hPlus K → p ∣ hMinus K`, then
-the total class-number divisibility condition is equivalent to relative
-class-number divisibility.
-
-The canonical class-number API used here is:
-* `h K` from `KummerCriterion/TotallyRealSubfield/Basic.lean`;
-* `hPlus K` from `KummerCriterion/TotallyRealSubfield/Basic.lean`;
-* `hMinus K` from `KummerCriterion/TotallyRealSubfield/ClassGroup.lean`;
-* `h_eq_hPlus_mul_hMinus`
- `KummerCriterion/TotallyRealSubfield/ClassGroup.lean`.
--/
+/-- A cyclotomic-unit implication `p ∣ hPlus K → p ∣ hMinus K` identifies
+total and relative class-number divisibility. -/
 theorem dvd_h_iff_dvd_hMinus_of_dvd_hPlus_imp
     {p : ℕ} [hp : Fact p.Prime] (hp_odd : p ≠ 2)
     {K : Type*} [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]

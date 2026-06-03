@@ -24,10 +24,7 @@ variable (p : ℕ) [hp : Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K] [IsCMField K]
 
 omit [IsCyclotomicExtension {p} ℚ K] in
-/-- To finish `hMinus_formula`, it is enough to know the intermediate odd
-`L`-value formula together with the corresponding product formula for the
-Gauss-sum factors. This packages the final algebraic rewrite
-`L(1, χ)` stage to the Bernoulli-product stage. -/
+/-- Reduce `hMinus_formula` to the odd `L`-value formula and Gauss-product identity. -/
 theorem hMinus_formula_of_LValue_formula_and_gauss_product
     {coefficient : ℂ}
     (hLValues :
@@ -38,7 +35,8 @@ theorem hMinus_formula_of_LValue_formula_and_gauss_product
     (hgauss :
       coefficient *
           Finset.prod (oddCharacters (p := p)) (fun χ =>
-            ((((Real.pi : ℝ) : ℂ) * Complex.I) * gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ))) =
+            ((((Real.pi : ℝ) : ℂ) * Complex.I) *
+              gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ))) =
         (2 * p : ℂ) *
           Finset.prod (oddCharacters (p := p))
             (fun _ : DirichletCharacter ℂ p => (-(1 / 2 : ℂ)))) :
@@ -54,7 +52,8 @@ theorem hMinus_formula_of_LValue_formula_and_gauss_product
   calc
     coefficient *
         (Finset.prod (oddCharacters (p := p)) (fun χ =>
-            ((((Real.pi : ℝ) : ℂ) * Complex.I) * gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ))) *
+            ((((Real.pi : ℝ) : ℂ) * Complex.I) *
+              gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ))) *
           Finset.prod (oddCharacters (p := p)) (fun χ => BernoulliGen χ⁻¹ 1)) =
       (coefficient *
           Finset.prod (oddCharacters (p := p)) (fun χ =>
@@ -80,11 +79,7 @@ theorem hMinus_formula_of_LValue_formula_and_gauss_product
           (-(1 / 2 : ℂ)) * BernoulliGen χ⁻¹ 1) := by
             rw [← Finset.prod_mul_distrib]
 
-/-- Once the cyclotomic residue is identified with the even/odd `L(1, χ)`
-product and the even part is matched with the `K⁺` side of the analytic class
-number formula, the quotient computation for `h⁻` is formal. This packages the
-result in the exact `hLValues` shape consumed by
-`hMinus_formula_of_LValue_formula_and_gauss_product`. -/
+/-- Derive the odd `L`-value formula for `hMinus` from the residue and `hPlus` formulas. -/
 theorem hMinus_LValue_formula_of_residue_and_hPlus
     (hp_odd' : p ≠ 2)
     {coefficient plusFactor : ℂ}
@@ -97,7 +92,8 @@ theorem hMinus_LValue_formula_of_residue_and_hPlus
           Finset.prod (oddCharacters (p := p)) (fun χ => DirichletCharacter.LFunction χ 1))
     (hplus :
       ((hPlus K : ℕ) : ℂ) =
-        plusFactor * Finset.prod (evenNontrivialCharacters (p := p)) (fun χ => evenLValueRhs p χ)) :
+        plusFactor *
+          Finset.prod (evenNontrivialCharacters (p := p)) (fun χ => evenLValueRhs p χ)) :
     ((hMinus K : ℕ) : ℂ) =
       coefficient *
         Finset.prod (oddCharacters (p := p)) (fun χ => DirichletCharacter.LFunction χ 1) := by
@@ -131,7 +127,8 @@ theorem hMinus_formula_of_residue_and_hPlus_and_gauss
     (hgauss :
       coefficient *
           Finset.prod (oddCharacters (p := p)) (fun χ =>
-            ((((Real.pi : ℝ) : ℂ) * Complex.I) * gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ))) =
+            ((((Real.pi : ℝ) : ℂ) * Complex.I) *
+              gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ))) =
         (2 * p : ℂ) *
           Finset.prod (oddCharacters (p := p))
             (fun _ : DirichletCharacter ℂ p => (-(1 / 2 : ℂ)))) :

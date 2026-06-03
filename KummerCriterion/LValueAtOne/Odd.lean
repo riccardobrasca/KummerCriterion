@@ -40,7 +40,8 @@ theorem odd_LFunction_zero_eq_pi_inv_mul_sum_sinZeta_one
   calc
     ∑ a : ZMod p, χ a * HurwitzZeta.hurwitzZetaOdd (ZMod.toAddCircle a) 0
         = ∑ a : ZMod p,
-            χ a * ((((Real.pi : ℝ) : ℂ)⁻¹) * HurwitzZeta.sinZeta (ZMod.toAddCircle a) 1) := by
+            χ a *
+              ((((Real.pi : ℝ) : ℂ)⁻¹) * HurwitzZeta.sinZeta (ZMod.toAddCircle a) 1) := by
               refine Finset.sum_congr rfl fun a _ => ?_
               have hvalue := HurwitzZeta.hurwitzZetaOdd_one_sub
                 (s := (1 : ℂ)) (a := ZMod.toAddCircle a) hs
@@ -78,7 +79,9 @@ theorem odd_LFunction_zero_eq_neg_BernoulliGen_one_of_sinZeta_one_formula
             ∑ a : ZMod p, χ a * HurwitzZeta.sinZeta (ZMod.toAddCircle a) 1 :=
           odd_LFunction_zero_eq_pi_inv_mul_sum_sinZeta_one (p := p) hχ_odd
     _ = (((Real.pi : ℝ) : ℂ)⁻¹) *
-          ∑ a : ZMod p, χ a * ((((Real.pi : ℝ) : ℂ) * ((1 / 2 : ℂ) - (a.val : ℂ) / (p : ℂ)))) := by
+          ∑ a : ZMod p,
+            χ a *
+              ((((Real.pi : ℝ) : ℂ) * ((1 / 2 : ℂ) - (a.val : ℂ) / (p : ℂ)))) := by
             refine congrArg (fun z : ℂ => (((Real.pi : ℝ) : ℂ)⁻¹) * z) ?_
             refine Finset.sum_congr rfl fun a _ => ?_
             rcases eq_or_ne a 0 with rfl | ha

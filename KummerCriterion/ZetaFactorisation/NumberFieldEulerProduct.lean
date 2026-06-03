@@ -145,7 +145,9 @@ lemma idealNormMultiplicity_mul {m n : ℕ} (hcop : Nat.Coprime m n) :
         ⊤ = Ideal.span {(m : 𝓞 L)} ⊔ Ideal.span {(n : 𝓞 L)} := h_cop_spans.symm
         _ ≤ Ideal.span {(m : 𝓞 L)} ⊔ L' := sup_le_sup_left (by
             rw [Ideal.span_le, Set.singleton_subset_iff]
-            have : ((n : ℕ) : 𝓞 L) ∈ L' := by rw [← hL]; exact Ideal.absNorm_mem L'
+            have : ((n : ℕ) : 𝓞 L) ∈ L' := by
+              rw [← hL]
+              exact Ideal.absNorm_mem L'
             exact_mod_cast this) _
     have h_cop_n_J : ∀ (J : Ideal (𝓞 L)), Ideal.absNorm J = m →
         IsCoprime (Ideal.span {(n : 𝓞 L)}) J := fun J hJ => by
@@ -157,7 +159,9 @@ lemma idealNormMultiplicity_mul {m n : ℕ} (hcop : Nat.Coprime m n) :
               exact h_cop_spans.symm
         _ ≤ Ideal.span {(n : 𝓞 L)} ⊔ J := sup_le_sup_left (by
             rw [Ideal.span_le, Set.singleton_subset_iff]
-            have : ((m : ℕ) : 𝓞 L) ∈ J := by rw [← hJ]; exact Ideal.absNorm_mem J
+            have : ((m : ℕ) : 𝓞 L) ∈ J := by
+              rw [← hJ]
+              exact Ideal.absNorm_mem J
             exact_mod_cast this) _
     have h_inv_m : ∀ (J L' : Ideal (𝓞 L)), Ideal.absNorm J = m → Ideal.absNorm L' = n →
         J * L' ⊔ Ideal.span {(m : 𝓞 L)} = J := fun J L' hJ hL => by
@@ -165,7 +169,9 @@ lemma idealNormMultiplicity_mul {m n : ℕ} (hcop : Nat.Coprime m n) :
         Ideal.isCoprime_iff_sup_eq.mp (h_cop_m_L L' hL)
       refine le_antisymm (sup_le Ideal.mul_le_right ?_) ?_
       · rw [Ideal.span_le, Set.singleton_subset_iff]
-        have : ((m : ℕ) : 𝓞 L) ∈ J := by rw [← hJ]; exact Ideal.absNorm_mem J
+        have : ((m : ℕ) : 𝓞 L) ∈ J := by
+          rw [← hJ]
+          exact Ideal.absNorm_mem J
         exact_mod_cast this
       · calc
           J = J * ⊤ := (Ideal.mul_top J).symm
@@ -179,7 +185,9 @@ lemma idealNormMultiplicity_mul {m n : ℕ} (hcop : Nat.Coprime m n) :
         Ideal.isCoprime_iff_sup_eq.mp (h_cop_n_J J hJ)
       refine le_antisymm (sup_le Ideal.mul_le_left ?_) ?_
       · rw [Ideal.span_le, Set.singleton_subset_iff]
-        have : ((n : ℕ) : 𝓞 L) ∈ L' := by rw [← hL]; exact Ideal.absNorm_mem L'
+        have : ((n : ℕ) : 𝓞 L) ∈ L' := by
+          rw [← hL]
+          exact Ideal.absNorm_mem L'
         exact_mod_cast this
       · calc
           L' = ⊤ * L' := (Ideal.top_mul L').symm
@@ -274,7 +282,8 @@ lemma dedekindZeta_eq_tsum_idealNormMultiplicity {s : ℂ} (hs : 1 < s.re) :
 lemma summable_tsum_symGeometric (α : Type*) [Fintype α] [Finite α] {z : ℂ}
     (hz : ‖z‖ < 1) :
     Summable (fun n : ℕ => (Fintype.card (Sym α n) : ℂ) * z ^ n) ∧
-      (∑' n : ℕ, (Fintype.card (Sym α n) : ℂ) * z ^ n) = ((1 - z)⁻¹) ^ Fintype.card α := by
+      (∑' n : ℕ, (Fintype.card (Sym α n) : ℂ) * z ^ n) =
+        ((1 - z)⁻¹) ^ Fintype.card α := by
   by_cases hα : Fintype.card α = 0
   · haveI : IsEmpty α := Fintype.card_eq_zero_iff.mp hα
     let term : ℕ → ℂ := fun n => (Fintype.card (Sym α n) : ℂ) * z ^ n
@@ -291,23 +300,21 @@ lemma summable_tsum_symGeometric (α : Type*) [Fintype α] [Finite α] {z : ℂ}
     constructor
     · exact summable_of_hasFiniteSupport hsupport
     · have hcard0 : Fintype.card (Sym α 0) = 1 := by
-          rw [Sym.card_sym_eq_multichoose, Nat.multichoose_zero_right]
+        rw [Sym.card_sym_eq_multichoose, Nat.multichoose_zero_right]
       simpa [term, hcard0, hα] using tsum_eq_single 0 hzero
   · obtain ⟨k, hk⟩ := Nat.exists_eq_succ_of_ne_zero hα
     constructor
     · refine (summable_choose_mul_geometric_of_norm_lt_one k hz).congr ?_
       intro n
-      rw [Sym.card_sym_eq_choose]
-      rw [hk, Nat.succ_add_sub_one]
-      rw [Nat.add_comm k n, Nat.choose_symm_add]
+      rw [Sym.card_sym_eq_choose, hk, Nat.succ_add_sub_one, Nat.add_comm k n,
+        Nat.choose_symm_add]
     · calc
         ∑' n : ℕ, (Fintype.card (Sym α n) : ℂ) * z ^ n
             = ∑' n : ℕ, ((n + k).choose k : ℂ) * z ^ n := by
                 apply tsum_congr
                 intro n
-                rw [Sym.card_sym_eq_choose]
-                rw [hk, Nat.succ_add_sub_one]
-                rw [Nat.add_comm k n, Nat.choose_symm_add]
+                rw [Sym.card_sym_eq_choose, hk, Nat.succ_add_sub_one, Nat.add_comm k n,
+                  Nat.choose_symm_add]
         _ = 1 / (1 - z) ^ (k + 1) := tsum_choose_mul_geometric_of_norm_lt_one k hz
         _ = ((1 - z)⁻¹) ^ (k + 1) := by simp [one_div]
         _ = ((1 - z)⁻¹) ^ Fintype.card α := by simp [hk]
@@ -338,7 +345,8 @@ lemma summable_idealNormMultiplicity_mul_cpow_neg {s : ℂ} (hs : 1 < s.re) :
       =O[Filter.atTop] (fun n : ℕ => (n : ℝ) ^ (1 : ℝ)) := by
     have h_card_bridge : ∀ n : ℕ,
         Nat.card {I : NonzeroIdeal L // Ideal.absNorm I.1 ≤ n} =
-        Nat.card {I : (Ideal (𝓞 L))⁰ // ((Ideal.absNorm I.1 : ℕ) : ℝ) ≤ (n : ℝ)} := fun n =>
+        Nat.card {I : (Ideal (𝓞 L))⁰ // ((Ideal.absNorm I.1 : ℕ) : ℝ) ≤ (n : ℝ)} :=
+      fun n =>
       Nat.card_congr
         { toFun := fun ⟨⟨I, hI⟩, hn⟩ =>
             ⟨⟨I, mem_nonZeroDivisors_of_ne_zero hI⟩, by exact_mod_cast hn⟩

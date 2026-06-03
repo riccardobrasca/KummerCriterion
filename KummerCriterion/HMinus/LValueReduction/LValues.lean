@@ -170,7 +170,8 @@ theorem odd_character_ne_inv_of_mod_four_eq_one
 and rewrite it as a single power. -/
 theorem odd_weightedGaussProduct_eq_scalar_pow_mul (hp_odd' : p ≠ 2) :
     Finset.prod (oddCharacters (p := p)) (fun χ =>
-      ((((Real.pi : ℝ) : ℂ) * Complex.I) * gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ))) =
+      ((((Real.pi : ℝ) : ℂ) * Complex.I) *
+        gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ))) =
       (((((Real.pi : ℝ) : ℂ) * Complex.I) / (p : ℂ)) ^ ((p - 1) / 2)) *
         Finset.prod (oddCharacters (p := p))
           (fun χ => gaussSum χ (ZMod.stdAddChar (N := p))) := by
@@ -179,7 +180,8 @@ theorem odd_weightedGaussProduct_eq_scalar_pow_mul (hp_odd' : p ≠ 2) :
     exact_mod_cast hp.out.ne_zero
   calc
     Finset.prod (oddCharacters (p := p)) (fun χ =>
-        ((((Real.pi : ℝ) : ℂ) * Complex.I) * gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ))) =
+        ((((Real.pi : ℝ) : ℂ) * Complex.I) *
+          gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ))) =
       Finset.prod (oddCharacters (p := p)) (fun χ =>
         C * gaussSum χ (ZMod.stdAddChar (N := p))) := by
           refine Finset.prod_congr rfl ?_
@@ -207,8 +209,7 @@ theorem odd_weightedGaussProduct_eq_scalar_pow_mul (hp_odd' : p ≠ 2) :
           (fun χ => gaussSum χ (ZMod.stdAddChar (N := p))) := by
             rfl
 
-/-- Package the `K⁺` residue bridge into the exact even-value `hPlus` formula
-consumed by the downstream `hMinus` assembly theorems. -/
+/-- Rewrite the `K⁺` residue formula using the even `L`-product. -/
 theorem hPlus_formula_of_evenLProduct (hp_odd' : p ≠ 2) :
     ((hPlus K : ℕ) : ℂ) =
       maximalRealSubfieldClassNumberFactor (K := K) * evenLProduct p (1 : ℂ) :=
@@ -216,8 +217,7 @@ theorem hPlus_formula_of_evenLProduct (hp_odd' : p ≠ 2) :
     (KplusResidue := evenLProduct p (1 : ℂ))
     (complex_maximalRealSubfield_residue_eq_evenLProduct_one (p := p) (K := K) hp_odd')
 
-/-- Package the `K⁺` residue bridge into the exact even-value `hPlus` formula
-consumed by the downstream `hMinus` assembly theorems. -/
+/-- Rewrite the `K⁺` residue formula using the explicit even `L`-values. -/
 theorem hPlus_formula_of_evenLValueRhs (hp_odd' : p ≠ 2) :
     ((hPlus K : ℕ) : ℂ) =
       maximalRealSubfieldClassNumberFactor (K := K) *
@@ -231,8 +231,7 @@ theorem hPlus_formula_of_evenLValueRhs (hp_odd' : p ≠ 2) :
           Finset.prod (evenNontrivialCharacters (p := p)) (fun χ => evenLValueRhs p χ) := by
             rw [evenLProduct_one_eq_prod_evenLValueRhs (p := p)]
 
-/-- Package the `K⁺` residue bridge into the exact even-value `hPlus` formula
-consumed by the downstream `hMinus` assembly theorems. -/
+/-- Rewrite the even-value `hPlus` formula with the cyclotomic `K⁺` factor. -/
 theorem hPlus_formula_of_evenLValues_cyclotomicFactor (hp_odd' : p ≠ 2) :
     ((hPlus K : ℕ) : ℂ) =
       cyclotomicHPlusFactor (K := K) *
@@ -248,14 +247,13 @@ theorem hPlus_formula_of_evenLValues (hp_odd' : p ≠ 2) :
         Finset.prod (evenNontrivialCharacters (p := p)) (fun χ => evenLValueRhs p χ) :=
   hPlus_formula_of_evenLValues_cyclotomicFactor (p := p) (K := K) hp_odd'
 
-set_option linter.unusedSectionVars false
-
 /-- Split the product of the odd `L(1, χ)` right-hand sides into the Gauss-sum
 factor and the Bernoulli factor. -/
 theorem oddLValueRhs_product_eq_gauss_product_mul_bernoulli_product :
     Finset.prod (oddCharacters (p := p)) (fun χ => oddLValueRhs p χ) =
       Finset.prod (oddCharacters (p := p)) (fun χ =>
-        ((((Real.pi : ℝ) : ℂ) * Complex.I) * gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ))) *
+        ((((Real.pi : ℝ) : ℂ) * Complex.I) *
+          gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ))) *
         Finset.prod (oddCharacters (p := p)) (fun χ => BernoulliGen χ⁻¹ 1) := by
   classical
   unfold oddLValueRhs

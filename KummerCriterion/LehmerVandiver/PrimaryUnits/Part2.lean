@@ -41,8 +41,6 @@ section PrimaryPlus
 variable (p : ℕ) [hp : Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-local notation3 "K⁺" => NumberField.maximalRealSubfield K
-
 section CyclotomicUnits
 
 variable (p : ℕ) [hp : Fact p.Prime]
@@ -54,9 +52,7 @@ theorem cyclotomicUnit_p_eq_zero : cyclotomicUnit p K p = 0 :=
   (zeta_spec p ℚ K).unit'_coe.geom_sum_eq_zero
     (Nat.lt_of_lt_of_le one_lt_two hp.1.two_le)
 
-/-- `cyclotomicUnit p K (p - 1) = -ζ^{p-1}`. From the cyclotomic
-identity `∑_{j=0}^{p-1} ζ^j = 0`, we have
-`∑_{j=0}^{p-2} ζ^j = -ζ^{p-1}`. -/
+/-- `cyclotomicUnit p K (p - 1) = -ζ^{p-1}`. -/
 theorem cyclotomicUnit_p_sub_one :
     cyclotomicUnit p K (p - 1) = -((zeta_spec p ℚ K).unit' : 𝓞 K) ^ (p - 1) := by
   have hp_pos : 1 ≤ p := hp.1.pos
@@ -70,17 +66,10 @@ theorem cyclotomicUnit_p_sub_one :
 
 end CyclotomicUnits
 
-/-! ## Real cyclotomic units `(1 - ζ^k)(1 - ζ^{-k})/((1 - ζ)(1 - ζ^{-1}))`
-
-These are `σ`-fixed in `𝓞 K` and hence descend to elements of `𝓞 K⁺`.
-They are the building blocks for Pollaczek's primary unit decomposition. -/
-
 section RealCyclotomicUnits
 
 variable (p : ℕ) [hp : Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
-
-local notation3 "K⁺" => NumberField.maximalRealSubfield K
 
 /-- The real cyclotomic combination
 `(cyclotomicUnit k) · σ(cyclotomicUnit k)` in `𝓞 K`. This is
@@ -106,7 +95,6 @@ theorem realCyclotomicUnit_complexConj [IsCMField K] (k : ℕ) :
 theorem zetaSubOne_dvd_realCyclotomicUnit_sub_sq [IsCMField K] (k : ℕ) :
     ((zeta_spec p ℚ K).unit' : 𝓞 K) - 1 ∣
       realCyclotomicUnit p K k - (k : 𝓞 K) ^ 2 := by
-  -- Combine cyclotomicUnit ≡ k and σ(cyclotomicUnit) ≡ k modulo ζ - 1
   have h_diff : realCyclotomicUnit p K k - (k : 𝓞 K) ^ 2 =
       cyclotomicUnit p K k *
         (ringOfIntegersComplexConj K (cyclotomicUnit p K k) - (k : 𝓞 K)) +
@@ -120,8 +108,8 @@ theorem zetaSubOne_dvd_realCyclotomicUnit_sub_sq [IsCMField K] (k : ℕ) :
     ((zetaSubOne_dvd_cyclotomicUnit_sub_natCast p K k).mul_left _)
 
 /-- The real cyclotomic combination is a unit when `k` is coprime to `p`. -/
-theorem isUnit_realCyclotomicUnit [IsCMField K] (k : ℕ)
-    (hk : k.Coprime p) (hp_two : 2 ≤ p) :
+theorem isUnit_realCyclotomicUnit [IsCMField K] (k : ℕ) (hk : k.Coprime p)
+    (hp_two : 2 ≤ p) :
     IsUnit (realCyclotomicUnit p K k) := by
   unfold realCyclotomicUnit
   exact (isUnit_cyclotomicUnit p K k hk hp_two).mul

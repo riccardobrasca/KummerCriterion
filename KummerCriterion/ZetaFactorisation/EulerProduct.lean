@@ -136,7 +136,7 @@ lemma idealNormMultiplicity_p_pow_eq_one (k : ℕ) :
   exact Nat.card_unique
 
 lemma normalizedFactors_subset_primesOverFinset_of_absNorm_prime_pow
-  {q : Nat.Primes} {I : Ideal (𝓞 K)} (hI_ne : I ≠ ⊥)
+    {q : Nat.Primes} {I : Ideal (𝓞 K)} (hI_ne : I ≠ ⊥)
     {k : ℕ} (hI_norm : Ideal.absNorm I = (q : ℕ) ^ k) :
     (UniqueFactorizationMonoid.normalizedFactors I).toFinset ⊆ primesOverFinset K (q : ℕ) := by
   classical
@@ -185,7 +185,8 @@ lemma absNorm_eq_q_pow_localResidueDegree_of_mem_primesOverFinset
   exact Ideal.absNorm_eq_pow_inertiaDeg' P q.2
 
 lemma normalizedFactors_card_mul_localResidueDegree_of_absNorm_prime_pow
-  {q : Nat.Primes} [Fact (q : ℕ).Prime] (hq : (q : ℕ) ≠ p) {I : Ideal (𝓞 K)} (hI_ne : I ≠ ⊥)
+    {q : Nat.Primes} [Fact (q : ℕ).Prime] (hq : (q : ℕ) ≠ p)
+    {I : Ideal (𝓞 K)} (hI_ne : I ≠ ⊥)
     {k : ℕ} (hI_norm : Ideal.absNorm I = (q : ℕ) ^ k) :
     localResidueDegree (p := p) (q : ℕ) hq *
         (UniqueFactorizationMonoid.normalizedFactors I).card = k := by
@@ -311,8 +312,8 @@ lemma idealNormMultiplicity_prime_pow_mul_localResidueDegree_eq_card_sym
         _ = (q : ℕ) ^ (d * m.card) := by rw [hsum_count]
         _ = (q : ℕ) ^ (d * n) := by rw [hm_card]
     ⟨⟨m.prod, hm_prod_ne⟩, hm_norm⟩
-  have htoSym_map_val :
-      ∀ b : β, (toSym b).1.map Subtype.val = UniqueFactorizationMonoid.normalizedFactors b.1.1 := by
+  have htoSym_map_val : ∀ b : β,
+      (toSym b).1.map Subtype.val = UniqueFactorizationMonoid.normalizedFactors b.1.1 := by
     rintro ⟨⟨I, hI_ne⟩, hI_norm⟩
     dsimp [toSym]
     let m := UniqueFactorizationMonoid.normalizedFactors I
@@ -378,8 +379,8 @@ lemma dedekind_prime_power_series_eq_localFactor_at_p {s : ℂ} (hs : 1 < s.re) 
   · simpa using tsum_geometric_of_norm_lt_one hnorm
 
 lemma dedekind_prime_power_series_eq_localFactor
-  (p : ℕ) [Fact p.Prime] (K : Type*) [Field K] [NumberField K]
-  [IsCyclotomicExtension {p} ℚ K] {q : Nat.Primes} {s : ℂ} (hs : 1 < s.re) :
+    (p : ℕ) [Fact p.Prime] (K : Type*) [Field K] [NumberField K]
+    [IsCyclotomicExtension {p} ℚ K] {q : Nat.Primes} {s : ℂ} (hs : 1 < s.re) :
     (∑' k : ℕ, (idealNormMultiplicity K ((q : ℕ) ^ k) : ℂ) *
       (((q : ℕ) ^ k : ℕ) : ℂ) ^ (-s)) =
       (dedekindLocalFactor K (q : ℕ) s)⁻¹ := by
@@ -457,7 +458,8 @@ lemma dedekind_prime_power_series_eq_localFactor
         Int.ideal_span_isMaximal_of_prime (q : ℕ)
       have hne : (rationalPrimeIdeal (q : ℕ)) ≠ ⊥ := by
         simp [rationalPrimeIdeal, q.2.ne_zero]
-      have hcoe := IsDedekindDomain.coe_primesOverFinset (p := rationalPrimeIdeal (q : ℕ)) hne (𝓞 K)
+      have hcoe :=
+        IsDedekindDomain.coe_primesOverFinset (p := rationalPrimeIdeal (q : ℕ)) hne (𝓞 K)
       have h1 := ncard_primesOver_eq_localPrimeCount (p := p) (K := K) hq
       rw [← hcoe, Set.ncard_coe_finset] at h1
       exact h1
@@ -534,7 +536,9 @@ theorem LProduct_eq_one_sub_p_neg_s_mul_dedekindZeta_of_one_lt_re {s : ℂ} (hs 
     have h1 : (fun q : Nat.Primes => (charLocalFactor (p := p) (q : ℕ) s)⁻¹) =
         (fun q : Nat.Primes => ∏ χ : DirichletCharacter ℂ p,
           (1 - χ ((q : ℕ) : ZMod p) * ((q : ℕ) : ℂ) ^ (-s))⁻¹) := by
-      funext q; unfold charLocalFactor; rw [Finset.prod_inv_distrib]
+      funext q
+      unfold charLocalFactor
+      rw [Finset.prod_inv_distrib]
     rw [h1]
     exact multipliable_prod (s := Finset.univ) fun χ _ =>
       (DirichletCharacter.LSeries_eulerProduct_hasProd χ hs).multipliable
@@ -616,7 +620,9 @@ for `K = ℚ(ζ_p)`. -/
 theorem dedekindZeta_eq_riemannZeta_mul_nontrivialLProduct_of_one_lt_re {s : ℂ}
     (hs : 1 < s.re) :
     NumberField.dedekindZeta K s = riemannZeta s * nontrivialLProduct p s := by
-  have hs_ne : s ≠ 1 := fun h => by rw [h] at hs; simp at hs
+  have hs_ne : s ≠ 1 := fun h => by
+    rw [h] at hs
+    simp at hs
   have h1 : LProduct (p := p) s = (1 - (p : ℂ) ^ (-s)) * NumberField.dedekindZeta K s :=
     LProduct_eq_one_sub_p_neg_s_mul_dedekindZeta_of_one_lt_re p K hs
   have h2 : LProduct (p := p) s =

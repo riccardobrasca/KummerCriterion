@@ -79,7 +79,8 @@ theorem one_sub_fourierPow_complement_pow_order_eq_negI_pow_mul_negOnePow_mul_do
       exact_mod_cast hp.out.ne_zero
     have hmulReal : (p : ℝ) * (Real.pi * (k : ℝ) / p) = (k : ℝ) * Real.pi := by
       field_simp [hp0]
-    have hmulCast : (p : ℂ) * ((Real.pi * (k : ℝ) / p : ℝ) : ℂ) = (k : ℂ) * (Real.pi : ℂ) := by
+    have hmulCast :
+        (p : ℂ) * ((Real.pi * (k : ℝ) / p : ℝ) : ℂ) = (k : ℂ) * (Real.pi : ℂ) := by
       exact_mod_cast hmulReal
     calc
       Complex.exp ((p : ℂ) * a)
@@ -285,7 +286,7 @@ theorem det_normalizedDft_eq_I_pow_orderHalf (hp2 : p ≠ 2) :
     _ = Complex.I ^ ((p - 1) / 2) := by
           simpa [n] using KummerCriterion.negI_pow_orderHalfMul_eq_I_pow_half (p := p) hp2
 
-/-- If `p ≡ 3 (mod 4)`, the determinant route lands in the imaginary branch. -/
+/-- If `p ≡ 3 (mod 4)`, the determinant is in the imaginary branch. -/
 theorem det_normalizedDft_eq_negOnePow_mul_I_of_mod_four_eq_three
     (hp2 : p ≠ 2) (hp4 : p % 4 = 3) :
     LinearMap.det (normalizedDft p) = (-1 : ℂ) ^ ((p - 3) / 4) * Complex.I := by

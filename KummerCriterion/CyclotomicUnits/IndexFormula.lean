@@ -6,8 +6,7 @@ import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.IndexFormula
 # P-primary cyclotomic-unit index formula
 
 This file records the p-primary form of Sinnott's cyclotomic-unit index formula
-for the real prime-conductor cyclotomic-unit family. The hard analytic input is
-kept explicit as `LehmerVandiver.Sinnott.KummerDirichletDeterminant`.
+for the real prime-conductor cyclotomic-unit family.
 -/
 
 @[expose] public section
@@ -63,12 +62,7 @@ theorem cyclotomicUnitIndex_primeConductor_pPrimary_of_sinnottIndexFormula
   rw [hindex]
   exact prime_dvd_two_pow_mul_iff_dvd (p := p) hp_odd ((p - 3) / 2) (hPlus K)
 
-/-- P-primary cyclotomic-unit index formula from the named hard analytic input
-`KummerDirichletDeterminant`.
-
-The determinant input gives the squared-family index
-`2^((p - 3) / 2) * hPlus K`; the final equivalence removes the power of `2`
-using `p ≠ 2`. -/
+/-- P-primary cyclotomic-unit index formula from `KummerDirichletDeterminant`. -/
 theorem cyclotomicUnitIndex_primeConductor_pPrimary_of_kummerDirichletDeterminant
     (hp_odd : p ≠ 2) (hp_three : 3 ≤ p)
     (hdet : LehmerVandiver.Sinnott.KummerDirichletDeterminant p K hp_odd hp_three) :

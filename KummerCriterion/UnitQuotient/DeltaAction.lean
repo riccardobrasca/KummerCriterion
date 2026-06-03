@@ -79,9 +79,7 @@ theorem cyclotomicSigmaOfUnit_apply_zeta (a : CyclotomicUnitDelta p) :
       (n := p) (K := K) (σ := σ)
       (x := IsCyclotomicExtension.zeta p ℚ K)
       ((IsCyclotomicExtension.zeta_spec p ℚ K).pow_eq_one)
-  rw [show IsCyclotomicExtension.Rat.galEquivZMod p K σ = a by
-      exact cyclotomicGalEquivZMod_sigmaOfUnit (p := p) (K := K) a] at h
-  exact h
+  rwa [cyclotomicGalEquivZMod_sigmaOfUnit] at h
 
 @[simp]
 theorem cyclotomicSigmaOfUnit_smul_zetaInteger (a : CyclotomicUnitDelta p) :
@@ -93,9 +91,7 @@ theorem cyclotomicSigmaOfUnit_smul_zetaInteger (a : CyclotomicUnitDelta p) :
       (n := p) (K := K) (σ := σ)
       (x := cyclotomicZetaInteger (p := p) K)
       ((cyclotomicZetaInteger_isPrimitiveRoot (p := p) (K := K)).pow_eq_one)
-  rw [show IsCyclotomicExtension.Rat.galEquivZMod p K σ = a by
-      exact cyclotomicGalEquivZMod_sigmaOfUnit (p := p) (K := K) a] at h
-  exact h
+  rwa [cyclotomicGalEquivZMod_sigmaOfUnit] at h
 
 /-- The ring-of-integers automorphism induced by the cyclotomic Galois
 automorphism indexed by `a`. -/
@@ -107,8 +103,7 @@ noncomputable def cyclotomicRingOfIntegersEquiv (a : CyclotomicUnitDelta p) :
 @[simp]
 theorem cyclotomicRingOfIntegersEquiv_one_apply (x : 𝓞 K) :
     cyclotomicRingOfIntegersEquiv (p := p) K 1 x = x := by
-  change cyclotomicSigmaOfUnit (p := p) K 1 • x = x
-  simp
+  simp [cyclotomicRingOfIntegersEquiv]
 
 theorem cyclotomicRingOfIntegersEquiv_mul_apply
     (a b : CyclotomicUnitDelta p) (x : 𝓞 K) :
@@ -118,10 +113,7 @@ theorem cyclotomicRingOfIntegersEquiv_mul_apply
   change cyclotomicSigmaOfUnit (p := p) K (a * b) • x =
     cyclotomicSigmaOfUnit (p := p) K a •
       cyclotomicSigmaOfUnit (p := p) K b • x
-  rw [cyclotomicSigmaOfUnit_mul]
-  exact smul_smul
-    (cyclotomicSigmaOfUnit (p := p) K a)
-    (cyclotomicSigmaOfUnit (p := p) K b) x
+  simp [cyclotomicSigmaOfUnit_mul, smul_smul]
 
 end KummerCriterion
 

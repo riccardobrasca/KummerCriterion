@@ -22,12 +22,7 @@ namespace KummerCriterion
 variable {p : ℕ} [Fact p.Prime]
 
 /-- A finite-index subgroup of a commutative group has p-prime-to index if it
-is p-saturated in the whole group and contains every element killed by `p`.
-
-The proof is Cauchy's theorem on `G / H`: a p-divisor of the index gives a
-nontrivial quotient class with p-th power one. Saturation lifts the p-th
-power equality into `H`, and the torsion hypothesis forces the representative
-itself back into `H`, contradiction. -/
+is p-saturated in the whole group and contains every element killed by `p`. -/
 theorem subgroup_not_dvd_index_of_pSaturated_top_of_pow_eq_one_mem
     {G : Type*} [CommGroup G] {H : Subgroup G} [H.FiniteIndex]
     (hsat : pSaturated H (⊤ : Subgroup G) p)

@@ -40,14 +40,6 @@ section PrimaryPlus
 variable (p : ℕ) [hp : Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-local notation3 "K⁺" => NumberField.maximalRealSubfield K
-
-/-! ## Cyclotomic units `(1 - ζ^k)/(1 - ζ)` in `𝓞 K`
-
-For `k` coprime to `p` (so `1 ≤ k ≤ p-1`), the element
-`(1 - ζ^k)/(1 - ζ)` is a unit in `𝓞 K`. These are the building blocks
-for Pollaczek's primary units in K⁺. -/
-
 section CyclotomicUnits
 
 variable (p : ℕ) [hp : Fact p.Prime]
@@ -61,9 +53,8 @@ noncomputable def cyclotomicUnit (k : ℕ) : 𝓞 K :=
 /-- Recursive identity: `cyclotomicUnit (k+1) = cyclotomicUnit k + ζ^k`. -/
 theorem cyclotomicUnit_succ (k : ℕ) :
     cyclotomicUnit p K (k + 1) =
-      cyclotomicUnit p K k + ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ k := by
-  unfold cyclotomicUnit
-  rw [Finset.sum_range_succ]
+      cyclotomicUnit p K k + ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ k :=
+  Finset.sum_range_succ _ _
 
 /-- The cyclotomic-unit telescoping identity:
 `(1 - ζ) · cyclotomicUnit k = 1 - ζ^k` in `𝓞 K`. -/
@@ -82,8 +73,7 @@ theorem one_sub_zeta_mul_cyclotomicUnit (k : ℕ) :
 theorem zeta_sub_one_mul_cyclotomicUnit (k : ℕ) :
     (((zeta_spec p ℚ K).unit' : 𝓞 K) - 1) * cyclotomicUnit p K k =
       ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ k - 1 := by
-  have h := one_sub_zeta_mul_cyclotomicUnit p K k
-  linear_combination -h
+  linear_combination -(one_sub_zeta_mul_cyclotomicUnit p K k)
 
 /-- `cyclotomicUnit k ≡ k (mod ζ - 1)` in `𝓞 K`: the difference
 `cyclotomicUnit k - k` is divisible by `ζ - 1`. -/
@@ -103,18 +93,11 @@ theorem zetaSubOne_dvd_cyclotomicUnit_sub_natCast (k : ℕ) :
         (((zeta_spec p ℚ K).unit' : 𝓞 K) ^ n - 1) := by ring
     rw [hsplit]
     refine dvd_add ih ?_
-    -- ζ - 1 ∣ ζ^n - 1
-    have htel : (((zeta_spec p ℚ K).unit' : 𝓞 K) - 1) *
-        cyclotomicUnit p K n =
-        ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ n - 1 := by
-      have h := one_sub_zeta_mul_cyclotomicUnit p K n
-      linear_combination -h
-    exact ⟨cyclotomicUnit p K n, htel.symm⟩
+    exact ⟨cyclotomicUnit p K n, (zeta_sub_one_mul_cyclotomicUnit p K n).symm⟩
 
 /-- The complex conjugate of `cyclotomicUnit k` is also congruent to `k`
 modulo `ζ - 1`. -/
-theorem zetaSubOne_dvd_complexConj_cyclotomicUnit_sub_natCast [IsCMField K]
-    (k : ℕ) :
+theorem zetaSubOne_dvd_complexConj_cyclotomicUnit_sub_natCast [IsCMField K] (k : ℕ) :
     ((zeta_spec p ℚ K).unit' : 𝓞 K) - 1 ∣
       ringOfIntegersComplexConj K (cyclotomicUnit p K k) - (k : 𝓞 K) := by
   have h := zetaSubOne_dvd_cyclotomicUnit_sub_natCast p K k
@@ -124,7 +107,6 @@ theorem zetaSubOne_dvd_complexConj_cyclotomicUnit_sub_natCast [IsCMField K]
     map_dvd (ringOfIntegersComplexConj K).toRingEquiv.toRingHom h
   rw [map_sub, map_sub (a := cyclotomicUnit p K k), map_one,
     map_natCast] at h_apply
-  -- σ(ζ - 1) is associated to ζ - 1
   have hassoc :
       Associated (ringOfIntegersComplexConj K (((zeta_spec p ℚ K).unit' : 𝓞 K)) - 1)
         (((zeta_spec p ℚ K).unit' : 𝓞 K) - 1) := by
@@ -140,7 +122,7 @@ theorem zetaSubOne_dvd_complexConj_cyclotomicUnit_sub_natCast [IsCMField K]
   exact hassoc.symm.dvd.trans h_apply
 
 /-- The cyclotomic unit `(1 - ζ^k)/(1 - ζ)` is a unit in `𝓞 K` when
-`k` is coprime to `p`. Proven via mathlib's `geom_sum_isUnit`. -/
+`k` is coprime to `p`. -/
 theorem isUnit_cyclotomicUnit (k : ℕ) (hk : k.Coprime p) (hp_two : 2 ≤ p) :
     IsUnit (cyclotomicUnit p K k) := by
   unfold cyclotomicUnit

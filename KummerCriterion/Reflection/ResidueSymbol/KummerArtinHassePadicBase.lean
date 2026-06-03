@@ -29,8 +29,7 @@ def lambdaRationalPrimeIdeal : Ideal ℤ :=
   Ideal.span ({(p : ℤ)} : Set ℤ)
 
 /-- The height-one spectrum point of `ℤ` attached to the rational prime `p`. -/
-def lambdaRationalHeightOneSpectrum :
-    IsDedekindDomain.HeightOneSpectrum ℤ where
+def lambdaRationalHeightOneSpectrum : IsDedekindDomain.HeightOneSpectrum ℤ where
   asIdeal := lambdaRationalPrimeIdeal p
   isPrime := (Int.ideal_span_isMaximal_of_prime p).isPrime
   ne_bot := by
@@ -42,8 +41,7 @@ theorem zetaPrime_liesOver_lambdaRationalPrimeIdeal :
     (zetaPrime p K).LiesOver (lambdaRationalPrimeIdeal p) := by
   haveI : IsCyclotomicExtension {p ^ (0 + 1)} ℚ K := by
     simpa using (inferInstance : IsCyclotomicExtension {p} ℚ K)
-  have hζpow :
-      IsPrimitiveRoot (IsCyclotomicExtension.zeta p ℚ K) (p ^ (0 + 1)) := by
+  have hζpow : IsPrimitiveRoot (IsCyclotomicExtension.zeta p ℚ K) (p ^ (0 + 1)) := by
     simp
   have h :
       (Ideal.span

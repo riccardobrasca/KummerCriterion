@@ -31,10 +31,12 @@ lemma norm_sum_range_smul_le_of_antitone_of_nonneg_of_bounded
     simpa using this
   · rw [Finset.sum_range_by_parts (f := a) (g := z) (n := n)]
     have hsum_le :
-        ‖∑ i ∈ Finset.range (n - 1), (a (i + 1) - a i) • ∑ j ∈ Finset.range (i + 1), z j‖ ≤
+        ‖∑ i ∈ Finset.range (n - 1),
+            (a (i + 1) - a i) • ∑ j ∈ Finset.range (i + 1), z j‖ ≤
           B * (a 0 - a (n - 1)) := by
       calc
-        ‖∑ i ∈ Finset.range (n - 1), (a (i + 1) - a i) • ∑ j ∈ Finset.range (i + 1), z j‖
+        ‖∑ i ∈ Finset.range (n - 1),
+            (a (i + 1) - a i) • ∑ j ∈ Finset.range (i + 1), z j‖
             ≤ ∑ i ∈ Finset.range (n - 1),
                 ‖(a (i + 1) - a i) • ∑ j ∈ Finset.range (i + 1), z j‖ := by
               simpa using norm_sum_le (Finset.range (n - 1))
@@ -68,7 +70,8 @@ lemma norm_sum_range_smul_le_of_antitone_of_nonneg_of_bounded
               rw [htel]
     have hfirst : ‖a (n - 1) • ∑ i ∈ Finset.range n, z i‖ ≤ B * a (n - 1) := by
       calc
-        ‖a (n - 1) • ∑ i ∈ Finset.range n, z i‖ = |a (n - 1)| * ‖∑ i ∈ Finset.range n, z i‖ := by
+        ‖a (n - 1) • ∑ i ∈ Finset.range n, z i‖ =
+            |a (n - 1)| * ‖∑ i ∈ Finset.range n, z i‖ := by
           rw [norm_smul, Real.norm_eq_abs]
         _ = a (n - 1) * ‖∑ i ∈ Finset.range n, z i‖ := by
           rw [abs_of_nonneg (ha_nonneg _)]
@@ -86,7 +89,8 @@ lemma norm_sum_range_smul_le_of_antitone_of_nonneg_of_bounded
                   (a (i + 1) - a i) • ∑ j ∈ Finset.range (i + 1), z j‖ := by
               simpa [sub_eq_add_neg] using
                 (norm_sub_le (a (n - 1) • ∑ i ∈ Finset.range n, z i)
-                  (∑ i ∈ Finset.range (n - 1), (a (i + 1) - a i) • ∑ j ∈ Finset.range (i + 1), z j))
+                  (∑ i ∈ Finset.range (n - 1),
+                    (a (i + 1) - a i) • ∑ j ∈ Finset.range (i + 1), z j))
       _ ≤ B * a (n - 1) + B * (a 0 - a (n - 1)) := add_le_add hfirst hsum_le
       _ = B * a 0 := by ring
 

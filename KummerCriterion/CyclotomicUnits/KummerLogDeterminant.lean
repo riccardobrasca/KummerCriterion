@@ -5,7 +5,7 @@ import KummerCriterion.CyclotomicUnits.Vandermonde
 /-!
 # Kummer logarithm determinant
 
-This file assembles the coefficient congruence and the 
+This file assembles the coefficient congruence and the
 Vandermonde determinant into Kummer's determinant criterion. The determinant
 is nonzero exactly when the Bernoulli numerator factors in the classical
 range are nonzero modulo `p`.

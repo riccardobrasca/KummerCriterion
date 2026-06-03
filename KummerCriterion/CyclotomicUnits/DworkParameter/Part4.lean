@@ -482,8 +482,7 @@ theorem samePrimeFiniteArtinHasseExpCoord_mem_lambdaIdeal
       (Ideal.pow_mem_pow hx (n + 1))
   exact (lambdaIdeal p K).mul_mem_left _ hpow
 
-/-- Homogeneous bookkeeping polynomial for the same-prime finite
-Artin--Hasse principal-unit coordinate. -/
+/-- Homogeneous polynomial for the same-prime finite Artin--Hasse principal-unit coordinate. -/
 def samePrimeFiniteArtinHasseExpCoordPoly
     (N : ℕ) (x : ValuedIntegerRing p K) :
     Polynomial (ValuedIntegerRing p K) :=
@@ -559,11 +558,10 @@ theorem samePrimeFiniteArtinHasseExpCoordPoly_coeff_eq_zero_of_lt
     (samePrimeFiniteArtinHasseExpCoordPoly (p := p) (K := K) N x).coeff d = 0 := by
   classical
   rw [samePrimeFiniteArtinHasseExpCoordPoly, Polynomial.finsetSum_coeff]
-  exact Finset.sum_eq_zero fun n hn =>
-    by
-      have hnlt : n < N := Finset.mem_range.mp hn
-      have hne : n + 1 ≠ d := by omega
-      simp [Polynomial.coeff_monomial, hne]
+  exact Finset.sum_eq_zero fun n hn => by
+    have hnlt : n < N := Finset.mem_range.mp hn
+    have hne : n + 1 ≠ d := by omega
+    simp [Polynomial.coeff_monomial, hne]
 
 theorem samePrimeFiniteArtinHasseExpCoordPoly_pow_coeff_mem_lambdaIdeal_pow
     (N : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K)

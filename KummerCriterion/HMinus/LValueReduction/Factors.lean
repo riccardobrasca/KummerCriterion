@@ -60,7 +60,6 @@ theorem maximalRealSubfieldClassNumberFactor_eq_explicit (hp_odd' : p ≠ 2) :
     abs_discr_maximalRealSubfield_eq_pow (p := p) (K := K) hp_odd']
   norm_num
 
-set_option linter.unusedSectionVars false in
 theorem hPlus_formula_of_Kplus_residue
     {KplusResidue : ℂ}
     (hresPlus :
@@ -68,14 +67,8 @@ theorem hPlus_formula_of_Kplus_residue
         KplusResidue) :
     ((hPlus K : ℕ) : ℂ) =
       maximalRealSubfieldClassNumberFactor (K := K) * KplusResidue := by
-  calc
-    ((hPlus K : ℕ) : ℂ) =
-        ((NumberField.dedekindZeta_residue (NumberField.maximalRealSubfield K) : ℝ) : ℂ) *
-          maximalRealSubfieldClassNumberFactor (K := K) := hPlus_formula_complex (K := K)
-    _ = KplusResidue * maximalRealSubfieldClassNumberFactor (K := K) := by
-          rw [hresPlus]
-    _ = maximalRealSubfieldClassNumberFactor (K := K) * KplusResidue := by
-          ring
+  rw [hPlus_formula_complex (K := K), hresPlus]
+  ring
 
 omit [IsCMField K] in
 lemma maximalRealSubfieldClassNumberFactor_ne_zero :
@@ -192,12 +185,11 @@ theorem cyclotomicRelativeLValueCoefficient_eq_final
   rw [hsqrt_split]
   field_simp [hsqrtB_ne, hpow_pi_ne]
 
-/- The `K⁺` class-number scalar in the notation used by the repaired
-cyclotomic `hMinus` reduction chain. -/
+/-- The `K⁺` class-number scalar used in the cyclotomic `hMinus` reduction. -/
 abbrev cyclotomicHPlusFactor : ℂ :=
   maximalRealSubfieldClassNumberFactor (K := K)
 
-set_option linter.unusedSectionVars false in
+omit hp [IsCyclotomicExtension {p} ℚ K] [IsCMField K] in
 lemma cyclotomicClassNumberFactor_eq_relative_coefficient_mul_hPlusFactor :
     cyclotomicClassNumberFactor (p := p) (K := K) =
       cyclotomicRelativeLValueCoefficient (p := p) (K := K) *

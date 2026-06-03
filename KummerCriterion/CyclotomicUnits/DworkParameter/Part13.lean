@@ -74,7 +74,8 @@ theorem rationalPadicPrimeIdeal_pow_eq_valuation_closedBall (n : ℕ) :
   rw [rationalPadicPrimeIdeal, Ideal.span_singleton_pow]
   simpa using
     (IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.integers
-      (K := ℚ) (v := lambdaRationalHeightOneSpectrum p)).coe_span_singleton_eq_setOf_le_v_algebraMap
+      (K := ℚ)
+      (v := lambdaRationalHeightOneSpectrum p)).coe_span_singleton_eq_setOf_le_v_algebraMap
       ((p : RationalPadicIntegerRing p) ^ n)
 
 theorem rationalPadicPrimeIdeal_pow_isOpen (n : ℕ) :
@@ -505,9 +506,7 @@ theorem dworkParameterPowerLinearMap_mem_parameterIdeal_pow_mul_pred_of_mem_prim
       ((rationalPadicPrimeIdeal p) ^ q) ha i)
 
 set_option maxHeartbeats 1200000 in
--- This packages the correction step extracted from the quotient-spanning
--- induction; the kernel otherwise spends most of the default budget reducing
--- the completed Dwork algebra maps in the returned correction data.
+-- Needed for reducing nested Dwork completion algebra maps.
 theorem dworkParameterPowerLinearMap_oneStepCorrection_of_residue_lift
     (hres :
       ∀ y : DworkCompleteIntegerRing p K,
@@ -784,9 +783,7 @@ theorem dworkParameterPowerApproxBlockSeq_sub_mem_primeIdeal_pow_smul_top
     (hM := le_rfl)
 
 set_option maxHeartbeats 1200000 in
--- This is the formal limit step for. It is conditional only on the
--- coefficient module's `p`-adic precompleteness; the coherent approximation
--- and Dwork-continuity estimates are proved above.
+-- Needed for the precompletion limit construction over finite coefficient functions.
 theorem dworkParameterPowerLinearMap_surjective_of_precomplete
     [IsPrecomplete (rationalPadicPrimeIdeal p)
       (Fin (p - 1) → RationalPadicIntegerRing p)] :

@@ -33,13 +33,11 @@ variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 field. -/
 noncomputable def cyclotomicComplexConjGal
     (hp_gt_two : 2 < p) : Gal(K / ℚ) := by
-  haveI : NumberField.IsCMField K :=
-    IsCyclotomicExtension.IsCMField K hp_gt_two
+  haveI : NumberField.IsCMField K := IsCyclotomicExtension.IsCMField K hp_gt_two
   exact
     { (NumberField.IsCMField.complexConj K).toRingEquiv with
-      commutes' := fun q => by
-        exact map_ratCast
-          ((NumberField.IsCMField.complexConj K).toRingEquiv.toRingHom) q }
+      commutes' := fun q =>
+        map_ratCast ((NumberField.IsCMField.complexConj K).toRingEquiv.toRingHom) q }
 
 /-- Under the standard cyclotomic Galois identification, complex conjugation
 is the element `-1` of `(ZMod p)^*`. -/
@@ -59,10 +57,8 @@ theorem cyclotomicGalEquivZMod_complexConjGal_eq_neg_one
       NumberField.IsCMField.complexConj K
           (IsCyclotomicExtension.zeta p ℚ K) =
         (IsCyclotomicExtension.zeta p ℚ K)⁻¹ := by
-    have hconj :=
-      NumberField.IsCMField.complexConj_torsion
-        (K := K) ⟨hζ.unit', hzeta_torsion⟩
-    simpa using hconj
+    simpa using
+      NumberField.IsCMField.complexConj_torsion (K := K) ⟨hζ.unit', hzeta_torsion⟩
   have hζ_inv :
       (IsCyclotomicExtension.zeta p ℚ K)⁻¹ =
         (IsCyclotomicExtension.zeta p ℚ K) ^ (p - 1) := by
@@ -77,21 +73,14 @@ theorem cyclotomicGalEquivZMod_complexConjGal_eq_neg_one
       (IsCyclotomicExtension.zeta p ℚ K) ^
           (IsCyclotomicExtension.Rat.galEquivZMod p K c).val.val =
         (IsCyclotomicExtension.zeta p ℚ K) ^ (p - 1) := by
-    calc
-      (IsCyclotomicExtension.zeta p ℚ K) ^
-          (IsCyclotomicExtension.Rat.galEquivZMod p K c).val.val
-          = c (IsCyclotomicExtension.zeta p ℚ K) := by
-              symm
-              exact IsCyclotomicExtension.Rat.galEquivZMod_apply_of_pow_eq
-                (n := p) (K := K) c hζ.pow_eq_one
-      _ = (IsCyclotomicExtension.zeta p ℚ K) ^ (p - 1) := hc
+    rw [← hc, ← IsCyclotomicExtension.Rat.galEquivZMod_apply_of_pow_eq
+      (n := p) (K := K) c hζ.pow_eq_one]
   apply Units.ext
-  have hpow' := hpow
   rw [(hζ.isOfFinOrder (Fact.out : p.Prime).ne_zero).pow_inj_mod, ← hζ.eq_orderOf,
     ← ZMod.natCast_eq_natCast_iff', ZMod.natCast_val,
-    Nat.cast_sub (Fact.out : p.Prime).one_le,
-    ZMod.natCast_self, zero_sub, Nat.cast_one] at hpow'
-  simpa [c, cyclotomicGalEquivZMod] using hpow'
+    Nat.cast_sub (Fact.out : p.Prime).one_le, ZMod.natCast_self, zero_sub,
+    Nat.cast_one] at hpow
+  simpa [c, cyclotomicGalEquivZMod] using hpow
 
 /-- The Galois automorphism indexed by `-1` is complex conjugation. -/
 theorem cyclotomicSigmaOfUnit_neg_one_eq_complexConjGal

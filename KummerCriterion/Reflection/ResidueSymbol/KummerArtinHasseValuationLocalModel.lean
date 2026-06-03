@@ -33,8 +33,7 @@ variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
 /-- The height-one prime of `𝓞 K` corresponding to `lambda = zeta_p - 1`. -/
-def lambdaHeightOneSpectrum :
-    IsDedekindDomain.HeightOneSpectrum (𝓞 K) where
+def lambdaHeightOneSpectrum : IsDedekindDomain.HeightOneSpectrum (𝓞 K) where
   asIdeal := zetaPrime p K
   isPrime := zetaPrime_isPrime p K
   ne_bot := zetaPrime_ne_bot p K
@@ -47,8 +46,7 @@ abbrev LambdaValuedCompletion : Type _ :=
 abbrev LambdaValuedIntegerRing : Type _ :=
   (lambdaHeightOneSpectrum p K).adicCompletionIntegers K
 
-instance lambdaValuedCompletion_field :
-    Field (LambdaValuedCompletion p K) :=
+instance lambdaValuedCompletion_field : Field (LambdaValuedCompletion p K) :=
   inferInstance
 
 end KummerArtinHasse

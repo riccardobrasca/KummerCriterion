@@ -11,8 +11,8 @@ For an extension `A → B` of commutative domains with injective algebra map
 homomorphism `ClassGroup.extensionMap: ClassGroup A →* ClassGroup B` given
 by pushing fractional ideals forward along the algebra map.
 
-This is the common machinery; see `KummerCriterion.TotallyRealSubfield`
-the specialisation to the inclusion `𝒪_{K⁺} ↪ 𝒪_K` used in Kummer's
+This is the common machinery; see `KummerCriterion.TotallyRealSubfield` for
+the specialization to the inclusion `𝒪_{K⁺} ↪ 𝒪_K` used in Kummer's
 criterion.
 
 ## Main definitions
@@ -123,7 +123,6 @@ on `(FractionalIdeal A⁰ (FractionRing A))ˣ`. -/
 lemma mk0_eq_quotientMk (I : (Ideal A)⁰) :
     (ClassGroup.mk0 I : ClassGroup A) =
       QuotientGroup.mk (FractionalIdeal.mk0 (FractionRing A) I) := by
-  change ClassGroup.mk (FractionalIdeal.mk0 _ I) = _
   change ((QuotientGroup.mk' _).comp _) (FractionalIdeal.mk0 _ I) = _
   simp only [MonoidHom.coe_comp, Function.comp_apply,
     FractionalIdeal.canonicalEquiv_self]

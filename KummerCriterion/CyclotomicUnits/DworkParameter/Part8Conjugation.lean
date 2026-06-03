@@ -26,7 +26,7 @@ open MonoidWithZeroHom.ValueGroup₀
 open KummerCriterion.Reflection.Local
 
 set_option maxHeartbeats 800000 in
--- The proof compares value-group basic neighborhoods for two valuation type synonyms.
+-- Required for the valuation-neighborhood comparison.
 omit [NumberField K] in
 theorem uniformContinuous_withValCongr_comap
     (v : Valuation K ℤᵐ⁰) (σ : K ≃+* K) :
@@ -86,7 +86,7 @@ theorem uniformContinuous_withValCongr_comap
   exact hx
 
 set_option maxHeartbeats 800000 in
--- The proof is the inverse-neighborhood version of `uniformContinuous_withValCongr_comap`.
+-- Required for the inverse valuation-neighborhood comparison.
 omit [NumberField K] in
 theorem uniformContinuous_withValCongr_comap_symm
     (v : Valuation K ℤᵐ⁰) (σ : K ≃+* K) :

@@ -11,37 +11,11 @@ import Mathlib.Data.List.GetD
 
 This module proves `bernoulliCompute n = bernoulli n`, connecting the fast
 computable definition to Mathlib's noncomputable `bernoulli`.
-
-## Proof strategy
-
-1. **`binomSum` agrees with `Finset.sum` + `Nat.choose`** (`binomSum_eq`):
- By induction on the list, maintaining the invariant that the running
- coefficient `c` equals `↑(Nat.choose m k)`. The key identity is
- `(k+1) · C(m, k+1) = (m − k) · C(m, k)` lifted to `ℚ`.
-
-2. **`bernoulliList` properties**:
- - `bernoulliList_length`: `(bernoulliList n).length = n + 1`.
- - `bernoulliList_getD`: earlier entries are preserved on extension.
-
-3. **Main theorem** (`bernoulliCompute_eq`):
- By strong induction on `n` using `sum_bernoulli (n+2)`:
- `∑_{k≤n+1} C(n+2,k) · Bₖ = 0`
- Split off the last term `(n+2) · B_{n+1}`, substitute the IH via
- `Finset.sum_congr`, and equate with the definition of `bernoulliCompute`.
-
-## Main declarations
-
-* `binomSum_eq` — `binomSum bs m = ∑ k ∈ range |bs|, ↑(m.choose k) · bs.getD k 0`
-* `bernoulliCompute_eq` — `bernoulliCompute n = bernoulli n`
-* `bernoulliCompute_num_eq` — `(bernoulliCompute n).num = (bernoulli n).num`
-* `bernoulliCompute_den_eq` — `(bernoulliCompute n).den = (bernoulli n).den`
 -/
 
 namespace KummerCriterion.BernoulliFast
 
 open Finset Nat
-
-/-! ### Binomial coefficient identity -/
 
 /-- The multiplicative recurrence for binomial coefficients, cast to `ℚ`:
 `↑C(m, k+1) = ↑C(m, k) · (↑m − ↑k) / (↑k + 1)`.
@@ -65,8 +39,6 @@ theorem cast_choose_mul_eq (m k : ℕ) (hk : k < m) :
 theorem cast_choose_mul_eq_of_le (m k : ℕ) (hk : m ≤ k) :
     (↑(m.choose (k + 1)) : ℚ) = 0 := by
   norm_num [Nat.choose_eq_zero_of_lt (Nat.lt_succ_of_le hk)]
-
-/-! ### `binomSum` agrees with `Finset.sum` -/
 
 /-- Loop invariant: `binomSum.loop m bs k c acc` equals
 `acc + ∑_{j<|bs|} ↑C(m, k+j) · bs.getD j 0` provided `c = ↑C(m, k)`. -/
@@ -109,8 +81,6 @@ theorem binomSum_eq (bs : List ℚ) (m : ℕ) :
   rw [binomSum_loop_eq m bs 0 1 0 (by simp)]
   simp
 
-/-! ### `bernoulliList` properties -/
-
 theorem bernoulliList_length (n : ℕ) : (bernoulliList n).length = n + 1 := by
   induction n with
   | zero =>
@@ -125,9 +95,8 @@ theorem bernoulliList_getD_lt (n k : ℕ) (hk : k ≤ n) :
       [- binomSum (bernoulliList n) (n + 2) / ((n : ℚ) + 2)] 0 k
       (by simpa [bernoulliList_length] using Nat.lt_succ_of_le hk))
 
-/-! ### Main correctness theorem -/
-
-theorem bernoulliList_getD_eq : ∀ n k : ℕ, k ≤ n → (bernoulliList n).getD k 0 = bernoulli k := by
+theorem bernoulliList_getD_eq :
+    ∀ n k : ℕ, k ≤ n → (bernoulliList n).getD k 0 = bernoulli k := by
   intro n
   induction n with
   | zero =>

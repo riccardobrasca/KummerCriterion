@@ -30,10 +30,9 @@ local instance : DecidableEq (Option (DirichletCharacter ℂ p)) := Classical.de
 
 /-- Replace the trivial Dirichlet character by the constant-`1` function, but
 leave every other character unchanged. -/
-def constOneDirichletCharacterFamily (χ : DirichletCharacter ℂ p) : ZMod p → ℂ :=
-  by
-    classical
-    exact if hχ : χ = 1 then fun _ : ZMod p => (1 : ℂ) else (χ : ZMod p → ℂ)
+def constOneDirichletCharacterFamily (χ : DirichletCharacter ℂ p) : ZMod p → ℂ := by
+  classical
+  exact if hχ : χ = 1 then fun _ : ZMod p => (1 : ℂ) else (χ : ZMod p → ℂ)
 
 omit hp in
 @[simp] theorem constOneDirichletCharacterFamily_one :
@@ -162,12 +161,11 @@ theorem deltaZeroConstOneDirichletCharacterBasis_apply_some_ne_one
 
 /-- The underlying involution on the adapted basis indices. -/
 def normalizedDftConstOneBasisPermFun :
-    Option (DirichletCharacter ℂ p) → Option (DirichletCharacter ℂ p) :=
-  by
-    classical
-    exact fun
-      | none => some 1
-      | some χ => if hχ : χ = 1 then none else some χ⁻¹
+    Option (DirichletCharacter ℂ p) → Option (DirichletCharacter ℂ p) := by
+  classical
+  exact fun
+    | none => some 1
+    | some χ => if hχ : χ = 1 then none else some χ⁻¹
 
 /-- The permutation of the adapted basis induced by the normalized DFT. -/
 def normalizedDftConstOneBasisPerm :
@@ -212,15 +210,14 @@ def normalizedDftConstOneBasisPerm :
           simp [normalizedDftConstOneBasisPermFun, hχ, hχinv]
 
 /-- The scalar attached to each basis vector under the normalized DFT. -/
-def normalizedDftConstOneBasisScalar (i : Option (DirichletCharacter ℂ p)) : ℂ :=
-  by
-    classical
-    exact match i with
-    | none => (Real.sqrt p : ℂ)⁻¹
-    | some χ =>
-        if hχ : χ = 1 then ((Real.sqrt p : ℂ)⁻¹) * p
-        else ((Real.sqrt p : ℂ)⁻¹) *
-          (χ⁻¹ (-1) * gaussSum χ (ZMod.stdAddChar (N := p)))
+def normalizedDftConstOneBasisScalar (i : Option (DirichletCharacter ℂ p)) : ℂ := by
+  classical
+  exact match i with
+  | none => (Real.sqrt p : ℂ)⁻¹
+  | some χ =>
+      if hχ : χ = 1 then ((Real.sqrt p : ℂ)⁻¹) * p
+      else ((Real.sqrt p : ℂ)⁻¹) *
+        (χ⁻¹ (-1) * gaussSum χ (ZMod.stdAddChar (N := p)))
 
 theorem normalizedDft_deltaZeroConstOneDirichletCharacterBasis_eq_smul_perm
     (i : Option (DirichletCharacter ℂ p)) :
@@ -363,7 +360,8 @@ theorem card_fixedPoints_normalizedDftConstOneBasisPerm (hp₂ : p ≠ 2) :
   refine ⟨⟨some (quadraticCharComplex p), ?_⟩, ?_⟩
   · exact (mem_fixedPoints_normalizedDftConstOneBasisPerm_iff (p := p) hp₂ _).2 rfl
   · intro x
-    exact Subtype.ext <| (mem_fixedPoints_normalizedDftConstOneBasisPerm_iff (p := p) hp₂ x.1).1 x.2
+    exact Subtype.ext <|
+      (mem_fixedPoints_normalizedDftConstOneBasisPerm_iff (p := p) hp₂ x.1).1 x.2
 
 theorem sign_normalizedDftConstOneBasisPerm (hp₂ : p ≠ 2) :
     (Equiv.Perm.sign (normalizedDftConstOneBasisPerm (p := p)) : ℂ) =
@@ -607,7 +605,8 @@ theorem inv_not_mem_nonselfdualCharacterReps {χ : DirichletCharacter ℂ p}
 theorem mem_reps_or_inv_mem_reps {hp₂ : p ≠ 2} {χ : DirichletCharacter ℂ p}
     (hχ : χ ∈ nonselfdualCharacterFinset (p := p)) :
     χ ∈ nonselfdualCharacterReps (p := p) ∨ χ⁻¹ ∈ nonselfdualCharacterReps (p := p) := by
-  have hne : χ ≠ χ⁻¹ := ne_inv_of_mem_nonselfdualCharacterFinset (p := p) (hp₂ := hp₂) hχ
+  have hne : χ ≠ χ⁻¹ :=
+    ne_inv_of_mem_nonselfdualCharacterFinset (p := p) (hp₂ := hp₂) hχ
   have hij :
       characterIndexEquiv (p := p) χ ≠ characterIndexEquiv (p := p) χ⁻¹ := fun hidx =>
     hne <| (characterIndexEquiv (p := p)).injective hidx

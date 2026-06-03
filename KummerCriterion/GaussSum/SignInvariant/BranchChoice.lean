@@ -160,7 +160,8 @@ theorem evenNonselfdualCharacterFinset_eq_union_evenReps_image_inv (hp₂ : p �
           by simp⟩
   · intro hχ
     rcases Finset.mem_union.mp hχ with hχrep | hχimage
-    · rcases (mem_evenNonselfdualCharacterReps_iff (p := p) χ).1 hχrep with ⟨hχrep', hχeven⟩
+    · rcases (mem_evenNonselfdualCharacterReps_iff (p := p) χ).1 hχrep with
+        ⟨hχrep', hχeven⟩
       exact (mem_evenNonselfdualCharacterFinset_iff (p := p) χ).2
         ⟨(mem_nonselfdualCharacterReps_iff (p := p) χ).1 hχrep' |>.1, hχeven⟩
     · rcases Finset.mem_image.mp hχimage with ⟨ψ, hψrep, rfl⟩
@@ -294,8 +295,7 @@ theorem normalizedDft_quadraticScalar_eq_neg_scaledGaussSum_of_mod_four_eq_three
   simp [normalizedDftConstOneBasisScalar, hq_ne, quadraticCharComplex_inv (p := p),
     quadraticCharComplex_eval_neg_one_of_mod_four_eq_three (p := p) hp₂ hp₄]
 
-/-- Comparing the two determinant formulas forces the quadratic block scalar to
-be `-I` in the imaginary branch. -/
+/-- In the imaginary branch, the quadratic block scalar is `-I`. -/
 theorem normalizedDft_quadraticScalar_eq_neg_I_of_mod_four_eq_three
     (hp₂ : p ≠ 2) (hp₄ : p % 4 = 3) :
     normalizedDftConstOneBasisScalar (p := p) (some (quadraticCharComplex p)) = -Complex.I := by
@@ -330,8 +330,7 @@ theorem normalizedDft_quadraticScalar_eq_neg_I_of_mod_four_eq_three
     _ = Complex.I * (-1 : ℂ) := by rw [hneg]
     _ = -Complex.I := by ring
 
-/-- The determinant comparison fixes the positive imaginary branch of the
-quadratic Gauss sum. -/
+/-- In the `p ≡ 3 [ZMOD 4]` branch, the quadratic Gauss sum is `I * √p`. -/
 theorem gaussSum_quadraticCharComplex_eq_I_mul_sqrt_of_mod_four_eq_three
     (hp₂ : p ≠ 2) (hp₄ : p % 4 = 3) :
     gaussSum (quadraticCharComplex p) (ZMod.stdAddChar (N := p)) =

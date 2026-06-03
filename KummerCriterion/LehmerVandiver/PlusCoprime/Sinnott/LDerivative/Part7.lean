@@ -41,7 +41,6 @@ theorem sinnottMatrix_A_sub_B_apply_eq_sub_shifted
               NumberField.Units.dirichletUnitTheorem.w₀) 1 := by
   classical
   rw [sinnottMatrix_A_sub_B_apply_eq_sub p K hp_odd hp_three i w]
-  -- k_shifted(w) * k(w₀) = (k(w) * k(w₀)⁻¹) * k(w₀) = k(w).
   unfold kplusEmbeddingIndexQuotientShifted
   rw [show (kplusEmbeddingIndexQuotient p K w.val *
       (kplusEmbeddingIndexQuotient p K

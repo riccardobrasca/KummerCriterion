@@ -6,25 +6,9 @@ import Mathlib.RingTheory.Ideal.GoingUp
 public import KummerCriterion.HMinus.KplusLocalCharacters
 
 /-!
-# `K⁺` prime arithmetic above `ℓ ≠ p` 
+# `K⁺` prime arithmetic
 
-Arithmetic half of the local `K⁺` package:
-
-- `primesOverFinsetPlus` and its cardinality / membership lemmas for the finite
- set of primes of `𝓞 K⁺` above `(ℓ)`.
-- `primesOverFinsetContractionToPlus`, the contraction map from primes of
- `𝓞 K` over `(ℓ)` to primes of `𝓞 K⁺` over `(ℓ)`.
-- The CM-fiber dichotomy showing those fibers have size `1` or `2`, according
- to whether complex conjugation fixes the prime.
-- `map_ringOfIntegersComplexConj_eq_self_iff_even_localResidueDegree` and its
- half-degree reformulation, relating the fixed-prime case to
- `localResidueDegreePlus`.
-- `primesOver_inertiaDeg_eq_localResidueDegreePlus`, the inertia-degree formula
- for primes of `K⁺` above unramified rational primes `ℓ ≠ p`.
-
-This file is the arithmetic continuation of the old monolithic
-`KummerCriterion.HMinus.KplusLocalResidue`; the even-character local-factor
-algebra now lives in `KummerCriterion.HMinus.KplusLocalCharacters`.
+Prime-ideal, contraction, and inertia-degree formulas for the maximal real subfield.
 -/
 
 @[expose] public section
@@ -36,8 +20,6 @@ open NumberField.IsCMField
 open scoped BigOperators Pointwise
 
 namespace KummerCriterion
-
-section KplusPrimeArithmetic
 
 variable (p : ℕ) [hp : Fact p.Prime]
 
@@ -271,7 +253,8 @@ lemma galEquivZMod_complexConj_eq_neg_one (hp_odd : p ≠ 2) :
     have hc' := congrArg (fun x : 𝓞 K => (x : K)) (complexConj_apply_zeta (p := p) (K := K))
     simpa [c, complexConjRat_apply, coe_ringOfIntegersComplexConj] using hc'
   have hpow :
-      (IsCyclotomicExtension.zeta p ℚ K) ^ (IsCyclotomicExtension.Rat.galEquivZMod p K c).val.val =
+      (IsCyclotomicExtension.zeta p ℚ K) ^
+          (IsCyclotomicExtension.Rat.galEquivZMod p K c).val.val =
         (IsCyclotomicExtension.zeta p ℚ K) ^ (p - 1) := by
     calc
       (IsCyclotomicExtension.zeta p ℚ K) ^ (IsCyclotomicExtension.Rat.galEquivZMod p K c).val.val
@@ -358,7 +341,8 @@ lemma complexConjRat_mem_stabilizer_iff_even_localResidueDegree
       ((coprime_of_prime_ne (p := p) hℓp).symm), galEquivZMod_complexConj_eq_neg_one
       (p := p) (K := K) hp_odd] at hmem_map
     simpa [unitOfPrimeNe] using
-      (neg_one_mem_zpowers_unitOfPrimeNe_iff_even_localResidueDegree (p := p) hp_odd hℓp).1 hmem_map
+      (neg_one_mem_zpowers_unitOfPrimeNe_iff_even_localResidueDegree
+        (p := p) hp_odd hℓp).1 hmem_map
   · intro h_even
     have hneg_mem : (-1 : (ZMod p)ˣ) ∈ Subgroup.zpowers (unitOfPrimeNe (p := p) ℓ hℓp) :=
       (neg_one_mem_zpowers_unitOfPrimeNe_iff_even_localResidueDegree (p := p) hp_odd hℓp).2 h_even
@@ -501,7 +485,8 @@ lemma primesOver_inertiaDeg_eq_localResidueDegreePlus
     intro hbot
     have hlie : PPlus.LiesOver (rationalPrimeIdeal ℓ) := inferInstance
     have hover := (Ideal.liesOver_iff _ _).1 hlie
-    have hcomap_bot : Ideal.comap (algebraMap ℤ (𝓞 (K⁺))) (⊥ : Ideal (𝓞 (K⁺))) = ⊥ := by
+    have hcomap_bot :
+        Ideal.comap (algebraMap ℤ (𝓞 (K⁺))) (⊥ : Ideal (𝓞 (K⁺))) = ⊥ := by
       ext x
       simp
     have hneq : rationalPrimeIdeal ℓ ≠ ⊥ := by
@@ -671,7 +656,9 @@ lemma dedekindLocalFactor_eq_pow_localResidueDegreePlus (hp_odd : p ≠ 2)
       (1 - (ℓ : ℂ) ^ (-(localResidueDegreePlus (p := p) ℓ hℓp : ℂ) * s)) ^
         localPrimeCountPlus (p := p) ℓ hℓp := by
   classical
-  have hcard_eq : (primesOverFinsetPlus (K := K) ℓ).card = localPrimeCountPlus (p := p) ℓ hℓp := by
+  have hcard_eq :
+      (primesOverFinsetPlus (K := K) ℓ).card =
+        localPrimeCountPlus (p := p) ℓ hℓp := by
     rw [primesOverFinsetPlus_card_eq_ncard (K := K) (ℓ := ℓ)]
     exact ncard_primesOverPlus_eq_localPrimeCountPlus (p := p) (K := K) hp_odd hℓp
   unfold dedekindLocalFactor
@@ -788,7 +775,8 @@ lemma zetaPrimePlus_inertiaDeg_eq_one_at_p :
     primesOver_inertiaDeg_eq_one_at_p (p := p) (K := K) (zetaPrime p K)
       (zetaPrime_mem_primesOver_at_p (p := p) (K := K))
   rw [hzeta_inertia] at hinertia_tower
-  exact Nat.eq_one_of_dvd_one <| ⟨(zetaPrimePlus p K).inertiaDeg (zetaPrime p K), hinertia_tower⟩
+  exact Nat.eq_one_of_dvd_one <|
+    ⟨(zetaPrimePlus p K).inertiaDeg (zetaPrime p K), hinertia_tower⟩
 
 lemma primesOverPlus_inertiaDeg_eq_one_at_p (PPlus : Ideal (𝓞 (K⁺)))
     (hPPlus : PPlus ∈ Ideal.primesOver (rationalPrimeIdeal p) (𝓞 (K⁺))) :
@@ -830,7 +818,4 @@ lemma dedekindLocalFactorPlus_at_p {s : ℂ} :
   rw [habsNorm]
   push_cast
   rw [pow_one]
-
-end KplusPrimeArithmetic
-
 end KummerCriterion

@@ -317,11 +317,10 @@ theorem samePrime_rIntegralRatToQuotient_factorialWeightedLogCoeff
               ValuedIntegerRing p K ⧸ (lambdaIdeal p K) ^ (N + 1)) ^ (n + 1)) * y)
           hcoeff
 
-set_option linter.style.longLine false in
 set_option maxHeartbeats 800000 in
--- The quotient-sum comparison is elaboration-heavy because the target expands
--- finite sums, quotient maps, and power-series coefficients at the same time.
-theorem quotient_mk_samePrimeFiniteArtinHasseLogHomogeneousNumerator_factorial_weighted_sum_eq_formal
+-- Required for the quotient coefficient-sum comparison.
+theorem
+  quotient_mk_samePrimeFiniteArtinHasseLogHomogeneousNumerator_factorial_weighted_sum_eq_formal
     (N d : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) :
     samePrimeQuotientMap (p := p) (K := K) N
         (∑ n ∈ Finset.Icc 1 d,
@@ -537,10 +536,8 @@ theorem samePrimeFiniteArtinHasseLogHomogeneousNumerator_factorial_weighted_sub_
   exact Ideal.pow_le_pow_right htarget hweighted
 
 set_option linter.style.longLine false in
-set_option linter.style.longLine false in
 set_option maxHeartbeats 800000 in
--- The proof compares two expanded quotient sums after rewriting a formal
--- coefficient sum to zero, so elaboration needs the same local bump.
+-- Required for the quotient sum after the formal coefficient vanishes.
 theorem samePrimeFiniteArtinHasseLogHomogeneousNumerator_factorial_weighted_sum_mem_lambdaIdeal_pow_of_not_pow
     (N d : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K)
     (hd : ¬ ∃ r : ℕ, d = p ^ r) :
@@ -622,9 +619,9 @@ theorem samePrimeFiniteArtinHasseLogHomogeneousNumerator_factorial_weighted_sum_
 
 set_option linter.style.longLine false in
 set_option maxHeartbeats 800000 in
--- The power-degree slice repeats the quotient-sum comparison after replacing
--- the formal coefficient sum by its single surviving monomial.
-theorem samePrimeFiniteArtinHasseLogHomogeneousNumerator_factorial_weighted_sub_pow_mem_lambdaIdeal_pow
+-- Required for the power-degree quotient sum comparison.
+theorem
+  samePrimeFiniteArtinHasseLogHomogeneousNumerator_factorial_weighted_sub_pow_mem_lambdaIdeal_pow
     (N r : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) :
     (∑ n ∈ Finset.Icc 1 (p ^ r),
       (((p ^ r).factorial / n : ℕ) : ValuedIntegerRing p K) *

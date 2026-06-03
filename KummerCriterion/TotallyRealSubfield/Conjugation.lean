@@ -78,8 +78,8 @@ theorem antisymmetric_unit_is_root_of_unity [IsCMField K]
     {hζ : IsPrimitiveRoot (IsCyclotomicExtension.zeta p ℚ K) p}
     (u : (𝓞 K)ˣ) (_hu : unitsComplexConj K u * u = 1) :
     ∃ m : ℕ, u * (unitsComplexConj K u)⁻¹ = (hζ.unit' ^ m) ^ 2 := by
-  have hp2 : 2 < p := lt_of_le_of_ne hp.1.two_le (Ne.symm hp_odd)
-  simpa using unit_inv_conj_is_root_of_unity (hζ := hζ) u hp2
+  exact unit_inv_conj_is_root_of_unity (hζ := hζ) u
+    (lt_of_le_of_ne hp.1.two_le (Ne.symm hp_odd))
 
 include hp_odd in
 /-- An antisymmetric unit has the form `(-1)^k ζ^n`. -/
@@ -126,9 +126,12 @@ theorem conj_zeta_pow [IsCMField K]
     exact hζ.unit'_pow
   have hbase : unitsComplexConj K hζ.unit' = (hζ.unit'⁻¹ : (𝓞 K)ˣ) := by
     simpa using unitsComplexConj_torsion K ⟨hζ.unit', hzeta_torsion⟩
-  have hunits : unitsComplexConj K (hζ.unit' ^ m : (𝓞 K)ˣ) = ((hζ.unit' ^ m)⁻¹ : (𝓞 K)ˣ) := by
+  have hunits :
+      unitsComplexConj K (hζ.unit' ^ m : (𝓞 K)ˣ) =
+        ((hζ.unit' ^ m)⁻¹ : (𝓞 K)ˣ) := by
     calc
-      unitsComplexConj K (hζ.unit' ^ m : (𝓞 K)ˣ) = (unitsComplexConj K hζ.unit') ^ m := by simp
+      unitsComplexConj K (hζ.unit' ^ m : (𝓞 K)ˣ) =
+          (unitsComplexConj K hζ.unit') ^ m := by simp
       _ = ((hζ.unit')⁻¹ : (𝓞 K)ˣ) ^ m := by rw [hbase]
       _ = ((hζ.unit' ^ m)⁻¹ : (𝓞 K)ˣ) := by simp
   have hro :
@@ -156,7 +159,8 @@ include hp_odd in
 theorem multiplicity_zetaPrime_even_of_map_eq_span [IsCMField K]
     (I : Ideal (𝓞 (NumberField.maximalRealSubfield K)))
     (a : 𝓞 K) (ha : a ≠ 0)
-    (hIa : I.map (algebraMap (𝓞 (NumberField.maximalRealSubfield K)) (𝓞 K)) = Ideal.span {a}) :
+    (hIa :
+      I.map (algebraMap (𝓞 (NumberField.maximalRealSubfield K)) (𝓞 K)) = Ideal.span {a}) :
     Even (multiplicity ((zeta_spec p ℚ K).toInteger - 1 : 𝓞 K) a) := by
   have hζ := IsCyclotomicExtension.zeta_spec p ℚ K
   let f : 𝓞 (NumberField.maximalRealSubfield K) →+* 𝓞 K :=

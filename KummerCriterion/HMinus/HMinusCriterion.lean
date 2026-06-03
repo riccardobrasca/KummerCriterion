@@ -19,9 +19,7 @@ public import KummerCriterion.HMinus.PadicCorollaries
 /-!
 # Bernoulli criterion from the relative class number formula
 
-This file starts. The main theorem here is Diekmann Theorem 42 in the
-form needed later in the project: divisibility of the relative class number is
-equivalent to divisibility of one of the relevant even Bernoulli numerators.
+Diekmann's relative class-number criterion, in the form used later in the project.
 -/
 
 @[expose] public section
@@ -32,8 +30,6 @@ open NumberField
 open scoped BigOperators
 
 namespace KummerCriterion
-
-section HMinusCriterion
 
 variable (p : ℕ) [hp : Fact p.Prime] (hp_odd : p ≠ 2)
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K] [IsCMField K]
@@ -108,13 +104,15 @@ theorem p_dvd_hMinus_iff_p_dvd_some_bernoulli (hp_odd' : p ≠ 2) :
     calc
       ((A : ℤ_[p]) : ℚ_[p]) = ∏ j ∈ S, (((a j : ℤ_[p]) : ℚ_[p])) := by
         dsimp [A]
-        change (algebraMap ℤ_[p] ℚ_[p]) (∏ j ∈ S, a j) = ∏ j ∈ S, (algebraMap ℤ_[p] ℚ_[p]) (a j)
+        change (algebraMap ℤ_[p] ℚ_[p]) (∏ j ∈ S, a j) =
+          ∏ j ∈ S, (algebraMap ℤ_[p] ℚ_[p]) (a j)
         rw [map_prod]
       _ = Finset.prod S (fun j =>
             (-(1 / 2 : ℚ_[p])) * ((((bernoulli (j + 1) : ℚ) / (j + 1) : ℚ) : ℚ_[p]))) :=
           Finset.prod_congr rfl ha_cast
   have hzA :
-      (((hMinus K : ℕ) : ℚ_[p])) = ((A : ℤ_[p]) : ℚ_[p]) + (p : ℚ_[p]) * (z : ℚ_[p]) := by
+      (((hMinus K : ℕ) : ℚ_[p])) =
+        ((A : ℤ_[p]) : ℚ_[p]) + (p : ℚ_[p]) * (z : ℚ_[p]) := by
     calc
       (((hMinus K : ℕ) : ℚ_[p])) =
           Finset.prod S (fun j =>
@@ -175,7 +173,4 @@ theorem p_dvd_hMinus_iff_p_dvd_some_bernoulli (hp_odd' : p ≠ 2) :
           (Padic.nonarchimedean (((A : ℤ_[p]) : ℚ_[p])) ((p : ℚ_[p]) * (z : ℚ_[p])))
       exact lt_of_le_of_lt hle (max_lt hA_lt hpz_lt)
     simpa using (Padic.norm_natCast_lt_one_iff (p := p) (n := hMinus K)).1 hhMinus_lt
-
-end HMinusCriterion
-
 end KummerCriterion

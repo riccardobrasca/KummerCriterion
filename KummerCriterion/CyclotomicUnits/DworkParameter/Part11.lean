@@ -59,11 +59,8 @@ theorem span_natCast_prime_dworkComplete_eq_parameterIdeal_pow_pred :
   rw [span_natCast_prime_dworkComplete_eq_lambdaIdeal_pow_pred (p := p) (K := K),
     dworkParameterIdeal_eq_dworkCompleteLambdaIdeal (p := p) (K := K)]
 
-/-- The Dwork ramification unit `epsilon_varpi` satisfying
-`p * epsilon_varpi = varpi^(p - 1)`.
-
-The sign is forced by the corrected Artin-Hasse parameter equation
-`varpi^(p - 1) = -p * tailUnit`. -/
+/-- The Dwork ramification unit `epsilon_varpi` with
+`p * epsilon_varpi = varpi^(p - 1)`. -/
 noncomputable def dworkRamificationUnit (hp_two : 2 < p) :
     DworkCompleteIntegerRing p K :=
   -artinHasseTailUnit (p := p) (K := K) hp_two
@@ -115,11 +112,7 @@ theorem dworkRamificationUnit_add_one_mem_dworkParameterIdeal_pow_tail
     artinHasseTailUnit_eq_one_add_artinHasseTail (p := p) (K := K) hp_two]
   ring
 
-/-- Integral form of the folded same-prime `p`-term.
-
-If `Y = varpi * Z`, then `epsilon_varpi * varpi * Z^p` is the integral element
-whose product with `p` is `Y^p`. This is the precise integral replacement
-the formal expression `Y^p / p`. -/
+/-- Integral form of the folded same-prime `p`-term. -/
 theorem natCast_prime_mul_dworkRamificationCorrection
     (hp_two : 2 < p) (Z : DworkCompleteIntegerRing p K) :
     (p : DworkCompleteIntegerRing p K) *
@@ -289,9 +282,7 @@ theorem dworkParameter_pow_regular (n : ℕ)
         dworkParameter_regular (p := p) (K := K) hmul
       exact ih hn
 
-/-- Multiplication by `p` is injective in the complete Dwork ring. The proof
-uses the ramification identity only in the complete ring, where powers of the
-Dwork parameter are regular. -/
+/-- Multiplication by `p` is injective in the complete Dwork ring. -/
 theorem natCast_prime_dworkComplete_regular
     (hp_two : 2 < p) {x : DworkCompleteIntegerRing p K}
     (hx : (p : DworkCompleteIntegerRing p K) * x = 0) :

@@ -45,9 +45,7 @@ theorem dirichletCharacterUnitMonoidHom_injective :
   intro χ ψ hχψ
   apply (DirichletCharacter.toUnitHom_inj (χ := χ) (ψ := ψ)).mp
   ext u
-  have hcoe : ((χ.toUnitHom u : ℂˣ) : ℂ) = ((ψ.toUnitHom u : ℂˣ) : ℂ) :=
-    DFunLike.congr_fun hχψ u
-  exact hcoe
+  exact DFunLike.congr_fun hχψ u
 
 /-- Dirichlet characters are linearly independent on the unit group. -/
 theorem linearIndependent_dirichletCharactersOnUnits :

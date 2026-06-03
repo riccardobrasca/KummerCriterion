@@ -84,8 +84,8 @@ theorem samePrimeFiniteArtinHasseExpCoordLogHomogeneousDegreeSum_eq_eval_sum
   exact samePrimeNatDivEval_eq_of_eq (p := p) (K := K) han
     (by simp [samePrimeFiniteArtinHasseExpCoordLogHomogeneousNumerator]) hnum0 _
 
-set_option linter.style.longLine false in
-theorem samePrimeFiniteArtinHasseExpCoordLogHomogeneousDegreeSum_eq_zero_of_factorial_weighted_sum_mem
+theorem
+  samePrimeFiniteArtinHasseExpCoordLogHomogeneousDegreeSum_eq_zero_of_factorial_weighted_sum_mem
     (N d : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K)
     (hclear :
       (∑ n ∈ Finset.Icc 1 d,
@@ -411,8 +411,7 @@ theorem samePrimeFiniteArtinHasseLogTerm_eq_zero_of_succ_le_index
 
 set_option linter.style.longLine false in
 set_option maxHeartbeats 800000 in
--- This is the same-prime port of the homogeneous `p^r` slice comparison; it
--- expands three attached finite sums and transports finite-log additivity.
+-- Required for the same-prime homogeneous degree-sum comparison.
 theorem samePrimeFiniteArtinHasseExpCoordLogHomogeneousDegreeSum_eq_logTerm_of_factorial_weighted_sub_pow_mem
     (N r : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K)
     (hclear :

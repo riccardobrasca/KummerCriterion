@@ -22,7 +22,7 @@ namespace CyclotomicUnits
 variable (p : ℕ) [Fact p.Prime]
 
 /-- A noncanonical equivalence between nontrivial characters of the even
-quotient and non-identity elements of the even quotient. It is used only
+quotient and non-identity elements of the even quotient. It is used only for
 determinant reindexing; the determinant statements below are independent of
 which equivalence is chosen. -/
 noncomputable def cyclotomicEvenNontrivCharEquivNonidentity (hp_two : 2 < p) :

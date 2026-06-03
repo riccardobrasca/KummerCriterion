@@ -52,8 +52,6 @@ theorem normSq_one_sub_exp_I_mul_eq_four_sin_sq (θ : ℝ) :
     Complex.normSq (1 - Complex.exp (θ * Complex.I)) =
       4 * Real.sin (θ / 2) ^ 2 := by
   rw [normSq_one_sub_exp_I_mul]
-  -- 2 - 2 cos θ = 4 sin²(θ/2): use Real.cos_eq_one_sub_two_sin_sq via half-angle.
-  -- cos(2x) = 1 - 2 sin²(x), so cos(θ) = 1 - 2 sin²(θ/2).
   have h_cos : Real.cos θ = 1 - 2 * Real.sin (θ / 2) ^ 2 := by
     have : Real.cos (2 * (θ / 2)) = 1 - 2 * Real.sin (θ / 2) ^ 2 := by
       rw [Real.cos_two_mul]

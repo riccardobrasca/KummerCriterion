@@ -317,7 +317,7 @@ theorem completedLogArg_pow
   simp [completedLogArg, principalUnitPowCoord]
 
 omit [NumberField.IsCMField K] in
-/-- the completed same-prime logarithm of a `p`th power is a
+/-- The completed same-prime logarithm of a `p`th power is a
 `p`-multiple. -/
 theorem completedLog_pow_p_eq_p_smul
     (u : completedLogDomain (p := p) (K := K)) :
@@ -657,7 +657,7 @@ theorem completedLog_EPlus_completedLogDomainPowPred_mem_pPowerSubgroup
         (EPlus_completedLogDomainPowPred (p := p) (K := K) x) := by
         rw [hu_pow]
 
-/-- a `CPlus` exponent product that is a `p`th power in `EPlus`
+/-- A `CPlus` exponent product that is a `p`th power in `EPlus`
 gives a `p`-divisible completed logarithm relation in the fixed Dwork
 subalgebra. -/
 theorem completedLog_relation_of_CPlus_product_mem_powers
@@ -821,7 +821,7 @@ theorem concreteKummerLogMatrix_mulVec_exponents_eq_coeff
   exact Finset.sum_congr rfl fun a _ha =>
     mul_comm (rationalPadicIntegerToZMod p ((b.repr (v a)) i)) (e a : ZMod p)
 
-/-- extracting Kummer coordinates from a `p`-divisible completed-log
+/-- Extracting Kummer coordinates from a `p`-divisible completed-log
 relation gives the concrete Kummer matrix kernel equation over `ZMod p`. -/
 theorem concreteKummerLogMatrix_mulVec_exponents_eq_zero
     (hp_three : 3 ≤ p) (hp_five : 5 ≤ p)
@@ -843,7 +843,7 @@ theorem concreteKummerLogMatrix_mulVec_exponents_eq_zero
   exact dworkFixedEvenPowerBasis_coeff_zmod_eq_zero_of_p_smul
     (p := p) (K := K) hp_five hy j
 
-/-- determinant nonvanishing forces the generator exponents in a
+/-- Determinant nonvanishing forces the generator exponents in a
 `p`th-power relation to vanish modulo `p`. -/
 theorem CPlusGenerator_exponents_modP_zero_of_kummerLog_det_ne_zero
     (hp_three : 3 ≤ p) (hp_five : 5 ≤ p)

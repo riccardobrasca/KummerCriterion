@@ -237,8 +237,8 @@ def bernoulliFactor (p j : ℕ) [Fact p.Prime] : ZMod p :=
 
 /-- The explicit unit factor used for the coefficient convention. The
 factorial is a unit in the final range `2*j <= p - 3`. -/
-def kummerLogUnitFactor (p : ℕ) (_j : ℕ) [Fact p.Prime] : ZMod p :=
-  -(((Nat.factorial (2 * _j) : ℕ) : ZMod p)⁻¹)
+def kummerLogUnitFactor (p j : ℕ) [Fact p.Prime] : ZMod p :=
+  -(((Nat.factorial (2 * j) : ℕ) : ZMod p)⁻¹)
 
 theorem factorial_two_mul_index_zmod_ne_zero {p j : ℕ} [Fact p.Prime]
     (hj : 1 ≤ j) (hjp : 2 * j ≤ p - 3) :
@@ -297,7 +297,7 @@ coming from the formal logarithm coefficient convention. -/
 def reducedKummerLogCoeffFactor (p j : ℕ) [Fact p.Prime] : ZMod p :=
   kummerLogUnitFactor p j * bernoulliFactor p j
 
-/-- The final mod-`p` formal coefficient target for. -/
+/-- The final mod-`p` formal coefficient polynomial. -/
 def formalKummerLogCoeffModP (p j : ℕ) [Fact p.Prime] :
     KummerLogModCoeffRing p :=
   Polynomial.C (reducedKummerLogCoeffFactor p j) *
@@ -309,8 +309,7 @@ theorem formalKummerLogCoeffModP_unit_ne_zero
     kummerLogUnitFactor p j ≠ 0 :=
   kummerLogUnitFactor_ne_zero hj hjp
 
-/-- Evaluation form of the final unspecialized theorem. will
-apply this with `x` a Teichmuller/residue column value. -/
+/-- Evaluation of the final mod-`p` formal coefficient polynomial. -/
 theorem formalKummerLogCoeffModP_eval
     (p j : ℕ) [Fact p.Prime] (x : ZMod p) :
     Polynomial.eval x (formalKummerLogCoeffModP p j) =

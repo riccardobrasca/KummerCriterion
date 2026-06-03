@@ -1,6 +1,5 @@
 module
 
-import Mathlib.RingTheory.Localization.AtPrime.Basic
 public import KummerCriterion.TotallyRealSubfield.ZetaPrime
 
 /-!
@@ -39,13 +38,12 @@ def oneUnitsSubgroup (I : Ideal R) : Subgroup Rˣ where
   inv_mem' {u} hu := by
     have hmul : ((u : R) * (((u⁻¹ : Rˣ) : R) - 1)) ∈ I := by
       simpa [sub_eq_add_neg, mul_add, add_comm, add_left_comm, add_assoc] using I.neg_mem hu
-    exact
-      (Ideal.unit_mul_mem_iff_mem (I := I) (x := ((((u⁻¹ : Rˣ) : R) - 1))) (y := (u : R))
-        u.isUnit).mp hmul
+    exact (Ideal.unit_mul_mem_iff_mem (I := I) (x := ((u⁻¹ : Rˣ) : R) - 1)
+      (y := (u : R)) u.isUnit).mp hmul
 
 @[simp]
 theorem mem_oneUnitsSubgroup {R : Type*} [CommRing R] {I : Ideal R} {u : Rˣ} :
-  u ∈ Ideal.oneUnitsSubgroup I ↔ (u : R) - 1 ∈ I :=
+    u ∈ Ideal.oneUnitsSubgroup I ↔ (u : R) - 1 ∈ I :=
   Iff.rfl
 
 end OneUnits

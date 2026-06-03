@@ -35,8 +35,6 @@ def toRat (f : Frac) : ℚ :=
 private def valid (f : Frac) : Prop :=
   f.2 ≠ 0
 
-/-! ## Fraction primitives -/
-
 private def simplify : Frac → Frac
   | (_, 0) => (0, 1)
   | (p, q) =>
@@ -68,8 +66,6 @@ private def divN (f : Frac) (d : Nat) : Frac :=
   let (p, q) := f
   let g := Nat.gcd p.natAbs d
   simplify (p / (g : Int), q * (d / g))
-
-/-! ## Rational soundness of the fraction primitives -/
 
 private theorem toRat_simplify {f : Frac} (hf : f.2 ≠ 0) :
     toRat (simplify f) = toRat f := by
@@ -265,14 +261,6 @@ private theorem toRat_divN {f : Frac} (hf : f.2 ≠ 0) {d : Nat} (hd : d ≠ 0) 
   rw [hnum, hden'] at h
   exact h.symm
 
-/-! ## Simprocs for `Frac` and literal `List` traversal
-
-Without these, every `Frac` op unfolds through a long typeclass chain
-(`HMul.hMul → instHMul → Mul.mul → Int.instMul → Int.mul →...`) and
-`simplify` rebuilds a `Prod` via pattern matching, and every list traversal
-walks a cons-by-cons equation unfolding. The simprocs below extract ground
-values, compute the result in meta code, and emit a single-step `Eq.refl`. -/
-
 open Lean Meta Lean.Meta.Tactic.Cbv
 
 namespace CbvBernoulli
@@ -412,8 +400,6 @@ cbv_simproc cbv_eval simpListMap (List.map _ _) := fun e => do
   let .succ u := (← Sym.getLevel β) | return .rfl
   let result ← Sym.share (mkListLit β u out)
   return .step result (← Sym.mkEqRefl result)
-
-/-! ## Certified mirror of `BernoulliFast.bernoulliCompute` -/
 
 private def binomSumFrac.loop (m : Nat) : List Frac → Nat → Frac → Frac → Frac
   | [], _, _, acc => acc
@@ -584,8 +570,6 @@ theorem bernoulliFracList_getD_toRat_eq_bernoulli {n k : Nat} (hk : k ≤ n) :
   rw [htable]
   simpa [toRat, Rat.mkRat_eq_div] using
     KummerCriterion.BernoulliFast.bernoulliList_getD_eq n k hk
-
-/-! ## Pascal-row recurrence -/
 
 /-- Next Pascal row: `[C(n,0), C(n,1),..., C(n,n)]` to
 `[C(n+1,0), C(n+1,1),..., C(n+1,n+1)]`. -/

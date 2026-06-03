@@ -38,7 +38,7 @@ lemma norm_sum_range_cos_le {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) (n : ℕ) 
     have hm_lt_one : (m : ℝ) < 1 := by nlinarith [Real.pi_pos, hx₁, him]
     have hm_pos_int : 0 < m := by exact_mod_cast hm_pos
     have hm_lt_one_int : m < 1 := by exact_mod_cast hm_lt_one
-    omega
+    lia
   have hre :
       ((∑ i ∈ Finset.range n, z ^ i).re : ℝ) =
         ∑ i ∈ Finset.range n, Real.cos (2 * Real.pi * x * i) := by
@@ -49,10 +49,10 @@ lemma norm_sum_range_cos_le {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) (n : ℕ) 
       congr 1
       norm_num
       ring, Complex.exp_ofReal_mul_I_re]
-  have hgeom :
-      ‖∑ i ∈ Finset.range n, z ^ i‖ ≤ 2 / ‖z - 1‖ := by
+  have hgeom : ‖∑ i ∈ Finset.range n, z ^ i‖ ≤ 2 / ‖z - 1‖ := by
     calc
-      ‖∑ i ∈ Finset.range n, z ^ i‖ = ‖(z ^ n - 1) / (z - 1)‖ := by rw [geom_sum_eq hz_ne_one]
+      ‖∑ i ∈ Finset.range n, z ^ i‖ = ‖(z ^ n - 1) / (z - 1)‖ := by
+        rw [geom_sum_eq hz_ne_one]
       _ = ‖z ^ n - 1‖ / ‖z - 1‖ := by rw [Complex.norm_div]
       _ ≤ 2 / ‖z - 1‖ := by
         have hden : 0 < ‖z - 1‖ := norm_pos_iff.mpr (sub_ne_zero.mpr hz_ne_one)
@@ -147,7 +147,8 @@ lemma norm_sum_range_shifted_cos_term_le {x s : ℝ} (hx₀ : 0 < x) (hx₁ : x 
     rw [Complex.norm_real, hsum]
     calc
       |∑ i ∈ Finset.range (k + 1), Real.cos (2 * Real.pi * x * i) - 1|
-          ≤ |∑ i ∈ Finset.range (k + 1), Real.cos (2 * Real.pi * x * i) - 0| + |0 - (1 : ℝ)| := by
+          ≤ |∑ i ∈ Finset.range (k + 1), Real.cos (2 * Real.pi * x * i) - 0| +
+              |0 - (1 : ℝ)| := by
               simpa using
                 abs_sub_le
                   (∑ i ∈ Finset.range (k + 1), Real.cos (2 * Real.pi * x * i)) 0 1
@@ -160,11 +161,13 @@ lemma norm_sum_range_shifted_cos_term_le {x s : ℝ} (hx₀ : 0 < x) (hx₁ : x 
             exact add_le_add hcos le_rfl
       _ ≤ 2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ +
             2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
-            have hdenom : 1 ≤ 2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
+            have hdenom :
+                1 ≤ 2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
               have hnorm : ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ ≤ 2 := by
                 calc
                   ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖
-                      ≤ ‖(1 : ℂ)‖ + ‖Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := norm_sub_le _ _
+                      ≤ ‖(1 : ℂ)‖ + ‖Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
+                        exact norm_sub_le _ _
                   _ = 1 + 1 := by
                         rw [norm_one]
                         simpa [mul_assoc] using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * x)
@@ -180,7 +183,7 @@ lemma norm_sum_range_shifted_cos_term_le {x s : ℝ} (hx₀ : 0 < x) (hx₁ : x 
                 have hm_lt_one : (m : ℝ) < 1 := by nlinarith [Real.pi_pos, hx₁, him]
                 have hm_pos_int : 0 < m := by exact_mod_cast hm_pos
                 have hm_lt_one_int : m < 1 := by exact_mod_cast hm_lt_one
-                omega
+                lia
               have hden_pos : 0 < ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ :=
                 norm_pos_iff.mpr hzero
               simpa using (one_le_div hden_pos).2 hnorm
@@ -201,7 +204,8 @@ lemma norm_sum_range_shifted_cos_term_le {x s : ℝ} (hx₀ : 0 < x) (hx₁ : x 
             simp [a, z, div_eq_mul_inv, mul_comm, mul_left_comm]
     _ ≤ (2 * (4 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖)) * a m :=
           norm_sum_range_shift_smul_le_of_antitone_of_nonneg_of_bounded ha ha_nonneg hzbound m n
-    _ = (8 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖) * (1 / (m + 1 : ℝ) ^ s) := by
+    _ = (8 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖) *
+          (1 / (m + 1 : ℝ) ^ s) := by
           have hcoef :
               (2 * (4 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖)) =
                 8 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
@@ -212,7 +216,8 @@ lemma norm_sum_range_shifted_cos_term_le {x s : ℝ} (hx₀ : 0 < x) (hx₁ : x 
 lemma exists_tendsto_sum_range_cos_div_nat {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) :
     ∃ l : ℝ,
       Tendsto
-        (fun n ↦ ∑ i ∈ Finset.range n, if i = 0 then 0 else Real.cos (2 * Real.pi * x * i) / i)
+        (fun n ↦
+          ∑ i ∈ Finset.range n, if i = 0 then 0 else Real.cos (2 * Real.pi * x * i) / i)
         atTop (𝓝 l) := by
   let f : ℕ → ℝ := fun n => if n = 0 then 1 else 1 / n
   let z : ℕ → ℝ := fun n => if n = 0 then 0 else Real.cos (2 * Real.pi * x * n)
@@ -240,14 +245,17 @@ lemma exists_tendsto_sum_range_cos_div_nat {x : ℝ} (hx₀ : 0 < x) (hx₁ : x 
         4 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
     intro n
     rcases n.eq_zero_or_pos with rfl | hn
-    · have : 0 ≤ 4 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by positivity
+    · have : 0 ≤ 4 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
+        positivity
       simpa [z] using this
     · let g : ℕ → ℝ := fun i => Real.cos (2 * Real.pi * x * i)
       have hz0 := Finset.sum_range_add z 1 (n - 1)
       have hg0 := Finset.sum_range_add g 1 (n - 1)
       have hsum :
-          ∑ i ∈ Finset.range n, z i = ∑ i ∈ Finset.range n, Real.cos (2 * Real.pi * x * i) - 1 := by
-        have hn' : 1 + (n - 1) = n := by omega
+          ∑ i ∈ Finset.range n, z i =
+            ∑ i ∈ Finset.range n, Real.cos (2 * Real.pi * x * i) - 1 := by
+        have hn' : 1 + (n - 1) = n := by
+          simpa [Nat.add_comm] using Nat.succ_pred_eq_of_pos hn
         have hz0' :
             ∑ x ∈ Finset.range n, z x =
               ∑ x ∈ Finset.range 1, z x + ∑ x ∈ Finset.range (n - 1), z (1 + x) := by
@@ -268,7 +276,8 @@ lemma exists_tendsto_sum_range_cos_div_nat {x : ℝ} (hx₀ : 0 < x) (hx₁ : x 
       rw [hsum]
       calc
         |∑ i ∈ Finset.range n, Real.cos (2 * Real.pi * x * i) - 1|
-            ≤ |∑ i ∈ Finset.range n, Real.cos (2 * Real.pi * x * i) - 0| + |0 - (1 : ℝ)| := by
+            ≤ |∑ i ∈ Finset.range n, Real.cos (2 * Real.pi * x * i) - 0| +
+                |0 - (1 : ℝ)| := by
                 simpa using
                   abs_sub_le
                     (∑ i ∈ Finset.range n, Real.cos (2 * Real.pi * x * i)) 0 1
@@ -284,7 +293,8 @@ lemma exists_tendsto_sum_range_cos_div_nat {x : ℝ} (hx₀ : 0 < x) (hx₁ : x 
               have hnorm : ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ ≤ 2 := by
                 calc
                   ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖
-                      ≤ ‖(1 : ℂ)‖ + ‖Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := norm_sub_le _ _
+                      ≤ ‖(1 : ℂ)‖ + ‖Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
+                        exact norm_sub_le _ _
                   _ = 1 + 1 := by
                         rw [norm_one]
                         simpa [mul_assoc] using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * x)
@@ -300,10 +310,11 @@ lemma exists_tendsto_sum_range_cos_div_nat {x : ℝ} (hx₀ : 0 < x) (hx₁ : x 
                 have hm_lt_one : (m : ℝ) < 1 := by nlinarith [Real.pi_pos, hx₁, him]
                 have hm_pos_int : 0 < m := by exact_mod_cast hm_pos
                 have hm_lt_one_int : m < 1 := by exact_mod_cast hm_lt_one
-                omega
+                lia
               have hden_pos : 0 < ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ :=
                 norm_pos_iff.mpr hzero
-              have hdenom : 1 ≤ 2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
+              have hdenom :
+                  1 ≤ 2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
                 simpa using (one_le_div hden_pos).2 hnorm
               linarith
         _ = 4 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by ring
@@ -312,7 +323,8 @@ lemma exists_tendsto_sum_range_cos_div_nat {x : ℝ} (hx₀ : 0 < x) (hx₁ : x 
   refine ⟨l, ?_⟩
   have hseries :
       (fun n ↦ ∑ i ∈ Finset.range n, f i • z i) =
-        fun n ↦ ∑ i ∈ Finset.range n, if i = 0 then 0 else Real.cos (2 * Real.pi * x * i) / i := by
+        fun n ↦
+          ∑ i ∈ Finset.range n, if i = 0 then 0 else Real.cos (2 * Real.pi * x * i) / i := by
     funext n
     refine Finset.sum_congr rfl fun i _ => ?_
     rcases Nat.eq_zero_or_pos i with rfl | hi
@@ -368,12 +380,13 @@ lemma tendsto_sum_range_cos_div_nat {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) :
     have hm_lt_one : (m : ℝ) < 1 := by nlinarith [Real.pi_pos, hx₁, him]
     have hm_pos_int : 0 < m := by exact_mod_cast hm_pos
     have hm_lt_one_int : m < 1 := by exact_mod_cast hm_lt_one
-    omega
+    lia
   have hcont :
       Tendsto
         (fun r : ℝ =>
           -Real.log ‖(1 : ℂ) - (r : ℂ) * Complex.exp ((2 * Real.pi * x) * Complex.I)‖)
-        (𝓝[<] 1) (𝓝 (-Real.log ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖)) := by
+        (𝓝[<] 1)
+        (𝓝 (-Real.log ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖)) := by
     have hinner :
         ContinuousAt
           (fun r : ℝ => (1 : ℂ) - (r : ℂ) * Complex.exp ((2 * Real.pi * x) * Complex.I)) 1 :=
@@ -381,10 +394,12 @@ lemma tendsto_sum_range_cos_div_nat {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) :
         (Complex.continuous_ofReal.continuousAt.mul continuousAt_const)
     have hnorm :
         ContinuousAt
-          (fun r : ℝ => ‖(1 : ℂ) - (r : ℂ) * Complex.exp ((2 * Real.pi * x) * Complex.I)‖) 1 :=
+          (fun r : ℝ =>
+            ‖(1 : ℂ) - (r : ℂ) * Complex.exp ((2 * Real.pi * x) * Complex.I)‖) 1 :=
       continuous_norm.continuousAt.comp hinner
     have hnorm_ne :
-        ‖(1 : ℂ) - ((1 : ℝ) : ℂ) * Complex.exp ((2 * Real.pi * x) * Complex.I)‖ ≠ 0 := by
+        ‖(1 : ℂ) - ((1 : ℝ) : ℂ) *
+            Complex.exp ((2 * Real.pi * x) * Complex.I)‖ ≠ 0 := by
       simpa using (norm_ne_zero_iff.mpr hzero)
     have hlog :
         ContinuousAt
@@ -396,7 +411,8 @@ lemma tendsto_sum_range_cos_div_nat {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) :
   have ht₀ : 0 < 2 * Real.pi * x := by nlinarith [hx₀, Real.pi_pos]
   have ht₂π : 2 * Real.pi * x < 2 * Real.pi := by nlinarith [hx₁, Real.pi_pos]
   have hnorm_value :
-      ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ = 2 * Real.sin (Real.pi * x) := by
+      ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ =
+        2 * Real.sin (Real.pi * x) := by
     simpa [show (2 * Real.pi * x) / 2 = Real.pi * x by ring] using
       norm_one_sub_exp_ofReal_mul_I ht₀ ht₂π
   have hl_eq : l = -Real.log (2 * Real.sin (Real.pi * x)) :=
@@ -410,7 +426,8 @@ lemma tendsto_sum_range_shifted_cos_one {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1
         Real.cos (2 * Real.pi * x * (i + 1)) / ((i + 1 : ℂ) ^ (1 : ℂ)))
       atTop (nhds ((-Real.log (2 * Real.sin (Real.pi * x)) : ℝ) : ℂ)) := by
   let F : ℕ → ℂ := fun n =>
-    ((∑ i ∈ Finset.range n, if i = 0 then 0 else Real.cos (2 * Real.pi * x * i) / i : ℝ) : ℂ)
+    ((∑ i ∈ Finset.range n,
+        if i = 0 then 0 else Real.cos (2 * Real.pi * x * i) / i : ℝ) : ℂ)
   have hbase : Tendsto F atTop (nhds (((-Real.log (2 * Real.sin (Real.pi * x)) : ℝ) : ℂ))) := by
     simpa [F] using (tendsto_sum_range_cos_div_nat hx₀ hx₁).ofReal
   have hshifted : Tendsto (fun n : ℕ => F (n + 1)) atTop
@@ -435,7 +452,8 @@ lemma uniformCauchySeqOn_shiftedCosPartialSums {x : ℝ} (hx₀ : 0 < x) (hx₁ 
     have ht₀ : 0 < 2 * Real.pi * x := by nlinarith [hx₀, Real.pi_pos]
     have ht₂π : 2 * Real.pi * x < 2 * Real.pi := by nlinarith [hx₁, Real.pi_pos]
     have hnorm_eq :
-        ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ = 2 * Real.sin (Real.pi * x) := by
+        ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ =
+          2 * Real.sin (Real.pi * x) := by
       simpa [show (2 * Real.pi * x) / 2 = Real.pi * x by ring] using
         norm_one_sub_exp_ofReal_mul_I ht₀ ht₂π
     rw [hnorm_eq]
@@ -543,7 +561,7 @@ theorem cosZeta_one_eq_boundary {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) :
       have hn_lt_one : (n : ℝ) < 1 := by nlinarith [hx₁, hn']
       have hn_pos_int : 0 < n := by exact_mod_cast hn_pos
       have hn_lt_one_int : n < 1 := by exact_mod_cast hn_lt_one
-      omega
+      lia
     have hcomplex : Tendsto (fun z : ℂ => HurwitzZeta.cosZeta x z) (𝓝 (1 : ℂ))
         (𝓝 (HurwitzZeta.cosZeta x 1)) :=
       (HurwitzZeta.differentiableAt_cosZeta (a := (x : UnitAddCircle)) (s := (1 : ℂ))

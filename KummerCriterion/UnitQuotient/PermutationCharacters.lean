@@ -63,24 +63,14 @@ theorem cyclotomicEvenDeltaQuotient_neg_one :
     cyclotomicEvenDeltaQuotient p (-1 : CyclotomicUnitDelta p) = 1 :=
   (QuotientGroup.eq_one_iff (-1 : CyclotomicUnitDelta p)).2 (Subgroup.mem_zpowers _)
 
-/-- **Negation invariance of the quotient map**: for any `a: (ZMod p)ˣ`,
-`q(-a) = q(a)` in `(ZMod p)ˣ / ⟨-1⟩`. Direct consequence of
-`q(-1) = 1` + the homomorphism property `q(-a) = q((-1) · a) = q(-1) · q(a)`. -/
+/-- Negation invariance of the quotient map `Delta → Delta / {±1}`. -/
 @[simp]
 theorem cyclotomicEvenDeltaQuotient_neg (a : CyclotomicUnitDelta p) :
     cyclotomicEvenDeltaQuotient p (-a) = cyclotomicEvenDeltaQuotient p a := by
   have h : -a = (-1 : CyclotomicUnitDelta p) * a := (neg_one_mul a).symm
   rw [h, map_mul, cyclotomicEvenDeltaQuotient_neg_one, one_mul]
 
-/-- **Even function descent**: any function `f: (ZMod p)ˣ → R` satisfying
-`f(-a) = f(a)` (= even under negation) descends to a function on the quotient
-`(ZMod p)ˣ ⧸ ⟨-1⟩ = CyclotomicEvenDelta p`. This is the function-level analog
-of the character-level `evenDeltaCharacterDescend`.
-
-The well-definedness uses `(-1)^k ∈ {1, -1}` for any `k: ℤ` (which follows
-from `(-1)^2 = 1` + `zpow_eq_zpow_emod'`). For `k % 2 = 0`, the equivalence
-gives `b = a`; for `k % 2 = 1`, it gives `b = -a`, and `hf_even` resolves
-the function value. -/
+/-- An even function on `Delta` descends to the quotient `Delta / {±1}`. -/
 def evenFunctionDescend {R : Type*} (f : CyclotomicUnitDelta p → R)
     (hf_even : ∀ a : CyclotomicUnitDelta p, f (-a) = f a) :
     CyclotomicEvenDelta p → R :=
@@ -89,14 +79,11 @@ def evenFunctionDescend {R : Type*} (f : CyclotomicUnitDelta p → R)
       QuotientGroup.leftRel_apply.mp hab
     rw [CyclotomicEvenDeltaSubgroup, Subgroup.mem_zpowers_iff] at hab'
     obtain ⟨k, hk⟩ := hab'
-    -- hk: (-1)^k = a⁻¹ * b, so b = a * (-1)^k
     have h_b : b = a * ((-1 : CyclotomicUnitDelta p) ^ k) := by
       rw [hk]; group
-    -- Use that (-1)^2 = 1 to reduce k mod 2.
     have h_sq : ((-1 : CyclotomicUnitDelta p) ^ (2 : ℕ)) = 1 := by
       rw [sq, neg_one_mul, neg_neg]
     rw [zpow_eq_zpow_emod' k h_sq] at h_b
-    -- k % 2 ∈ {0, 1}
     have h_mod : k % ((2 : ℕ) : ℤ) = 0 ∨ k % ((2 : ℕ) : ℤ) = 1 := by omega
     rcases h_mod with h0 | h1
     · rw [h0, zpow_zero, mul_one] at h_b

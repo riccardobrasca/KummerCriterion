@@ -1,13 +1,6 @@
 module
 
-public import Mathlib.RingTheory.DedekindDomain.Factorization
-public import Mathlib.RingTheory.DedekindDomain.SelmerGroup
-public import Mathlib.RingTheory.DedekindDomain.SInteger
 public import KummerCriterion.Reflection.Local.Basic
-public import Mathlib.Algebra.Module.ZMod
-public import Mathlib.Algebra.Module.Equiv.Basic
-public import Mathlib.Algebra.Exact
-public import Mathlib.RingTheory.ClassGroup
 
 /-!
 # Singular Kummer: localization at a height-one prime
@@ -30,19 +23,13 @@ from the singular group `S` to the local-unit quotient.
 
 noncomputable section
 
-open WithZero Multiplicative IsDedekindDomain
-open scoped NumberField nonZeroDivisors WithZero
+open scoped NumberField
 
 namespace KummerCriterion
 namespace Reflection
 namespace SingularKummer
 
-set_option linter.unusedSectionVars false
-
 namespace SingularPair
-
-variable (R K : Type*) [CommRing R] [IsDomain R] [IsDedekindDomain R]
-variable [Field K] [Algebra R K] [IsFractionRing R K]
 
 section Cyclotomic
 
@@ -50,7 +37,7 @@ variable (p : ℕ) [Fact p.Prime]
 variable (F : Type*) [Field F] [NumberField F] [IsCyclotomicExtension {p} ℚ F]
 
 /-- The distinguished cyclotomic lambda prime as a height-one prime. -/
-def cyclotomicLambdaHeightOne : HeightOneSpectrum (𝓞 F) where
+def cyclotomicLambdaHeightOne : IsDedekindDomain.HeightOneSpectrum (𝓞 F) where
   asIdeal := Local.cyclotomicLambda p F
   isPrime := zetaPrime_isPrime p F
   ne_bot := zetaPrime_ne_bot p F

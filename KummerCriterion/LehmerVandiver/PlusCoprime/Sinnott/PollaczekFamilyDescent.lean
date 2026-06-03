@@ -32,30 +32,6 @@ variable (p : ℕ) [hp : Fact p.Prime]
 variable (K : Type) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
   [IsCMField K]
 
-/-! ## Algebra: `algebraMap pollaczekUnitPlusKplus = pollaczekUnitPlus`
-
-The K⁺-side preimage `pollaczekUnitPlusKplus` maps under `algebraMap` to
-the K-side `pollaczekUnitPlus p K i`. This requires:
-* Distributing `algebraMap` through the product.
-* For each `j`, `algebraMap (family j) = cyclotomicRealUnit (j+2)`
- (= the σ-symmetric K-side cyclotomic unit at `j+2`).
-* `pollaczekUnitPlus = pollaczekUnit · σ(pollaczekUnit) =
- ∏_b cyclotomicRealUnit(b)^{exp_b}` (σ-distribution over product).
--/
-
-/-! ## Proof of `AlgebraMapPollaczekUnitPlusKplus_eq`
-
-The claim: image of `pollaczekUnitPlusKplus` under `algebraMap` equals
-`pollaczekUnitPlus` in `𝓞 K`. Proof outline:
-
-1. `algebraMap` distributes through products and powers.
-2. `algebraMap (family j) = (cyclotomicRealUnit (j+2): 𝓞 K)`
- (via `algebraMap_realCyclotomicUnitPlus` + unit-value identity).
-3. `pollaczekUnitPlus = ∏_b cyclotomicRealUnit(b)^{exp_b}` (σ-distribution
- over the Pollaczek product).
-4. The b=1 term is trivial (`cyclotomicRealUnit 1 = 1`).
-5. Reindex `b = j + 2` to match. -/
-
 set_option backward.isDefEq.respectTransparency false in
 /-- **Each family element's algebraMap is the K-side `realCyclotomicUnit`**.
 

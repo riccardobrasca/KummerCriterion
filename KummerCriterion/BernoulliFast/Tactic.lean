@@ -13,19 +13,6 @@ import Mathlib.Tactic
 Provides the `bernoulli_decide` tactic which closes goals involving concrete
 Bernoulli numbers by rewriting to the certified `Cbv.bernoulliFrac` evaluator
 and normalizing it with `cbv`.
-
-## Strategy
-
-- Rewrite `bernoulli n` to `Cbv.toRat (Cbv.bernoulliFrac n)` via
- `← Cbv.bernoulliFrac_toRat_eq_bernoulli`.
-- Run `cbv`, using the `Frac` and literal-list simprocs
- `KummerCriterion.BernoulliFast.Cbv`.
-
-## Axioms
-
-Only the standard axioms used by rational arithmetic. No `native_decide`; the
-custom fraction representation is connected to `ℚ` by theorem-level proofs in
-`KummerCriterion.BernoulliFast.Cbv`.
 -/
 
 namespace KummerCriterion.BernoulliFast

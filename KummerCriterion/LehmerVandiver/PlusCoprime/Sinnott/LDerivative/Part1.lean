@@ -68,7 +68,6 @@ theorem norm_one_sub_stdAddChar_neg (a : ZMod p) :
     ‖(1 : ℂ) - ZMod.stdAddChar (N := p) (-a)‖ =
       ‖(1 : ℂ) - ZMod.stdAddChar (N := p) a‖ := by
   rw [KummerCriterion.stdAddChar_neg_eq_conj]
-  -- Goal: ‖1 - conj (stdAddChar a)‖ = ‖1 - stdAddChar a‖
   rw [show (1 : ℂ) - (starRingEnd ℂ) (ZMod.stdAddChar (N := p) a) =
         (starRingEnd ℂ) (1 - ZMod.stdAddChar (N := p) a) from by
     rw [map_sub]; simp]
@@ -386,7 +385,6 @@ theorem characterMatrixSquareOnEven_mul_inverseCharacterMatrixSquareOnEven_trans
     have h_one := MulChar.sum_one_eq_card_units
       (R := KummerCriterion.CyclotomicEvenDelta p) (R' := ℂ)
     rw [h_one]
-    -- Need: ↑(card Gˣ) = ↑(card G) for G a group.
     have h_card : Fintype.card (KummerCriterion.CyclotomicEvenDelta p)ˣ =
         Fintype.card (KummerCriterion.CyclotomicEvenDelta p) :=
       Fintype.card_congr toUnits.symm.toEquiv
@@ -420,7 +418,6 @@ theorem det_characterMatrixSquareOnEven_ne_zero (hp_two : 2 < p) :
   have h_det_orth := congrArg Matrix.det h_orth
   rw [Matrix.det_mul, h_det_zero, zero_mul] at h_det_orth
   rw [Matrix.det_smul, Matrix.det_one, mul_one] at h_det_orth
-  -- h_det_orth: 0 = card^(card)
   have h_card_pos : 0 < Fintype.card (KummerCriterion.CyclotomicEvenDelta p) := by
     rw [KummerCriterion.cyclotomicEvenDelta_card (p := p) hp_two]
     omega
@@ -514,7 +511,6 @@ theorem sum_full_eq_two_mul_sum_descended (f : KummerCriterion.CyclotomicUnitDel
       2 * ∑ b : KummerCriterion.CyclotomicEvenDelta p,
             KummerCriterion.evenFunctionDescend (p := p) f hf_even b := by
   classical
-  -- Step 1: rewrite f(a) as f̄(q(a))
   have h_step1 : ∀ a, f a =
       KummerCriterion.evenFunctionDescend (p := p) f hf_even
         (KummerCriterion.cyclotomicEvenDeltaQuotient p a) := by
@@ -522,9 +518,7 @@ theorem sum_full_eq_two_mul_sum_descended (f : KummerCriterion.CyclotomicUnitDel
     rw [KummerCriterion.cyclotomicEvenDeltaQuotient_apply,
         KummerCriterion.evenFunctionDescend_apply_mk]
   simp_rw [h_step1]
-  -- Step 2: apply Finset.sum_comp
   rw [Finset.sum_comp _ (KummerCriterion.cyclotomicEvenDeltaQuotient p)]
-  -- Step 3: image of q over univ is univ (q surjective)
   have h_image : Finset.image (KummerCriterion.cyclotomicEvenDeltaQuotient p)
         (Finset.univ : Finset (KummerCriterion.CyclotomicUnitDelta p)) =
       Finset.univ := by
@@ -535,12 +529,10 @@ theorem sum_full_eq_two_mul_sum_descended (f : KummerCriterion.CyclotomicUnitDel
     rw [KummerCriterion.cyclotomicEvenDeltaQuotient_apply]
     exact Quotient.out_eq b
   rw [h_image]
-  -- Step 4: each fiber has cardinality 2
   rw [Finset.mul_sum]
   refine Finset.sum_congr rfl (fun b _ => ?_)
   have h_card : ({a ∈ (Finset.univ : Finset (KummerCriterion.CyclotomicUnitDelta p)) |
       KummerCriterion.cyclotomicEvenDeltaQuotient p a = b}).card = 2 := by
-    -- The fiber over b is in bijection with the subgroup ⟨-1⟩ of size 2.
     have h_equiv := QuotientGroup.preimageMkEquivSubgroupProdSet
       (KummerCriterion.CyclotomicEvenDeltaSubgroup p) ({b} : Set _)
     have h_card_eq :
@@ -588,8 +580,6 @@ theorem two_mul_quotientEigenvalue_eq_sum_full
         ξ (KummerCriterion.cyclotomicEvenDeltaQuotient p a)
     rw [KummerCriterion.cyclotomicEvenDeltaQuotient_neg]
   have h_half := sum_full_eq_two_mul_sum_descended (p := p) f hf_even hp_two
-  -- h_half: ∑ a, f a = 2 * ∑ b, evenFunctionDescend f hf_even b
-  -- Show: quotientEigenvalue p ξ = ∑ b, evenFunctionDescend f hf_even b
   have h_quot_eq : quotientEigenvalue p ξ =
       ∑ b : KummerCriterion.CyclotomicEvenDelta p,
         KummerCriterion.evenFunctionDescend (p := p) f hf_even b := by
@@ -599,15 +589,11 @@ theorem two_mul_quotientEigenvalue_eq_sum_full
         KummerCriterion.cyclotomicEvenDeltaQuotient p a = b :=
       ⟨Quotient.out b,
         by rw [KummerCriterion.cyclotomicEvenDeltaQuotient_apply]; exact Quotient.out_eq b⟩
-    -- Convert q a to QuotientGroup.mk a so evenFunctionDescend_apply_mk fires.
     rw [KummerCriterion.cyclotomicEvenDeltaQuotient_apply]
     rw [KummerCriterion.evenFunctionDescend_apply_mk]
     simp only [hf_def]
-    -- Goal: ξ ↑a * convolutionLogNormDescended ↑a =
-    -- pullback ξ a * log-norm a
     unfold convolutionLogNormDescended
     rw [KummerCriterion.evenFunctionDescend_apply_mk]
-    -- Use pullback def: `ξ ↑a = pullback ξ a`.
     rfl
   rw [h_quot_eq, ← h_half]
 

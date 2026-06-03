@@ -9,8 +9,7 @@ This file proves the finite-group determinant identity behind the real
 cyclotomic-unit regulator computation. The statement is abstract: for a
 finite abelian group `G`, a function `q: G → ℂ`, and the deleted matrix
 `(q (h * k⁻¹) - q h)` indexed by `G \ {1}`, its determinant is the product of
-the nontrivial Fourier coefficients. The proof uses the deleted character
-matrix and includes the rank-one correction in its inverse.
+the nontrivial Fourier coefficients.
 -/
 
 noncomputable section

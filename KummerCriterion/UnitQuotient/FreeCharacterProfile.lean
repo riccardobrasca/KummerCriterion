@@ -54,10 +54,8 @@ theorem cyclotomicEvenDelta_card (hp_gt_two : 2 < p) :
   rw [Nat.card_eq_fintype_card, Nat.card_eq_fintype_card, Nat.card_eq_fintype_card,
     show Fintype.card (CyclotomicUnitDelta p) = p - 1 by rw [ZMod.card_units],
     cyclotomicEvenDeltaSubgroup_card (p := p) hp_gt_two] at hcard
-  have hmul : 2 * Fintype.card (CyclotomicEvenDelta p) = p - 1 := by
-    rw [mul_comm]
-    exact hcard.symm
-  exact Nat.eq_div_of_mul_eq_right (by decide) hmul
+  exact Nat.eq_div_of_mul_eq_right (by decide)
+    (by linarith : 2 * Fintype.card (CyclotomicEvenDelta p) = p - 1)
 
 end KummerCriterion
 

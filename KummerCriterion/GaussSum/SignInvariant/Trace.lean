@@ -145,13 +145,12 @@ theorem selfInverse_character_image_units_eq_one_or_neg_one {χ : DirichletChara
     apply Units.ext
     simpa using hχ
 
-/-- The hard bridge for the sign-invariant trace route: under the chosen equivalence, the
-quadratic complex Dirichlet character corresponds to the unique nontrivial
-order-`2` unit `-1`. -/
+/-- Under the chosen equivalence, the quadratic complex Dirichlet character
+corresponds to the unit `-1`. -/
 theorem complexCharacterMulEquivUnits_quadraticCharComplex (hp₂ : p ≠ 2) :
     complexCharacterMulEquivUnits (p := p) (quadraticCharComplex p) = (-1 : (ZMod p)ˣ) := by
-  rcases selfInverse_character_image_units_eq_one_or_neg_one
-      (p := p) (χ := quadraticCharComplex p) (quadraticCharComplex_inv (p := p)).symm with hχ | hχ
+  rcases selfInverse_character_image_units_eq_one_or_neg_one (p := p)
+      (χ := quadraticCharComplex p) (quadraticCharComplex_inv (p := p)).symm with hχ | hχ
   · exfalso
     apply quadraticCharComplex_ne_one (p := p) hp₂
     exact (complexCharacterMulEquivUnits (p := p)).injective (by simpa using hχ)
@@ -161,7 +160,8 @@ theorem complexCharacterMulEquivUnits_quadraticCharComplex (hp₂ : p ≠ 2) :
 theorem selfInverse_character_eq_one_or_quadratic (hp₂ : p ≠ 2)
     {χ : DirichletCharacter ℂ p} (hχself : χ = χ⁻¹) :
     χ = 1 ∨ χ = quadraticCharComplex p := by
-  rcases selfInverse_character_image_units_eq_one_or_neg_one (p := p) (χ := χ) hχself with hχ | hχ
+  rcases selfInverse_character_image_units_eq_one_or_neg_one (p := p) (χ := χ)
+      hχself with hχ | hχ
   · left
     exact (complexCharacterMulEquivUnits (p := p)).injective (by simpa using hχ)
   · right

@@ -216,9 +216,6 @@ theorem kummerLogValuedCyclotomicUnit_pow_pred_sub_one_mem_lambdaIdeal
     realCyclotomicUnit_index_coprime (p := p)
       (kummerLogColumnIndex_two_le (p := p) hp_three a)
       (kummerLogColumnIndex_le_half (p := p) hp_three a)
-  have hk_pos : 0 < k := by
-    have hk_two := kummerLogColumnIndex_two_le (p := p) hp_three a
-    omega
   have hk_sq_coprime : (k ^ 2).Coprime p := hk_coprime.pow_left 2
   have hcpow :
       c ^ (p - 1) - 1 ∈ lambdaIdeal p K := by
@@ -551,13 +548,9 @@ theorem samePrimeFiniteLog_quotientMap_complexConj {N : ℕ}
 end PadicLogSetup.DworkParameter.Conjugation
 
 set_option synthInstance.maxHeartbeats 80000 in
--- The proof repeatedly forms quotient rings of the completed Dwork ring; the
--- local aliases keep the statement readable but make quotient-ring instance
--- search slightly deeper than the default budget.
+-- Needed for quotient-ring instance search in the Dwork completion.
 set_option maxHeartbeats 400000 in
--- The proof normalizes the basis expansion through quotient maps and ideal
--- membership before applying the existing scalar-prime-ideal criterion.
-
+-- Needed for quotient-ring instance search in the Dwork completion.
 theorem kummerLogValuedCyclotomicUnit_complexConj
     (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) :
     Conjugation.valuedIntegerComplexConj (p := p) K

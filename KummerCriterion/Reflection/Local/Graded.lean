@@ -34,18 +34,15 @@ variable (p : ℕ) [Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
 /-- The global cyclotomic prime `lambda` is maximal. -/
-theorem cyclotomicLambda_isMaximal :
-    (cyclotomicLambda p K).IsMaximal := by
+theorem cyclotomicLambda_isMaximal : (cyclotomicLambda p K).IsMaximal := by
   simpa [cyclotomicLambda] using
     (Ideal.IsPrime.isMaximal (zetaPrime_isPrime p K) (zetaPrime_ne_bot p K))
 
 /-- The global residue ring at `lambda` has cardinality `p`. -/
-theorem globalCyclotomicResidueCard :
-    Nat.card (𝓞 K ⧸ cyclotomicLambda p K) = p := by
+theorem globalCyclotomicResidueCard : Nat.card (𝓞 K ⧸ cyclotomicLambda p K) = p := by
   haveI : IsCyclotomicExtension {p ^ (0 + 1)} ℚ K := by
     simpa using (inferInstance : IsCyclotomicExtension {p} ℚ K)
-  have hζ : IsPrimitiveRoot (IsCyclotomicExtension.zeta p ℚ K) (p ^ (0 + 1)) := by
-    simp
+  have hζ : IsPrimitiveRoot (IsCyclotomicExtension.zeta p ℚ K) (p ^ (0 + 1)) := by simp
   have hAbs : Ideal.absNorm (cyclotomicLambda p K) = p := by
     simpa [cyclotomicLambda, zetaPrime] using
       (IsCyclotomicExtension.Rat.absNorm_span_zeta_sub_one p 0 hζ)

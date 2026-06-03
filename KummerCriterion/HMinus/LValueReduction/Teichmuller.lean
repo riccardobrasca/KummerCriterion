@@ -127,7 +127,8 @@ theorem sum_zmod_eq_sum_unitGroupGeneratorPowers
     ∑ a : ZMod p, F a = F 0 + ∑ a : {a : ZMod p // a ≠ 0}, F a.1 := hsplit
     _ = ∑ a : {a : ZMod p // a ≠ 0}, F a.1 := by rw [hF0, zero_add]
     _ = ∑ u : (ZMod p)ˣ, F (u : ZMod p) := hnonzero
-    _ = ∑ m : Fin (p - 1), F (((unitGroupGenerator p) ^ (m : ℕ) : (ZMod p)ˣ) : ZMod p) := hpowers
+    _ = ∑ m : Fin (p - 1),
+        F (((unitGroupGenerator p) ^ (m : ℕ) : (ZMod p)ˣ) : ZMod p) := hpowers
 
 theorem oddCharacter_ne_one {R : Type*} [Field R] [CharZero R] [Algebra ℚ R]
     {χ : DirichletCharacter R p} (hχ_odd : χ.Odd) :
@@ -154,7 +155,8 @@ theorem oddBernoulliFactor_eq_sum {R : Type*} [Field R] [CharZero R] [Algebra �
     _ = (p : R)⁻¹ * ((-(1 / 2 : R)) * ((p : R) * BernoulliGen (χ⁻¹) 1)) := by
           ac_rfl
     _ = (p : R)⁻¹ * ((-(1 / 2 : R)) * ∑ a : ZMod p, (χ⁻¹) a * (a.val : R)) := by
-          rw [natCast_mul_BernoulliGen_one_of_ne_one (R := R) (N := p) (χ := χ⁻¹) hχinv_ne_one]
+          rw [natCast_mul_BernoulliGen_one_of_ne_one
+            (R := R) (N := p) (χ := χ⁻¹) hχinv_ne_one]
     _ = ((p : R)⁻¹ * (-(1 / 2 : R))) * ∑ a : ZMod p, (χ⁻¹) a * (a.val : R) := by
           ac_rfl
 
@@ -310,7 +312,8 @@ theorem oddCharacters_eq_image_oddComplexPowers (hp_odd' : p ≠ 2) :
         _ = (complexCharacterGenerator p) ^ j := by rw [pow_mod_orderOf]
         _ = χ := hj
     have hk_odd : Odd (k : ℕ) := by
-      have hk_odd' : ((complexCharacterGenerator p) ^ (k : ℕ)).Odd := by simpa [hk_eq] using hχ_odd
+      have hk_odd' : ((complexCharacterGenerator p) ^ (k : ℕ)).Odd := by
+        simpa [hk_eq] using hχ_odd
       exact (complexCharacterGenerator_pow_odd_iff (p := p) hp_odd' (k : ℕ)).1 hk_odd'
     refine Finset.mem_image.mpr ⟨⟨k, hk_odd⟩, Finset.mem_univ _, ?_⟩
     simpa using hk_eq
@@ -668,7 +671,8 @@ theorem hMinus_formula_oddCharacterIndex (hp_odd' : p ≠ 2) :
     ((hMinus K : ℕ) : ℂ) =
       (2 * p : ℂ) *
         Finset.prod (Finset.univ : Finset (OddCharacterIndex p)) fun j =>
-          (-(1 / 2 : ℂ)) * BernoulliGen (((complexCharacterGenerator p) ^ (j.1 : ℕ))⁻¹) 1 := by
+          (-(1 / 2 : ℂ)) *
+            BernoulliGen (((complexCharacterGenerator p) ^ (j.1 : ℕ))⁻¹) 1 := by
   rw [hMinus_formula (p := p) (K := K) hp_odd']
   rw [prod_oddCharacters_eq_prod_oddCharacterIndex (p := p) hp_odd'
     (fun χ => (-(1 / 2 : ℂ)) * BernoulliGen (χ⁻¹) 1)]

@@ -41,14 +41,10 @@ section PrimaryPlus
 variable (p : ℕ) [hp : Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-local notation3 "K⁺" => NumberField.maximalRealSubfield K
-
 section RealCyclotomicUnits
 
 variable (p : ℕ) [hp : Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
-
-local notation3 "K⁺" => NumberField.maximalRealSubfield K
 
 /-- The real cyclotomic combination descends to `𝓞 K⁺`: there exists
 `y ∈ 𝓞 K⁺` with `algebraMap y = realCyclotomicUnit p K k`. -/
@@ -73,20 +69,18 @@ theorem algebraMap_realCyclotomicUnitPlus [IsCMField K] (k : ℕ) :
   (exists_realCyclotomicUnit_descent p K k).choose_spec
 
 /-- The K⁺-side real cyclotomic unit is itself a unit when `k` is coprime
-to `p`. Uses the norm characterization of units in `𝓞 K⁺`. -/
+to `p`. -/
 theorem isUnit_realCyclotomicUnitPlus [IsCMField K] (k : ℕ)
     (hk : k.Coprime p) (hp_two : 2 ≤ p) :
     IsUnit (realCyclotomicUnitPlus p K k) := by
   have h_unit : IsUnit (realCyclotomicUnit p K k) :=
     isUnit_realCyclotomicUnit p K k hk hp_two
   rw [← algebraMap_realCyclotomicUnitPlus p K k] at h_unit
-  -- norm of a unit is a unit; norm K⁺ (algebraMap y) = y^[K:K⁺] = y^2
   have h_norm_unit : IsUnit (RingOfIntegers.norm (NumberField.maximalRealSubfield K)
       (algebraMap (𝓞 (NumberField.maximalRealSubfield K)) (𝓞 K)
         (realCyclotomicUnitPlus p K k))) :=
     h_unit.map _
   rw [RingOfIntegers.norm_algebraMap] at h_norm_unit
-  -- IsUnit (y ^ finrank) → IsUnit y when finrank > 0
   have hfin_ne : Module.finrank (NumberField.maximalRealSubfield K) K ≠ 0 := by
     rw [finrank_K_over_Kplus]
     decide

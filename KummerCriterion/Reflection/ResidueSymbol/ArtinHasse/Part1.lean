@@ -109,10 +109,8 @@ noncomputable def artinHasseExpSeries (r : ℕ) [Fact (Nat.Prime r)] :
   unfold artinHasseExpSeries
   rw [PowerSeries.coeff_subst' (artinHasseLogSeries_hasSubst r)]
   rw [finsum_eq_single _ 0]
-  · -- main term at d = 0: (coeff 0 exp) • coeff 0 (L^0) = 1 • 1 = 1
-    simp
-  · -- terms at d ≠ 0 vanish: coeff 0 (L^d) = 0 since L has constant coeff 0
-    intro d hd
+  · simp
+  · intro d hd
     have hL_const : (PowerSeries.constantCoeff (R := ℚ)) (artinHasseLogSeries r) = 0 :=
       artinHasseLogSeries_constantCoeff r
     have h_pow_const : (PowerSeries.constantCoeff (R := ℚ))

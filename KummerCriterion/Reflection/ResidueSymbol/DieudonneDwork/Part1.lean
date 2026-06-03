@@ -46,12 +46,6 @@ namespace Furtwaengler
 
 namespace DieudonneDwork
 
-/-! ### `r`-integrality predicate on rationals
-
-A rational `q` is `r`-integral if its denominator (in lowest terms) is coprime
-to `r`. This is exactly membership in the localization `ℤ_(r) ⊂ ℚ` of `ℤ` at
-the prime ideal `(r)`. -/
-
 /-- A rational is `r`-integral iff its denominator is coprime to `r`. -/
 def IsRIntegralRat (r : ℕ) (q : ℚ) : Prop := (q.den : ℕ).Coprime r
 
@@ -90,8 +84,6 @@ theorem IsRIntegralRat.mul {r : ℕ} {q₁ q₂ : ℚ}
   exact h₁.mul_left h₂
 
 namespace IsRIntegralRat
-
-/-! ### Residues of `r`-integral rationals -/
 
 /-- Residue of an `r`-integral rational modulo `r`.
 
@@ -301,11 +293,6 @@ theorem powerSeries_expand_zmod {p : ℕ} [Fact p.Prime] (F : PowerSeries (ZMod 
       (f := (F : MvPowerSeries Unit (ZMod p)))
   simpa [PowerSeries.expand, PowerSeries.map, ZMod.frobenius_zmod p] using h
 
-/-! ### Lift to power series
-
-A power series `F ∈ ℚ[[T]]` is `r`-integral if every coefficient `[T^n] F` is
-`r`-integral. -/
-
 /-- A formal power series in `ℚ[[T]]` is `r`-integral if every coefficient is. -/
 def IsRIntegralPS (r : ℕ) (F : PowerSeries ℚ) : Prop :=
   ∀ n : ℕ, IsRIntegralRat r ((PowerSeries.coeff (R := ℚ) n) F)
@@ -337,8 +324,6 @@ theorem IsRIntegralPS.mul {r : ℕ} {F G : PowerSeries ℚ}
     (hF : IsRIntegralPS r F) (hG : IsRIntegralPS r G) :
     IsRIntegralPS r (F * G) := fun n => by
   rw [PowerSeries.coeff_mul]
-  -- The n-th coefficient of F*G is ∑_{i+j=n} (F.coeff i) * (G.coeff j).
-  -- Each summand is r-integral by closure, and the sum is r-integral.
   apply Finset.sum_induction
   · intro a b ha hb; exact ha.add hb
   · exact IsRIntegralRat.zero r
@@ -528,8 +513,6 @@ theorem coeff_mul_left_multiple_pos_right_integral_lt {r n : ℕ} {F G : PowerSe
 end IsRMultipleIntegralPS
 
 namespace IsRIntegralPS
-
-/-! ### Coefficientwise reduction of power series -/
 
 /-- The power series over the localized coefficient ring `ℤ_(r)` represented
 by an `r`-integral rational power series. -/
