@@ -1,4 +1,6 @@
-import KummerCriterion.CyclotomicUnits.KummerLogNormalization.Part2
+module
+
+public import KummerCriterion.CyclotomicUnits.KummerLogNormalization.Part2
 
 @[expose] public section
 

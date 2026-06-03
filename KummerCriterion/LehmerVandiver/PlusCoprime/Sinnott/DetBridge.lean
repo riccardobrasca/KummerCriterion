@@ -1,4 +1,6 @@
-import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part7
+module
+
+public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part7
 
 /-!
 # Bridge from substantive matrix content to RegOf-squared form

@@ -1,6 +1,9 @@
-import KummerCriterion.CyclotomicUnits.NormalizedIndex
-import KummerCriterion.CyclotomicUnits.Saturation
-import Mathlib.GroupTheory.Perm.Cycle.Type
+module
+
+public import KummerCriterion.CyclotomicUnits.NormalizedIndex
+public import KummerCriterion.CyclotomicUnits.Saturation
+public import Mathlib.GroupTheory.Perm.Cycle.Type
+import Mathlib.Tactic
 
 /-!
 # From p-saturation to p-index nondivisibility

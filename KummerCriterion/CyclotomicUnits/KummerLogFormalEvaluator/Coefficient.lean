@@ -1,4 +1,6 @@
-import KummerCriterion.CyclotomicUnits.KummerLogFormalEvaluator.Homogeneous
+module
+
+public import KummerCriterion.CyclotomicUnits.KummerLogFormalEvaluator.Homogeneous
 
 /-!
 # Final Kummer logarithm evaluator coefficient bridge

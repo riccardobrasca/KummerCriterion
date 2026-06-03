@@ -3,7 +3,9 @@ Copyright (c) 2026 Bernoulli-Regular project contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Bernoulli-Regular project contributors
 -/
-import Mathlib.NumberTheory.Bernoulli
+module
+
+public import Mathlib.NumberTheory.Bernoulli
 
 /-!
 # Fast computable Bernoulli numbers
@@ -13,6 +15,8 @@ sum and an iterative list recurrence for efficient concrete evaluation.
 -/
 
 set_option linter.unusedVariables false
+
+@[expose] public section
 
 namespace KummerCriterion.BernoulliFast
 

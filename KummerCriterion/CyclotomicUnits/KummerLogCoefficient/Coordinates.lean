@@ -1,4 +1,6 @@
-import KummerCriterion.CyclotomicUnits.KummerLogCoefficient.Basic
+module
+
+public import KummerCriterion.CyclotomicUnits.KummerLogCoefficient.Basic
 
 /-!
 # Dwork-coordinate coefficient maps for Kummer logarithms

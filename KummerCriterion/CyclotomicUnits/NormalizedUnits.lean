@@ -1,6 +1,9 @@
-import KummerCriterion.CyclotomicUnits.Basic
+module
+
+public import KummerCriterion.CyclotomicUnits.Basic
 import KummerCriterion.LehmerVandiver.PlusCoprime.CharacterIdentification
-import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
+public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
+public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
 import Mathlib.Data.ZMod.Units
 
 /-!

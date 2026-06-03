@@ -1,6 +1,9 @@
-import KummerCriterion.CyclotomicUnits.NormalizedUnits
-import KummerCriterion.CyclotomicUnits.Subgroup
+module
+
+public import KummerCriterion.CyclotomicUnits.NormalizedUnits
+public import KummerCriterion.CyclotomicUnits.Subgroup
 import KummerCriterion.CyclotomicUnits.IndexComparison
+public import Mathlib.GroupTheory.Rank
 import Mathlib.GroupTheory.Schreier
 
 /-!

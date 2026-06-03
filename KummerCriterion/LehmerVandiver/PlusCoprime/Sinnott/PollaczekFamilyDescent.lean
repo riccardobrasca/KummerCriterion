@@ -1,4 +1,6 @@
-import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.IndexFormula
+module
+
+public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.IndexFormula
 import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
 
 /-!

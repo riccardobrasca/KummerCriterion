@@ -1,5 +1,7 @@
-import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LogEmbedding
-import Mathlib.Analysis.SpecialFunctions.Complex.Circle
+module
+
+public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LogEmbedding
+public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 
 /-!
 # LV-SIN-B: Vandermonde-style determinant evaluation

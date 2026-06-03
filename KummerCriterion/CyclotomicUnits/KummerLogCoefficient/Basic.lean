@@ -1,6 +1,8 @@
-import KummerCriterion.CyclotomicUnits.KummerLogFormal
-import KummerCriterion.CyclotomicUnits.KummerLogNormalization.Part4
-import KummerCriterion.CyclotomicUnits.KummerLogTrace
+module
+
+public import KummerCriterion.CyclotomicUnits.KummerLogFormal
+public import KummerCriterion.CyclotomicUnits.KummerLogNormalization.Part4
+public import KummerCriterion.CyclotomicUnits.KummerLogTrace
 
 /-!
 # Kummer logarithm coefficient congruence

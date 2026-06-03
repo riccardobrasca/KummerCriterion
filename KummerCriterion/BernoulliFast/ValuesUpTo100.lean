@@ -1,4 +1,6 @@
-import KummerCriterion.BernoulliFast.Tactic
+module
+
+public import KummerCriterion.BernoulliFast.Tactic
 
 /-!
 # Concrete Bernoulli values up to `B₁₀₀`
@@ -7,6 +9,8 @@ This file caches `bernoulli 0` and the even-indexed rational values through
 `bernoulli 100` as `simp` theorems, proved by the certified
 `bernoulli_table` evaluator.
 -/
+
+@[expose] public section
 
 namespace KummerCriterion.BernoulliFast
 

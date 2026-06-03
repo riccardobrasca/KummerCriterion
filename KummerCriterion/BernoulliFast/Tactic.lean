@@ -3,9 +3,12 @@ Copyright (c) 2026 Bernoulli-Regular project contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Bernoulli-Regular project contributors
 -/
-import KummerCriterion.BernoulliFast.Cbv
+module
+
+public import KummerCriterion.BernoulliFast.Cbv
+public import Lean.Elab.Tactic.Basic
 import Mathlib.Data.Rat.Lemmas
-import Mathlib.Tactic
+public import Mathlib.Tactic
 
 /-!
 # Tactic for certifying Bernoulli number values

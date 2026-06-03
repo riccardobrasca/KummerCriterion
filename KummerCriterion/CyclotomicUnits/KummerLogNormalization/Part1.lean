@@ -1,6 +1,8 @@
-import KummerCriterion.CyclotomicUnits.DworkParameter.Part18
-import KummerCriterion.CyclotomicUnits.KummerLogTrace
-import KummerCriterion.CyclotomicUnits.NormalizedUnits
+module
+
+public import KummerCriterion.CyclotomicUnits.DworkParameter.Part18
+public import KummerCriterion.CyclotomicUnits.KummerLogTrace
+public import KummerCriterion.CyclotomicUnits.NormalizedUnits
 
 /-!
 # Normalization of the Kummer logarithm columns

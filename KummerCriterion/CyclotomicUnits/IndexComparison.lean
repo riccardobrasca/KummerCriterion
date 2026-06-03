@@ -1,5 +1,7 @@
-import Mathlib.GroupTheory.Index
-import Mathlib.Data.Nat.Prime.Basic
+module
+
+public import Mathlib.GroupTheory.Index
+public import Mathlib.Data.Nat.Prime.Basic
 
 /-!
 # Odd-primary subgroup index comparison

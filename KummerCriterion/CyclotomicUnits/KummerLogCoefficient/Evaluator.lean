@@ -1,4 +1,6 @@
-import KummerCriterion.CyclotomicUnits.KummerLogCoefficient.Coordinates
+module
+
+public import KummerCriterion.CyclotomicUnits.KummerLogCoefficient.Coordinates
 
 /-!
 # Specialized finite-log coefficient evaluators

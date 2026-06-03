@@ -1,6 +1,8 @@
-import KummerCriterion.CyclotomicUnits.KummerLogFormalEvaluator.Coefficient
-import KummerCriterion.CyclotomicUnits.KummerLogLinearAlgebra
-import KummerCriterion.CyclotomicUnits.Vandermonde
+module
+
+public import KummerCriterion.CyclotomicUnits.KummerLogFormalEvaluator.Coefficient
+public import KummerCriterion.CyclotomicUnits.KummerLogLinearAlgebra
+public import KummerCriterion.CyclotomicUnits.Vandermonde
 
 /-!
 # Kummer logarithm determinant

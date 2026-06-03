@@ -1,4 +1,6 @@
-import KummerCriterion.CyclotomicUnits.KummerLogFormalEvaluator.Folded
+module
+
+public import KummerCriterion.CyclotomicUnits.KummerLogFormalEvaluator.Folded
 
 /-!
 # Homogeneous finite-log coordinates

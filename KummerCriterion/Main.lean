@@ -1,5 +1,7 @@
-import KummerCriterion.CyclotomicUnits.UnitsReflection
-import FltRegular.NumberTheory.RegularPrimes
+module
+
+public import KummerCriterion.CyclotomicUnits.UnitsReflection
+public import FltRegular.NumberTheory.RegularPrimes
 
 /-!
 # Kummer's criterion

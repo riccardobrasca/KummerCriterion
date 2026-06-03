@@ -1,4 +1,6 @@
-import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
+module
+
+public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
 import KummerCriterion.LehmerVandiver.PrimaryUnits.Part1
 import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
 import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3

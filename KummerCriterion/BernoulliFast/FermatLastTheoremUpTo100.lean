@@ -1,6 +1,8 @@
-import KummerCriterion.BernoulliFast.PrimesUpTo100
-import FltRegular.FltRegular
-import Mathlib.NumberTheory.FLT.Four
+module
+
+public import KummerCriterion.BernoulliFast.PrimesUpTo100
+public import FltRegular.FltRegular
+public import Mathlib.NumberTheory.FLT.Four
 
 /-!
 # FLT for regular prime exponents up to 100
@@ -13,6 +15,8 @@ The composite exponent `74 = 2 * 37` is also excluded because reducing FLT
 `74` by divisor monotonicity would require the currently excluded exponent
 `37`; the exponent `2` itself is false.
 -/
+
+@[expose] public section
 
 namespace KummerCriterion
 

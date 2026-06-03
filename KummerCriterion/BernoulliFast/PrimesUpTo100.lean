@@ -1,5 +1,7 @@
-import KummerCriterion.BernoulliFast.ValuesUpTo100
-import KummerCriterion.Main
+module
+
+public import KummerCriterion.BernoulliFast.ValuesUpTo100
+public import KummerCriterion.Main
 
 /-!
 # Regularity of primes below 100
@@ -16,6 +18,8 @@ Irregular primes below `100`:
 The computational Bernoulli steps are discharged by `norm_num` using the
 `@[simp]` values from `KummerCriterion.BernoulliFast.ValuesUpTo100`.
 -/
+
+@[expose] public section
 
 namespace KummerCriterion
 

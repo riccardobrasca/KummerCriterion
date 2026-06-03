@@ -1,7 +1,9 @@
-import KummerCriterion.CyclotomicUnits.ClassNumber
-import KummerCriterion.CyclotomicUnits.KummerLogDeterminant
-import KummerCriterion.CyclotomicUnits.LogDomain
-import KummerCriterion.CyclotomicUnits.SaturationIndex
+module
+
+public import KummerCriterion.CyclotomicUnits.ClassNumber
+public import KummerCriterion.CyclotomicUnits.KummerLogDeterminant
+public import KummerCriterion.CyclotomicUnits.LogDomain
+public import KummerCriterion.CyclotomicUnits.SaturationIndex
 
 /-!
 # Cyclotomic-unit route to weak reflection

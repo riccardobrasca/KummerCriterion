@@ -1,5 +1,8 @@
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.NumberTheory.MulChar.Basic
+module
+
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.NumberTheory.MulChar.Basic
+public import Mathlib.Data.Complex.Basic
 import Mathlib.Tactic
 
 /-!
@@ -11,6 +14,8 @@ finite abelian group `G`, a function `q: G → ℂ`, and the deleted matrix
 `(q (h * k⁻¹) - q h)` indexed by `G \ {1}`, its determinant is the product of
 the nontrivial Fourier coefficients.
 -/
+
+@[expose] public section
 
 noncomputable section
 

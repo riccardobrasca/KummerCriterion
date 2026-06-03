@@ -1,8 +1,10 @@
-import KummerCriterion.LValueAtOne.Even
-import KummerCriterion.GaussSum.Basic
-import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge
-import Mathlib.NumberTheory.LSeries.Nonvanishing
-import KummerCriterion.CyclotomicUnits.DeletedFourier
+module
+
+public import KummerCriterion.LValueAtOne.Even
+public import KummerCriterion.GaussSum.Basic
+public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge
+public import Mathlib.NumberTheory.LSeries.Nonvanishing
+public import KummerCriterion.CyclotomicUnits.DeletedFourier
 
 /-!
 # Deleted Fourier determinant on the even cyclotomic quotient
@@ -11,6 +13,8 @@ This file specializes the abstract deleted Fourier determinant identity to
 `CyclotomicEvenDelta p = (ZMod p)ˣ / {±1}` and identifies the `hk` convention
 with the existing `LehmerVandiver.Sinnott.quotientEigenvalue` normalization.
 -/
+
+@[expose] public section
 
 noncomputable section
 

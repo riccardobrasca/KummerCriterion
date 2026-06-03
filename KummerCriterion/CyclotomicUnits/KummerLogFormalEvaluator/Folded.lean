@@ -1,4 +1,6 @@
-import KummerCriterion.CyclotomicUnits.KummerLogFormalEvaluator.Representatives
+module
+
+public import KummerCriterion.CyclotomicUnits.KummerLogFormalEvaluator.Representatives
 
 /-!
 # Folded same-prime finite logarithm representatives

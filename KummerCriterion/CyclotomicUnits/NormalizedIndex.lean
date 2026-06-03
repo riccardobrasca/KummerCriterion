@@ -1,8 +1,10 @@
-import KummerCriterion.CyclotomicUnits.IndexFormula
-import KummerCriterion.CyclotomicUnits.IndexDeterminant
-import KummerCriterion.CyclotomicUnits.NormalizedSubgroup
-import KummerCriterion.HMinus.ClassNumberFormula
-import Mathlib.NumberTheory.NumberField.Cyclotomic.PID
+module
+
+public import KummerCriterion.CyclotomicUnits.IndexFormula
+public import KummerCriterion.CyclotomicUnits.IndexDeterminant
+public import KummerCriterion.CyclotomicUnits.NormalizedSubgroup
+public import KummerCriterion.HMinus.ClassNumberFormula
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.PID
 
 /-!
 # Normalized cyclotomic-unit index theorem

@@ -1,12 +1,14 @@
-import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
+module
+
+public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
 import KummerCriterion.LehmerVandiver.PrimaryConj
 import FltRegular.CaseII.AuxLemmas
 import KummerCriterion.HMinus.KplusPrimeArithmetic
 import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
 import KummerCriterion.LehmerVandiver.PrimaryUnits.Part1
 import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
-import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3
-import KummerCriterion.HMinus.ClassNumberFormula
+public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3
+public import KummerCriterion.HMinus.ClassNumberFormula
 import Mathlib.NumberTheory.NumberField.Units.Regulator
 
 /-!

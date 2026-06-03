@@ -3,8 +3,15 @@ Copyright (c) 2026 Bernoulli-Regular project contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Bernoulli-Regular project contributors
 -/
-import KummerCriterion.BernoulliFast.Correctness
+module
+
+public import KummerCriterion.BernoulliFast.Correctness
+public import Lean.Meta.Sym.LitValues
+public import Lean.Meta.Sym.InferType
+public import Lean.Meta.Sym.Simp.SimpM
+public meta import Lean.Meta.Tactic.Cbv
 import Mathlib.Data.List.Defs
+import Mathlib.Tactic
 
 /-!
 # `cbv`-optimized Bernoulli number evaluation
@@ -22,6 +29,8 @@ The main public definitions are:
 * `KummerCriterion.BernoulliFast.Cbv.bernoulliFrac` — the concrete evaluator.
 -/
 
+@[expose] public section
+
 namespace KummerCriterion.BernoulliFast.Cbv
 
 /-- Integer numerator and natural denominator, used only for fast ground
@@ -35,34 +44,34 @@ def toRat (f : Frac) : ℚ :=
 private def valid (f : Frac) : Prop :=
   f.2 ≠ 0
 
-private def simplify : Frac → Frac
+def simplify : Frac → Frac
   | (_, 0) => (0, 1)
   | (p, q) =>
     let g := Nat.gcd p.natAbs q
     (p / (g : Int), q / g)
 
-private def negF (f : Frac) : Frac := (-f.1, f.2)
+def negF (f : Frac) : Frac := (-f.1, f.2)
 
-private def addF : Frac → Frac → Frac
+def addF : Frac → Frac → Frac
   | (p1, q1), (p2, q2) =>
     let g := Nat.gcd q1 q2
     let lcm := q1 / g * q2
     simplify (p1 * ((q2 / g) : Int) + p2 * ((q1 / g) : Int), lcm)
 
-private def mulF : Frac → Frac → Frac
+def mulF : Frac → Frac → Frac
   | (p1, q1), (p2, q2) =>
     simplify (p1 * p2, q1 * q2)
 
-private def mulN (f : Frac) (c : Nat) : Frac :=
+def mulN (f : Frac) (c : Nat) : Frac :=
   let (p, q) := f
   let g := Nat.gcd c q
   simplify (p * ((c / g) : Int), q / g)
 
-private def mulZ (f : Frac) (z : Int) : Frac :=
+def mulZ (f : Frac) (z : Int) : Frac :=
   let (p, q) := f
   simplify (p * z, q)
 
-private def divN (f : Frac) (d : Nat) : Frac :=
+def divN (f : Frac) (d : Nat) : Frac :=
   let (p, q) := f
   let g := Nat.gcd p.natAbs d
   simplify (p / (g : Int), q * (d / g))
@@ -263,6 +272,8 @@ private theorem toRat_divN {f : Frac} (hf : f.2 ≠ 0) {d : Nat} (hd : d ≠ 0) 
 
 open Lean Meta Lean.Meta.Tactic.Cbv
 
+@[expose] public meta section
+
 namespace CbvBernoulli
 
 /-- Extract an `Int` literal in any canonical form `cbv` might produce:
@@ -292,6 +303,38 @@ def mkListLit (α : Expr) (u : Level) (xs : Array Expr) : Expr :=
   let nil := mkApp (mkConst ``List.nil [u]) α
   xs.foldr (fun x acc => mkApp3 (mkConst ``List.cons [u]) α x acc) nil
 
+def simplifyValue : Frac → Frac
+  | (_, 0) => (0, 1)
+  | (p, q) =>
+    let g := Nat.gcd p.natAbs q
+    (p / (g : Int), q / g)
+
+def negFValue (f : Frac) : Frac := (-f.1, f.2)
+
+def addFValue : Frac → Frac → Frac
+  | (p1, q1), (p2, q2) =>
+    let g := Nat.gcd q1 q2
+    let lcm := q1 / g * q2
+    simplifyValue (p1 * ((q2 / g) : Int) + p2 * ((q1 / g) : Int), lcm)
+
+def mulFValue : Frac → Frac → Frac
+  | (p1, q1), (p2, q2) =>
+    simplifyValue (p1 * p2, q1 * q2)
+
+def mulNValue (f : Frac) (c : Nat) : Frac :=
+  let (p, q) := f
+  let g := Nat.gcd c q
+  simplifyValue (p * ((c / g) : Int), q / g)
+
+def mulZValue (f : Frac) (z : Int) : Frac :=
+  let (p, q) := f
+  simplifyValue (p * z, q)
+
+def divNValue (f : Frac) (d : Nat) : Frac :=
+  let (p, q) := f
+  let g := Nat.gcd p.natAbs d
+  simplifyValue (p / (g : Int), q * (d / g))
+
 end CbvBernoulli
 
 open CbvBernoulli
@@ -299,48 +342,48 @@ open CbvBernoulli
 cbv_simproc cbv_eval simpSimplify (simplify _) := fun e => do
   let_expr simplify a := e | return .rfl
   let some f := getFracValue? a | return .rfl
-  let result ← Sym.share (mkFracExpr (simplify f))
+  let result ← Sym.share (mkFracExpr (simplifyValue f))
   return .step result (← Sym.mkEqRefl result)
 
 cbv_simproc cbv_eval simpNegF (negF _) := fun e => do
   let_expr negF a := e | return .rfl
   let some f := getFracValue? a | return .rfl
-  let result ← Sym.share (mkFracExpr (negF f))
+  let result ← Sym.share (mkFracExpr (negFValue f))
   return .step result (← Sym.mkEqRefl result)
 
 cbv_simproc cbv_eval simpAddF (addF _ _) := fun e => do
   let_expr addF a b := e | return .rfl
   let some f₁ := getFracValue? a | return .rfl
   let some f₂ := getFracValue? b | return .rfl
-  let result ← Sym.share (mkFracExpr (addF f₁ f₂))
+  let result ← Sym.share (mkFracExpr (addFValue f₁ f₂))
   return .step result (← Sym.mkEqRefl result)
 
 cbv_simproc cbv_eval simpMulF (mulF _ _) := fun e => do
   let_expr mulF a b := e | return .rfl
   let some f₁ := getFracValue? a | return .rfl
   let some f₂ := getFracValue? b | return .rfl
-  let result ← Sym.share (mkFracExpr (mulF f₁ f₂))
+  let result ← Sym.share (mkFracExpr (mulFValue f₁ f₂))
   return .step result (← Sym.mkEqRefl result)
 
 cbv_simproc cbv_eval simpMulN (mulN _ _) := fun e => do
   let_expr mulN a c := e | return .rfl
   let some f := getFracValue? a | return .rfl
   let some c := Sym.getNatValue? c | return .rfl
-  let result ← Sym.share (mkFracExpr (mulN f c))
+  let result ← Sym.share (mkFracExpr (mulNValue f c))
   return .step result (← Sym.mkEqRefl result)
 
 cbv_simproc cbv_eval simpMulZ (mulZ _ _) := fun e => do
   let_expr mulZ a z := e | return .rfl
   let some f := getFracValue? a | return .rfl
   let some z := CbvBernoulli.getIntValue? z | return .rfl
-  let result ← Sym.share (mkFracExpr (mulZ f z))
+  let result ← Sym.share (mkFracExpr (mulZValue f z))
   return .step result (← Sym.mkEqRefl result)
 
 cbv_simproc cbv_eval simpDivN (divN _ _) := fun e => do
   let_expr divN a d := e | return .rfl
   let some f := getFracValue? a | return .rfl
   let some d := Sym.getNatValue? d | return .rfl
-  let result ← Sym.share (mkFracExpr (divN f d))
+  let result ← Sym.share (mkFracExpr (divNValue f d))
   return .step result (← Sym.mkEqRefl result)
 
 /-- `xs ++ ys` for literal lists becomes a single literal list. -/
@@ -401,14 +444,16 @@ cbv_simproc cbv_eval simpListMap (List.map _ _) := fun e => do
   let result ← Sym.share (mkListLit β u out)
   return .step result (← Sym.mkEqRefl result)
 
-private def binomSumFrac.loop (m : Nat) : List Frac → Nat → Frac → Frac → Frac
+end
+
+def binomSumFrac.loop (m : Nat) : List Frac → Nat → Frac → Frac → Frac
   | [], _, _, acc => acc
   | b :: rest, k, c, acc =>
     binomSumFrac.loop m rest (k + 1)
       (divN (mulZ c ((m : Int) - (k : Int))) (k + 1))
       (addF acc (mulF c b))
 
-private def binomSumFrac (bs : List Frac) (m : Nat) : Frac :=
+def binomSumFrac (bs : List Frac) (m : Nat) : Frac :=
   binomSumFrac.loop m bs 0 (1, 1) (0, 1)
 
 /-- The same recurrence as `BernoulliFast.bernoulliList`, but using the
@@ -573,20 +618,20 @@ theorem bernoulliFracList_getD_toRat_eq_bernoulli {n k : Nat} (hk : k ≤ n) :
 
 /-- Next Pascal row: `[C(n,0), C(n,1),..., C(n,n)]` to
 `[C(n+1,0), C(n+1,1),..., C(n+1,n+1)]`. -/
-private def nextPascalRow (row : List Nat) : List Nat :=
+def nextPascalRow (row : List Nat) : List Nat :=
   let mid := (row.zip row.tail).map (fun (a, b) => a + b)
   [1] ++ mid ++ [1]
 
 /-- Given known Bernoulli numbers and the matching Pascal row, compute the
 next Bernoulli number. `bs.zip row` truncates to `bs.length` pairs; the row
 is intentionally one coefficient longer. -/
-private def nextBernoulli (bs : List Frac) (row : List Nat) : Frac :=
+def nextBernoulli (bs : List Frac) (row : List Nat) : Frac :=
   let k := bs.length
   let weightedSum := (bs.zip row).foldl (fun acc (bj, cj) => addF acc (mulN bj cj)) (0, 1)
   negF (divN weightedSum (k + 1))
 
 /-- Carry the Pascal row as a second accumulator. -/
-private def go : Nat → List Frac → List Nat → List Frac
+def go : Nat → List Frac → List Nat → List Frac
   | 0, bs, _ => bs
   | n + 1, bs, row => go n (bs ++ [nextBernoulli bs row]) (nextPascalRow row)
 

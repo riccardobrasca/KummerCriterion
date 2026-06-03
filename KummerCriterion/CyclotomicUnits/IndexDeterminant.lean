@@ -1,5 +1,7 @@
-import KummerCriterion.CyclotomicUnits.DeletedFourierCyclotomic
-import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge
+module
+
+public import KummerCriterion.CyclotomicUnits.DeletedFourierCyclotomic
+public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge
 
 /-!
 # Deleted Fourier determinant for Sinnott's cyclotomic-unit matrix
