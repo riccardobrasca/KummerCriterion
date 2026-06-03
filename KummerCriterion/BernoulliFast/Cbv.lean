@@ -568,6 +568,23 @@ theorem bernoulliFrac_toRat_eq_bernoulli (n : Nat) :
     toRat (bernoulliFrac n) = bernoulli n :=
   bernoulliComputeFrac_toRat_eq_bernoulli n
 
+/-- Any entry of a certified `Frac` Bernoulli table agrees with Mathlib's
+Bernoulli number at the same index. -/
+theorem bernoulliFracList_getD_toRat_eq_bernoulli {n k : Nat} (hk : k ≤ n) :
+    toRat ((bernoulliFracList n).getD k (0, 1)) = bernoulli k := by
+  have h := congrArg (fun xs : List ℚ => xs.getD k (toRat (0, 1)))
+    (bernoulliComputeFracList_toRat n)
+  change ((bernoulliComputeFracList n).map toRat).getD k (toRat (0, 1)) =
+    (KummerCriterion.BernoulliFast.bernoulliList n).getD k (toRat (0, 1)) at h
+  rw [List.getD_map] at h
+  have htable :
+      toRat ((bernoulliFracList n).getD k (0, 1)) =
+        (KummerCriterion.BernoulliFast.bernoulliList n).getD k 0 := by
+    simpa [bernoulliFracList, toRat, Rat.mkRat_eq_div] using h
+  rw [htable]
+  simpa [toRat, Rat.mkRat_eq_div] using
+    KummerCriterion.BernoulliFast.bernoulliList_getD_eq n k hk
+
 /-! ## Pascal-row recurrence -/
 
 /-- Next Pascal row: `[C(n,0), C(n,1),..., C(n,n)]` to
