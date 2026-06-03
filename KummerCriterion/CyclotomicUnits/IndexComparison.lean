@@ -5,9 +5,9 @@ import Mathlib.Data.Nat.Prime.Basic
 # Odd-primary subgroup index comparison
 
 This file contains the abstract group-index arithmetic needed to compare the
-normalized cyclotomic-unit subgroup with the squared-family subgroup.  If
-`H ≤ K ≤ G` and the relative index `[K : H]` is a power-of-two divisor, then
-an odd prime `p` divides `[G : H]` exactly when it divides `[G : K]`.
+normalized cyclotomic-unit subgroup with the squared-family subgroup. If
+`H ≤ K ≤ G` and the relative index `[K: H]` is a power-of-two divisor, then
+an odd prime `p` divides `[G: H]` exactly when it divides `[G: K]`.
 -/
 
 @[expose] public section

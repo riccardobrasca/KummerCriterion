@@ -7,7 +7,7 @@ public import KummerCriterion.KummerCongruence.VonStaudtClausen
 
 Voronoi's elementary congruence for generalized Bernoulli numbers:
 
-  `(a^k − 1) · B_k ≡ k · a^{k−1} · ∑_{j=0}^{p−1} j^{k−1} · ⌊ja/p⌋ (mod p)`
+ `(a^k − 1) · B_k ≡ k · a^{k−1} · ∑_{j=0}^{p−1} j^{k−1} · ⌊ja/p⌋ (mod p)`
 
 for `a` coprime to `p`, `k ≥ 2` even with `(p−1) ∤ k` and `p ∤ (k+1)`.
 
@@ -15,7 +15,7 @@ This module exposes the main theorem `voronoi_congruence_mod_p`, built
 from three private helpers: the polynomial linear approximation, the
 multiplicative permutation of residues, and the per-term binomial mod `p²`
 bound. See the umbrella `KummerCriterion.KummerCongruence` for how this
-combines with Step 2 to prove T011 (Kummer's congruence).
+combines with Step 2 to prove (Kummer's congruence).
 -/
 
 @[expose] public section
@@ -24,30 +24,30 @@ noncomputable section
 
 namespace KummerCriterion
 
-/-! ### Step 3 — Voronoi's congruence and T011 (Kummer's congruence)
+/-! ### Step 3 — Voronoi's congruence and (Kummer's congruence)
 
 **Voronoi's congruence** (Cohen Prop 9.5.20): for `a, p` with `gcd(a, p) = 1`
 and `k ≥ 1` with `(p-1) ∤ k`:
-  `(a^k - 1) · B_k ≡ k · a^{k-1} · ∑_{j=1}^{p-1} j^{k-1} · ⌊ja/p⌋ (mod p)`
+ `(a^k - 1) · B_k ≡ k · a^{k-1} · ∑_{j=1}^{p-1} j^{k-1} · ⌊ja/p⌋ (mod p)`
 as elements of `ℤ_[p]` (where `B_k` is `p`-integral by vSC generic).
 
-**Proof**: permutation argument `{ja mod p : j ∈ [0, p-1]} = [0, p-1]`
+**Proof**: permutation argument `{ja mod p: j ∈ [0, p-1]} = [0, p-1]`
 combined with the binomial expansion
 `(ja mod p)^k ≡ (ja)^k - k·(ja)^{k-1}·p·⌊ja/p⌋ (mod p²)`,
 summed over `j`. After invoking Faulhaber to express `∑ j^k` in terms of
 `B_k · p + p² · (integer)`, the mod-`p` form follows by canceling common
 factors. See Cohen §9.5.4 or Washington §5.4.
 
-**T011 (Kummer's congruence)** follows from Voronoi: for `m ≡ n (mod p-1)`,
+** (Kummer's congruence)** follows from Voronoi: for `m ≡ n (mod p-1)`,
 a primitive root `a` gives `a^m ≡ a^n (mod p)`, `S_m ≡ S_n (mod p)`, so
 the Voronoi RHSs for `m` and `n` are congruent mod `p`. Dividing by
 `m · n` (p-units when p ∤ m·n) gives `B_m/m ≡ B_n/n (mod p)`.
 -/
 
 /-- **Voronoi polynomial identity** (helper): in any commutative ring `R`,
-for `k ≥ 1` and any `x y : R`,
-  `(x - p·y)^k = x^k - k · x^{k-1} · p · y + p² · z`
-for some explicit `z : R`. The `z` is the tail of the binomial expansion
+for `k ≥ 1` and any `x y: R`,
+ `(x - p·y)^k = x^k - k · x^{k-1} · p · y + p² · z`
+for some explicit `z: R`. The `z` is the tail of the binomial expansion
 (terms with `i ≥ 2`), each of which carries a factor of `p^i ≥ p²`. -/
 lemma voronoi_sub_pow_linear_approx {R : Type*} [CommRing R]
     (p : R) {k : ℕ} (hk : 1 ≤ k) (x y : R) :
@@ -76,11 +76,11 @@ lemma voronoi_sub_pow_linear_approx {R : Type*} [CommRing R]
 
 /-- **Voronoi permutation** (helper): if `a` is coprime to `p` (odd prime),
 then multiplication by `a` permutes residues mod `p`. Hence for any function
-`f : ℕ → R` (where `R` is an additive commutative monoid),
-  `∑_{j < p} f((j * a) % p) = ∑_{j < p} f(j)`.
+`f: ℕ → R` (where `R` is an additive commutative monoid),
+ `∑_{j < p} f((j * a) % p) = ∑_{j < p} f(j)`.
 
 Proof via `Finset.sum_nbij'` with bijection `j ↦ (j * a) % p` and inverse
-`j ↦ (j * b) % p` where `b = (a : ZMod p)⁻¹.val` is the modular inverse. -/
+`j ↦ (j * b) % p` where `b = (a: ZMod p)⁻¹.val` is the modular inverse. -/
 lemma voronoi_permutation
     {p : ℕ} [hp : Fact p.Prime] {a : ℕ} (ha_coprime : ¬ (p : ℕ) ∣ a)
     {R : Type*} [AddCommMonoid R] (f : ℕ → R) :
@@ -128,7 +128,7 @@ lemma voronoi_permutation
 
 /-- **Voronoi sum identity mod p²** (helper): in `ℤ_[p]`, for `k ≥ 1`,
 `a` coprime to `p`,
-  `(a^k - 1) · ∑_{j<p} j^k - k · a^{k-1} · p · ∑_{j<p} j^{k-1} · ⌊ja/p⌋ ∈ p²·ℤ_p`.
+ `(a^k - 1) · ∑_{j<p} j^k - k · a^{k-1} · p · ∑_{j<p} j^{k-1} · ⌊ja/p⌋ ∈ p²·ℤ_p`.
 
 This is obtained by summing the binomial identity
 `((j·a) mod p)^k = (j·a - p·⌊ja/p⌋)^k ≡ (j·a)^k - k·(j·a)^{k-1}·p·⌊ja/p⌋ (mod p²)`
@@ -143,13 +143,13 @@ lemma voronoi_sum_mod_p_sq
             ((∑ j ∈ Finset.range p, j ^ (k - 1) * (j * a / p) : ℕ) : ℤ_[p])) =
         (p : ℤ_[p]) ^ 2 * W := by
   -- Per-term bound from voronoi_sub_pow_linear_approx.
-  -- For each j < p: define r_j := (j*a) % p, q_j := (j*a) / p, so j*a = p*q_j + r_j
-  -- in ℕ, hence (r_j : ℤ_p) = (j*a : ℤ_p) - p · q_j.
+  -- For each j < p: define r_j:= (j*a) % p, q_j:= (j*a) / p, so j*a = p*q_j + r_j
+  -- in ℕ, hence (r_j: ℤ_p) = (j*a: ℤ_p) - p · q_j.
   -- Then r_j^k = (j*a - p*q_j)^k = (j*a)^k - k · (j*a)^(k-1) · p · q_j + p² · z_j.
   -- Summing, using permutation, gives the identity.
   -- Choose per-term z_j: a function of j.
   have hp_prime : Nat.Prime p := hp.out
-  -- Helper: `(j * a : ℤ_[p]) = p · q_j + r_j` where r_j = (j*a) % p, q_j = (j*a) / p.
+  -- Helper: `(j * a: ℤ_[p]) = p · q_j + r_j` where r_j = (j*a) % p, q_j = (j*a) / p.
   have h_div_mod : ∀ j : ℕ,
       ((j * a : ℕ) : ℤ_[p]) = ((j * a / p : ℕ) : ℤ_[p]) * (p : ℤ_[p]) +
         ((((j * a) % p : ℕ)) : ℤ_[p]) := fun j => by
@@ -157,13 +157,13 @@ lemma voronoi_sum_mod_p_sq
       rw [← (Nat.div_add_mod' _ _).symm]]
     push_cast; ring
   -- Per-j witness: apply voronoi_sub_pow_linear_approx to
-  -- x = (j*a : ℤ_p), y = (j*a/p : ℤ_p), p = (p : ℤ_p).
+  -- x = (j*a: ℤ_p), y = (j*a/p: ℤ_p), p = (p: ℤ_p).
   choose wj hwj using (fun (j : ℕ) (_hj : j ∈ Finset.range p) =>
     voronoi_sub_pow_linear_approx (R := ℤ_[p])
       (p := (p : ℤ_[p])) (k := k) hk_pos ((j * a : ℕ) : ℤ_[p])
       (((j * a / p : ℕ)) : ℤ_[p]))
-  -- Now: (r_j : ℤ_p)^k = ((j*a) - p * (j*a/p))^k = (j*a)^k - k*(j*a)^(k-1)*p*(j*a/p) + p²*wj.
-  -- For this we need to show (((j*a) % p : ℕ) : ℤ_p) = (j*a : ℤ_p) - p*(j*a/p : ℤ_p).
+  -- Now: (r_j: ℤ_p)^k = ((j*a) - p * (j*a/p))^k = (j*a)^k - k*(j*a)^(k-1)*p*(j*a/p) + p²*wj.
+  -- For this we need to show (((j*a) % p: ℕ): ℤ_p) = (j*a: ℤ_p) - p*(j*a/p: ℤ_p).
   have h_rj_eq : ∀ j : ℕ, (((((j * a) % p : ℕ)) : ℤ_[p])) =
       ((j * a : ℕ) : ℤ_[p]) - (p : ℤ_[p]) * (((j * a / p : ℕ)) : ℤ_[p]) := fun j => by
     linear_combination -h_div_mod j
@@ -175,8 +175,8 @@ lemma voronoi_sum_mod_p_sq
             (((j * a / p : ℕ)) : ℤ_[p]) +
         (p : ℤ_[p]) ^ 2 * wj j hj := fun j hj => by rw [h_rj_eq j]; exact hwj j hj
   -- Sum over j ∈ range p.
-  -- Let S₁ := ∑ j^k (ℕ form → ℤ_p)
-  -- Let S₁' := ∑ ((j*a) % p)^k
+  -- Let S₁:= ∑ j^k (ℕ form → ℤ_p)
+  -- Let S₁':= ∑ ((j*a) % p)^k
   -- By permutation (voronoi_permutation), S₁ = S₁' (as ℤ_p elements).
   -- ∑ (j*a)^k = a^k · ∑ j^k = a^k · S₁.
   -- ∑ (j*a)^(k-1) · (j*a/p) = a^(k-1) · ∑ j^(k-1) · (j*a/p) = a^(k-1) · S₂.
@@ -190,7 +190,7 @@ lemma voronoi_sum_mod_p_sq
       ((∑ j ∈ Finset.range p, j ^ k : ℕ) : ℤ_[p]) := by
     congr 1; exact voronoi_permutation ha_coprime (fun n : ℕ => n ^ k)
   -- Step B: sum the per-j binomial identity over j ∈ range p in ℤ_p.
-  -- Define a total function w : ℕ → ℤ_[p] extending wj.
+  -- Define a total function w: ℕ → ℤ_[p] extending wj.
   set w : ℕ → ℤ_[p] := fun j => if h : j ∈ Finset.range p then wj j h else 0 with hw_def
   have hw_eq : ∀ (j : ℕ) (hj : j ∈ Finset.range p), w j = wj j hj := fun j hj => by
     change (if h : j ∈ Finset.range p then wj j h else 0) = wj j hj; simp [hj]
@@ -257,14 +257,14 @@ lemma voronoi_sum_mod_p_sq
         ((j : ℕ) : ℤ_[p]) ^ (k - 1) * ((j * a / p : ℕ) : ℤ_[p])) =
       ((∑ j ∈ Finset.range p, j ^ (k - 1) * (j * a / p) : ℕ) : ℤ_[p]) := by push_cast; rfl
   rw [h_three, h_cast1, h_cast2] at h_sum_ℤp
-  -- Now h_sum_ℤp : ∑ j^k = a^k·∑ j^k - k·a^(k-1)·p·S₂ + p²·W_attach.
+  -- Now h_sum_ℤp: ∑ j^k = a^k·∑ j^k - k·a^(k-1)·p·S₂ + p²·W_attach.
   -- Goal: (a^k - 1)·∑ j^k - k·a^(k-1)·p·S₂ = p²·(-W_attach).
   linear_combination -h_sum_ℤp
 
 /-- **Voronoi's congruence** (Cohen Prop 9.5.20, specialized to `n = p`).
 
 For `a, p` coprime, `k ≥ 2` even with `(p-1) ∤ k` and `p ∤ (k+1)`:
-  `(a^k - 1) · B_k ≡ k · a^{k-1} · ∑_{j=0}^{p-1} j^{k-1} · ⌊ja/p⌋ (mod p)`
+ `(a^k - 1) · B_k ≡ k · a^{k-1} · ∑_{j=0}^{p-1} j^{k-1} · ⌊ja/p⌋ (mod p)`
 in `ℤ_[p]`.
 
 The sum uses `Finset.range p` (including `j = 0`, whose term is `0`
@@ -274,22 +274,22 @@ when `k ≥ 2`). Note `B_k ∈ ℤ_[p]` for `(p-1) ∤ k` (vSC generic), and
 **Proof outline:**
 
 1. *Permutation lemma:* `j ↦ (j·a) mod p` is a bijection on `[0, p)`,
-   hence `∑_{j<p} ((j·a) mod p)^k = ∑_{j<p} j^k`.
+ hence `∑_{j<p} ((j·a) mod p)^k = ∑_{j<p} j^k`.
 
 2. *Per-term binomial mod p²:* for each `j < p`, write
-   `j·a = p·q + r` with `r = (j·a) mod p`, `q = (j·a) / p`. Then
-   `r^k = (j·a - p·q)^k ≡ (j·a)^k - k · (j·a)^{k-1} · p · q (mod p²)`.
+ `j·a = p·q + r` with `r = (j·a) mod p`, `q = (j·a) / p`. Then
+ `r^k = (j·a - p·q)^k ≡ (j·a)^k - k · (j·a)^{k-1} · p · q (mod p²)`.
 
 3. *Sum in ℤ (via ℤ_p):* Summing step 2 over `j < p` and using step 1
-   for the LHS gives, in `ℤ_p`:
-   `(a^k - 1) · ∑_j j^k - k · a^{k-1} · p · ∑_j j^{k-1} · ⌊ja/p⌋ ∈ p²·ℤ_p`.
+ for the LHS gives, in `ℤ_p`:
+ `(a^k - 1) · ∑_j j^k - k · a^{k-1} · p · ∑_j j^{k-1} · ⌊ja/p⌋ ∈ p²·ℤ_p`.
 
 4. *Faulhaber substitution:* multiplying by `(k+1)` and using
-   `sum_range_pow_sub_p_mul_bernoulli_weighted`, substitute
-   `(k+1) · ∑_j j^k = (k+1)·p·B_k + p²·W` to get
-   `p · (k+1) · ((a^k-1)·B_k - k·a^{k-1}·∑_j j^{k-1}·⌊ja/p⌋) ∈ p²·ℤ_p`.
-   Dividing by `p · (k+1)` (both `p`-units: `(k+1)` is by hypothesis,
-   `p` we divide via mul_left_cancel₀) gives the claim.
+ `sum_range_pow_sub_p_mul_bernoulli_weighted`, substitute
+ `(k+1) · ∑_j j^k = (k+1)·p·B_k + p²·W` to get
+ `p · (k+1) · ((a^k-1)·B_k - k·a^{k-1}·∑_j j^{k-1}·⌊ja/p⌋) ∈ p²·ℤ_p`.
+ Dividing by `p · (k+1)` (both `p`-units: `(k+1)` is by hypothesis,
+ `p` we divide via mul_left_cancel₀) gives the claim.
 -/
 theorem voronoi_congruence_mod_p
     {p : ℕ} [hp : Fact p.Prime] (hp_odd : p ≠ 2)
@@ -307,12 +307,12 @@ theorem voronoi_congruence_mod_p
   have hk_pos : 0 < k := by omega
   have hpQ_ne : (p : ℚ_[p]) ≠ 0 := by exact_mod_cast hp.ne_zero
   -- Step 1 (ℤ_p, from voronoi_sum_mod_p_sq):
-  --   (a^k - 1)·S₁ - k·a^(k-1)·p·S₂ = p²·W   where
-  --   S₁ := ∑ j^k (in ℤ_p),
-  --   S₂ := ∑ j^(k-1)·⌊ja/p⌋ (in ℤ_p).
+  -- (a^k - 1)·S₁ - k·a^(k-1)·p·S₂ = p²·W where
+  -- S₁:= ∑ j^k (in ℤ_p),
+  -- S₂:= ∑ j^(k-1)·⌊ja/p⌋ (in ℤ_p).
   obtain ⟨W, hW⟩ := voronoi_sum_mod_p_sq ha_coprime hk_pos
   -- Step 2 (ℚ_p, from sum_range_pow_sub_p_mul_bernoulli_weighted):
-  --   (k+1)·(S₁ - p·B_k) = p²·W'
+  -- (k+1)·(S₁ - p·B_k) = p²·W'
   obtain ⟨W', hW'⟩ := sum_range_pow_sub_p_mul_bernoulli_weighted hp_odd hk_two hk_even
     (fun j hj hj_two hj_even =>
       p_mul_bernoulli_mem_padicInt_restricted hp_odd hj_two hj_even

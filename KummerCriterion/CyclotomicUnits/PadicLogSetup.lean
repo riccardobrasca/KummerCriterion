@@ -1,10 +1,10 @@
 module
 
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.KummerArtinHasseGlobalDecomposition
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.KummerArtinHasseValuationTrace
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.ArtinHasse.Part1
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.ArtinHasse.Part2
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.Stickelberger.Part1
+public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseGlobalDecomposition
+public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseValuationTrace
+public import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part1
+public import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part2
+public import KummerCriterion.Reflection.ResidueSymbol.Stickelberger
 public import Mathlib.FieldTheory.Finite.Basic
 public import Mathlib.GroupTheory.SpecificGroups.Cyclic
 public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
@@ -19,8 +19,8 @@ public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
 public import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
 public import Mathlib.RingTheory.Localization.Basic
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork.Part1
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork.Part2
+public import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part1
+public import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part2
 public import Mathlib.RingTheory.PowerSeries.Substitution
 public import Mathlib.RingTheory.PowerSeries.Basic
 public import Mathlib.RingTheory.PowerSeries.Trunc
@@ -36,7 +36,7 @@ This file exposes the completed local cyclotomic model already available in
 the Furtwängler development under route-level names for the cyclotomic-unit
 reflection proof.
 
-The local model here uses the proved uniformizer `lambda = zeta_p - 1`.  The
+The local model here uses the proved uniformizer `lambda = zeta_p - 1`. The
 formal Artin-Hasse inverse package below records the corrected Dwork
 normalization: the inverse of `E_p(T) - 1` has integral coefficients, starts
 with `T`, and satisfies the formal sign identity behind `c(varpi) = -varpi`.
@@ -44,13 +44,13 @@ with `T`, and satisfies the formal sign identity behind `c(varpi) = -varpi`.
 The originally advertised stronger Artin-Hasse/Dwork parameter package,
 
 ```text
-varpi^(p - 1) = -p,     E_p(varpi) = zeta_p,     c(varpi) = -varpi,
+varpi^(p - 1) = -p, E_p(varpi) = zeta_p, c(varpi) = -varpi,
 ```
 
-is false for the standard Artin-Hasse normalization.  The analytic step that
+is false for the standard Artin-Hasse normalization. The analytic step that
 is still missing is the construction of the completed local element
 `varpi = (E_p(T)-1)^{-1}(zeta_p - 1)` together with the real fixed-basis
-theorem.  This file deliberately does not replace that missing construction
+theorem. This file deliberately does not replace that missing construction
 by a bundled hypothesis.
 -/
 
@@ -81,8 +81,8 @@ series. -/
 abbrev expMinusOneSeries : PowerSeries ℚ :=
   Furtwaengler.artinHasseExpMinusOneSeries p
 
-/-- The formal inverse of `E_p(T) - 1`.  Evaluated at `zeta_p - 1` in a
-complete local ring, this is the corrected Dwork parameter from CU-09. -/
+/-- The formal inverse of `E_p(T) - 1`. Evaluated at `zeta_p - 1` in a
+complete local ring, this is the corrected Dwork parameter. -/
 abbrev inverseSeries : PowerSeries ℚ :=
   Furtwaengler.artinHasseExpInverseSeries p
 
@@ -218,7 +218,7 @@ theorem expSeries_rescale_neg_mul_self (hp_two : 2 < p) :
   rw [hneg]
   exact subst_neg_log_exp_mul_expSeries p
 
-/-- The same sign identity in terms of `H_p(T) = E_p(T)-1`.  This is the
+/-- The same sign identity in terms of `H_p(T) = E_p(T)-1`. This is the
 formal source of the conjugation relation for the corrected local parameter. -/
 theorem one_add_rescale_neg_expMinusOneSeries_mul_self (hp_two : 2 < p) :
     (1 + PowerSeries.rescale (-1 : ℚ) (expMinusOneSeries p)) *

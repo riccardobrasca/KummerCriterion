@@ -9,9 +9,9 @@ public import Mathlib.NumberTheory.DirichletCharacter.Orthogonality
 public import Mathlib.RingTheory.RootsOfUnity.EnoughRootsOfUnity
 
 /-!
-# Characters of `Gal(ℚ(ζ_p)/ℚ)` — Teichmüller character
+# Characters of `Gal(ℚ(ζ_p)/ℚ)` - Teichmüller character
 
-Let `p` be a prime. The Teichmüller character `ω : ZMod p →*₀ ℤ_[p]`
+Let `p` be a prime. The Teichmüller character `ω: ZMod p →*₀ ℤ_[p]`
 sends each nonzero residue class `a ∈ (ZMod p)ˣ` to the unique `(p-1)`-th
 root of unity in `ℤ_[p]` that reduces to `a` modulo `p`, and sends the
 zero residue class to `0`.
@@ -24,15 +24,15 @@ lands in `ℤ_[p]`.
 
 ## Main definitions
 
-- `KummerCriterion.teichmuller` — `ω : ZMod p →*₀ ℤ_[p]`.
+- `KummerCriterion.teichmuller` - `ω: ZMod p →*₀ ℤ_[p]`.
 
 ## Main results
 
-- `toZMod_teichmuller` — `ω(a) ≡ a (mod p)`.
-- `teichmuller_pow_sub_one` — `ω(a)^{p-1} = 1` for `a ≠ 0`.
+- `toZMod_teichmuller` - `ω(a) ≡ a (mod p)`.
+- `teichmuller_pow_sub_one` - `ω(a)^{p-1} = 1` for `a ≠ 0`.
 - The `MonoidWithZeroHom` structure is provided by the bundled
-  definition, so `teichmuller_zero`, `teichmuller_one`,
-  `teichmuller_mul` follow.
+ definition, so `teichmuller_zero`, `teichmuller_one`,
+ `teichmuller_mul` follow.
 
 ## References
 
@@ -74,13 +74,13 @@ instance maximalIdealQuotient_finite : Finite (ℤ_[p] ⧸ maximalIdeal ℤ_[p])
 
 /-! ### Teichmüller character via `Perfection.teichmuller₀` -/
 
-/-- The Teichmüller character `ω : ZMod p →*₀ ℤ_[p]`. Composition of:
+/-- The Teichmüller character `ω: ZMod p →*₀ ℤ_[p]`. Composition of:
 
-- `(maximalIdealQuotientEquivZMod p).symm : ZMod p ≃+* ℤ_[p] ⧸ maximalIdeal`,
-- `(PerfectionMap.id p _).equiv : (ℤ_[p] ⧸ maximalIdeal) ≃+*
-  Perfection (ℤ_[p] ⧸ maximalIdeal) p`,
-- `Perfection.teichmuller₀ p (maximalIdeal ℤ_[p]) :
-  Perfection (ℤ_[p] ⧸ maximalIdeal) p →*₀ ℤ_[p]`.
+- `(maximalIdealQuotientEquivZMod p).symm: ZMod p ≃+* ℤ_[p] ⧸ maximalIdeal`,
+- `(PerfectionMap.id p _).equiv: (ℤ_[p] ⧸ maximalIdeal) ≃+*
+ Perfection (ℤ_[p] ⧸ maximalIdeal) p`,
+- `Perfection.teichmuller₀ p (maximalIdeal ℤ_[p]):
+ Perfection (ℤ_[p] ⧸ maximalIdeal) p →*₀ ℤ_[p]`.
 
 Its image is `μ_{p-1} ∪ {0}` in `ℤ_[p]`. -/
 noncomputable def teichmuller : ZMod p →*₀ ℤ_[p] :=
@@ -119,7 +119,7 @@ lemma teichmuller_pow_sub_one {a : ZMod p} (ha : a ≠ 0) : teichmuller p a ^ (p
 lemma teichmuller_injective : Function.Injective (teichmuller p) := fun _ _ hab => by
   simpa using congrArg PadicInt.toZMod hab
 
-/-- Fixed point of Frobenius: `ω(a)^p = ω(a)` for any `a : ZMod p`.
+/-- Fixed point of Frobenius: `ω(a)^p = ω(a)` for any `a: ZMod p`.
 This follows from `a^p = a` in `ZMod p` (Fermat) and multiplicativity. -/
 lemma teichmuller_pow_card (a : ZMod p) : teichmuller p a ^ p = teichmuller p a := by
   rw [← map_pow, ZMod.pow_card]
@@ -127,12 +127,12 @@ lemma teichmuller_pow_card (a : ZMod p) : teichmuller p a ^ p = teichmuller p a 
 /-- **Sharper Teichmüller congruence**: `ω(a) ≡ a^p (mod p²)` in `ℤ_[p]`,
 where the lift of `a` to `ℤ_[p]` is taken via `ZMod.val`.
 
-Proof: `ω(a) ≡ (a.val : ℤ_[p]) (mod p)` (basic Teichmüller property),
+Proof: `ω(a) ≡ (a.val: ℤ_[p]) (mod p)` (basic Teichmüller property),
 so `ω(a)^p ≡ (a.val)^p (mod p²)` by `SModEq.pow_pow_add_one`. But
 `ω(a)^p = ω(a)` by `teichmuller_pow_card`, giving the claim. -/
 lemma teichmuller_sModEq_pow_val (a : ZMod p) :
     teichmuller p a ≡ (a.val : ℤ_[p]) ^ p [SMOD (maximalIdeal ℤ_[p]) ^ 2] := by
-  -- Step A: `ω(a) ≡ (a.val : ℤ_[p]) [SMOD maximalIdeal]`.
+  -- Step A: `ω(a) ≡ (a.val: ℤ_[p]) [SMOD maximalIdeal]`.
   have h_base : teichmuller p a ≡ (a.val : ℤ_[p]) [SMOD maximalIdeal ℤ_[p]] := by
     rw [SModEq.sub_mem, ← ker_toZMod, RingHom.mem_ker, map_sub, toZMod_teichmuller,
       map_natCast, ZMod.natCast_val, ZMod.cast_id, sub_self]
@@ -143,7 +143,7 @@ lemma teichmuller_sModEq_pow_val (a : ZMod p) :
   -- Step C: `(teichmuller p a)^p = teichmuller p a`.
   rwa [pow_one, teichmuller_pow_card] at h_pow
 
-/-- `ω(a) - (a.val : ℤ_[p])^p ∈ p² · ℤ_[p]`. Equivalent reformulation
+/-- `ω(a) - (a.val: ℤ_[p])^p ∈ p² · ℤ_[p]`. Equivalent reformulation
 of `teichmuller_sModEq_pow_val`. -/
 lemma teichmuller_sub_pow_val_mem_pow_two (a : ZMod p) :
     teichmuller p a - (a.val : ℤ_[p]) ^ p ∈ (maximalIdeal ℤ_[p]) ^ 2 :=
@@ -151,7 +151,7 @@ lemma teichmuller_sub_pow_val_mem_pow_two (a : ZMod p) :
 
 /-! ### The Teichmüller character as a Dirichlet character -/
 
-/-- The Teichmüller character `ω : ZMod p →*₀ ℤ_[p]` packaged as a
+/-- The Teichmüller character `ω: ZMod p →*₀ ℤ_[p]` packaged as a
 `DirichletCharacter ℤ_[p] p`. A Dirichlet character must send
 non-units to `0`; for `ZMod p` (a field for `p` prime), non-unit
 means `0`, and `ω(0) = 0` by construction. -/
@@ -168,8 +168,8 @@ lemma teichmullerChar_apply (a : ZMod p) : teichmullerChar p a = teichmuller p a
 /-! ### Primitive `(p-1)`-th root of unity and
 `HasEnoughRootsOfUnity` instance -/
 
-/-- If `g : (ZMod p)ˣ` generates the unit group, then
-`ω(g) = teichmuller p (g : ZMod p)` is a primitive `(p-1)`-th root of
+/-- If `g: (ZMod p)ˣ` generates the unit group, then
+`ω(g) = teichmuller p (g: ZMod p)` is a primitive `(p-1)`-th root of
 unity in `ℤ_[p]`. -/
 lemma teichmuller_isPrimitiveRoot_of_generator {g : (ZMod p)ˣ}
     (hg_gen : ∀ x : (ZMod p)ˣ, x ∈ Subgroup.zpowers g) :
@@ -187,7 +187,7 @@ lemma teichmuller_isPrimitiveRoot_of_generator {g : (ZMod p)ˣ}
       rw [orderOf_eq_card_of_forall_mem_zpowers hg_gen, Nat.card_eq_fintype_card, ZMod.card_units]
     rw [← h_order]; exact orderOf_dvd_of_pow_eq_one h_units
 
-/-! ### T002: the character group is cyclic of order `p - 1` -/
+/-! ### the character group is cyclic of order `p - 1` -/
 
 /-- `ω^(p-1) = 1` in the Dirichlet character group: the `(p-1)`-th power
 of the Teichmüller character is the trivial character. This is the
@@ -213,9 +213,9 @@ lemma orderOf_teichmullerChar : orderOf (teichmullerChar p) = p - 1 := by
   simp only [MulChar.pow_apply_coe, teichmullerChar_apply, MulChar.one_apply_coe] at h_apply
   exact (teichmuller_isPrimitiveRoot_of_generator hg_gen).2 _ h_apply
 
-/-! ### T004 — Character sum identity (Diekmann Lemma 24) -/
+/-! ### Character sum identity (Diekmann Lemma 24) -/
 
-/-! ### T003 — Character parity (Diekmann Lemmas 23, 25) -/
+/-! ### Character parity (Diekmann Lemmas 23, 25) -/
 
 /-- `ω(-1) = -1` for any odd prime `p`.
 

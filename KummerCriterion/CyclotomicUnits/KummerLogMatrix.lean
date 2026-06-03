@@ -2,13 +2,13 @@ module
 
 public import KummerCriterion.CyclotomicUnits.DworkParameter.Part18
 public import KummerCriterion.CyclotomicUnits.Vandermonde
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.PrincipalUnitFactor.Part2.Part3
+public import KummerCriterion.Reflection.ResidueSymbol.PrincipalUnitFactor
 
 /-!
 # The Kummer logarithm coefficient matrix
 
 This file packages the coefficient-extraction layer for the logarithmic
-matrix in Kummer's cyclotomic-unit criterion.  The analytic construction of
+matrix in Kummer's cyclotomic-unit criterion. The analytic construction of
 the cyclotomic-unit logarithm vector is deliberately an input here: once a
 column has been placed in the conjugation-fixed Dwork subalgebra, its
 coordinates in the even-power Dwork basis give the desired matrix entries
@@ -32,7 +32,7 @@ open PadicLogSetup PadicLogSetup.DworkParameter
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-/-- Input type for the analytic logarithm columns.  A value of this type assigns
+/-- Input type for the analytic logarithm columns. A value of this type assigns
 to each Kummer column a conjugation-fixed element of the completed Dwork integer
 ring. -/
 abbrev KummerLogVector : Type _ :=
@@ -40,7 +40,7 @@ abbrev KummerLogVector : Type _ :=
 
 /-- The row `j` of Kummer's matrix corresponds to the even Dwork exponent
 `2 * (j + 1)`, i.e. to `varpi^(2j)` with mathematical row numbering
-`j = 1, ..., (p - 3) / 2`. -/
+`j = 1,..., (p - 3) / 2`. -/
 def kummerLogEvenPowerIndex (hp_five : 5 ≤ p) (j : Fin (kummerLogRank p)) :
     dworkEvenPowerIndex p :=
   ⟨⟨2 * ((j : ℕ) + 1), by
@@ -264,7 +264,7 @@ theorem kummerLogColumnFiniteLog_factorPow
   samePrimeFiniteLog_factorPow (p := p) (K := K) hMN
     (kummerLogColumnFiniteLogArg_mem_lambdaIdeal (p := p) (K := K) hp_three a)
 
-/-- Quotient coordinates of the completed logarithm column.  The zero-th
+/-- Quotient coordinates of the completed logarithm column. The zero-th
 coordinate is forced by the quotient modulo the unit ideal. -/
 noncomputable def kummerLogColumnCoord
     (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) (N : ℕ) :

@@ -7,7 +7,7 @@ public import Mathlib.Tactic
 # Arithmetic bounds for finite logarithm denominators
 
 This file records the elementary natural-number estimates used to control the
-`Q`-adic orders of terms `x^n / n` in the finite-logarithm argument.  The
+`Q`-adic orders of terms `x^n / n` in the finite-logarithm argument. The
 valuation `v_ell(n)` is written as `n.factorization ell`.
 -/
 
@@ -47,7 +47,7 @@ theorem factorization_mul_pred_le_pred {ell n : ℕ}
     Nat.mul_pred_le_pow_sub_one ell f hell.pos
   exact hmul_le.trans (Nat.sub_le_sub_right hpow_le 1)
 
-/-- Ticket-form version: `n - (ell - 1) * v_ell(n) >= 1` for nonzero `n`. -/
+/-- Version: `n - (ell - 1) * v_ell(n) >= 1` for nonzero `n`. -/
 theorem one_le_sub_pred_mul_factorization {ell n : ℕ}
     (hell : ell.Prime) (hn : n ≠ 0) :
     1 ≤ n - (ell - 1) * n.factorization ell := by
@@ -101,7 +101,7 @@ theorem pred_mul_factorization_add_div_le {ell n : ℕ}
     _ = ell ^ v * c := by rw [hpow_split, Nat.mul_assoc]
     _ = n := hn_eq
 
-/-- Ticket-form tail bound:
+/-- Tail bound:
 `n >= ell * (N+1) -> n - (ell - 1) * v_ell(n) >= N+1`. -/
 theorem succ_le_sub_pred_mul_factorization_of_mul_succ_le {ell N n : ℕ}
     (hell : ell.Prime) (hn : ell * (N + 1) ≤ n) :

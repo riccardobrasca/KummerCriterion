@@ -5,7 +5,7 @@ public import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 public import Mathlib.NumberTheory.DirichletCharacter.GaussSum
 public import Mathlib.NumberTheory.LSeries.DirichletContinuation
 public import Mathlib.NumberTheory.LSeries.HurwitzZetaValues
-public import KummerCriterion.BernoulliGeneralized
+public import KummerCriterion.KummerCongruence.BernoulliGeneralized
 
 /-!
 # Basic `L(1, χ)` definitions
@@ -26,7 +26,7 @@ section LValueAtOne
 
 variable (p : ℕ) [hp : Fact p.Prime]
 
-/-- T021 right-hand side: the value predicted for `L(1, χ)` when `χ` is odd
+/-- right-hand side: the value predicted for `L(1, χ)` when `χ` is odd
 primitive modulo `p`. -/
 noncomputable def oddLValueRhs (χ : DirichletCharacter ℂ p) : ℂ :=
   ((((Real.pi : ℝ) : ℂ) * Complex.I) * gaussSum χ (ZMod.stdAddChar (N := p)) / (p : ℂ)) *
@@ -37,7 +37,7 @@ noncomputable def oddLValueRhs (χ : DirichletCharacter ℂ p) : ℂ :=
 noncomputable def evenLValueLogSum (χ : DirichletCharacter ℂ p) : ℂ :=
   ∑ a : ZMod p, χ⁻¹ a * ((Real.log ‖(1 : ℂ) - ZMod.stdAddChar (N := p) a‖ : ℝ) : ℂ)
 
-/-- T022 right-hand side: the value predicted for `L(1, χ)` when `χ` is even
+/-- right-hand side: the value predicted for `L(1, χ)` when `χ` is even
 primitive modulo `p`. -/
 noncomputable def evenLValueRhs (χ : DirichletCharacter ℂ p) : ℂ :=
   -(gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)))⁻¹ * evenLValueLogSum p χ

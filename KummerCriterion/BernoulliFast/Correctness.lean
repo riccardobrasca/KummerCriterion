@@ -15,19 +15,19 @@ computable definition to Mathlib's noncomputable `bernoulli`.
 ## Proof strategy
 
 1. **`binomSum` agrees with `Finset.sum` + `Nat.choose`** (`binomSum_eq`):
-   By induction on the list, maintaining the invariant that the running
-   coefficient `c` equals `↑(Nat.choose m k)`.  The key identity is
-   `(k+1) · C(m, k+1) = (m − k) · C(m, k)` lifted to `ℚ`.
+ By induction on the list, maintaining the invariant that the running
+ coefficient `c` equals `↑(Nat.choose m k)`. The key identity is
+ `(k+1) · C(m, k+1) = (m − k) · C(m, k)` lifted to `ℚ`.
 
 2. **`bernoulliList` properties**:
-   - `bernoulliList_length`: `(bernoulliList n).length = n + 1`.
-   - `bernoulliList_getD`: earlier entries are preserved on extension.
+ - `bernoulliList_length`: `(bernoulliList n).length = n + 1`.
+ - `bernoulliList_getD`: earlier entries are preserved on extension.
 
 3. **Main theorem** (`bernoulliCompute_eq`):
-   By strong induction on `n` using `sum_bernoulli (n+2)`:
-     `∑_{k≤n+1} C(n+2,k) · Bₖ = 0`
-   Split off the last term `(n+2) · B_{n+1}`, substitute the IH via
-   `Finset.sum_congr`, and equate with the definition of `bernoulliCompute`.
+ By strong induction on `n` using `sum_bernoulli (n+2)`:
+ `∑_{k≤n+1} C(n+2,k) · Bₖ = 0`
+ Split off the last term `(n+2) · B_{n+1}`, substitute the IH via
+ `Finset.sum_congr`, and equate with the definition of `bernoulliCompute`.
 
 ## Main declarations
 

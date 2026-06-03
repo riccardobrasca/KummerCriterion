@@ -8,26 +8,26 @@ public import Mathlib.RingTheory.ClassGroup
 
 For an extension `A → B` of commutative domains with injective algebra map
 (equivalently `Module.IsTorsionFree A B`), we construct the monoid
-homomorphism `ClassGroup.extensionMap : ClassGroup A →* ClassGroup B` given
+homomorphism `ClassGroup.extensionMap: ClassGroup A →* ClassGroup B` given
 by pushing fractional ideals forward along the algebra map.
 
-This is the common machinery; see `KummerCriterion.TotallyRealSubfield` for
+This is the common machinery; see `KummerCriterion.TotallyRealSubfield`
 the specialisation to the inclusion `𝒪_{K⁺} ↪ 𝒪_K` used in Kummer's
 criterion.
 
 ## Main definitions
 
 - `FractionalIdeal.extensionMap A B` — the ring homomorphism on fractional
-  ideals induced by `A → B`.
+ ideals induced by `A → B`.
 - `FractionalIdeal.fractionRingMap A B` — the ring homomorphism on fraction
-  rings induced by `A → B` via the universal property of localisation.
+ rings induced by `A → B` via the universal property of localisation.
 - `ClassGroup.extensionMap A B` — the descent to class groups.
 
 ## Main results
 
 - `FractionalIdeal.extensionMap_spanSingleton` — principal fractional ideals
-  push forward to principal fractional ideals. The key compatibility that
-  makes the class-group-level descent well-defined.
+ push forward to principal fractional ideals. The key compatibility that
+ makes the class-group-level descent well-defined.
 -/
 
 @[expose] public section

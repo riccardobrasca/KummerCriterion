@@ -21,13 +21,13 @@ The two displayed congruences on page 51 of Diekmann 2023, used directly in
 the proof of Theorem 42:
 
 * `hMinus_formula_teichmuller_mod_p` — separating the boundary factor `j = p - 2`
-  gives `h⁻ ≡ ∏_{1 ≤ j ≤ p-4, odd j} (-1/2) · B_{1,ω^j}  (mod p)`.
+ gives `h⁻ ≡ ∏_{1 ≤ j ≤ p-4, odd j} (-1/2) · B_{1,ω^j} (mod p)`.
 * `hMinus_formula_bernoulli_mod_p` — substituting Corollary 34 gives
-  `h⁻ ≡ ∏_{1 ≤ j ≤ p-4, odd j} (-1/2) · B_{j+1} / (j+1)  (mod p)`.
+ `h⁻ ≡ ∏_{1 ≤ j ≤ p-4, odd j} (-1/2) · B_{j+1} / (j+1) (mod p)`.
 
 Both are proved on top of `hMinus_formula_teichmuller`
 (`KummerCriterion.HMinus.LValueReduction`), now fully proved in the
-completed T023 chain. These corollaries are therefore established on a
+completed chain. These corollaries are therefore established on a
 completed base.
 -/
 

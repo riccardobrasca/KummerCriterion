@@ -19,7 +19,7 @@ public import Mathlib.RingTheory.Polynomial.Cyclotomic.Factorization
 /-!
 # Basic cyclotomic zeta-factorisation infrastructure
 
-This module contains the setup and prime-by-prime local-factor calculations for
+This module contains the setup and prime-by-prime local-factor calculations
 `KummerCriterion.ZetaFactorisation`.
 -/
 
@@ -191,7 +191,7 @@ lemma prod_nthRootsFinset_one_sub_mul (d : ℕ) (hd : 0 < d) (T : ℂ) :
     have hTT : T ^ d * T⁻¹ ^ d = 1 := by rw [← mul_pow, mul_inv_cancel₀ hT, one_pow]
     linear_combination hTT
 
-/-- Helper: if `ω` is a primitive `n`-th root of unity, then for any `a : ℕ`,
+/-- Helper: if `ω` is a primitive `n`-th root of unity, then for any `a: ℕ`,
 `ω^a` is a primitive `(n / gcd(n, a))`-th root of unity.
 
 This generalises `IsPrimitiveRoot.pow_of_coprime` to arbitrary exponents. -/
@@ -219,7 +219,7 @@ lemma _root_.IsPrimitiveRoot.pow_isPrimitiveRoot_div_gcd
   exact hω_c.pow_of_coprime _ ha'_cop
 
 /-- Polynomial identity: for `ω` a primitive `n`-th root of unity in `ℂ` and any
-`a : ℕ`, `∏_{k = 0..n-1} (1 - ω^{ka} T) = (1 - T^{n/gcd(n,a)})^{gcd(n,a)}`. -/
+`a: ℕ`, `∏_{k = 0..n-1} (1 - ω^{ka} T) = (1 - T^{n/gcd(n,a)})^{gcd(n,a)}`. -/
 lemma prod_pow_primRoot_eq_pow {n : ℕ} (hn : 0 < n) (a : ℕ)
     {ω : ℂ} (hω : IsPrimitiveRoot ω n) (T : ℂ) :
     ∏ k ∈ Finset.range n, (1 - ω ^ (k * a) * T) =
@@ -311,7 +311,7 @@ lemma prod_pow_primRoot_eq_pow {n : ℕ} (hn : 0 < n) (a : ℕ)
     _ = 1 - T ^ d := prod_nthRootsFinset_one_sub_mul d hd_pos T
 
 /-- The classical finite-group character identity:
-for `u : (ZMod p)ˣ` with `orderOf u = d`, as `χ` ranges over
+for `u: (ZMod p)ˣ` with `orderOf u = d`, as `χ` ranges over
 `DirichletCharacter ℂ p`, the values `χ(u)` hit each `d`-th root of unity
 exactly `(p - 1) / d` times, so the product `∏_χ (1 - χ(u) T)` is
 `(1 - T^d)^{(p-1)/d}`. -/
@@ -423,7 +423,7 @@ lemma charLocalFactor_eq_pow_localResidueDegree {ℓ : ℕ} [Fact ℓ.Prime]
         Complex.cpow_mul_nat]]
   rfl
 
-/-- At `ℓ = p`, every Dirichlet character `χ` mod `p` vanishes at `(p : ZMod p) = 0`
+/-- At `ℓ = p`, every Dirichlet character `χ` mod `p` vanishes at `(p: ZMod p) = 0`
 (since `0` is not a unit), so each factor `(1 - χ(p)·p^{-s})` equals `1` and the
 full character-side local factor is `1`. This differs from the Dedekind-side
 local factor `1 - p^{-s}` by exactly the `(1 - p^{-s})` factor distinguishing

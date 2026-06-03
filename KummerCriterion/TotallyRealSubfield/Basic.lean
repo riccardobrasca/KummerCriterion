@@ -10,7 +10,7 @@ public import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
 public import Mathlib.RingTheory.Flat.TorsionFree
 public import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
 public import Mathlib.RingTheory.Ideal.GoingUp
-public import KummerCriterion.ClassGroupExtension
+public import KummerCriterion.TotallyRealSubfield.ClassGroupExtension
 public import FltRegular.NumberTheory.RegularPrimes
 public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
 import FltRegular.NumberTheory.Cyclotomic.MoreLemmas
@@ -50,12 +50,12 @@ theorem isCMField_of_cyclotomic : IsCMField K :=
 
 /-! ### 2. Basic dimensions -/
 
-/-- `[K : K⁺] = 2`. -/
+/-- `[K: K⁺] = 2`. -/
 theorem finrank_K_over_Kplus [IsCMField K] :
     Module.finrank (K⁺) K = 2 :=
   IsQuadraticExtension.finrank_eq_two _ _
 
-/-- `[K⁺ : ℚ] = (p-1)/2`. -/
+/-- `[K⁺: ℚ] = (p-1)/2`. -/
 theorem finrank_Kplus_over_rat [IsCMField K] :
     Module.finrank ℚ (K⁺) = (p - 1) / 2 := by
   have h1 : Module.finrank (K⁺) K = 2 := finrank_K_over_Kplus K

@@ -6,7 +6,7 @@ import Mathlib.GroupTheory.Perm.Cycle.Type
 # From p-saturation to p-index nondivisibility
 
 This file records the finite-index group-theoretic step used after the
-cyclotomic-unit saturation theorem.  If a finite-index subgroup contains all
+cyclotomic-unit saturation theorem. If a finite-index subgroup contains all
 `p`-torsion and is `p`-saturated in the ambient group, then `p` cannot divide
 its index.
 -/
@@ -25,7 +25,7 @@ variable {p : ℕ} [Fact p.Prime]
 is p-saturated in the whole group and contains every element killed by `p`.
 
 The proof is Cauchy's theorem on `G / H`: a p-divisor of the index gives a
-nontrivial quotient class with p-th power one.  Saturation lifts the p-th
+nontrivial quotient class with p-th power one. Saturation lifts the p-th
 power equality into `H`, and the torsion hypothesis forces the representative
 itself back into `H`, contradiction. -/
 theorem subgroup_not_dvd_index_of_pSaturated_top_of_pow_eq_one_mem
@@ -102,7 +102,7 @@ theorem CPlus_index_ne_zero (hp_three : 3 ≤ p) :
     exact (Nat.mul_pos (pow_pos (by norm_num : 0 < 2) _)
       (Nat.pos_of_ne_zero Fintype.card_ne_zero)).ne'
 
-/-- CU-15: p-saturation of the cyclotomic units in the full plus-side unit
+/-- p-saturation of the cyclotomic units in the full plus-side unit
 group forces p not to divide the cyclotomic-unit index. -/
 theorem not_dvd_index_of_pSaturated (hp_three : 3 ≤ p)
     (hsat : pSaturated (CPlus (p := p) (K := K) hp_three) (EPlus (K := K)) p) :

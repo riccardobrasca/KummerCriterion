@@ -4,7 +4,7 @@ import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
 import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3
 import Mathlib.NumberTheory.NumberField.CMField
 import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
-import KummerCriterion.LehmerVandiver.PlusCoprime.KummerLift.CharacterIdentification
+import KummerCriterion.LehmerVandiver.PlusCoprime.CharacterIdentification
 import Mathlib.RingTheory.Ideal.Quotient.Basic
 import Mathlib.GroupTheory.SpecificGroups.Cyclic
 import Mathlib.RingTheory.IntegralDomain
@@ -16,7 +16,7 @@ import KummerCriterion.TotallyRealSubfield.ClassGroup
 
 The classical Sinnott / Washington Theorem 8.2 states
 
-  `[(𝓞 K⁺)ˣ : C⁺] = h⁺(K)`
+ `[(𝓞 K⁺)ˣ: C⁺] = h⁺(K)`
 
 for `K = ℚ(ζ_p)` (with `C⁺ ⊆ (𝓞 K)ˣ` the real cyclotomic-units
 subgroup intersected with `realUnits K`, viewed via `(𝓞 K⁺)ˣ ≃ realUnits K`).
@@ -34,11 +34,11 @@ the rest of the chain to compose parametrically.
 ## References
 
 * Washington, *Introduction to Cyclotomic Fields*, 2nd ed. §8.2
-  (Theorem 8.2: Sinnott's index formula for the cyclotomic case).
+ (Theorem 8.2: Sinnott's index formula for the cyclotomic case).
 * Sinnott, *On the Stickelberger ideal and the circular units of a
-  cyclotomic field*, Annals of Math. 108 (1978).
+ cyclotomic field*, Annals of Math. 108 (1978).
 * `KummerCriterion/HMinus/ClassNumberFormula.lean` — analytic CNF
-  inputs (`hPlus_formula`, `hPlus_formula_of_evenLValues`).
+ inputs (`hPlus_formula`, `hPlus_formula_of_evenLValues`).
 -/
 
 @[expose] public section
@@ -61,15 +61,15 @@ variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 the index of `⟨cyclotomicUnitFamilyKplus⟩ ⊔ torsion` in `(𝓞 K⁺)ˣ`
 equals `h⁺(K) = hPlus K`.
 
-Equivalently (under the natural identifications), `[E⁺ : C⁺] = h⁺`.
+Equivalently (under the natural identifications), `[E⁺: C⁺] = h⁺`.
 
 The proof requires:
 1. The regulator-of-cyclotomic-units determinant computation
-   (Kummer 1850, classical): `Reg(C⁺) = (factor) · ∏_{χ even nontrivial} L(1, χ)`.
+ (Kummer 1850, classical): `Reg(C⁺) = (factor) · ∏_{χ even nontrivial} L(1, χ)`.
 2. The analytic CNF for K⁺ (already shipped as `hPlus_formula_of_evenLValues`):
-   `h⁺ · Reg(K⁺) = (same factor) · ∏ L(1, χ)`.
+ `h⁺ · Reg(K⁺) = (same factor) · ∏ L(1, χ)`.
 3. Comparison: `Reg(C⁺) / Reg(K⁺) = h⁺`, which by `regOfFamily_div_regulator`
-   equals `[E⁺ : ⟨family⟩ ⊔ torsion]`.
+ equals `[E⁺: ⟨family⟩ ⊔ torsion]`.
 
 Step 1 is the substantive deferred content. -/
 def SinnottIndexFormula (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) : Prop :=
@@ -83,7 +83,7 @@ set_option backward.isDefEq.respectTransparency false in
 `regOfFamily(family) = 2^((p-3)/2) · h⁺ · regulator(K⁺)` directly.
 The factor `2^((p-3)/2)` reflects the index of the squared cyclotomic
 unit subgroup `⟨realCyclotomicUnit_k⟩` inside the standard cyclotomic
-units `C⁺`; multiplied by the Sinnott index `[U⁺ : C⁺] = h⁺` gives the
+units `C⁺`; multiplied by the Sinnott index `[U⁺: C⁺] = h⁺` gives the
 total index. Composes with `regOfFamily_div_regulator` to give the
 index formula. -/
 def SinnottRegulatorIdentity (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) : Prop :=
@@ -101,7 +101,7 @@ theorem sinnottIndexFormula_of_regulatorIdentity
     (h : SinnottRegulatorIdentity p K hp_odd hp_three) :
     SinnottIndexFormula p K hp_odd hp_three := by
   unfold SinnottIndexFormula SinnottRegulatorIdentity at *
-  -- regOfFamily(family) / regulator(K⁺) = [E⁺ : ⟨family⟩ ⊔ torsion] (mathlib).
+  -- regOfFamily(family) / regulator(K⁺) = [E⁺: ⟨family⟩ ⊔ torsion] (mathlib).
   have h_div := regOfFamily_cyclotomicUnitFamilyKplus_div_regulator
     p K hp_odd hp_three
   -- regulator K⁺ ≠ 0 (positive).
@@ -109,13 +109,13 @@ theorem sinnottIndexFormula_of_regulatorIdentity
       (NumberField.maximalRealSubfield K) :=
     NumberField.Units.regulator_pos _
   rw [h] at h_div
-  -- h_div : 2^((p-3)/2) · h⁺ · R / R = (index : ℝ)
+  -- h_div: 2^((p-3)/2) · h⁺ · R / R = (index: ℝ)
   rw [show (2 : ℝ) ^ ((p - 3) / 2) * (hPlus K : ℝ) *
         NumberField.Units.regulator (NumberField.maximalRealSubfield K) /
         NumberField.Units.regulator (NumberField.maximalRealSubfield K) =
       2 ^ ((p - 3) / 2) * (hPlus K : ℝ) from by
     field_simp] at h_div
-  -- h_div : 2^((p-3)/2) · h⁺ = (index : ℝ)
+  -- h_div: 2^((p-3)/2) · h⁺ = (index: ℝ)
   exact_mod_cast h_div.symm
 
 set_option backward.isDefEq.respectTransparency false in
@@ -123,8 +123,8 @@ set_option backward.isDefEq.respectTransparency false in
 
 The analytic CNF for K⁺ (already shipped as `hPlus_formula`) gives
 
-  `(hPlus K : ℝ) · regulator K⁺ = dedekindZeta_residue K⁺ ·
-    (torsionOrder · √|disc K⁺|) / (2^r · (2π)^c)`
+ `(hPlus K: ℝ) · regulator K⁺ = dedekindZeta_residue K⁺ ·
+ (torsionOrder · √|disc K⁺|) / (2^r · (2π)^c)`
 
 where the RHS is purely analytic (no `hPlus`, no `regulator`).
 
@@ -139,11 +139,11 @@ set_option backward.isDefEq.respectTransparency false in
 Once `SinnottIndexFormula` is established, the **structural contrapositive
 engine** (step F) reduces `Cor8_19Bridge` to a "p-saturation" check:
 
-  Under `¬ p ∣ h⁺`, the family-generated subgroup `⟨family⟩ ⊔ torsion`
-  has index coprime to p in `(𝓞 K⁺)ˣ`. Hence the inclusion
-  `⟨family⟩ ⊔ torsion ↪ (𝓞 K⁺)ˣ` is "p-saturated", i.e., a unit is a
-  p-th power in `(𝓞 K⁺)ˣ` iff it is a p-th power in
-  `⟨family⟩ ⊔ torsion` (when the unit lies in the latter).
+ Under `¬ p ∣ h⁺`, the family-generated subgroup `⟨family⟩ ⊔ torsion`
+ has index coprime to p in `(𝓞 K⁺)ˣ`. Hence the inclusion
+ `⟨family⟩ ⊔ torsion ↪ (𝓞 K⁺)ˣ` is "p-saturated", i.e., a unit is a
+ p-th power in `(𝓞 K⁺)ˣ` iff it is a p-th power in
+ `⟨family⟩ ⊔ torsion` (when the unit lies in the latter).
 
 For `pollaczekUnitPlus ∈ ⟨family⟩ ⊔ torsion` (extending step E to the
 family-version), the contrapositive form of the local certificate gives
@@ -156,7 +156,7 @@ under Sinnott's full theorem, but a separate step in the formal chain). -/
 
 set_option backward.isDefEq.respectTransparency false in
 /-- **Sinnott formula bridge target**: under `SinnottIndexFormula` (step C/D),
-the index identity gives `[E⁺ : ⟨family⟩ ⊔ torsion] = 2^((p-3)/2) · h⁺`
+the index identity gives `[E⁺: ⟨family⟩ ⊔ torsion] = 2^((p-3)/2) · h⁺`
 directly. The factor `2^((p-3)/2)` reflects the gap between the project's
 squared cyclotomic family `⟨realCyclotomicUnit_k⟩` and the standard
 cyclotomic units `C⁺`. -/
@@ -184,11 +184,11 @@ Under `SinnottIndexFormula` and `PollaczekInFamily`, the "p-saturation"
 argument gives `Cor8_19Bridge`:
 
 * `¬ p ∣ h⁺` (target conclusion).
-* `[E⁺ : ⟨family⟩ ⊔ torsion] = h⁺` (Sinnott).
-* So `p ∤ [E⁺ : ⟨family⟩ ⊔ torsion]`.
-* For `α^p = pollaczekUnitPlus` in `E⁺` with α : (𝓞 K)ˣ — the descent
-  of α to a family-or-torsion element exists by p-saturation, giving the
-  contrapositive: `¬IsPthPower(pollaczekUnitPlus in E⁺) → ¬p∣h⁺`.
+* `[E⁺: ⟨family⟩ ⊔ torsion] = h⁺` (Sinnott).
+* So `p ∤ [E⁺: ⟨family⟩ ⊔ torsion]`.
+* For `α^p = pollaczekUnitPlus` in `E⁺` with α: (𝓞 K)ˣ — the descent
+ of α to a family-or-torsion element exists by p-saturation, giving the
+ contrapositive: `¬IsPthPower(pollaczekUnitPlus in E⁺) → ¬p∣h⁺`.
 
 This is the structural form of the Cor 8.19 contrapositive engine. -/
 

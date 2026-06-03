@@ -6,7 +6,7 @@ import KummerCriterion.CyclotomicUnits.KummerLogTrace
 # Kummer logarithm coefficient congruence
 
 This file specializes the formal coefficient identity from `KummerLogFormal`
-at the residue of the Kummer column.  The specialization is still a formal
+at the residue of the Kummer column. The specialization is still a formal
 mod-`p` statement; the final bridge to concrete matrix entries is recorded
 separately so it cannot be hidden behind a bundled hypothesis.
 -/
@@ -59,7 +59,7 @@ theorem formalKummerLogCoeffModP_column_unit_ne_zero
     (kummerLogRowIndex_one_le (p := p) j)
     (two_mul_kummerLogRowIndex_le_sub_three (p := p) j)
 
-/-- CU-11e: specialization of the formal coefficient identity at the Kummer
+/-- specialization of the formal coefficient identity at the Kummer
 column residue. -/
 theorem formalKummerLogCoeffModP_eval_kummerLogColumnIndex
     (hp_three : 3 ≤ p) (_hp_five : 5 ≤ p)
@@ -101,7 +101,7 @@ theorem kummerLogCoeffCongrRhs_unit_ne_zero
     kummerLogUnitFactor p (kummerLogRowIndex (p := p) j) ≠ 0 :=
   formalKummerLogCoeffModP_column_unit_ne_zero (p := p) hp_five j
 
-/-- The squared-family unit factor.  The normalized `C⁺` coefficient uses
+/-- The squared-family unit factor. The normalized `C⁺` coefficient uses
 `kummerLogUnitFactor`; the currently implemented concrete logarithm columns
 come from the squared real cyclotomic-unit family, so their exact coefficient
 has this extra factor `2`. -/

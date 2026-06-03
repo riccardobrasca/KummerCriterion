@@ -23,7 +23,7 @@ section ZetaFactorisation
 variable (p : ℕ) [hp : Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-/-! ### Step F — residue-ready statements for T023 -/
+/-! ### Residue-ready statements -/
 
 /-- Residue of `(s - 1) · ζ(s) · nontrivialLProduct p s` at `s = 1`: equals
 `nontrivialLProduct p 1`, since `lim (s - 1)ζ(s) = 1` (residue of Riemann zeta)

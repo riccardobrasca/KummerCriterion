@@ -784,7 +784,7 @@ theorem dworkParameterPowerApproxBlockSeq_sub_mem_primeIdeal_pow_smul_top
     (hM := le_rfl)
 
 set_option maxHeartbeats 1200000 in
--- This is the formal limit step for CU-09e2.  It is conditional only on the
+-- This is the formal limit step for. It is conditional only on the
 -- coefficient module's `p`-adic precompleteness; the coherent approximation
 -- and Dwork-continuity estimates are proved above.
 theorem dworkParameterPowerLinearMap_surjective_of_precomplete

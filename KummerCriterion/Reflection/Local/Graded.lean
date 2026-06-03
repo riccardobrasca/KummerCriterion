@@ -12,7 +12,7 @@ public import KummerCriterion.Reflection.Local.Basic
 /-!
 # First graded piece of the principal-unit filtration
 
-This file begins the REF-10d2 first graded-piece layer.  It constructs the
+This file begins the first graded-piece layer. It constructs the
 standard homomorphism from multiplicative principal units to the additive
 cotangent space `I / I^2`, sending `u` to `u - 1`, and identifies its kernel.
 -/

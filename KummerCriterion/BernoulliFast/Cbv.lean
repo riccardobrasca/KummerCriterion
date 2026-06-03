@@ -10,15 +10,15 @@ import Mathlib.Data.List.Defs
 # `cbv`-optimized Bernoulli number evaluation
 
 This module provides a proof-producing evaluator for concrete Bernoulli
-numbers.  It uses a small fraction representation and `cbv` simprocs that
+numbers. It uses a small fraction representation and `cbv` simprocs that
 collapse ground fraction operations and literal-list traversals in one step.
 
 The main public definitions are:
 
 * `KummerCriterion.BernoulliFast.Cbv.Frac` — the integer/natural fraction
-  representation used by the evaluator;
+ representation used by the evaluator;
 * `KummerCriterion.BernoulliFast.Cbv.toRat` — interpretation of a fraction as
-  a rational number;
+ a rational number;
 * `KummerCriterion.BernoulliFast.Cbv.bernoulliFrac` — the concrete evaluator.
 -/
 
@@ -317,9 +317,9 @@ private theorem toRat_divN {f : Frac} (hf : f.2 ≠ 0) {d : Nat} (hd : d ≠ 0) 
 /-! ## Simprocs for `Frac` and literal `List` traversal
 
 Without these, every `Frac` op unfolds through a long typeclass chain
-(`HMul.hMul → instHMul → Mul.mul → Int.instMul → Int.mul → ...`) and
+(`HMul.hMul → instHMul → Mul.mul → Int.instMul → Int.mul →...`) and
 `simplify` rebuilds a `Prod` via pattern matching, and every list traversal
-walks a cons-by-cons equation unfolding.  The simprocs below extract ground
+walks a cons-by-cons equation unfolding. The simprocs below extract ground
 values, compute the result in meta code, and emit a single-step `Eq.refl`. -/
 
 open Lean Meta Lean.Meta.Tactic.Cbv
@@ -619,14 +619,14 @@ theorem bernoulliFrac_toRat_eq_bernoulli (n : Nat) :
 
 /-! ## Pascal-row recurrence -/
 
-/-- Next Pascal row: `[C(n,0), C(n,1), ..., C(n,n)]` to
-`[C(n+1,0), C(n+1,1), ..., C(n+1,n+1)]`. -/
+/-- Next Pascal row: `[C(n,0), C(n,1),..., C(n,n)]` to
+`[C(n+1,0), C(n+1,1),..., C(n+1,n+1)]`. -/
 private def nextPascalRow (row : List Nat) : List Nat :=
   let mid := (row.zip row.tail).map (fun (a, b) => a + b)
   [1] ++ mid ++ [1]
 
 /-- Given known Bernoulli numbers and the matching Pascal row, compute the
-next Bernoulli number.  `bs.zip row` truncates to `bs.length` pairs; the row
+next Bernoulli number. `bs.zip row` truncates to `bs.length` pairs; the row
 is intentionally one coefficient longer. -/
 private def nextBernoulli (bs : List Frac) (row : List Nat) : Frac :=
   let k := bs.length
@@ -638,14 +638,14 @@ private def go : Nat → List Frac → List Nat → List Frac
   | 0, bs, _ => bs
   | n + 1, bs, row => go n (bs ++ [nextBernoulli bs row]) (nextPascalRow row)
 
-/-- Pascal-row table `[B₀, ..., Bₙ]`, represented as `Frac`s. -/
+/-- Pascal-row table `[B₀,..., Bₙ]`, represented as `Frac`s. -/
 def bernoulliPascalFracList (n : Nat) : List Frac :=
   go n [(1, 1)] [1, 2, 1]
 
 /-- Pascal-row `Frac` evaluator from the original experiment.
 
 This is faster for large concrete `cbv` evaluations than the certified mirror
-above, but the theorem-level Mathlib bridge is currently provided for
+above, but the theorem-level Mathlib bridge is currently provided
 `bernoulliFrac`. -/
 def bernoulliPascalFrac (n : Nat) : Frac :=
   (bernoulliPascalFracList n).getLast!

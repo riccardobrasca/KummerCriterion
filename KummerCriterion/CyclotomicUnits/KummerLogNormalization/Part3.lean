@@ -493,7 +493,7 @@ theorem natCast_factorial_mul_samePrimeFiniteArtinHasseNormalizedCoordLogHomogen
 set_option linter.style.longLine false in
 set_option maxHeartbeats 800000 in
 -- This repeats the Part5 factorial-cleared comparison with the normalized
--- formal source.  The formal hypothesis is a concrete coefficient equality,
+-- formal source. The formal hypothesis is a concrete coefficient equality,
 -- not a bundled finite-log assumption.
 omit [NumberField.IsCMField K] in
 theorem samePrimeFiniteArtinHasseNormalizedCoordLogHomogeneousTerm_eq_zero_of_not_mem_support

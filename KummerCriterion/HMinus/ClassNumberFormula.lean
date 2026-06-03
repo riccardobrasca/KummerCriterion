@@ -25,9 +25,9 @@ Outputs:
 - `hPlus_formula` — the corresponding formula for `h⁺ K`.
 - `hMinus_eq_h_div_hPlus` — the relative class number as `h / h⁺`.
 - `hMinus_formula_via_residues` — `h⁻` expressed as a quotient of residue
-  packages.
+ packages.
 - `h_formula_cyclotomic` — the prime-conductor specialization of `h_formula`
-  with explicit cyclotomic invariants.
+ with explicit cyclotomic invariants.
 
 See the sibling module `KummerCriterion.HMinus.LValueReduction` for the
 reduction of these residue expressions to character `L`-values.

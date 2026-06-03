@@ -5,12 +5,12 @@ public import Mathlib.NumberTheory.BernoulliPolynomials
 public import Mathlib.NumberTheory.Padics.PadicVal.Basic
 public import Mathlib.Data.Nat.Prime.Factorial
 public import Mathlib.Data.Nat.Choose.Dvd
-public import KummerCriterion.Characters
+public import KummerCriterion.KummerCongruence.Characters
 
 /-!
 # Generalized Bernoulli numbers `B_{n, χ}`
 
-Let `N : ℕ` be a positive modulus and `χ : DirichletCharacter R N` a
+Let `N: ℕ` be a positive modulus and `χ: DirichletCharacter R N` a
 Dirichlet character valued in a commutative `ℚ`-algebra `R`. The
 *generalized Bernoulli numbers* `B_{n, χ} ∈ R` interpolate classical
 Bernoulli numbers in the presence of a character twist, and arise as
@@ -18,7 +18,7 @@ values of the Dirichlet `L`-function `L(s, χ)` at non-positive integers.
 
 This file defines `BernoulliGen` via the explicit formula
 
-  `B_{n, χ} = N^{n-1} · ∑_{a : ZMod N} χ(a) · B_n(a/N)`
+ `B_{n, χ} = N^{n-1} · ∑_{a: ZMod N} χ(a) · B_n(a/N)`
 
 (Diekmann Prop 45, Washington eq. (4.1)) rather than via the
 generating-function description of Diekmann Definition 27. The two
@@ -31,11 +31,11 @@ fresh definition.
 
 ## Main definitions
 
-- `BernoulliGen χ n` — the generalized Bernoulli number `B_{n, χ}`.
+- `BernoulliGen χ n` - the generalized Bernoulli number `B_{n, χ}`.
 
 ## Main results
 
-- `BernoulliGen_zero_of_ne_one` — for non-trivial `χ`, `B_{0, χ} = 0`.
+- `BernoulliGen_zero_of_ne_one` - for non-trivial `χ`, `B_{0, χ} = 0`.
 
 ## References
 
@@ -55,10 +55,10 @@ variable {N : ℕ} {R : Type*} [CommRing R] [Algebra ℚ R]
 
 /-- The generalized Bernoulli number `B_{n, χ}`, defined by the explicit
 formula
-  `B_{n, χ} = N^{n-1} · ∑_{a : ZMod N} χ(a) · B_n(a/N)`,
+ `B_{n, χ} = N^{n-1} · ∑_{a: ZMod N} χ(a) · B_n(a/N)`,
 where `B_n` is the `n`-th Bernoulli polynomial over `ℚ`, base-changed
 to `R` via `algebraMap ℚ R`, and `a/N` is evaluated in `ℚ` using
-`ZMod.val a : ℕ`.
+`ZMod.val a: ℕ`.
 
 For non-trivial `χ` the `a = 0` summand vanishes because `χ(0) = 0`,
 and `BernoulliGen_zero_of_ne_one` shows the whole sum vanishes when
@@ -69,7 +69,7 @@ noncomputable def BernoulliGen [NeZero N]
     ∑ a : ZMod N, χ a *
       algebraMap ℚ R ((Polynomial.bernoulli n).eval ((a.val : ℚ) / N))
 
-/-- Intermediate form (T006): for a non-trivial Dirichlet character `χ`,
+/-- Intermediate form: for a non-trivial Dirichlet character `χ`,
 the `1/2` constant term in `B_1(a/N) = a/N - 1/2` does not contribute
 after summing, because `∑ χ(a) = 0`. -/
 lemma BernoulliGen_one_of_ne_one [IsDomain R] [NeZero N]
@@ -87,7 +87,7 @@ lemma BernoulliGen_one_of_ne_one [IsDomain R] [NeZero N]
       rw [Finset.mul_sum]; exact Finset.sum_congr rfl fun a _ => mul_comm _ _]
   rw [MulChar.sum_eq_zero_of_ne_one hχ, mul_zero, sub_zero]
 
-/-- **Diekmann eq. 24/27** (T006), cleared form: `N · B_{1, χ} = ∑_a χ(a) · a`
+/-- **Diekmann eq. 24/27**, cleared form: `N · B_{1, χ} = ∑_a χ(a) · a`
 for non-trivial `χ`. Cleared of denominators so it holds in any commutative
 `ℚ`-algebra. -/
 lemma natCast_mul_BernoulliGen_one_of_ne_one [IsDomain R] [NeZero N]
@@ -102,11 +102,11 @@ lemma natCast_mul_BernoulliGen_one_of_ne_one [IsDomain R] [NeZero N]
     ← map_mul, mul_div_cancel₀ _ (Nat.cast_ne_zero.mpr (NeZero.ne N))]
   push_cast; rfl
 
-/-! ### T008 — the boundary character `ω^{-1}` -/
+/-! ### The boundary character `ω^{-1}` -/
 
 /-- The `ℚ_[p]`-valued Teichmüller character, obtained by post-composing
 the `ℤ_[p]`-valued Teichmüller character with the natural embedding
-`ℤ_[p] → ℚ_[p]`. -/
+`ℤ_[p] -> ℚ_[p]`. -/
 noncomputable def teichmullerCharQp (p : ℕ) [Fact p.Prime] : DirichletCharacter ℚ_[p] p :=
   (teichmullerChar p).ringHomComp PadicInt.Coe.ringHom
 
@@ -149,7 +149,7 @@ lemma teichmullerCharQp_pow_ne_one_of_not_dvd {n : ℕ} (hn : ¬ (p - 1) ∣ n) 
   fun hpow => hn ((teichmullerCharQp_pow_eq_one_iff (p := p) n).mp hpow)
 
 omit [Algebra ℚ R] in
-/-- **Diekmann eq. 29** (T008): for an odd prime `p`, the boundary
+/-- **Diekmann eq. 29**: for an odd prime `p`, the boundary
 character `ω^{-1}` contributes the exceptional term `(p - 1) / p`, up
 to a `p`-adic integer. We realise `ω^{-1}` as `ω^(p - 2)`. -/
 lemma bernoulliGen_teichmuller_inverse_eq_p_sub_one_div_p_add_padicInt
@@ -226,51 +226,51 @@ lemma bernoulliGen_teichmuller_inverse_eq_p_sub_one_div_p_add_padicInt
     _ = (p : ℚ_[p]) * (((p - 1 : ℚ_[p]) / p) + z) := by
       rw [mul_add, mul_div_cancel₀ _ hpQ_ne_zero]
 
-/-! ### T009 — `B_{1, χ} = 0` for non-trivial even `χ`
+/-! ### `B_{1, χ} = 0` for non-trivial even `χ`
 
 The argument is: re-index the sum `∑_a χ(a) · a.val` by `a ↔ -a`.
 Because `χ` is even, `χ(-a) = χ(a)`; and on `ZMod N`,
 `a.val + (-a).val = N` whenever `a ≠ 0`. Summing both versions,
 `2·∑ = ∑ χ(a) · (a.val + (-a).val) = N · ∑_{a ≠ 0} χ(a) = N · 0 = 0`
-(the last step uses T004 and `χ(0) = 0`, which needs
+(the last step uses the character sum identity and `χ(0) = 0`, which needs
 `Nontrivial (ZMod N)`, automatic from `Fact (1 < N)`). Dividing by
 `2 ≠ 0` (CharZero) gives the result. -/
 
-/-! ### T010 — Von Staudt–Clausen (p-local case at `n = p-1`)
+/-! ### Von Staudt–Clausen (p-local case at `n = p-1`)
 
 The full Von Staudt–Clausen theorem states, for `n ≥ 2` even:
-  `B_n + ∑_{q prime, (q-1) ∣ n} 1/q ∈ ℤ`.
+ `B_n + ∑_{q prime, (q-1) ∣ n} 1/q ∈ ℤ`.
 We prove the p-local form at `n = p-1` (Diekmann Thm 46 at `n = p-1`):
 for an odd prime `p`, `B_{p-1} + 1/p` is a `p`-adic integer, equivalently
 `p · B_{p-1} ≡ -1 (mod p)` as `p`-adic integers. This is what is needed
-by T013 (boundary character handling for `ω^{p-2}`).
+by (boundary character handling for `ω^{p-2}`).
 
 Proof outline:
 1. **p-integrality below the boundary** (`bernoulli_padicValNat_den_of_lt`):
-   for `0 ≤ k < p-1`, `p` does not divide the denominator of `bernoulli k`
-   (equivalently, `bernoulli k` is a `p`-adic integer).
-   Proof: strong induction on `k`. Use `sum_bernoulli (k+1)` to express
-   `(k+1) · bernoulli k = -∑_{j<k} C(k+1, j) · bernoulli j`; since
-   `k+1 < p`, `k+1` is a `p`-unit, and each summand is `p`-integral by IH.
+ for `0 ≤ k < p-1`, `p` does not divide the denominator of `bernoulli k`
+ (equivalently, `bernoulli k` is a `p`-adic integer).
+ Proof: strong induction on `k`. Use `sum_bernoulli (k+1)` to express
+ `(k+1) · bernoulli k = -∑_{j<k} C(k+1, j) · bernoulli j`; since
+ `k+1 < p`, `k+1` is a `p`-unit, and each summand is `p`-integral by IH.
 
 2. **Main result** (`bernoulli_pSubOne_add_inv_p_mem_padicInt`):
-   specialising `sum_bernoulli` at `n = p` gives
-   `p · bernoulli (p-1) = -∑_{k<p-1} C(p, k) · bernoulli k`.
-   The `k = 0` term contributes `-1`; the `k = 1` term is `p/2`; odd
-   `k ≥ 3` vanish; even `k ∈ [2, p-3]` have a factor `C(p, k)` divisible
-   by `p` combined with `p`-integral `bernoulli k` (step 1). Combining,
-   `p · bernoulli (p-1) + 1 ∈ p · ℤ_[p]`. -/
+ specialising `sum_bernoulli` at `n = p` gives
+ `p · bernoulli (p-1) = -∑_{k<p-1} C(p, k) · bernoulli k`.
+ The `k = 0` term contributes `-1`; the `k = 1` term is `p/2`; odd
+ `k ≥ 3` vanish; even `k ∈ [2, p-3]` have a factor `C(p, k)` divisible
+ by `p` combined with `p`-integral `bernoulli k` (step 1). Combining,
+ `p · bernoulli (p-1) + 1 ∈ p · ℤ_[p]`. -/
 
 /-- Bernoulli numbers below the boundary `p - 1` are `p`-adic integers.
 
-Stated as: `(bernoulli k : ℚ_[p])` equals the image of some `z : ℤ_[p]`
-under the natural coercion `ℤ_[p] → ℚ_[p]`.
+Stated as: `(bernoulli k: ℚ_[p])` equals the image of some `z: ℤ_[p]`
+under the natural coercion `ℤ_[p] -> ℚ_[p]`.
 
 **Proof approach:** strong induction on `k`. Base cases `k = 0` (equals `1`)
 and `k = 1` (equals `-1/2`, a `p`-unit in `ℤ_[p]` since `p` is odd) are
 direct. Odd `k ≥ 3` have `bernoulli k = 0` and are trivial. For even
 `k ≥ 2` with `k < p - 1`, use `sum_bernoulli (k + 1)` to get
-  `(k + 1) · bernoulli k = -∑_{j ∈ range k} C(k + 1, j) · bernoulli j`;
+ `(k + 1) · bernoulli k = -∑_{j ∈ range k} C(k + 1, j) · bernoulli j`;
 since `k + 1 < p`, the scalar is a `p`-unit, and each summand is a
 `p`-adic integer by the induction hypothesis. -/
 theorem bernoulli_mem_padicInt_of_lt_sub_one {p : ℕ} [hp : Fact p.Prime]
@@ -296,11 +296,11 @@ theorem bernoulli_mem_padicInt_of_lt_sub_one {p : ℕ} [hp : Fact p.Prime]
       -∑ j ∈ Finset.range k, (Nat.choose (k + 1) j : ℚ) * _root_.bernoulli j := by
     push_cast; linarith [h_sum]
   -- Extract `ℤ_[p]`-witnesses for `bernoulli j`, `j < k`.
-  have hj_wit : ∀ j, j < k → ∃ z : ℤ_[p], (bernoulli j : ℚ_[p]) = (z : ℚ_[p]) :=
+  have hj_wit : ∀ j, j < k -> ∃ z : ℤ_[p], (bernoulli j : ℚ_[p]) = (z : ℚ_[p]) :=
     fun j hj => ih j hj (Nat.lt_of_lt_of_le hj (Nat.le_of_lt hk))
-  let z_of : ℕ → ℤ_[p] := fun j =>
+  let z_of : ℕ -> ℤ_[p] := fun j =>
     if h : j < k then (hj_wit j h).choose else 0
-  have hz_of : ∀ j, j < k → (bernoulli j : ℚ_[p]) = ((z_of j : ℤ_[p]) : ℚ_[p]) := by
+  have hz_of : ∀ j, j < k -> (bernoulli j : ℚ_[p]) = ((z_of j : ℤ_[p]) : ℚ_[p]) := by
     intro j hj; simp only [z_of, dif_pos hj]; exact (hj_wit j hj).choose_spec
   let S : ℤ_[p] := ∑ j ∈ Finset.range k, (Nat.choose (k + 1) j : ℤ_[p]) * z_of j
   have hS_coe : (S : ℚ_[p]) =

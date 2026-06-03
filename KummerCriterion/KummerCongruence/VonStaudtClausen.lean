@@ -1,26 +1,26 @@
 module
 
-public import KummerCriterion.BernoulliGeneralized
+public import KummerCriterion.KummerCongruence.BernoulliGeneralized
 public import Mathlib.NumberTheory.Bernoulli
 
 /-!
-# Kummer congruences — Von Staudt–Clausen + Step 2 (power-sum mod `p²`)
+# Kummer congruences - Von Staudt–Clausen + Step 2 (power-sum mod `p²`)
 
 This module proves the `p`-adic integrality ingredients for the Kummer
 congruence chain:
 
 - **Adams' integrality** (restricted to `k < p - 1`):
-  `bernoulli_div_mem_padicInt`.
+ `bernoulli_div_mem_padicInt`.
 - **Von Staudt–Clausen (generic case, restricted)**:
-  `bernoulli_mem_padicInt_of_not_pSubOne_dvd`.
+ `bernoulli_mem_padicInt_of_not_pSubOne_dvd`.
 - **Faulhaber term bound** (helper): `faulhaber_term_mem_p_sq`.
 - **Pre-division Step 2**: `sum_range_pow_sub_p_mul_bernoulli_weighted`.
 - **Step 2** (power-sum mod `p²`): `sum_range_pow_sModEq_p_mul_bernoulli`.
 - **Von Staudt–Clausen (unified, restricted)**:
-  `p_mul_bernoulli_mem_padicInt_restricted`.
+ `p_mul_bernoulli_mem_padicInt_restricted`.
 
 See the umbrella `KummerCriterion.KummerCongruence` for the full
-proof strategy and the T011/T012/T013 statements derived from these
+proof strategy and the // statements derived from these
 ingredients.
 -/
 
@@ -30,32 +30,32 @@ noncomputable section
 
 namespace KummerCriterion
 
-/-! ### Step 2 — Power-sum congruence `∑ a^t ≡ p · B_t (mod p²)`
+/-! ### Step 2 - Power-sum congruence `∑ a^t ≡ p · B_t (mod p²)`
 
 This is the non-trivial elementary ingredient that, combined with
 the sharper Teichmüller `ω(a) ≡ (a.val)^p (mod p²)` from Step 1,
-produces the bridge T012.
+produces the bridge.
 
 **Proof outline** (Faulhaber + p-adic valuation bookkeeping, following
 reviewer's clean formulation):
 
 Faulhaber's formula (mathlib `sum_range_pow`) gives, for any `N`:
-  `∑_{a=0}^{N-1} a^t = (1/(t+1)) ∑_{i=0}^{t} B_i · C(t+1, i) · N^{t+1-i}`.
+ `∑_{a=0}^{N-1} a^t = (1/(t+1)) ∑_{i=0}^{t} B_i · C(t+1, i) · N^{t+1-i}`.
 Setting `N = p` and multiplying by `(t+1)` keeps everything in `ℤ_p`:
-  `(t+1) · ∑_{a=0}^{p-1} a^t = ∑_{i=0}^{t} B_i · C(t+1, i) · p^{t+1-i}`.
+ `(t+1) · ∑_{a=0}^{p-1} a^t = ∑_{i=0}^{t} B_i · C(t+1, i) · p^{t+1-i}`.
 Splitting off the `i = t` term (which is `(t+1) · p · B_t`) leaves
-  `(t+1) · (∑ a^t − p · B_t) = ∑_{i=0}^{t-1} B_i · C(t+1, i) · p^{t+1-i}`.
+ `(t+1) · (∑ a^t − p · B_t) = ∑_{i=0}^{t-1} B_i · C(t+1, i) · p^{t+1-i}`.
 
 Each `i < t` term is in `p²·ℤ_p`. Case-by-case valuation bound:
 
 | case | `v_p(B_i · C(t+1,i) · p^{t+1-i})` |
 |------|-------------------------------------|
-| `i = 0`                              | `≥ t+1 ≥ 3`        (Bernoulli `1`, huge `p^{t+1}` factor) |
-| `i = 1`                              | `≥ t ≥ 2`          (`v_p(−1/2) = 0` for odd `p`)          |
-| odd `i ≥ 3`                          | `= ∞`              (`bernoulli i = 0`)                    |
-| even `i ∈ [2, t-2]`, `(p-1) ∤ i`     | `≥ t+1-i ≥ 3`      (`v_p(B_i) ≥ 0` by vSC)                |
-| even `i ∈ [2, t-2]`, `(p-1) ∣ i`     | `≥ (t+1-i)−1 ≥ 2`  (`v_p(B_i) ≥ −1` by vSC)               |
-| `i = t−1 = 1` (so `t = 2`)           | `= 2`              (`B_1 = −1/2`, factor `p²`)            |
+| `i = 0` | `≥ t+1 ≥ 3` (Bernoulli `1`, huge `p^{t+1}` factor) |
+| `i = 1` | `≥ t ≥ 2` (`v_p(−1/2) = 0` for odd `p`) |
+| odd `i ≥ 3` | `= ∞` (`bernoulli i = 0`) |
+| even `i ∈ [2, t-2]`, `(p-1) ∤ i` | `≥ t+1-i ≥ 3` (`v_p(B_i) ≥ 0` by vSC) |
+| even `i ∈ [2, t-2]`, `(p-1) ∣ i` | `≥ (t+1-i)−1 ≥ 2` (`v_p(B_i) ≥ −1` by vSC) |
+| `i = t−1 = 1` (so `t = 2`) | `= 2` (`B_1 = −1/2`, factor `p²`) |
 
 (`v_p(C(t+1,i)) ≥ 0` is automatic from the integer-valued-ness of
 the binomial coefficient; no Kummer-on-binomials needed.)
@@ -66,45 +66,45 @@ since `p ∤ (t+1)`) gives the claim.
 Needed infrastructure:
 - `Finset.sum_range_pow` (mathlib, Faulhaber). ✓
 - `_root_.bernoulli_odd_eq_zero` for odd `i ≥ 3`. ✓
-- `bernoulli_mem_padicInt_of_lt_sub_one` (this file, T010-era work)
-  for `i < p-1`. ✓
+- `bernoulli_mem_padicInt_of_lt_sub_one` (this file, era work)
+ for `i < p-1`. ✓
 - `p_mul_bernoulli_mem_padicInt_restricted` (this file): `p · B_k ∈ ℤ_p`
-  for even `k ≥ 2` with `¬ p^3 ∣ (k+1)`. ✓ (unified vSC, proved by
-  strong induction on `k`, splitting on `v_p(k+1) ∈ {0, 1, 2}`).
+ for even `k ≥ 2` with `¬ p^3 ∣ (k+1)`. ✓ (unified vSC, proved by
+ strong induction on `k`, splitting on `v_p(k+1) ∈ {0, 1, 2}`).
 -/
 
 /-! ### Generalized von Staudt–Clausen bounds (prerequisites for Step 2)
 
 The other agent has proved `bernoulli_mem_padicInt_of_lt_sub_one` (bound
-`k < p - 1`). For Step 2 we need the full valuation bounds for
+`k < p - 1`). For Step 2 we need the full valuation bounds
 arbitrary `k`. Two theorems handle this:
 
 - `bernoulli_mem_padicInt_of_not_pSubOne_dvd`: for `k < p - 1`, `B_k ∈ ℤ_p`
-  (no `(p-1) ∣ k` restriction needed in this range). Derived from the
-  restricted Adams theorem `bernoulli_div_mem_padicInt` (also restricted
-  to `k < p - 1`).
+ (no `(p-1) ∣ k` restriction needed in this range). Derived
+ restricted Adams theorem `bernoulli_div_mem_padicInt` (also restricted
+ to `k < p - 1`).
 
 - `p_mul_bernoulli_mem_padicInt_restricted`: for even `k ≥ 2` with
-  `¬ p^3 ∣ (k+1)`, `p · B_k ∈ ℤ_p`. Unified over `(p-1) ∣ k` (vSC
-  boundary) and `(p-1) ∤ k` (vSC generic). Proved by strong induction on
-  `k`, splitting on `v_p(k+1)`:
+ `¬ p^3 ∣ (k+1)`, `p · B_k ∈ ℤ_p`. Unified over `(p-1) ∣ k` (vSC
+ boundary) and `(p-1) ∤ k` (vSC generic). Proved by strong induction on
+ `k`, splitting on `v_p(k+1)`:
 
-  - **Case A** (`p ∤ (k+1)`): apply Step 2 with `t = k`. Gives
-    `∑ a^k - p · B_k = p² · z` in ℚ_[p]; conclude `p · B_k ∈ ℤ_p`.
-  - **Case B** (`v_p(k+1) = 1`): use the pre-division form of Step 2:
-    `(k+1) · (∑ a^k − p · B_k) = p² · W`. With `k+1 = p · m'`,
-    `p ∤ m'`, divide by `m'` to conclude.
-  - **Case B'** (`v_p(k+1) = 2`): same pre-division form. Write
-    `k+1 = p² · q` with `p ∤ q`; cancel `p²`, divide by `q`.
-  - **Case C** (`v_p(k+1) ≥ 3`): ruled out by the hypothesis
-    `¬ p^3 ∣ (k+1)`.
+ - **Case A** (`p ∤ (k+1)`): apply Step 2 with `t = k`. Gives
+ `∑ a^k - p · B_k = p² · z` in ℚ_[p]; conclude `p · B_k ∈ ℤ_p`.
+ - **Case B** (`v_p(k+1) = 1`): use the pre-division form of Step 2:
+ `(k+1) · (∑ a^k − p · B_k) = p² · W`. With `k+1 = p · m'`,
+ `p ∤ m'`, divide by `m'` to conclude.
+ - **Case B'** (`v_p(k+1) = 2`): same pre-division form. Write
+ `k+1 = p² · q` with `p ∤ q`; cancel `p²`, divide by `q`.
+ - **Case C** (`v_p(k+1) ≥ 3`): ruled out by the hypothesis
+ `¬ p^3 ∣ (k+1)`.
 
 The `¬ p^3 ∣ (k+1)` restriction is essentially `t + 1 < p^3`, which is
 automatic for the Main theorem's pipeline (which uses `t = p·n + 1`
 with `n ≤ p - 3`, so `t + 1 < p^2 < p^3`).
 
-This unified formulation breaks the Adams → T011 → Voronoi → Faulhaber
-→ Adams dependency cycle: the Faulhaber Cases 4 and 5 are merged and
+This unified formulation breaks the Adams -> -> Voronoi -> Faulhaber
+-> Adams dependency cycle: the Faulhaber Cases 4 and 5 are merged and
 use only `p · B_j ∈ ℤ_[p]` (weaker than Adams's `B_j/j ∈ ℤ_[p]`).
 Adams is consequently only needed at `k < p - 1` in the Main pipeline.
 -/
@@ -124,13 +124,13 @@ Case analysis:
 - `i = 1`: `B_1 = −1/2` (odd `p`), factor `p^t ≥ p²`.
 - odd `i ≥ 3`: `B_i = 0`.
 - even `i ∈ [2, t-2]`: `p · B_i ∈ ℤ_p` **from `ih_pB`**,
-  `B_i · p^{t+1-i} = (p·B_i) · p^{t-i}` with `t-i ≥ 2`.
+ `B_i · p^{t+1-i} = (p·B_i) · p^{t-i}` with `t-i ≥ 2`.
 - `i = t-1`: for `t = 2`, handled in `i = 1` case; for `t ≥ 4`, odd ≥ 3,
-  `B_{t-1} = 0`. -/
+ `B_{t-1} = 0`. -/
 lemma faulhaber_term_mem_p_sq
     {p : ℕ} [hp : Fact p.Prime] (hp_odd : p ≠ 2)
     {t : ℕ} (ht_two : 2 ≤ t) (ht_even : Even t)
-    (ih_pB : ∀ j, j < t → 2 ≤ j → Even j →
+    (ih_pB : ∀ j, j < t -> 2 ≤ j -> Even j ->
       ∃ z : ℤ_[p], (p : ℚ_[p]) * ((bernoulli j : ℚ) : ℚ_[p]) = (z : ℚ_[p]))
     {i : ℕ} (hi : i < t) :
     ∃ z : ℤ_[p],
@@ -186,19 +186,19 @@ lemma faulhaber_term_mem_p_sq
     have hi_gt : 1 < i := by omega
     rw [bernoulli_eq_zero_of_odd hi_odd hi_gt]; push_cast; ring
 
-/-- **Pre-division Step 2**: the `(t+1)`-weighted Faulhaber identity for
+/-- **Pre-division Step 2**: the `(t+1)`-weighted Faulhaber identity
 `∑ a^t − p · B_t`. This is the intermediate form used in both:
 - `sum_range_pow_sModEq_p_mul_bernoulli` (Step 2 proper, after dividing
-  by `(t+1)` when `p ∤ (t+1)`);
+ by `(t+1)` when `p ∤ (t+1)`);
 - `p_mul_bernoulli_mem_padicInt_restricted` Case B (when
-  `v_p(t+1) = 1`, where dividing by `(t+1)/p` still lands in `ℤ_p`).
+ `v_p(t+1) = 1`, where dividing by `(t+1)/p` still lands in `ℤ_p`).
 
 Takes a unified IH `ih_pB` giving `p · B_j ∈ ℤ_[p]` for all even
 `2 ≤ j < t`. -/
 theorem sum_range_pow_sub_p_mul_bernoulli_weighted
     {p : ℕ} [hp : Fact p.Prime] (hp_odd : p ≠ 2)
     {t : ℕ} (ht_two : 2 ≤ t) (ht_even : Even t)
-    (ih_pB : ∀ j, j < t → 2 ≤ j → Even j →
+    (ih_pB : ∀ j, j < t -> 2 ≤ j -> Even j ->
       ∃ z : ℤ_[p], (p : ℚ_[p]) * ((bernoulli j : ℚ) : ℚ_[p]) = (z : ℚ_[p])) :
     ∃ W : ℤ_[p],
       ((t + 1 : ℕ) : ℚ_[p]) *
@@ -210,7 +210,7 @@ theorem sum_range_pow_sub_p_mul_bernoulli_weighted
   -- Per-`i` witness from `faulhaber_term_mem_p_sq` (threading the IH through).
   choose w hw using (fun (i : ℕ) (hi : i < t) =>
     faulhaber_term_mem_p_sq hp_odd ht_two ht_even ih_pB hi)
-  -- Set witness `W : ℤ_[p]` = ∑ w_i.
+  -- Set witness `W: ℤ_[p]` = ∑ w_i.
   set W : ℤ_[p] :=
     ∑ i ∈ Finset.attach (Finset.range t), w i.1 (Finset.mem_range.mp i.2) with hW_def
   refine ⟨W, ?_⟩
@@ -253,7 +253,7 @@ theorem sum_range_pow_sub_p_mul_bernoulli_weighted
       simp [PadicInt.coe_sum, Finset.mul_sum]
   rw [mul_sub, ← h_rhs_eq, ← h_split_sum]; push_cast; ring
 
-/-- **Step 2** (needed for T012): for an odd prime `p` and even `t ≥ 2`
+/-- **Step 2** (needed for ): for an odd prime `p` and even `t ≥ 2`
 with `p ∤ (t+1)`, the power sum `∑_{a=0}^{p-1} a^t` is congruent to
 `p · B_t` modulo `p²` (viewed in `ℚ_[p]`, with the difference a `p`-adic
 integer times `p²`).
@@ -261,7 +261,7 @@ integer times `p²`).
 Note: the statement does *not* require `(p-1) ∤ t`. It also applies when
 `(p-1) ∣ t`, in which case Fermat gives `∑ a^t ≡ -1 (mod p)` and the
 conclusion becomes `p · B_t ≡ -1 (mod p)`, i.e., `B_t + 1/p ∈ ℤ_p`
-(von Staudt–Clausen boundary). In that case the extra `p` comes from
+(von Staudt–Clausen boundary). In that case the extra `p` comes
 the sum's congruence, not from assumptions on `t`.
 
 Derived from the pre-division form `sum_range_pow_sub_p_mul_bernoulli_weighted`
@@ -270,7 +270,7 @@ theorem sum_range_pow_sModEq_p_mul_bernoulli
     {p : ℕ} [hp : Fact p.Prime] (hp_odd : p ≠ 2)
     {t : ℕ} (ht_two : 2 ≤ t) (ht_even : Even t)
     (h_p_not_dvd_t_plus_one : ¬ (p : ℕ) ∣ (t + 1))
-    (ih_pB : ∀ j, j < t → 2 ≤ j → Even j →
+    (ih_pB : ∀ j, j < t -> 2 ≤ j -> Even j ->
       ∃ z : ℤ_[p], (p : ℚ_[p]) * ((bernoulli j : ℚ) : ℚ_[p]) = (z : ℚ_[p])) :
     ∃ z : ℤ_[p],
       ((∑ k ∈ Finset.range p, (k : ℚ_[p]) ^ t)) -
@@ -299,7 +299,7 @@ theorem sum_range_pow_sModEq_p_mul_bernoulli
   linear_combination this - ((∑ k ∈ Finset.range p, (k : ℚ_[p]) ^ t) -
     (p : ℚ_[p]) * ((bernoulli t : ℚ) : ℚ_[p])) * hu_mul_Qp
 
-/-- **Von Staudt–Clausen (unified, restricted to `v_p(k+1) ≤ 2`)**: for
+/-- **Von Staudt–Clausen (unified, restricted to `v_p(k+1) ≤ 2`)**:
 every even `k ≥ 2` with `¬ p^3 ∣ (k+1)` we have `p · B_k ∈ ℤ_[p]`. This
 subsumes both the classical boundary case `(p-1) ∣ k` (where the naive
 statement `B_k ∈ ℤ_[p]` fails) and the generic case `(p-1) ∤ k` (where
@@ -308,19 +308,19 @@ The extra factor of `p` absorbs the potential pole in `B_k`.
 
 **Proof structure** (strong induction on `k`, split on `v_p(k+1)`):
 - **Case A** (`p ∤ (k+1)`): apply Step 2
-  (`sum_range_pow_sModEq_p_mul_bernoulli`) with `t = k`, using the IH
-  for `i < k`. Step 2 gives `∑ a^k − p · B_k = p² · z`; since
-  `∑ a^k ∈ ℤ ⊂ ℤ_p`, conclude `p · B_k ∈ ℤ_p`.
+ (`sum_range_pow_sModEq_p_mul_bernoulli`) with `t = k`, using the IH
+ for `i < k`. Step 2 gives `∑ a^k − p · B_k = p² · z`; since
+ `∑ a^k ∈ ℤ ⊂ ℤ_p`, conclude `p · B_k ∈ ℤ_p`.
 - **Case B** (`v_p(k+1) = 1`): use the pre-division form
-  `sum_range_pow_sub_p_mul_bernoulli_weighted`: `(k+1) · (∑ a^k − p · B_k)
-  = p² · W`. Write `k+1 = p · m'` with `p ∤ m'`; divide by `p`, then by
-  `m'` (a `p`-unit), to conclude.
+ `sum_range_pow_sub_p_mul_bernoulli_weighted`: `(k+1) · (∑ a^k − p · B_k)
+ = p² · W`. Write `k+1 = p · m'` with `p ∤ m'`; divide by `p`, then by
+ `m'` (a `p`-unit), to conclude.
 - **Case B'** (`v_p(k+1) = 2`): same pre-division form. Write
-  `k+1 = p² · q` with `p ∤ q`; cancel `p²`, divide by `q`.
+ `k+1 = p² · q` with `p ∤ q`; cancel `p²`, divide by `q`.
 - **Case C** (`v_p(k+1) ≥ 3`): ruled out by the `h_not_pCube` hypothesis.
 
 **Reachability note**: For the main theorem application via
-`bernoulliGen_teichmuller_pow_sModEq_div` (T012), Step 2 is invoked with
+`bernoulliGen_teichmuller_pow_sModEq_div`, Step 2 is invoked with
 `t = p·n + 1` where `n ∈ [1, p-4]` (odd). So `t ≤ p² − 4p + 1 < p²`, and
 the recursive calls involve `j < t < p²`, giving `v_p(j+1) ≤ 1`. Cases A
 and B suffice; Case C is unreachable for the Main theorem, which is why
@@ -328,12 +328,12 @@ we restrict the statement rather than prove full generality.
 
 The unified formulation (no `(p-1) ∣ k` hypothesis) lets us also replace
 the Adams-derived `B_i ∈ ℤ_[p]` in `faulhaber_term_mem_p_sq` Case 4,
-breaking the Adams → T011 → Voronoi → Faulhaber → Adams dependency
+breaking the Adams -> -> Voronoi -> Faulhaber -> Adams dependency
 cycle that otherwise blocks Adams's `k ≥ p - 1` branch. -/
 theorem p_mul_bernoulli_mem_padicInt_restricted
     {p : ℕ} [hp : Fact p.Prime] (hp_odd : p ≠ 2)
     {k : ℕ} (hk_two : 2 ≤ k) (hk_even : Even k)
-    (h_below : ∀ j, j ≤ k → ¬ (p : ℕ) ^ 3 ∣ (j + 1)) :
+    (h_below : ∀ j, j ≤ k -> ¬ (p : ℕ) ^ 3 ∣ (j + 1)) :
     ∃ z : ℤ_[p], (p : ℚ_[p]) * (((bernoulli k : ℚ)) : ℚ_[p]) = (z : ℚ_[p]) := by
   have hp : Nat.Prime p := hp.out
   have hp_gt : 2 < p := lt_of_le_of_ne hp.two_le (Ne.symm hp_odd)
@@ -343,15 +343,15 @@ theorem p_mul_bernoulli_mem_padicInt_restricted
   induction k using Nat.strong_induction_on with
   | _ k ih =>
     intro hk_two hk_even h_below
-    -- `ih : ∀ m < k, 2 ≤ m → Even m → (∀ j ≤ m, ¬ p^3 ∣ (j+1)) → ∃ z, p · B_m = z`.
-    -- IH for `faulhaber_term_mem_p_sq`: `∀ j < k, 2 ≤ j → Even j → ∃ z, p · B_j = z`.
-    have ih_pB : ∀ j, j < k → 2 ≤ j → Even j →
+    -- `ih: ∀ m < k, 2 ≤ m -> Even m -> (∀ j ≤ m, ¬ p^3 ∣ (j+1)) -> ∃ z, p · B_m = z`.
+    -- IH for `faulhaber_term_mem_p_sq`: `∀ j < k, 2 ≤ j -> Even j -> ∃ z, p · B_j = z`.
+    have ih_pB : ∀ j, j < k -> 2 ≤ j -> Even j ->
         ∃ z : ℤ_[p], (p : ℚ_[p]) * ((bernoulli j : ℚ) : ℚ_[p]) = (z : ℚ_[p]) := by
       intro j hj hj_two hj_even
       exact ih j hj hj_two hj_even (fun j' hj' => h_below j' (Nat.le_trans hj' hj.le))
     -- Main hypothesis: `¬ p^3 ∣ (k+1)`.
     have h_not_pCube : ¬ (p : ℕ) ^ 3 ∣ (k + 1) := h_below k (le_refl k)
-    -- Shared: S_nat := ∑ j^k, cast lemma.
+    -- Shared: S_nat:= ∑ j^k, cast lemma.
     set S_nat : ℕ := ∑ j ∈ Finset.range p, j ^ k with hS_def
     have hS_cast : (∑ j ∈ Finset.range p, (j : ℚ_[p]) ^ k) = ((S_nat : ℕ) : ℚ_[p]) := by
       simp only [hS_def]; push_cast; rfl
@@ -359,7 +359,7 @@ theorem p_mul_bernoulli_mem_padicInt_restricted
     · -- `p | (k+1)`. Split further on `v_p(k+1)`.
       by_cases h_p_sq : (p : ℕ) ^ 2 ∣ (k + 1)
       · -- `v_p(k+1) ≥ 2`. Since `¬ p^3 ∣ (k+1)`, must have `v_p(k+1) = 2`.
-        -- Case B' : k+1 = p² · q, p ∤ q.
+        -- Case B': k+1 = p² · q, p ∤ q.
         obtain ⟨q, hq⟩ := h_p_sq
         have hq_coprime : ¬ (p : ℕ) ∣ q := by
           intro hdvd
@@ -444,7 +444,7 @@ theorem p_mul_bernoulli_mem_padicInt_restricted
     · -- Case A: `p ∤ (k+1)`, apply Step 2.
       obtain ⟨w, hw⟩ :=
         sum_range_pow_sModEq_p_mul_bernoulli hp_odd hk_two hk_even h_p_dvd ih_pB
-      -- hw : ∑ a^k − p · B_k = p² · w.
+      -- hw: ∑ a^k − p · B_k = p² · w.
       rw [hS_cast] at hw
       refine ⟨(S_nat : ℤ_[p]) - (p : ℤ_[p]) ^ 2 * w, ?_⟩
       have h_rearr : (p : ℚ_[p]) * ((bernoulli k : ℚ) : ℚ_[p]) =

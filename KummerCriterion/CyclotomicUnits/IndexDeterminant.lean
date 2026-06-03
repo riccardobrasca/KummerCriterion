@@ -1,10 +1,10 @@
 import KummerCriterion.CyclotomicUnits.DeletedFourierCyclotomic
-import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge.Part1
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge
 
 /-!
 # Deleted Fourier determinant for Sinnott's cyclotomic-unit matrix
 
-This file connects the CU-08 deleted Fourier determinant with the matrix
+This file connects the deleted Fourier determinant with the matrix
 `sinnottMatrixA - sinnottMatrixB` used by the existing LehmerVandiver Sinnott pipeline.
 The point is to prove the determinant input from the concrete deleted Fourier
 identity, instead of assuming the named determinant source proposition.
@@ -77,7 +77,7 @@ theorem kplusPlaceStarEquivNonidentityShifted_apply
       LehmerVandiver.Sinnott.kplusEmbeddingIndexQuotientShifted (p := p) K w.val := by
   rfl
 
-/-- Sinnott's `(A - B)` determinant is the CU-08 deleted Fourier determinant,
+/-- Sinnott's `(A - B)` determinant is the deleted Fourier determinant,
 after transposing and reindexing rows and columns. This is the matrix-level
 replacement for the old `DetASubBSqEqProdNontrivialQeSq` source assumption.
 
@@ -175,7 +175,7 @@ theorem detASubB_sq_eq_deletedFourier_sq
   exact det_submatrix_equiv_equiv_sq rowEquiv colEquiv D
 
 /-- The old matrix-level determinant proposition follows from the concrete
-CU-08 deleted Fourier determinant, for the `p ≥ 5` branch. -/
+ deleted Fourier determinant, for the `p ≥ 5` branch. -/
 theorem detASubBSqEqProdNontrivialQeSq_of_deletedFourier
     (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) (hp_two : 2 < p) (hp_ge_five : 5 ≤ p) :
     haveI : DecidableEq (InfinitePlace K⁺) := Classical.decEq _

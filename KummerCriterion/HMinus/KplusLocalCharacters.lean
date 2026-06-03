@@ -14,27 +14,27 @@ public import KummerCriterion.ZetaFactorisation.EulerProduct
 public import KummerCriterion.ZetaFactorisation.Residue
 
 /-!
-# `K⁺` local even-character data (T023b2a1)
+# `K⁺` local even-character data 
 
 Character-side local input for the maximal real subfield package:
 
 - `localResidueDegreePlus` and `localPrimeCountPlus` — the residue degree and
-  number of primes of `K⁺ = maximalRealSubfield K` above a rational prime
-  `ℓ ≠ p`, expressed purely in terms of the cyclotomic-side invariants
-  `localResidueDegree` and `localPrimeCount` together with the sign dichotomy
-  `-1 ∈ ⟨ℓ⟩ mod p`.
+ number of primes of `K⁺ = maximalRealSubfield K` above a rational prime
+ `ℓ ≠ p`, expressed purely in terms of the cyclotomic-side invariants
+ `localResidueDegree` and `localPrimeCount` together with the sign dichotomy
+ `-1 ∈ ⟨ℓ⟩ mod p`.
 - Elementary power-equal-one / order-divides lemmas for even Dirichlet
-  characters evaluated at `unitOfPrimeNe`.
+ characters evaluated at `unitOfPrimeNe`.
 - Cardinality identities `card_even_characters_kplus` and
-  `card_evenNontrivialCharacters`.
+ `card_evenNontrivialCharacters`.
 - `localPrimeCountPlus_mul_localResidueDegreePlus`, the numerical identity
-  matching the `K⁺` degree count with the even-character count.
+ matching the `K⁺` degree count with the even-character count.
 - `prod_even_characters_eval_eq_pow_localResidueDegreePlus`, the orbit-product
-  formula collapsing the full even-character product at `ℓ ≠ p` to a single
-  Euler factor.
+ formula collapsing the full even-character product at `ℓ ≠ p` to a single
+ Euler factor.
 - `trivial_mul_evenCharLocalFactor_eq_pow_localResidueDegreePlus`, the final
-  unramified character-side local factor theorem in the shape later matched
-  against the `K⁺` Dedekind local factor.
+ unramified character-side local factor theorem in the shape later matched
+ against the `K⁺` Dedekind local factor.
 
 This file is the character half of the old monolithic
 `KummerCriterion.HMinus.KplusLocalResidue`; the prime-ideal / contraction /

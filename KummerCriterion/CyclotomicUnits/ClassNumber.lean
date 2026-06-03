@@ -25,8 +25,8 @@ The canonical class-number API used here is:
 * `h K` from `KummerCriterion/TotallyRealSubfield/Basic.lean`;
 * `hPlus K` from `KummerCriterion/TotallyRealSubfield/Basic.lean`;
 * `hMinus K` from `KummerCriterion/TotallyRealSubfield/ClassGroup.lean`;
-* `h_eq_hPlus_mul_hMinus` from
-  `KummerCriterion/TotallyRealSubfield/ClassGroup.lean`.
+* `h_eq_hPlus_mul_hMinus`
+ `KummerCriterion/TotallyRealSubfield/ClassGroup.lean`.
 -/
 theorem dvd_h_iff_dvd_hMinus_of_dvd_hPlus_imp
     {p : ℕ} [hp : Fact p.Prime] (hp_odd : p ≠ 2)

@@ -7,7 +7,7 @@ public import Mathlib.Data.ZMod.Basic
 /-!
 # Exact p-saturation for the real cyclotomic-unit subgroup
 
-This file isolates the group-theoretic part of the saturation argument.  The
+This file isolates the group-theoretic part of the saturation argument. The
 `p`th-power subgroup is the exact image of the `p`th-power map on a subgroup,
 not the closure of that image.
 -/
@@ -31,7 +31,7 @@ local notation3 "K⁺" => NumberField.maximalRealSubfield K
 def EPlus : Subgroup (𝓞 K⁺)ˣ :=
   ⊤
 
-/-- Exact image of the `p`th-power map on a subgroup.  This is not a closure. -/
+/-- Exact image of the `p`th-power map on a subgroup. This is not a closure. -/
 def pPowerSubgroup {G : Type*} [CommGroup G] (H : Subgroup G) (p : ℕ) : Subgroup G where
   carrier := {x | ∃ y : G, y ∈ H ∧ y ^ p = x}
   one_mem' := by
@@ -192,7 +192,7 @@ theorem CPlusExponentProduct_pow_of_exponents_eq_mul (hp_odd : p ≠ 2)
     _ = CPlusGenerator (p := p) (K := K) hp_three a ^ e a := by
           rw [hk a]
 
-/-- Concrete group-theoretic saturation criterion for `CPlus`.  CU-14e is
+/-- Concrete group-theoretic saturation criterion for `CPlus`. is
 intended to provide the exponent-vanishing hypothesis from the logarithm
 determinant; this theorem contains no p-adic logarithm input. -/
 theorem CPlus_pSaturated_of_generator_exponents_modP_zero (hp_odd : p ≠ 2)

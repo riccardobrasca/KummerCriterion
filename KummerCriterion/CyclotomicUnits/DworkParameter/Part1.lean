@@ -5,10 +5,10 @@ public import Mathlib.Algebra.CharP.Lemmas
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
 public import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
 public import KummerCriterion.Reflection.Local.Basic
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.DworkFactorization.FiniteArtinHasseFormal
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.DworkFactorization.FiniteLogBounds
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.DworkFactorization.FiniteLogFormal
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.DworkFactorization.Basic.Part1
+public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteArtinHasseFormal
+public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogBounds
+public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogFormal
+public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.Basic
 public import Mathlib.RingTheory.AdicCompletion.Algebra
 public import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
 public import Mathlib.RingTheory.AdicCompletion.Completeness
@@ -18,7 +18,7 @@ public import Mathlib.RingTheory.Flat.TorsionFree
 /-!
 # The corrected Dwork parameter
 
-This file starts CU-09b.  The first layer is the coefficient map sending
+This file starts. The first layer is the coefficient map sending
 `p`-integral rational Artin-Hasse coefficients into the valuation-completion
 integer ring at `lambda = zeta_p - 1`.
 
@@ -103,7 +103,7 @@ theorem rIntegralRatToValuedCompletion_mem_integers
   rw [Valued.valuedCompletion_apply]
   exact rIntegralRat_lambdaValuation_le_one (p := p) (K := K) q
 
-/-- The CU-09b coefficient map from `p`-integral rational coefficients into
+/-- The coefficient map from `p`-integral rational coefficients into
 the valuation-completion integer ring. -/
 def rIntegralRatToValuedInteger :
     Furtwaengler.DieudonneDwork.rIntegralRatSubring p →+*
@@ -241,7 +241,7 @@ theorem integralExpSeries_trunc_two :
   · simp [hn]
 
 /-- Finite truncation approximations to the corrected Dwork parameter
-`G_p(lambda)`.  CU-09b's remaining analytic step is to prove that these
+`G_p(lambda)`. remaining analytic step is to prove that these
 approximations converge in the completed local ring. -/
 def dworkParameterApprox (N : ℕ) : ValuedIntegerRing p K :=
   (PowerSeries.trunc N (integralInverseSeries p K)).eval₂
@@ -254,7 +254,7 @@ theorem dworkParameterApprox_two :
   rw [integralInverseSeries_trunc_two]
   simp
 
-/-- The principal `lambda`-adic ideal in the valuation integer ring.  This is
+/-- The principal `lambda`-adic ideal in the valuation integer ring. This is
 the ideal used for the honest inverse-limit construction below; it avoids
 assuming an adic-completeness instance for `ValuedIntegerRing p K`. -/
 abbrev lambdaIdeal : Ideal (ValuedIntegerRing p K) :=
@@ -507,7 +507,7 @@ theorem lambdaIdeal_pow_mul_pred_add_eq_span_natCast_prime_pow_mul
           Set (ValuedIntegerRing p K)) * I ^ s := by
       rw [Ideal.span_singleton_pow]
 
-/-- Lift-level same-prime denominator cancellation.  If an element has
+/-- Lift-level same-prime denominator cancellation. If an element has
 lambda-adic order at least `m * (p - 1) + s`, then it is divisible by `p^m`
 with quotient of lambda-adic order at least `s`. -/
 theorem exists_natCast_prime_pow_mul_eq_of_mem_lambdaIdeal_pow_mul_pred_add

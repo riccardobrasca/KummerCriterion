@@ -16,8 +16,8 @@ namespace Sinnott
 variable (p : ℕ) [hp : Fact p.Prime]
 
 set_option backward.isDefEq.respectTransparency false in
-/-- **ZMod-sum bridge for vanishing-at-zero functions**: `∑ a : ZMod p, f a =
-∑ a ∈ Finset.Ico 1 p, f ((a : ℕ) : ZMod p)` whenever `f 0 = 0`.
+/-- **ZMod-sum bridge for vanishing-at-zero functions**: `∑ a: ZMod p, f a =
+∑ a ∈ Finset.Ico 1 p, f ((a: ℕ): ZMod p)` whenever `f 0 = 0`.
 
 Concretely the bijection `Finset.Ico 1 p ≃ (ZMod p) \ {0}` via the natural-
 number cast lets us drop the `a = 0` summand on the left. -/
@@ -166,7 +166,7 @@ theorem DirichletLogSum_principal_eq_neg_log :
   haveI : NeZero p := ⟨hp.out.ne_zero⟩
   have hp_pos : 0 < p := hp.out.pos
   unfold DirichletLogSum
-  -- Step 1: replace (1 : DirichletCharacter) a with 1 for a ∈ Ico 1 p.
+  -- Step 1: replace (1: DirichletCharacter) a with 1 for a ∈ Ico 1 p.
   have h_eval : ∑ a ∈ Finset.Ico 1 p,
         ((1 : DirichletCharacter ℂ p) ((a : ℕ) : ZMod p)) *
         ((Real.log (2 * |Real.sin (Real.pi * a / p)|) : ℝ) : ℂ) =
@@ -252,7 +252,7 @@ theorem DirichletLogSum_principal_eq_neg_log :
 bridge `evenLValueLogSum p χ = -DirichletLogSum p χ⁻¹` gives the cleaner
 form
 
-  `evenLValueRhs p χ = (gaussSum χ⁻¹)⁻¹ · DirichletLogSum p χ⁻¹`.
+ `evenLValueRhs p χ = (gaussSum χ⁻¹)⁻¹ · DirichletLogSum p χ⁻¹`.
 
 This identifies the analytic-CNF building block (`evenLValueRhs`) with the
 K-side log-sum (`DirichletLogSum`) up to a Gauss-sum prefactor, which is the
@@ -281,7 +281,7 @@ theorem gaussSum_mul_gaussSum_inv_eq_p
   have h_primitive : (ZMod.stdAddChar (N := p)).IsPrimitive :=
     ZMod.isPrimitive_stdAddChar p
   have h_card := gaussSum_mul_gaussSum_eq_card hχ_ne h_primitive
-  -- h_card : gaussSum χ ψ * gaussSum χ⁻¹ ψ⁻¹ = Fintype.card (ZMod p)
+  -- h_card: gaussSum χ ψ * gaussSum χ⁻¹ ψ⁻¹ = Fintype.card (ZMod p)
   -- Use mul_gaussSum_inv_eq_gaussSum to relate gaussSum χ⁻¹ ψ⁻¹ to gaussSum χ⁻¹ ψ.
   have h_χinv_neg_one : χ⁻¹ ((-1 : ZMod p)) = 1 := by
     rw [MulChar.inv_apply_eq_inv']
@@ -382,8 +382,8 @@ reindexing identity `prod_gaussSum_eq_prod_gaussSum_inv` gives the analytic-side
 `hPlus` formula entirely in terms of `cyclotomicHPlusFactor`, the inverse of
 the product of `gaussSum` over even characters, and `∏ DirichletLogSum p χ⁻¹`:
 
-  hPlus K =
-    cyclotomicHPlusFactor · (∏ gaussSum χ)⁻¹ · ∏ DirichletLogSum p χ⁻¹
+ hPlus K =
+ cyclotomicHPlusFactor · (∏ gaussSum χ)⁻¹ · ∏ DirichletLogSum p χ⁻¹
 
 This is the analytic-side rewrite needed for the prefactor matching of
 Sinnott's regulator-determinant identity. -/
@@ -447,9 +447,9 @@ prefactor identity (`cyclotomicHPlusFactor_mul_regulator_eq`) with the
 `DirichletLogSum`-form of `hPlus` (`hPlus_eq_factor_gaussSum_inv_mul_prod_DirichletLogSum`)
 gives:
 
-  ↑(hPlus K) · ↑(regulator K⁺) =
-    (2·√(p^((p-3)/2)) / 2^((p-1)/2)) · (∏ gaussSum χ)⁻¹ ·
-      ∏ DirichletLogSum p χ⁻¹
+ ↑(hPlus K) · ↑(regulator K⁺) =
+ (2·√(p^((p-3)/2)) / 2^((p-1)/2)) · (∏ gaussSum χ)⁻¹ ·
+ ∏ DirichletLogSum p χ⁻¹
 
 The LHS is the value identified by `KummerDirichletDeterminant` with
 `regOfFamily(family)`. The RHS is the explicit analytic prefactor times
@@ -486,7 +486,7 @@ theorem hPlus_mul_regulator_eq_factor_gaussSum_inv_mul_prod_DirichletLogSum
 `2·√(p^((p-3)/2)) / 2^((p-1)/2)` with `(∏_{χ even nontriv} gaussSum χ)⁻¹`
 satisfies a clean closed form:
 
-  ((2·√(p^((p-3)/2)) / 2^((p-1)/2)) · (∏ gaussSum χ)⁻¹)² = 1 / 2^(p-3)
+ ((2·√(p^((p-3)/2)) / 2^((p-1)/2)) · (∏ gaussSum χ)⁻¹)² = 1 / 2^(p-3)
 
 The `p^((p-3)/2)` in the numerator (from `√(p^((p-3)/2))²`) cancels exactly
 with the `p^((p-3)/2)` in the denominator (from
@@ -548,12 +548,12 @@ theorem prefactor_sq_eq_inv_two_pow (hp_odd' : p ≠ 2) (hp_ge : 3 ≤ p) :
 combining the analytic-side hPlus formula with the prefactor-squared identity
 gives:
 
-  (↑(hPlus K) · ↑(regulator K⁺))² =
-    (∏_{χ even nontriv} DirichletLogSum p χ⁻¹)² / 2^(p-3)
+ (↑(hPlus K) · ↑(regulator K⁺))² =
+ (∏_{χ even nontriv} DirichletLogSum p χ⁻¹)² / 2^(p-3)
 
 This is the CLEAN squared form of `KummerDirichletDeterminant`. The
 Frobenius determinant evaluation of the cyclotomic-unit log-embedding
-matrix (the remaining PF-1 gap) needs to land on the same RHS — the
+matrix (the remaining gap) needs to land on the same RHS — the
 algebraic-side `|det M|²` must equal `(∏ DirichletLogSum)² / 2^(p-3)`. -/
 theorem hPlus_mul_regulator_sq_eq
     (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]

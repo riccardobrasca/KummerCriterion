@@ -209,7 +209,7 @@ instance instAddCommMonoidDworkFixedSubalgebra :
     AddCommMonoid (dworkFixedSubalgebra p K) :=
   inferInstance
 
-/-- Even exponents among `0, ..., p - 2`, used to index the real fixed basis. -/
+/-- Even exponents among `0,..., p - 2`, used to index the real fixed basis. -/
 abbrev dworkEvenPowerIndex : Type :=
   {i : Fin (p - 1) // Even (i : ℕ)}
 

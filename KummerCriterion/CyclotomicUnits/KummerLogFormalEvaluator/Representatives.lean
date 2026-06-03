@@ -3,9 +3,9 @@ import KummerCriterion.CyclotomicUnits.KummerLogCoefficient.Evaluator
 /-!
 # Formal-to-finite evaluator bridge for Kummer logarithm coefficients
 
-This file is the home for the remaining CU-11f2b work: turning the formal
+This file is the home for the remaining work: turning the formal
 normalized Artin-Hasse logarithm into the finite same-prime Dwork quotient
-coefficient.  The coefficient-extraction API already lives in
+coefficient. The coefficient-extraction API already lives in
 `KummerLogCoefficient`; this file keeps the evaluator proof separated so that
 the coefficient file stays focused and below the route line limit.
 -/

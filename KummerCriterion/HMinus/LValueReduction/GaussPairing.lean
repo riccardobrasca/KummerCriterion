@@ -108,8 +108,8 @@ theorem oddCharacterInvClass_card
   rw [oddCharacterInvClass_eq_pair (p := p) hχ]
   simp [oddCharacterInvPair, hχ_ne]
 
-/-- **T023d4**: In the `p ≡ 1 [ZMOD 4]` case, the odd Gauss product is the
-pair product `(-(p : ℂ))` repeated once for each inversion class. -/
+/-- In the `p ≡ 1 [ZMOD 4]` case, the odd Gauss product is the
+pair product `(-(p: ℂ))` repeated once for each inversion class. -/
 theorem rawGaussProduct_of_mod_four_eq_one
     (hp_odd' : p ≠ 2) (hp₄ : p % 4 = 1) :
     Finset.prod (oddCharacters (p := p))
@@ -349,7 +349,7 @@ theorem rawGaussProduct_withoutQuadratic_of_mod_four_eq_three
     _ = (-(p : ℂ)) ^ ((p - 3) / 4) := by
           rw [hqcard]
 
-/-- **T023d5**: In the `p ≡ 3 [ZMOD 4]` case, isolate the quadratic character
+/-- In the `p ≡ 3 [ZMOD 4]` case, isolate the quadratic character
 and pair the remaining odd characters by inversion. -/
 theorem rawGaussProduct_of_mod_four_eq_three
     (hp_odd' : p ≠ 2) (hp₄ : p % 4 = 3) :

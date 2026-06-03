@@ -17,29 +17,29 @@ public import Mathlib.RingTheory.ClassGroup
 public import Mathlib.Data.Fintype.Card
 public import Mathlib.GroupTheory.QuotientGroup.Basic
 public import KummerCriterion.UnitQuotient.Components
-public import KummerCriterion.UnitQuotient.FreeLatticeComparison.ConjugationTrace
+public import KummerCriterion.UnitQuotient.ConjugationTrace
 public import Mathlib.RepresentationTheory.Basic
 public import Mathlib.LinearAlgebra.Projection
 public import Mathlib.LinearAlgebra.Dimension.Finite
 public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
 public import Mathlib.Data.Nat.Factorization.Basic
 public import Mathlib.GroupTheory.Torsion
-public import KummerCriterion.Characters
+public import KummerCriterion.KummerCongruence.Characters
 public import KummerCriterion.UnitQuotient.DeltaAction
-public import KummerCriterion.Reflection.SingularKummer.Localization
+public import KummerCriterion.Reflection.SingularKummer
 
 /-!
 # Global lambda decomposition for the Kummer--Artin--Hasse correction
 
 The full explicit local correction is only consumed by the global product
-formula on elements of `Kˣ`.  This file gives the decomposition API for those
+formula on elements of `Kˣ`. This file gives the decomposition API for those
 global field units at the distinguished cyclotomic prime:
 
 * normalize by the explicit uniformizer `pi = zeta_p - 1`;
 * convert the resulting lambda-local unit into the localized ring and then
-  into the completed local unit group;
+ into the completed local unit group;
 * split the completed unit into its Teichmuller residue factor and a
-  principal-unit factor.
+ principal-unit factor.
 
 This avoids assuming that the adic completed integer ring is already known to
 Lean as a DVR.

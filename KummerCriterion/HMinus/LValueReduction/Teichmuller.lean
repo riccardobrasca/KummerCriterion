@@ -1,6 +1,6 @@
 module
 
-public import KummerCriterion.BernoulliGeneralized
+public import KummerCriterion.KummerCongruence.BernoulliGeneralized
 public import KummerCriterion.HMinus.LValueReduction.Final
 
 /-!
@@ -41,8 +41,7 @@ theorem oddCharacterIndex_ne_two (j : OddCharacterIndex p) : p ≠ 2 := by
   have hj_lt : (j.1 : ℕ) < p - 1 := j.1.is_lt
   omega
 
-/-- A fixed generator of `(ZMod p)ˣ`, used for the concrete polynomial model in
-`T023g1b2`. -/
+/-- A fixed generator of `(ZMod p)ˣ`, used for the concrete polynomial model. -/
 noncomputable def unitGroupGenerator : (ZMod p)ˣ :=
   (IsCyclic.exists_generator (α := (ZMod p)ˣ)).choose
 
@@ -81,7 +80,7 @@ noncomputable def oddBernoulliKernelCoeff (m : Fin (p - 1)) : ℚ :=
   ((((unitGroupGenerator p) ^ (m : ℕ) : (ZMod p)ˣ) : ZMod p).val : ℚ)
 
 /-- The explicit polynomial whose two realizations control the complex and
-`ℚ_[p]` odd Bernoulli factors in `T023g1b2`. -/
+`ℚ_[p]` odd Bernoulli factors. -/
 noncomputable def oddBernoulliKernelPoly (j : Fin (p - 1)) : Polynomial ℚ :=
   ∑ m : Fin (p - 1),
     Polynomial.monomial ((m : ℕ) * complementExponent (p := p) j)
@@ -664,7 +663,7 @@ variable (p : ℕ) [hp : Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K] [IsCMField K]
 
 /-- The complex `hMinus` formula rewritten over the shared abstract odd-exponent
-index type from `T023g1a1`. -/
+index type. -/
 theorem hMinus_formula_oddCharacterIndex (hp_odd' : p ≠ 2) :
     ((hMinus K : ℕ) : ℂ) =
       (2 * p : ℂ) *

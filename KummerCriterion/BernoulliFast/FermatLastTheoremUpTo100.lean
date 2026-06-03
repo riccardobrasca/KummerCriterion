@@ -9,7 +9,7 @@ This file exposes one readable endpoint: every exponent `n ≤ 100`, with
 `2 < n` and `n ∉ {37, 59, 67, 74}`, satisfies Fermat's Last Theorem.
 
 The three primes `37`, `59`, and `67` are the irregular primes below `100`.
-The composite exponent `74 = 2 * 37` is also excluded because reducing FLT for
+The composite exponent `74 = 2 * 37` is also excluded because reducing FLT
 `74` by divisor monotonicity would require the currently excluded exponent
 `37`; the exponent `2` itself is false.
 -/

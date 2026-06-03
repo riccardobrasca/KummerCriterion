@@ -6,8 +6,8 @@ import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part7
 The corrected `RegOfFamilySqEqProdNontrivialQeSq` requires the factor
 `2^(p-3)`. This file ships the algebraic bridge:
 
-  `(det(A − B) : ℂ)² = (∏_{ξ ≠ 1} qe(ξ))²` ⟹
-    `regOfFamily² = 2^(p-3) · (∏_{ξ ≠ 1} qe(ξ))²`
+ `(det(A − B): ℂ)² = (∏_{ξ ≠ 1} qe(ξ))²` ⟹
+ `regOfFamily² = 2^(p-3) · (∏_{ξ ≠ 1} qe(ξ))²`
 
 via `regOfFamily = |det M_Sinnott|` and `det M_Sinnott = 2^N · det(A − B)`. -/
 
@@ -96,7 +96,7 @@ open Classical in
 the corrected squared form follows from the substantive matrix-level
 identity by extracting the `2^(p-3)` factor algebraically.
 
-This reduces PF-1's substantive content to the rank-1 Frobenius
+This reduces substantive content to the rank-1 Frobenius
 identity on `(A − B)`. -/
 theorem regOfFamilySqEqProdNontrivialQeSq_of_detASubBSqEqProdQeSq
     (K : Type) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
@@ -138,7 +138,7 @@ set_option backward.isDefEq.respectTransparency false in
 open Classical in
 /-! ## Reduction of squared content to linear form
 
-`DetASubBSqEqProdNontrivialQeSq` (squared form) follows directly from
+`DetASubBSqEqProdNontrivialQeSq` (squared form) follows directly
 the linear form `det(A − B) = ε · ∏_{χ ≠ 1} qe(χ)` for any
 `ε² = 1` (i.e., `ε ∈ {±1}`). Squaring absorbs the sign.
 
@@ -146,9 +146,9 @@ This is the cleanest formulation since Sinnott's identity is naturally
 stated as `det(A − B) = ±∏ qe`, and the choice of sign depends on
 enumeration conventions in the proof. -/
 
-/-! ## Full PF-1 discharge from two parametric hypotheses
+/-! ## Full discharge from two parametric hypotheses
 
-Composing all shipped reductions, the entire PF-1 chain `KummerDirichletDeterminant`
+Composing all shipped reductions, the entire chain `KummerDirichletDeterminant`
 follows from just two parametric hypotheses:
 
 1. `SinnottConvolutionMatrixDetUnit`: `IsUnit (det U)` (Dirichlet non-vanishing).
@@ -169,7 +169,7 @@ open Classical in
 Wrap the shipped per-row eigenvalue identity
 `sum_char_sinnottMatrix_A_sub_B_eigenvalue` into a single matrix equation:
 
-  `(charMatrix · (A − B)^T)[ξ, i] = eigenvalue formula`
+ `(charMatrix · (A − B)^T)[ξ, i] = eigenvalue formula`
 
 This is the entry-wise statement; by `Matrix.ext`, equivalent to a
 matrix-level identity. Useful for downstream determinant computations. -/
@@ -178,11 +178,11 @@ matrix-level identity. Useful for downstream determinant computations. -/
 
 After the character action, the matrix `charMatrix · (A − B)^T` decomposes as
 
-  `charMatrix · (A − B)^T = D - col · row`
+ `charMatrix · (A − B)^T = D - col · row`
 
 where:
 - `D[ξ, i] = (ξ(q(famIdx i))⁻¹ - 1) · qe(ξ)`. (Note: D has row ξ = 1 zero
-  since (1 - 1) · qe(1) = 0.)
+ since (1 - 1) · qe(1) = 0.)
 - `col(ξ) = ξ(k(w₀))`.
 - `row(i) = corr(i) = M_even[k(w₀), q(famIdx i)] - M_even[k(w₀), 1]`.
 

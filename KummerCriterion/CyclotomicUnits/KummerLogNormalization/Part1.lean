@@ -6,7 +6,7 @@ import KummerCriterion.CyclotomicUnits.NormalizedUnits
 # Normalization of the Kummer logarithm columns
 
 The logarithm columns constructed in `KummerLogMatrix` use the squared real
-cyclotomic-unit family.  This file connects those columns with the normalized
+cyclotomic-unit family. This file connects those columns with the normalized
 cyclotomic units `epsilon_a`: locally, the selected real cyclotomic unit is
 `epsilon_a ^ 2`, so its finite logarithm is twice the normalized finite
 logarithm.
@@ -712,7 +712,7 @@ theorem concreteKummerLogVector_evalₐ_pow_pred_eq_two_nsmul_normalizedQuotient
     (p := p) (K := K) hp_three a
 
 /-- The cyclotomic quotient denominator, transported to the completed Dwork
-ring.  This is the unit `(E_p(omega(a) * varpi) - 1) / (E_p(varpi) - 1)`
+ring. This is the unit `(E_p(omega(a) * varpi) - 1) / (E_p(varpi) - 1)`
 after specialization. -/
 noncomputable def kummerLogDworkArtinHasseQuotientDenUnit
     (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) :
@@ -728,8 +728,8 @@ quotient:
 
 `den(a) * (E_p(varpi) - 1) = E_p(omega(a) * varpi) - 1`.
 
-This is the concrete bridge from the cyclotomic quotient denominator of CU-11b
-to the CU-09 Artin-Hasse endpoint. -/
+This is the concrete bridge from the cyclotomic quotient denominator of 
+to the Artin-Hasse endpoint. -/
 theorem kummerLogDworkArtinHasseQuotientDenUnit_mul_exp_sub_one
     (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) :
     (kummerLogDworkArtinHasseQuotientDenUnit

@@ -10,7 +10,7 @@ public import KummerCriterion.Reflection.Local.Graded
 /-!
 # Principal-unit domain lemmas for the saturation logarithm
 
-This file starts the CU-14b logarithm-domain layer.  The first input is the
+This file starts the logarithm-domain layer. The first input is the
 residue-field fact that the local image of any real unit becomes congruent to
 `1` after raising to `p - 1`.
 -/
@@ -317,7 +317,7 @@ theorem completedLogArg_pow
   simp [completedLogArg, principalUnitPowCoord]
 
 omit [NumberField.IsCMField K] in
-/-- CU-14b2: the completed same-prime logarithm of a `p`th power is a
+/-- the completed same-prime logarithm of a `p`th power is a
 `p`-multiple. -/
 theorem completedLog_pow_p_eq_p_smul
     (u : completedLogDomain (p := p) (K := K)) :
@@ -657,7 +657,7 @@ theorem completedLog_EPlus_completedLogDomainPowPred_mem_pPowerSubgroup
         (EPlus_completedLogDomainPowPred (p := p) (K := K) x) := by
         rw [hu_pow]
 
-/-- CU-14b3: a `CPlus` exponent product that is a `p`th power in `EPlus`
+/-- a `CPlus` exponent product that is a `p`th power in `EPlus`
 gives a `p`-divisible completed logarithm relation in the fixed Dwork
 subalgebra. -/
 theorem completedLog_relation_of_CPlus_product_mem_powers
@@ -821,7 +821,7 @@ theorem concreteKummerLogMatrix_mulVec_exponents_eq_coeff
   exact Finset.sum_congr rfl fun a _ha =>
     mul_comm (rationalPadicIntegerToZMod p ((b.repr (v a)) i)) (e a : ZMod p)
 
-/-- CU-14c: extracting Kummer coordinates from a `p`-divisible completed-log
+/-- extracting Kummer coordinates from a `p`-divisible completed-log
 relation gives the concrete Kummer matrix kernel equation over `ZMod p`. -/
 theorem concreteKummerLogMatrix_mulVec_exponents_eq_zero
     (hp_three : 3 ≤ p) (hp_five : 5 ≤ p)
@@ -843,7 +843,7 @@ theorem concreteKummerLogMatrix_mulVec_exponents_eq_zero
   exact dworkFixedEvenPowerBasis_coeff_zmod_eq_zero_of_p_smul
     (p := p) (K := K) hp_five hy j
 
-/-- CU-14e: determinant nonvanishing forces the generator exponents in a
+/-- determinant nonvanishing forces the generator exponents in a
 `p`th-power relation to vanish modulo `p`. -/
 theorem CPlusGenerator_exponents_modP_zero_of_kummerLog_det_ne_zero
     (hp_three : 3 ≤ p) (hp_five : 5 ≤ p)
@@ -866,7 +866,7 @@ theorem CPlusGenerator_exponents_modP_zero_of_kummerLog_det_ne_zero
     (concreteKummerLogMatrix_mulVec_exponents_eq_zero
       (p := p) (K := K) hp_three hp_five e hlog)
 
-/-- CU-14f: Kummer matrix determinant nonvanishing gives exact `p`-saturation
+/-- Kummer matrix determinant nonvanishing gives exact `p`-saturation
 of the real cyclotomic-unit subgroup in the full real-unit group. -/
 theorem cyclotomicUnits_pSaturated_of_kummerLog_det_ne_zero
     (hp_three : 3 ≤ p) (hp_five : 5 ≤ p)

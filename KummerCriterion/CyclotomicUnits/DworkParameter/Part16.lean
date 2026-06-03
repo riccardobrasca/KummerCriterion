@@ -1,7 +1,7 @@
 module
 
 public import KummerCriterion.CyclotomicUnits.DworkParameter.Part15
-public import KummerCriterion.Characters
+public import KummerCriterion.KummerCongruence.Characters
 
 @[expose] public section
 
@@ -52,7 +52,7 @@ abbrev padicIntOfPrime (q : Nat.Primes) : Type :=
   @PadicInt q.1 ⟨q.2⟩
 
 /-- The concrete `ℤ_p` model used on the Dwork side is the integer subring of
-the rational `(p)`-adic completion.  Mathlib's `ℤ_[p]` is canonically
+the rational `(p)`-adic completion. Mathlib's `ℤ_[p]` is canonically
 equivalent to it. -/
 noncomputable def padicIntToRationalPadicIntegerRingEquiv :
     ℤ_[lambdaPadicPrime p] ≃+* RationalPadicIntegerRing p := by
@@ -162,7 +162,7 @@ theorem rationalPadicTeichmuller_sub_natCast_val_mem_primeIdeal
     rationalPadicIntegerToZMod_natCast]
   exact sub_eq_zero.mpr (ZMod.natCast_zmod_val a).symm
 
-/-- The scaled Dwork parameter `omega(a) * varpi`.  The coefficient is the
+/-- The scaled Dwork parameter `omega(a) * varpi`. The coefficient is the
 Teichmüller lift in the rational completed integer ring. -/
 noncomputable def scaledDworkParameter (a : ZMod p) :
     DworkCompleteIntegerRing p K :=
@@ -485,7 +485,7 @@ theorem samePrimeFiniteLogTerm_pow_pred_eq_zero_of_prime_lt
 /-- Folded same-prime finite-log expansion at precision `lambda^(p - 1)`.
 
 The finite logarithm is the ordinary unit-denominator part through `n = p - 1`
-plus the single surviving same-prime term `n = p`.  The latter is the API-level
+plus the single surviving same-prime term `n = p`. The latter is the API-level
 representative of `x^p / p`; its integral ramification-unit rewrite is a
 separate step. -/
 theorem samePrimeFiniteLog_eq_sum_Icc_add_p_term_pow_pred
@@ -705,7 +705,7 @@ theorem scaledDworkParameterFiniteArtinHasseLog_eq_zero
   rw [scaledDworkParameterFiniteArtinHasseLog_eq_teichmuller_mul,
     dworkParameterFiniteArtinHasseLog_eq_zero, mul_zero]
 
-/-- Completed Artin-Hasse exponential at the scaled Dwork parameter.  CU-09g3
+/-- Completed Artin-Hasse exponential at the scaled Dwork parameter. 
 will identify this element with `zeta_p^a`. -/
 noncomputable def artinHasseExp_eval_scaledDworkParameter (a : ZMod p) :
     DworkCompleteIntegerRing p K :=

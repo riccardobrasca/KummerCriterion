@@ -21,7 +21,7 @@ This file isolates the definition `IsPrimary` and its basic lemmas.
 * Washington, *Introduction to Cyclotomic Fields*, §6.4 (definition).
 * Borevich–Shafarevich, *Number Theory*, §4.9 (use in Vandiver Lemma 1).
 * `FltRegular.NumberTheory.Cyclotomic.MoreLemmas`
-  (`zeta_sub_one_dvd_Int_iff`, `exists_zeta_sub_one_dvd_sub_Int`).
+ (`zeta_sub_one_dvd_Int_iff`, `exists_zeta_sub_one_dvd_sub_Int`).
 -/
 
 @[expose] public section

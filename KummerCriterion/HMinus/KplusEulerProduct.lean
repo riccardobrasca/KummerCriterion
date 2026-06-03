@@ -1,12 +1,12 @@
 module
 
 public import KummerCriterion.HMinus.KplusPrimeArithmetic
-public import KummerCriterion.NumberFieldEulerProduct
+public import KummerCriterion.ZetaFactorisation.NumberFieldEulerProduct
 
 /-!
 # `K⁺` Euler product and residue bridge
 
-This module closes the analytic `K⁺` side of the T023b2a chain.
+This module closes the analytic `K⁺` side of the chain.
 -/
 
 @[expose] public section

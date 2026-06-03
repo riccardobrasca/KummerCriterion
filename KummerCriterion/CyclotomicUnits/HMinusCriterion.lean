@@ -20,10 +20,10 @@ namespace KummerCriterion
 /-- Contrapositive form of `p_dvd_hMinus_iff_p_dvd_some_bernoulli`.
 
 For the concrete model `CyclotomicField p ℚ`, use this theorem with
-`K := CyclotomicField p ℚ` after installing the CM-field instance from
+`K:= CyclotomicField p ℚ` after installing the CM-field instance
 `isCMField_of_cyclotomic`. The divisibility statements already have the
-needed casts: `hMinus` uses `(p : ℕ)`, while Bernoulli numerators use
-`(p : ℤ)`.
+needed casts: `hMinus` uses `(p: ℕ)`, while Bernoulli numerators use
+`(p: ℤ)`.
 -/
 theorem bernoulli_nonzero_of_not_dvd_hMinus
     {p : ℕ} [Fact p.Prime]

@@ -26,7 +26,7 @@ variable (p : ℕ) [hp : Fact p.Prime]
 omit [IsCyclotomicExtension {p} ℚ K] in
 /-- To finish `hMinus_formula`, it is enough to know the intermediate odd
 `L`-value formula together with the corresponding product formula for the
-Gauss-sum factors. This packages the final algebraic rewrite from the
+Gauss-sum factors. This packages the final algebraic rewrite
 `L(1, χ)` stage to the Bernoulli-product stage. -/
 theorem hMinus_formula_of_LValue_formula_and_gauss_product
     {coefficient : ℂ}

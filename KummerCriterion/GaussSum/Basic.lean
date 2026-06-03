@@ -17,19 +17,19 @@ modulo a prime `p`, using the standard additive character
 ## Main results
 
 * `KummerCriterion.gaussSum_one_stdAddChar`: the Gauss sum of the trivial
-  Dirichlet character modulo a prime `p` with the standard additive character
-  equals `-1`.
+ Dirichlet character modulo a prime `p` with the standard additive character
+ equals `-1`.
 * `KummerCriterion.gaussSum_mul_gaussSum_inv_stdAddChar`: for a non-trivial
-  Dirichlet character `χ` modulo a prime `p`,
-  `τ(χ) · τ(χ̄) = χ(-1) · p`.
-* `KummerCriterion.DirichletCharacter.isPrimitive_of_prime_of_ne_one`: for
-  `p` prime, every non-trivial Dirichlet character mod `p` is primitive.
+ Dirichlet character `χ` modulo a prime `p`,
+ `τ(χ) · τ(χ̄) = χ(-1) · p`.
+* `KummerCriterion.DirichletCharacter.isPrimitive_of_prime_of_ne_one`:
+ `p` prime, every non-trivial Dirichlet character mod `p` is primitive.
 * `KummerCriterion.gaussSum_stdAddChar_mulShift`: the key Galois-equivariance
-  identity for the Gauss sum: for nontrivial `χ` mod prime `p` and `a : ZMod p`,
-  `gaussSum χ (stdAddChar.mulShift a) = χ⁻¹ a · gaussSum χ stdAddChar`.
+ identity for the Gauss sum: for nontrivial `χ` mod prime `p` and `a: ZMod p`,
+ `gaussSum χ (stdAddChar.mulShift a) = χ⁻¹ a · gaussSum χ stdAddChar`.
 * `KummerCriterion.isIntegral_gaussSum_stdAddChar`: the Gauss sum
-  `τ(χ) = gaussSum χ ZMod.stdAddChar` is an algebraic integer — integral over `ℤ`
-  as an element of `ℂ`.
+ `τ(χ) = gaussSum χ ZMod.stdAddChar` is an algebraic integer — integral over `ℤ`
+ as an element of `ℂ`.
 -/
 
 @[expose] public section
@@ -44,7 +44,7 @@ section GaussSum
 
 variable (p : ℕ) [hp : Fact p.Prime]
 
-/-- **T026**: For a non-trivial Dirichlet character `χ` modulo a prime `p`,
+/-- For a non-trivial Dirichlet character `χ` modulo a prime `p`,
 `τ(χ) · τ(χ̄) = χ(-1) · p`, where `τ(χ) = gaussSum χ ZMod.stdAddChar` is
 the classical Gauss sum. -/
 theorem gaussSum_mul_gaussSum_inv_stdAddChar
@@ -83,7 +83,7 @@ theorem gaussSum_mul_gaussSum_inv_stdAddChar
         (χ (-1) * gaussSum χ⁻¹ (ZMod.stdAddChar (N := p))⁻¹) from by ring, h2] at h3
   exact h3
 
-/-- **T027a**: For a prime modulus `p`, any non-trivial Dirichlet character
+/-- For a prime modulus `p`, any non-trivial Dirichlet character
 is primitive. Follows from `χ.conductor ∣ p` and the fact that the only
 character factoring through `1` is the trivial character. -/
 theorem DirichletCharacter.isPrimitive_of_ne_one
@@ -96,19 +96,19 @@ theorem DirichletCharacter.isPrimitive_of_ne_one
       (h ▸ χ.factorsThrough_conductor)) hχ
   · exact h
 
-/-- **T023d1a**: The quadratic Dirichlet character modulo `p`, viewed as
+/-- The quadratic Dirichlet character modulo `p`, viewed as
 `ℂ`-valued so it can be paired with `ZMod.stdAddChar` in Gauss sums. -/
 noncomputable def quadraticCharComplex : DirichletCharacter ℂ p :=
   (quadraticChar (ZMod p)).ringHomComp (Int.castRingHom ℂ)
 
-/-- **T023d1a**: The quadratic character modulo `p`, after base change to
+/-- The quadratic character modulo `p`, after base change to
 `ℂ`, is still quadratic. -/
 theorem quadraticCharComplex_isQuadratic :
     (quadraticCharComplex p).IsQuadratic := by
   simpa [quadraticCharComplex] using
     (quadraticChar_isQuadratic (F := ZMod p)).comp (Int.castRingHom ℂ)
 
-/-- **T023d1a**: For odd prime `p`, the quadratic character modulo `p` is
+/-- For odd prime `p`, the quadratic character modulo `p` is
 nontrivial after base change to `ℂ`. -/
 theorem quadraticCharComplex_ne_one (hp₂ : p ≠ 2) :
     quadraticCharComplex p ≠ 1 := by
@@ -117,21 +117,21 @@ theorem quadraticCharComplex_ne_one (hp₂ : p ≠ 2) :
       (f := Int.castRingHom ℂ) (hf := Int.cast_injective)).2
       (quadraticChar_ne_one (F := ZMod p) ((ZMod.ringChar_zmod_n p).substr hp₂))
 
-/-- **T023d1a**: The quadratic character modulo `p` is self-inverse after
+/-- The quadratic character modulo `p` is self-inverse after
 base change to `ℂ`. -/
 theorem quadraticCharComplex_inv :
     (quadraticCharComplex p)⁻¹ = quadraticCharComplex p := by
   simpa using
     (quadraticCharComplex_isQuadratic (p := p)).inv
 
-/-- **T023d1a**: The quadratic character at `-1` is given by `χ₄(p)`. -/
+/-- The quadratic character at `-1` is given by `χ₄(p)`. -/
 theorem quadraticCharComplex_eval_neg_one_eq_chi4 (hp₂ : p ≠ 2) :
     quadraticCharComplex p (-1) = ZMod.χ₄ p := by
   rw [quadraticCharComplex, MulChar.ringHomComp_apply,
     quadraticChar_neg_one (F := ZMod p) ((ZMod.ringChar_zmod_n p).substr hp₂), ZMod.card]
   rfl
 
-/-- **T023d1a**: The value of the quadratic character at `-1` is determined
+/-- The value of the quadratic character at `-1` is determined
 by `p % 4`. -/
 theorem quadraticCharComplex_eval_neg_one (hp₂ : p ≠ 2) :
     quadraticCharComplex p (-1) = if p % 4 = 1 then 1 else -1 := by
@@ -141,14 +141,14 @@ theorem quadraticCharComplex_eval_neg_one (hp₂ : p ≠ 2) :
   rw [quadraticCharComplex_eval_neg_one_eq_chi4 (p := p) hp₂, ZMod.χ₄_nat_eq_if_mod_four]
   simp [hp_odd]
 
-/-- **T023d1a**: If `p ≡ 1 (mod 4)`, the quadratic character takes the value
+/-- If `p ≡ 1 (mod 4)`, the quadratic character takes the value
 `1` at `-1`. -/
 theorem quadraticCharComplex_eval_neg_one_of_mod_four_eq_one (hp₂ : p ≠ 2)
     (hp₄ : p % 4 = 1) :
     quadraticCharComplex p (-1) = 1 := by
   simp [quadraticCharComplex_eval_neg_one (p := p) hp₂, hp₄]
 
-/-- **T023d1a**: If `p ≡ 3 (mod 4)`, the quadratic character takes the value
+/-- If `p ≡ 3 (mod 4)`, the quadratic character takes the value
 `-1` at `-1`. -/
 theorem quadraticCharComplex_eval_neg_one_of_mod_four_eq_three (hp₂ : p ≠ 2)
     (hp₄ : p % 4 = 3) :

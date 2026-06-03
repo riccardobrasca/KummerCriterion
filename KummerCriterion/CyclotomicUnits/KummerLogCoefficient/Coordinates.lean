@@ -175,7 +175,7 @@ theorem lambdaIdeal_pow_pred_le_comap_dworkParameterIdeal_pow_pred :
 
 omit [NumberField.IsCMField K] in
 /-- The `varpi^i` coefficient modulo `p` of a completed Dwork quotient modulo
-`(varpi)^(p - 1)`.  This is well-defined by CU-11f1: changing the
+`(varpi)^(p - 1)`. This is well-defined by changing the
 representative by `(varpi)^(p - 1) = (p)` changes every Dwork-basis
 coefficient by a multiple of `p`. -/
 noncomputable def dworkParameterQuotientCoeffModP

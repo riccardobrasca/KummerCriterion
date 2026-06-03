@@ -23,15 +23,15 @@ section SignInvariant
 variable (p : ℕ) [hp : Fact p.Prime]
 
 /-!
-## Determinant / Vandermonde reduction for `T023d1g2b`
+## Determinant / Vandermonde reduction
 
 This section isolates the matrix-level reductions for the determinant route:
 
 1. express `normalizedDft` as an explicit normalized Fourier matrix;
 2. reindex that matrix by `Fin p`, so the remaining algebra is on a standard
-   square matrix type;
+ square matrix type;
 3. package the Vandermonde product that should eventually evaluate the
-   determinant.
+ determinant.
 -/
 
 /-- The distinguished Fourier root whose powers enumerate the Vandermonde nodes. -/
@@ -70,7 +70,7 @@ theorem fourierMatrixFin_apply (i j : Fin p) :
   simp [fourierMatrix, zmodEquivFin_symm_apply]
 
 /-- The reindexed Fourier matrix is exactly the Vandermonde matrix on the
-Fourier nodes. This closes ticket `T023d1g2b1`. -/
+Fourier nodes. -/
 theorem fourierMatrixFin_eq_fourierVandermonde :
     fourierMatrixFin p = fourierVandermonde p := by
   ext i j
@@ -229,7 +229,7 @@ theorem weightedFourierRootProduct_eq_baseRoot_pow_choose_three :
   rw [hprod, Finset.prod_pow_eq_pow_sum, sum_range_weightedRootExponent_eq_choose_three]
 
 /-- The Fourier Vandermonde product with the weighted root contribution
-collapsed to a single power. This is the endpoint of `T023d1g2b2b1`. -/
+collapsed to a single power. This is the endpoint of the Vandermonde reduction. -/
 theorem fourierVandermondeProduct_eq_chooseThreeCyclotomicForm :
     fourierVandermondeProduct p =
       (fourierBaseRoot (p := p)) ^ (p.choose 3) * fourierCyclotomicDifferenceProduct p := by
@@ -336,7 +336,7 @@ theorem det_normalizedFourierMatrixFin_eq_scale_mul_fourierVandermondeProduct :
     det_fourierVandermonde_eq_fourierVandermondeProduct]
   simp
 
-/-- Packaged determinant skeleton for `T023d1g2b`: the remaining work is
+/-- Packaged determinant skeleton: the remaining work is
 exactly the final simplification of the explicit cyclotomic product. -/
 theorem det_normalizedDft_eq_scale_mul_fourierVandermondeProduct :
     LinearMap.det (normalizedDft p) =
@@ -355,7 +355,8 @@ theorem det_normalizedDft_eq_chooseThreeCyclotomicForm :
     fourierVandermondeProduct_eq_chooseThreeCyclotomicForm (p := p)]
 
 /-- Packaged determinant form with the cyclotomic-difference product grouped by
-the single difference `d = j - i`. This is the endpoint of `T023d1g2b2b2`. -/
+the single difference `d = j - i`. This is the endpoint of the grouped product
+reduction. -/
 theorem det_normalizedDft_eq_chooseThreeSingleDifferenceForm :
     LinearMap.det (normalizedDft p) =
       ((Real.sqrt p : ℂ)⁻¹) ^ p *

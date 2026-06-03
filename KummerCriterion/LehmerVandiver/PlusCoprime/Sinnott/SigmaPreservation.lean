@@ -11,7 +11,7 @@ The complex-conjugation automorphism `σ = unitsComplexConj K` of
 `(𝓞 K)ˣ` preserves the cyclotomic-units subgroup `C`. The key
 algebraic identity is
 
-  `σ(cyclotomicUnit p K k) = ζ^{p+1-k} · cyclotomicUnit p K k` in `𝓞 K`,
+ `σ(cyclotomicUnit p K k) = ζ^{p+1-k} · cyclotomicUnit p K k` in `𝓞 K`,
 
 which exhibits `σ(cyclotomicUnit k)` as a torsion-times-generator
 element of `C`.
@@ -95,13 +95,13 @@ theorem zeta_pow_pred_pow_eq (k : ℕ) (hk_le : k ≤ p) :
 set_option backward.isDefEq.respectTransparency false in
 /-- **σ-image of `cyclotomicUnit k`** (1 ≤ k ≤ p-1): the key identity
 
-  `(ζ-1) · cyclotomicUnit(p-1) · σ(cyclotomicUnit k) = (ζ-1) · cyclotomicUnit(p-k)`.
+ `(ζ-1) · cyclotomicUnit(p-1) · σ(cyclotomicUnit k) = (ζ-1) · cyclotomicUnit(p-k)`.
 
 Both sides equal `ζ^{p-k} - 1` after canceling `(ζ-1)`:
 * LHS = `(ζ^{p-1}-1) · σ(cyclotomicUnit k)` [defining identity]
-      = `σ((ζ-1) · cyclotomicUnit k)` [σ ring hom]
-      = `σ(ζ^k - 1)` [defining identity]
-      = `(ζ^{p-1})^k - 1 = ζ^{p-k} - 1` [reduction mod p].
+ = `σ((ζ-1) · cyclotomicUnit k)` [σ ring hom]
+ = `σ(ζ^k - 1)` [defining identity]
+ = `(ζ^{p-1})^k - 1 = ζ^{p-k} - 1` [reduction mod p].
 * RHS = `(ζ-1) · cyclotomicUnit(p-k) = ζ^{p-k} - 1` [defining identity]. -/
 theorem zeta_sub_one_mul_cyclotomicUnit_pred_mul_complexConj_cyclotomicUnit_eq
     (k : ℕ) (hk_le : k ≤ p) :
@@ -124,10 +124,10 @@ theorem zeta_sub_one_mul_cyclotomicUnit_pred_mul_complexConj_cyclotomicUnit_eq
   rw [zeta_sub_one_mul_cyclotomicUnit]
 
 set_option backward.isDefEq.respectTransparency false in
-/-- **σ-image clean form** (1 ≤ k ≤ p-1): cancelling `(ζ-1)` from the
+/-- **σ-image clean form** (1 ≤ k ≤ p-1): cancelling `(ζ-1)`
 key identity gives
 
-  `cyclotomicUnit(p-1) · σ(cyclotomicUnit k) = cyclotomicUnit(p-k)`
+ `cyclotomicUnit(p-1) · σ(cyclotomicUnit k) = cyclotomicUnit(p-k)`
 
 in `𝓞 K`. This expresses `σ(cyclotomicUnit k)` as a quotient of two
 cyclotomic units (both in `cyclotomicUnitsSubgroup`), establishing
@@ -141,7 +141,7 @@ theorem cyclotomicUnit_pred_mul_complexConj_cyclotomicUnit_eq
     (zeta_spec p ℚ K).zeta_sub_one_prime'.ne_zero
   have h_eq := zeta_sub_one_mul_cyclotomicUnit_pred_mul_complexConj_cyclotomicUnit_eq
     (p := p) (K := K) k hk_le
-  -- h_eq : (ζ-1) * cycl(p-1) * σ(cycl k) = (ζ-1) * cycl(p-k).
+  -- h_eq: (ζ-1) * cycl(p-1) * σ(cycl k) = (ζ-1) * cycl(p-k).
   -- We have (ζ-1) * (cycl(p-1) * σ(cycl k)) = (ζ-1) * cycl(p-k); cancel (ζ-1).
   have h_eq' : (((zeta_spec p ℚ K).unit' : 𝓞 K) - 1) *
       (cyclotomicUnit p K (p - 1) *

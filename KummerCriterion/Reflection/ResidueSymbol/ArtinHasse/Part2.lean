@@ -1,6 +1,6 @@
 module
 
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.Stickelberger.Part1
+public import KummerCriterion.Reflection.ResidueSymbol.Stickelberger
 public import Mathlib.FieldTheory.Finite.Basic
 public import Mathlib.GroupTheory.SpecificGroups.Cyclic
 public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
@@ -15,15 +15,15 @@ public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
 public import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
 public import Mathlib.RingTheory.Localization.Basic
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork.Part1
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork.Part2
+public import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part1
+public import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part2
 public import Mathlib.RingTheory.PowerSeries.Substitution
 public import Mathlib.RingTheory.PowerSeries.Basic
 public import Mathlib.RingTheory.PowerSeries.Trunc
 public import Mathlib.RingTheory.PowerSeries.Exp
 public import Mathlib.Data.Nat.Log
 public import Mathlib.NumberTheory.Padics.PadicVal.Basic
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.ArtinHasse.Part1
+public import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part1
 
 /-!
 # Artin-Hasse exponential power series
@@ -31,24 +31,24 @@ public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.ArtinHasse.P
 This file defines the Artin-Hasse log and exponential power series over `ℚ`,
 indexed by a prime `r`:
 
-* `artinHasseLogSeries r : PowerSeries ℚ` is `L_r(T) = ∑_{i ≥ 0} T^{r^i} / r^i`.
-* `artinHasseExpSeries r : PowerSeries ℚ` is `E_r(T) = exp(L_r(T))`.
+* `artinHasseLogSeries r: PowerSeries ℚ` is `L_r(T) = ∑_{i ≥ 0} T^{r^i} / r^i`.
+* `artinHasseExpSeries r: PowerSeries ℚ` is `E_r(T) = exp(L_r(T))`.
 
 The "is a power of `r`" predicate is decidable via `Nat.log`: for `r ≥ 2`,
 `n = r^i` for some `i ≥ 0` iff `r ^ Nat.log r n = n ∧ n ≠ 0`. (For `n = 0`,
 `r ^ Nat.log r 0 = r ^ 0 = 1 ≠ 0`, so the predicate fails as expected.)
 
 These are the building blocks of the Dwork coefficient sequence used by the
-`FullTeichDworkSetup` interface in REF-18 (the project's Φ/Kelly/Furtwängler
+`FullTeichDworkSetup` interface in (the project's Φ/Kelly/Furtwängler
 route). p-integrality of the Artin-Hasse exponential coefficients (the
 substantive Dieudonné-Dwork content) is proved separately.
 
 ## References
 
 * Alain M. Robert, *A Course in p-adic Analysis* (GTM 198, Springer 2000),
-  §7.1 Definition 1, p. 187.
+ §7.1 Definition 1, p. 187.
 * Neal Koblitz, *p-adic Numbers, p-adic Analysis, and Zeta-Functions*
-  (GTM 58, Springer 1984), §IV.2 Definition, p. 93.
+ (GTM 58, Springer 1984), §IV.2 Definition, p. 93.
 -/
 
 @[expose] public section

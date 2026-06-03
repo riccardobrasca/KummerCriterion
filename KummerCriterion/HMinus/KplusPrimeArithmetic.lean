@@ -6,21 +6,21 @@ import Mathlib.RingTheory.Ideal.GoingUp
 public import KummerCriterion.HMinus.KplusLocalCharacters
 
 /-!
-# `K⁺` prime arithmetic above `ℓ ≠ p` (T023b2a2)
+# `K⁺` prime arithmetic above `ℓ ≠ p` 
 
 Arithmetic half of the local `K⁺` package:
 
 - `primesOverFinsetPlus` and its cardinality / membership lemmas for the finite
-  set of primes of `𝓞 K⁺` above `(ℓ)`.
+ set of primes of `𝓞 K⁺` above `(ℓ)`.
 - `primesOverFinsetContractionToPlus`, the contraction map from primes of
-  `𝓞 K` over `(ℓ)` to primes of `𝓞 K⁺` over `(ℓ)`.
+ `𝓞 K` over `(ℓ)` to primes of `𝓞 K⁺` over `(ℓ)`.
 - The CM-fiber dichotomy showing those fibers have size `1` or `2`, according
-  to whether complex conjugation fixes the prime.
+ to whether complex conjugation fixes the prime.
 - `map_ringOfIntegersComplexConj_eq_self_iff_even_localResidueDegree` and its
-  half-degree reformulation, relating the fixed-prime case to
-  `localResidueDegreePlus`.
+ half-degree reformulation, relating the fixed-prime case to
+ `localResidueDegreePlus`.
 - `primesOver_inertiaDeg_eq_localResidueDegreePlus`, the inertia-degree formula
-  for primes of `K⁺` above unramified rational primes `ℓ ≠ p`.
+ for primes of `K⁺` above unramified rational primes `ℓ ≠ p`.
 
 This file is the arithmetic continuation of the old monolithic
 `KummerCriterion.HMinus.KplusLocalResidue`; the even-character local-factor

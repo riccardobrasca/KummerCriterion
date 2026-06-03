@@ -12,8 +12,8 @@ public import Mathlib.RingTheory.ZMod.Torsion
 # Unit quotients: the free character profile
 
 This file records the representation-theoretic closing statement for the free
-unit contribution.  The permutation representation of
-`Delta / {±1}` contains one copy of every quotient character.  The free unit
+unit contribution. The permutation representation of
+`Delta / {±1}` contains one copy of every quotient character. The free unit
 part corresponds to the augmentation subrepresentation, so the trivial line is
 removed and each nontrivial quotient character occurs with multiplicity one.
 

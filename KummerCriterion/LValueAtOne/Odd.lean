@@ -5,7 +5,7 @@ public import KummerCriterion.LValueAtOne.Sine
 /-!
 # Odd-character `L(1, χ)` formulas
 
-This file packages the odd `L(0, χ)` and `L(1, χ)` evaluations from the
+This file packages the odd `L(0, χ)` and `L(1, χ)` evaluations
 sine-side boundary-value identities.
 -/
 
@@ -57,7 +57,7 @@ theorem odd_LFunction_zero_eq_pi_inv_mul_sum_sinZeta_one
             rw [Finset.mul_sum]
 
 /-- The odd special value `L(0, χ) = -B_{1,χ}` follows from the classical
-boundary-value formula `sinZeta (a / p) 1 = π (1 / 2 - a / p)` for
+boundary-value formula `sinZeta (a / p) 1 = π (1 / 2 - a / p)`
 nonzero residues `a`. -/
 theorem odd_LFunction_zero_eq_neg_BernoulliGen_one_of_sinZeta_one_formula
     {χ : DirichletCharacter ℂ p} (hχ_odd : χ.Odd) (hχ_ne_one : χ ≠ 1)
@@ -115,7 +115,7 @@ theorem odd_LFunction_zero_eq_neg_BernoulliGen_one_of_sinZeta_one_formula
           push_cast
           rfl
 
-/-- **T021b / T021b1**: Odd special value `L(0, χ) = -BernoulliGen χ 1` for
+/-- Odd special value `L(0, χ) = -BernoulliGen χ 1`
 odd nontrivial Dirichlet characters modulo `p`, packaged independently of the
 endpoint layer by feeding the endpoint identity
 `sinZeta_toAddCircle_one_eq_boundary` into the generic reduction lemma. -/
@@ -126,7 +126,7 @@ theorem odd_LFunction_zero_eq_neg_BernoulliGen_one
     hχ_odd hχ_ne_one
     (fun _ ha => sinZeta_toAddCircle_one_eq_boundary (p := p) ha)
 
-/-- **T021 / T021c / T021c1**: `L(1, χ)` for odd primitive characters
+/-- `L(1, χ)` for odd primitive characters
 modulo `p`. Closes the full odd-side formula by applying the functional-equation
 reduction `odd_LFunction_one_eq_oddLValueRhs_of_LFunction_inv_zero` to the
 packaged odd special-value theorem at `χ⁻¹`. -/

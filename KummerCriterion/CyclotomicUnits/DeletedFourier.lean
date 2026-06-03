@@ -6,10 +6,10 @@ import Mathlib.Tactic
 # Deleted Fourier matrices on the augmentation subspace
 
 This file proves the finite-group determinant identity behind the real
-cyclotomic-unit regulator computation.  The statement is abstract: for a
-finite abelian group `G`, a function `q : G → ℂ`, and the deleted matrix
+cyclotomic-unit regulator computation. The statement is abstract: for a
+finite abelian group `G`, a function `q: G → ℂ`, and the deleted matrix
 `(q (h * k⁻¹) - q h)` indexed by `G \ {1}`, its determinant is the product of
-the nontrivial Fourier coefficients.  The proof uses the deleted character
+the nontrivial Fourier coefficients. The proof uses the deleted character
 matrix and includes the rank-one correction in its inverse.
 -/
 
@@ -121,7 +121,7 @@ def deletedCharacterMatrix
     Matrix (NontrivChar G) (NontrivChar G) ℂ :=
   Matrix.of fun h χ => χ.val (ρ h).val
 
-/-- The corrected left inverse of the deleted character matrix.  The `-1`
+/-- The corrected left inverse of the deleted character matrix. The `-1`
 term is the rank-one correction that appears after deleting the trivial row
 and the trivial character. -/
 def deletedCharacterMatrixLeftInverse
@@ -352,7 +352,7 @@ theorem deletedConvolutionMulMatrixAtReindexed_eq_translated
     mul_assoc]
 
 omit [Fintype G] in
-/-- The `hk` matrix is a row-inversion permutation of the `hk⁻¹` matrix for
+/-- The `hk` matrix is a row-inversion permutation of the `hk⁻¹` matrix
 `x ↦ q(x⁻¹)`. -/
 theorem deletedConvolutionMulMatrix_eq_invRow_submatrix (q : G → ℂ) :
     deletedConvolutionMulMatrixOnNonidentity (G := G) q =
@@ -486,7 +486,7 @@ theorem deletedFourierCoeff_invArg_eq_mul
   rw [inv_inv]
   ring
 
-/-- Squared determinant identity in the `hk` convention.  The square removes
+/-- Squared determinant identity in the `hk` convention. The square removes
 the sign of the row-inversion permutation. -/
 theorem det_deletedConvolutionMulMatrixOnNonidentity_sq_eq_prod_deletedFourierCoeffMul_sq
     [DecidableEq G] [Fintype (MulChar G ℂ)] [DecidableEq (MulChar G ℂ)]

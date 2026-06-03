@@ -9,7 +9,7 @@ public import Mathlib.LinearAlgebra.Finsupp.Pi
 /-!
 # Unit quotients: the even permutation representation
 
-This file proves `REF-07c3`.
+This file proves the even permutation-representation decomposition.
 
 The finite representation-theory statement needed for the free unit part is:
 the permutation representation of
@@ -63,7 +63,7 @@ theorem cyclotomicEvenDeltaQuotient_neg_one :
     cyclotomicEvenDeltaQuotient p (-1 : CyclotomicUnitDelta p) = 1 :=
   (QuotientGroup.eq_one_iff (-1 : CyclotomicUnitDelta p)).2 (Subgroup.mem_zpowers _)
 
-/-- **Negation invariance of the quotient map**: for any `a : (ZMod p)ˣ`,
+/-- **Negation invariance of the quotient map**: for any `a: (ZMod p)ˣ`,
 `q(-a) = q(a)` in `(ZMod p)ˣ / ⟨-1⟩`. Direct consequence of
 `q(-1) = 1` + the homomorphism property `q(-a) = q((-1) · a) = q(-1) · q(a)`. -/
 @[simp]
@@ -72,12 +72,12 @@ theorem cyclotomicEvenDeltaQuotient_neg (a : CyclotomicUnitDelta p) :
   have h : -a = (-1 : CyclotomicUnitDelta p) * a := (neg_one_mul a).symm
   rw [h, map_mul, cyclotomicEvenDeltaQuotient_neg_one, one_mul]
 
-/-- **Even function descent**: any function `f : (ZMod p)ˣ → R` satisfying
+/-- **Even function descent**: any function `f: (ZMod p)ˣ → R` satisfying
 `f(-a) = f(a)` (= even under negation) descends to a function on the quotient
 `(ZMod p)ˣ ⧸ ⟨-1⟩ = CyclotomicEvenDelta p`. This is the function-level analog
 of the character-level `evenDeltaCharacterDescend`.
 
-The well-definedness uses `(-1)^k ∈ {1, -1}` for any `k : ℤ` (which follows
+The well-definedness uses `(-1)^k ∈ {1, -1}` for any `k: ℤ` (which follows
 from `(-1)^2 = 1` + `zpow_eq_zpow_emod'`). For `k % 2 = 0`, the equivalence
 gives `b = a`; for `k % 2 = 1`, it gives `b = -a`, and `hf_even` resolves
 the function value. -/
@@ -89,7 +89,7 @@ def evenFunctionDescend {R : Type*} (f : CyclotomicUnitDelta p → R)
       QuotientGroup.leftRel_apply.mp hab
     rw [CyclotomicEvenDeltaSubgroup, Subgroup.mem_zpowers_iff] at hab'
     obtain ⟨k, hk⟩ := hab'
-    -- hk : (-1)^k = a⁻¹ * b, so b = a * (-1)^k
+    -- hk: (-1)^k = a⁻¹ * b, so b = a * (-1)^k
     have h_b : b = a * ((-1 : CyclotomicUnitDelta p) ^ k) := by
       rw [hk]; group
     -- Use that (-1)^2 = 1 to reduce k mod 2.

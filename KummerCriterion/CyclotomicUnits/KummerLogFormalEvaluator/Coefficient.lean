@@ -258,7 +258,7 @@ set_option maxHeartbeats 800000 in
 -- The proof first unfolds the same-prime finite logarithm to ordinary
 -- homogeneous slices, then collapses the Dwork coordinate sum to one degree.
 omit [NumberField.IsCMField K] in
-/-- CU-11f2b2c4 source theorem: the unscaled normalized finite-log coefficient
+/-- source theorem: the unscaled normalized finite-log coefficient
 on an even Kummer row is the formal Bernoulli coefficient. -/
 theorem valuedLambdaQuotientDworkCoeffModP_unscaledNormalizedFiniteLog_even_eq_formal
     (hp_five : 5 ≤ p) (j : Fin (kummerLogRank p)) :
@@ -324,7 +324,7 @@ theorem valuedLambdaQuotientDworkCoeffModP_unscaledNormalizedFiniteLog_even_eq_f
 
 omit [NumberField.IsCMField K] in
 /-- Even-row folded coefficient reduced to the unscaled normalized finite-log
-coordinate.  This is the coordinate-first C4 bridge; the remaining source
+coordinate. This is the coordinate-first C4 bridge; the remaining source
 calculation is the unscaled even-row normalized Artin-Hasse coefficient. -/
 theorem kummerLogDworkArtinHasseSpecializedFiniteLogCoeffModP_eq_one_sub_pow_mul_unscaled
     (hp_three : 3 ≤ p) (hp_five : 5 ≤ p)
@@ -370,7 +370,7 @@ theorem kummerLogDworkArtinHasseSpecializedFiniteLogCoeffModP_eq_formal_of_unsca
   ring
 
 omit [NumberField.IsCMField K] in
-/-- CU-11f2b2c4 endpoint: the specialized finite Artin-Hasse logarithm
+/-- endpoint: the specialized finite Artin-Hasse logarithm
 coefficient agrees with the formal Kummer coefficient on every even row. -/
 theorem kummerLogDworkArtinHasseSpecializedFiniteLogCoeffModP_eq_formal
     (hp_three : 3 ≤ p) (hp_five : 5 ≤ p)
@@ -386,7 +386,7 @@ theorem kummerLogDworkArtinHasseSpecializedFiniteLogCoeffModP_eq_formal
       (p := p) (K := K) hp_five j)
 
 omit [NumberField.IsCMField K] in
-/-- CU-11f2b3 endpoint: the folded finite same-prime evaluator gives the
+/-- endpoint: the folded finite same-prime evaluator gives the
 formal Kummer coefficient after specialization at the column residue. -/
 theorem kummerLogFormalEvaluator_coeff_eq
     (hp_three : 3 ≤ p) (hp_five : 5 ≤ p)
@@ -400,8 +400,8 @@ theorem kummerLogFormalEvaluator_coeff_eq
     (p := p) (K := K) hp_three hp_five j a
 
 omit [NumberField.IsCMField K] in
-/-- CU-11f2b3 endpoint rewritten to the assembled Kummer congruence right-hand
-side.  This is the form intended for the concrete matrix-entry theorem. -/
+/-- endpoint rewritten to the assembled Kummer congruence right-hand
+side. This is the form intended for the concrete matrix-entry theorem. -/
 theorem kummerLogDworkArtinHasseSpecializedFiniteLogCoeffModP_eq_congrRhs
     (hp_three : 3 ≤ p) (hp_five : 5 ≤ p)
     (j a : Fin (kummerLogRank p)) :
@@ -414,7 +414,7 @@ theorem kummerLogDworkArtinHasseSpecializedFiniteLogCoeffModP_eq_congrRhs
       (p := p) (K := K) hp_three hp_five j a)
 
 /-- The concrete squared-family matrix entry is twice the normalized finite-log
-coefficient.  This is the coordinate form of the already-proved identity
+coefficient. This is the coordinate form of the already-proved identity
 `concreteKummerLogVector = 2 • specializedFiniteLog` modulo `λ^(p - 1)`. -/
 theorem concreteKummerLogMatrix_eq_two_mul_specializedFiniteLogCoeffModP
     (hp_three : 3 ≤ p) (hp_five : 5 ≤ p)
@@ -481,7 +481,7 @@ theorem concreteKummerLogMatrix_eq_two_mul_specializedFiniteLogCoeffModP
           rw [htwo]
           rfl
 
-/-- CU-11f3: the concrete logarithm matrix entries satisfy the Kummer
+/-- the concrete logarithm matrix entries satisfy the Kummer
 congruence in the squared-family normalization. -/
 theorem concreteKummerLogMatrix_eq_squaredKummerLogCoeffCongrRhs
     (hp_three : 3 ≤ p) (hp_five : 5 ≤ p)
@@ -508,7 +508,7 @@ theorem concreteSquaredKummerLogMatrixEntry_congr
       (p := p) (K := K) hp_three hp_five j a]
   rfl
 
-/-- CU-11 endpoint: the concrete Kummer logarithm coefficient congruence.
+/-- endpoint: the concrete Kummer logarithm coefficient congruence.
 
 The unit factor is the squared-family unit
 `squaredKummerLogUnitFactor = 2 * kummerLogUnitFactor`, which is nonzero by

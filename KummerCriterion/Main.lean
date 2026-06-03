@@ -16,7 +16,7 @@ namespace KummerCriterion
 /-- **Kummer's criterion.**
 
 An odd prime `p` is regular iff `p` does not divide the numerator of any
-Bernoulli number `B_2, B_4, ..., B_{p-3}`. -/
+Bernoulli number `B_2, B_4,..., B_{p-3}`. -/
 theorem _root_.KummerCriterion
     {p : ℕ} [hp : Fact p.Prime] (hp_odd : p ≠ 2) :
     IsRegularPrime p ↔

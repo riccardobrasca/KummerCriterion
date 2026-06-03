@@ -212,7 +212,7 @@ set_option maxHeartbeats 1000000 in
 -- the Kummer quotient; elaborating those quotient powers is expensive.
 omit [NumberField.IsCMField K] in
 /-- The folded `n = p` same-prime finite-log term has zero even Kummer
-coordinate for every lambda-adic argument.  The argument is factored by the
+coordinate for every lambda-adic argument. The argument is factored by the
 complete Dwork parameter, and the resulting factor is reduced only modulo the
 Dwork parameter using the residue-lift theorem. -/
 theorem valuedLambdaQuotientDworkCoeffModP_samePrimeFiniteLogTerm_p_even_eq_zero
@@ -302,7 +302,7 @@ theorem normalizedFiniteLogApprox_evenCoeff_eq_ordinaryTerms
 set_option linter.style.longLine false in
 omit [NumberField.IsCMField K] in
 /-- For ordinary same-prime logarithm terms `n < p`, no same-prime
-denominator folding occurs.  Hence a homogeneous piece of lambda-degree
+denominator folding occurs. Hence a homogeneous piece of lambda-degree
 `>= N + 1` is already zero in the `lambda^(N + 1)` quotient. -/
 theorem samePrimeFiniteArtinHasseNormalizedCoordLogHomogeneousTerm_eq_zero_of_quotient_le_of_lt_prime
     {N n d : ℕ} {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K)
@@ -374,7 +374,7 @@ set_option maxHeartbeats 800000 in
 -- default heartbeat budget.
 omit [NumberField.IsCMField K] in
 /-- Coordinate of one low normalized homogeneous degree slice at the Dwork
-parameter approximant.  The bound `d < p - 1` makes `d!` invertible modulo
+parameter approximant. The bound `d < p - 1` makes `d!` invertible modulo
 `p`, so the factorial-cleared source theorem can be read in `ZMod p`
 coordinates. -/
 theorem valuedLambdaQuotientDworkCoeffModP_factorPow_normalizedHomogeneousDegreeSum_dworkParameterApprox_of_lt

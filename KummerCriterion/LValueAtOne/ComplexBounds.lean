@@ -21,7 +21,7 @@ section LValueAtOne
 
 variable (p : ℕ) [hp : Fact p.Prime]
 
-/-- For a nonzero residue `a : ZMod p`, the standard real representative lies
+/-- For a nonzero residue `a: ZMod p`, the standard real representative lies
 strictly between `0` and `1` after dividing by `p`. -/
 lemma zmod_val_div_prime_mem_Ioo {a : ZMod p} (ha : a ≠ 0) :
     (a.val / p : ℝ) ∈ Set.Ioo 0 1 := by

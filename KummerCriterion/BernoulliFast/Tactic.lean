@@ -17,13 +17,13 @@ and normalizing it with `cbv`.
 ## Strategy
 
 - Rewrite `bernoulli n` to `Cbv.toRat (Cbv.bernoulliFrac n)` via
-  `← Cbv.bernoulliFrac_toRat_eq_bernoulli`.
-- Run `cbv`, using the `Frac` and literal-list simprocs from
-  `KummerCriterion.BernoulliFast.Cbv`.
+ `← Cbv.bernoulliFrac_toRat_eq_bernoulli`.
+- Run `cbv`, using the `Frac` and literal-list simprocs
+ `KummerCriterion.BernoulliFast.Cbv`.
 
 ## Axioms
 
-Only the standard axioms used by rational arithmetic.  No `native_decide`; the
+Only the standard axioms used by rational arithmetic. No `native_decide`; the
 custom fraction representation is connected to `ℚ` by theorem-level proofs in
 `KummerCriterion.BernoulliFast.Cbv`.
 -/
@@ -39,8 +39,8 @@ Supported goal shapes (with concrete numerals `n`, `p`, `z`, `q`):
 - `bernoulli n = q` (full rational value in `ℚ`)
 - `(bernoulli n).num = z`
 - `(bernoulli n).den = d`
-- `(p : ℤ) ∣ (bernoulli n).num`
-- `¬ (p : ℤ) ∣ (bernoulli n).num` -/
+- `(p: ℤ) ∣ (bernoulli n).num`
+- `¬ (p: ℤ) ∣ (bernoulli n).num` -/
 elab "bernoulli_decide" : tactic => do
   let stx ← `(tactic|
     (rw [← Cbv.bernoulliFrac_toRat_eq_bernoulli]

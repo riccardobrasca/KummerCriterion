@@ -7,7 +7,7 @@ public import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
 # Unit quotients: the actual cyclotomic `Delta` action
 
 The files `UnitQuotient.Components` and `UnitQuotient.Structure` allow a
-declared action of `Delta = (ZMod p)ˣ` on `E/E^(p^N)`.  This file supplies the
+declared action of `Delta = (ZMod p)ˣ` on `E/E^(p^N)`. This file supplies the
 actual action when `K` is the `p`-th cyclotomic field.
 
 The construction uses the standard cyclotomic Galois equivalence
@@ -39,7 +39,7 @@ noncomputable abbrev cyclotomicGalEquivZMod :
     Gal(K / ℚ) ≃* CyclotomicUnitDelta p :=
   IsCyclotomicExtension.Rat.galEquivZMod p K
 
-/-- The Galois automorphism indexed by `a : (ZMod p)^*`. -/
+/-- The Galois automorphism indexed by `a: (ZMod p)^*`. -/
 noncomputable def cyclotomicSigmaOfUnit (a : CyclotomicUnitDelta p) :
     Gal(K / ℚ) :=
   (cyclotomicGalEquivZMod (p := p) K).symm a

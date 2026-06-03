@@ -1,17 +1,17 @@
 import KummerCriterion.CyclotomicUnits.Basic
-import KummerCriterion.LehmerVandiver.PlusCoprime.KummerLift.CharacterIdentification
+import KummerCriterion.LehmerVandiver.PlusCoprime.CharacterIdentification
 import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
 import Mathlib.Data.ZMod.Units
 
 /-!
 # Normalized cyclotomic units
 
-This file starts the CU-06b replacement of the squared real cyclotomic-unit
+This file starts the replacement of the squared real cyclotomic-unit
 family by the normalized units
 
 `ζ ^ e * (1 - ζ ^ a) / (1 - ζ)`, with `2 * e = 1 - a mod p`.
 
-The definitions here live first in `(𝓞 K)ˣ`.  Later files descend the
+The definitions here live first in `(𝓞 K)ˣ`. Later files descend the
 complex-conjugation fixed units to `(𝓞 K⁺)ˣ` and compare the generated
 subgroup with the existing squared-family subgroup.
 -/

@@ -21,7 +21,7 @@ This file isolates the K⁺-side primary definition with basic API.
 
 * Washington, *Introduction to Cyclotomic Fields*, §6.4.
 * Vandiver 1929, *Fermat's Last Theorem and the Second Factor in the
-  Cyclotomic Class Number*.
+ Cyclotomic Class Number*.
 -/
 
 @[expose] public section
@@ -54,7 +54,7 @@ variable (p : ℕ) [hp : Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
 /-- The cyclotomic unit `(1 - ζ^k)/(1 - ζ) ∈ 𝓞 K` for `k` coprime to
-`p`. Equivalently `1 + ζ + ζ^2 + ... + ζ^{k-1}`. -/
+`p`. Equivalently `1 + ζ + ζ^2 +... + ζ^{k-1}`. -/
 noncomputable def cyclotomicUnit (k : ℕ) : 𝓞 K :=
   ∑ j ∈ Finset.range k, (zeta_spec p ℚ K).unit' ^ j
 

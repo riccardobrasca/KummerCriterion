@@ -29,11 +29,11 @@ exponential's `r`-integrality (`artinHasseExpSeries_coeff_isRIntegral` in
 ## References
 
 * Alain M. Robert, *A Course in p-adic Analysis* (GTM 198, Springer 2000),
-  §7.2 Theorem 1, pp. 188-190.
+ §7.2 Theorem 1, pp. 188-190.
 * Neal Koblitz, *p-adic Numbers, p-adic Analysis, and Zeta-Functions*
-  (GTM 58, Springer 1984), §IV.2 Theorem 2, pp. 96-97.
+ (GTM 58, Springer 1984), §IV.2 Theorem 2, pp. 96-97.
 
-This is a local file (REF-18tf3b2a); a future cleanup may PR upstream.
+This is a local file; a future cleanup may PR upstream.
 -/
 
 @[expose] public section

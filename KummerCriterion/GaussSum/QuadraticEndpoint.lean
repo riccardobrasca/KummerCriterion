@@ -19,7 +19,7 @@ section GaussSum
 
 variable (p : ℕ) [hp : Fact p.Prime]
 
-/-- **T023d1g3**: In the `p ≡ 3 [ZMOD 4]` branch, the quadratic Gauss sum for
+/-- In the `p ≡ 3 [ZMOD 4]` branch, the quadratic Gauss sum
 the raw quadratic character equals `I * √p`. -/
 theorem gaussSum_quadraticChar_stdAddChar_of_mod_four_eq_three
     (hp₂ : p ≠ 2) (hp₄ : p % 4 = 3) :

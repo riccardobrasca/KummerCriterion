@@ -5,8 +5,8 @@ import KummerCriterion.CyclotomicUnits.Vandermonde
 /-!
 # Kummer logarithm determinant
 
-This file assembles the CU-11 coefficient congruence and the CU-12
-Vandermonde determinant into Kummer's determinant criterion.  The determinant
+This file assembles the coefficient congruence and the 
+Vandermonde determinant into Kummer's determinant criterion. The determinant
 is nonzero exactly when the Bernoulli numerator factors in the classical
 range are nonzero modulo `p`.
 -/
@@ -33,7 +33,7 @@ def kummerLogDetRowFactor (j : Fin (kummerLogRank p)) : ZMod p :=
     bernoulliFactor p (kummerLogRowIndex (p := p) j)
 
 /-- The concrete Kummer logarithm matrix factors as a diagonal matrix of row
-Bernoulli factors times the finite-field Vandermonde matrix from CU-12. -/
+Bernoulli factors times the finite-field Vandermonde matrix. -/
 theorem concreteKummerLogMatrix_eq_diagonal_mul_vandermonde
     (hp_three : 3 ≤ p) (hp_five : 5 ≤ p) :
     concreteKummerLogMatrix (p := p) (K := K) hp_three hp_five =
@@ -199,7 +199,7 @@ theorem exists_fin_kummerLogRowIndex_eq_of_mem_range
   simp [kummerLogRowIndex]
   omega
 
-/-- CU-13: Kummer's logarithm determinant is nonzero exactly when all
+/-- Kummer's logarithm determinant is nonzero exactly when all
 Bernoulli numerators in the classical even range are prime to `p`. -/
 theorem kummerLogMatrix_det_ne_zero_iff_bernoulli_nonzero
     (hp_three : 3 ≤ p) (hp_five : 5 ≤ p) :

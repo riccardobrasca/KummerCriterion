@@ -7,13 +7,13 @@ public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 # Valuation-completion model for the lambda-local Kummer--Artin--Hasse trace
 
 The existing `LambdaLocalIntegerRing` is an adic completion of the localized
-cyclotomic integer ring.  It is the model already used by the principal-unit
-filtration.  For the `Q_p`-linear trace in the explicit local correction,
+cyclotomic integer ring. It is the model already used by the principal-unit
+filtration. For the `Q_p`-linear trace in the explicit local correction,
 mathlib's available field/DVR API is instead attached to
 `HeightOneSpectrum.adicCompletion`.
 
 This file exposes the valuation-completion model attached to the same prime
-`lambda = zetaPrime p K`.  The final explicit Kummer--Artin--Hasse trace
+`lambda = zetaPrime p K`. The final explicit Kummer--Artin--Hasse trace
 source is routed through this valuation-completion model; the older
 `LambdaLocalIntegerRing` stack is legacy infrastructure for the adic
 principal-unit filtration, not the final trace API.

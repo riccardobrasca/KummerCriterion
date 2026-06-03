@@ -166,7 +166,7 @@ theorem samePrimeFiniteLog_eq_of_sub_mem {N : ℕ}
     samePrimeFiniteLogTerm_eq_of_sub_mem (p := p) (K := K) hx hy hxy
 
 /-- The ordinary finite logarithm re-expressed through the degree-indexed
-localized evaluator.  This form is used by the homogeneous additivity proof. -/
+localized evaluator. This form is used by the homogeneous additivity proof. -/
 noncomputable def samePrimeFiniteLogLocalizedTerm (N n : ℕ)
     (x : ValuedIntegerRing p K) (hx : x ∈ lambdaIdeal p K) :
     ValuedIntegerRing p K ⧸ (lambdaIdeal p K) ^ (N + 1) :=

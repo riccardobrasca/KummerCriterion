@@ -1,19 +1,19 @@
 module
 
-public import KummerCriterion.BernoulliGeneralized
+public import KummerCriterion.KummerCongruence.BernoulliGeneralized
 public import KummerCriterion.CyclotomicUnits.PadicLogSetup
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.DworkFactorization.FiniteArtinHasseFormal
+public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteArtinHasseFormal
 public import Mathlib.RingTheory.PowerSeries.Inverse
 
 /-!
 # Formal Kummer logarithm series
 
 This file starts the purely formal coefficient calculation used by the
-cyclotomic-units route.  The power-series variable is `T`; the scalar `X`
+cyclotomic-units route. The power-series variable is `T`; the scalar `X`
 lives as a polynomial coefficient, so the formal Kummer logarithm is an
 element of `ℚ[X]⟦T⟧`.
 
-No analytic `p`-adic logarithm is used here.  The only logarithm below is
+No analytic `p`-adic logarithm is used here. The only logarithm below is
 `PowerSeries.logOf`.
 -/
 
@@ -26,7 +26,7 @@ open scoped BigOperators PowerSeries
 namespace KummerCriterion
 namespace CyclotomicUnits
 
-/-- The ordinary formal exponential numerator `(exp(T)-1)/T`.  This is used
+/-- The ordinary formal exponential numerator `(exp(T)-1)/T`. This is used
 as the low-degree model for the Artin-Hasse normalized numerator. -/
 def formalExpNormalizedMinusOne : PowerSeries ℚ :=
   PowerSeries.mk fun n =>
@@ -225,7 +225,7 @@ theorem coeff_logOf_eq_of_coeff_eq_le
     simp [hcoeff k hk]
 
 /-- Reduction of a rational number modulo `p`, written using numerator and
-denominator.  The later coefficient theorems use separate hypotheses proving
+denominator. The later coefficient theorems use separate hypotheses proving
 that the denominators in question are units modulo `p`. -/
 def ratReductionZMod (p : ℕ) [Fact p.Prime] (q : ℚ) : ZMod p :=
   (q.num : ZMod p) / (q.den : ZMod p)
@@ -235,7 +235,7 @@ of `B_(2*j)/(2*j)` modulo `p`. -/
 def bernoulliFactor (p j : ℕ) [Fact p.Prime] : ZMod p :=
   ratReductionZMod p (((_root_.bernoulli (2 * j) : ℚ) / (2 * j : ℚ)))
 
-/-- The explicit unit factor used for the CU-11d coefficient convention.  The
+/-- The explicit unit factor used for the coefficient convention. The
 factorial is a unit in the final range `2*j <= p - 3`. -/
 def kummerLogUnitFactor (p : ℕ) (_j : ℕ) [Fact p.Prime] : ZMod p :=
   -(((Nat.factorial (2 * _j) : ℕ) : ZMod p)⁻¹)
@@ -255,7 +255,7 @@ theorem kummerLogUnitFactor_ne_zero {p j : ℕ} [Fact p.Prime]
   simpa [kummerLogUnitFactor] using
     (neg_ne_zero.mpr (inv_ne_zero (factorial_two_mul_index_zmod_ne_zero hj hjp)))
 
-/-- Under the CU-11d range hypotheses, the integer `2*j` is nonzero modulo
+/-- Under the range hypotheses, the integer `2*j` is nonzero modulo
 `p`. -/
 theorem two_mul_index_zmod_ne_zero {p j : ℕ} [Fact p.Prime]
     (hj : 1 ≤ j) (hjp : 2 * j ≤ p - 3) :
@@ -267,7 +267,7 @@ theorem two_mul_index_zmod_ne_zero {p j : ℕ} [Fact p.Prime]
   have hp_le : p ≤ 2 * j := Nat.le_of_dvd hpos hp_dvd
   omega
 
-/-- Under the CU-11d range hypotheses, `p` does not divide the denominator of
+/-- Under the range hypotheses, `p` does not divide the denominator of
 `B_(2*j)`. -/
 theorem prime_not_dvd_bernoulli_den_two_mul {p j : ℕ} [Fact p.Prime]
     (hj : 1 ≤ j) (hjp : 2 * j ≤ p - 3) :
@@ -279,7 +279,7 @@ theorem prime_not_dvd_bernoulli_den_two_mul {p j : ℕ} [Fact p.Prime]
   exact KummerCriterion.prime_not_dvd_bernoulli_den_of_lt_sub_one
     (p := p) (n := 2 * j) hp_ne_two (by omega)
 
-/-- Under the CU-11d range hypotheses, the Bernoulli denominator is nonzero
+/-- Under the range hypotheses, the Bernoulli denominator is nonzero
 modulo `p`. -/
 theorem bernoulli_den_zmod_ne_zero {p j : ℕ} [Fact p.Prime]
     (hj : 1 ≤ j) (hjp : 2 * j ≤ p - 3) :
@@ -292,24 +292,24 @@ abbrev KummerLogModCoeffRing (p : ℕ) : Type :=
   Polynomial (ZMod p)
 
 /-- The reduced scalar multiplying `X^(2*j)-1` in the final mod-`p`
-coefficient formula.  It is the Bernoulli factor times the factorial unit
+coefficient formula. It is the Bernoulli factor times the factorial unit
 coming from the formal logarithm coefficient convention. -/
 def reducedKummerLogCoeffFactor (p j : ℕ) [Fact p.Prime] : ZMod p :=
   kummerLogUnitFactor p j * bernoulliFactor p j
 
-/-- The final mod-`p` formal coefficient target for CU-11d. -/
+/-- The final mod-`p` formal coefficient target for. -/
 def formalKummerLogCoeffModP (p j : ℕ) [Fact p.Prime] :
     KummerLogModCoeffRing p :=
   Polynomial.C (reducedKummerLogCoeffFactor p j) *
     (Polynomial.X ^ (2 * j) - 1)
 
-/-- The unit factor in the final unspecialized CU-11d theorem is nonzero. -/
+/-- The unit factor in the final unspecialized theorem is nonzero. -/
 theorem formalKummerLogCoeffModP_unit_ne_zero
     {p j : ℕ} [Fact p.Prime] (hj : 1 ≤ j) (hjp : 2 * j ≤ p - 3) :
     kummerLogUnitFactor p j ≠ 0 :=
   kummerLogUnitFactor_ne_zero hj hjp
 
-/-- Evaluation form of the final unspecialized CU-11d theorem.  CU-11e will
+/-- Evaluation form of the final unspecialized theorem. will
 apply this with `x` a Teichmuller/residue column value. -/
 theorem formalKummerLogCoeffModP_eval
     (p j : ℕ) [Fact p.Prime] (x : ZMod p) :

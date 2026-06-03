@@ -22,7 +22,7 @@ This file isolates the K⁺-side primary definition with basic API.
 
 * Washington, *Introduction to Cyclotomic Fields*, §6.4.
 * Vandiver 1929, *Fermat's Last Theorem and the Second Factor in the
-  Cyclotomic Class Number*.
+ Cyclotomic Class Number*.
 -/
 
 @[expose] public section

@@ -7,7 +7,7 @@ public import Mathlib.RingTheory.PowerSeries.WellKnown
 # Formal logarithm identities for the finite logarithm
 
 This file isolates the formal-power-series identity behind finite-log
-additivity.  The identity is proved with a dummy variable `T`; substituting
+additivity. The identity is proved with a dummy variable `T`; substituting
 `T * x` and `T * y` makes coefficients of `T^d` record total degree `d` in the
 two principal-unit coordinates.
 -/
@@ -169,7 +169,7 @@ theorem log_subst_add_add_mul_scaled [IsAddTorsionFree A] (x y : A) :
   exact log_subst_mul_one_add_scaled (A := A) x y
 
 /-- Coefficient extraction from the scaled two-variable formal logarithm
-identity.  The coefficient of `T^n` is the homogeneous total-degree `n` part
+identity. The coefficient of `T^n` is the homogeneous total-degree `n` part
 of the identity in `x` and `y`. -/
 theorem coeff_log_subst_add_add_mul_scaled [IsAddTorsionFree A] (x y : A) (n : ℕ) :
     PowerSeries.coeff n

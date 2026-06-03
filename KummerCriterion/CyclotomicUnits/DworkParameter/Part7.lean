@@ -548,7 +548,7 @@ theorem evalₐ_pow_eq_zero_of_evalₐ_one_eq_zero
       exact Ideal.pow_mem_pow hrI (N + 1)
 
 /-- Finite quotient evaluation of an integral-coefficient power series at a
-completed element.  The target quotient makes the evaluation a finite
+completed element. The target quotient makes the evaluation a finite
 polynomial because the argument is nilpotent modulo `lambda^N`. -/
 def evalIntegralPowerSeriesMod
     (F : PowerSeries (ValuedIntegerRing p K))

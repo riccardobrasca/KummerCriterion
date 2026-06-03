@@ -12,14 +12,14 @@ public import Mathlib.RingTheory.ClassGroup
 /-!
 # Singular Kummer: localization at a height-one prime
 
-This file provides the REF-12 localization target.  For a height-one prime
+This file provides the localization target. For a height-one prime
 `v`, the local units are represented inside `Kˣ` as the elements with
-`v`-adic valuation one.  After choosing a uniformizer, every global field
+`v`-adic valuation one. After choosing a uniformizer, every global field
 class in `Kˣ / Kˣ^p` has a normalized representative in this local-unit
 subgroup, giving a homomorphism
 
 ```text
-  Kˣ / Kˣ^p -> U_v / U_v^p.
+ Kˣ / Kˣ^p -> U_v / U_v^p.
 ```
 
 Composing this with the singular-pair generator gives the localization map

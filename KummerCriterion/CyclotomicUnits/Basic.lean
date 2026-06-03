@@ -7,7 +7,7 @@ public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3
 /-!
 # Real cyclotomic units
 
-This file gives the cyclotomic-unit route a stable, non-LehmerVandiver-facing name for
+This file gives the cyclotomic-unit route a stable, non-LehmerVandiver-facing name
 the standard real cyclotomic units in `K⁺`.
 -/
 

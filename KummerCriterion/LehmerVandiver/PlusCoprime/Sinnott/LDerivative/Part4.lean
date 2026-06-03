@@ -36,13 +36,13 @@ theorem prod_evenNontriv_eq_prod_evenNontriv_inv
   · intro χ _; rfl
 
 /-- **Matrix-restriction step to the Sinnott matrix (named Prop)**: the
-substantive remaining content for PF-1, expressing that the squared
+substantive remaining content for, expressing that the squared
 determinant of the quotient convolution log-norm matrix times `2^(p-3)`
 equals the squared trivial-eigenvalue times the squared regulator of the
 cyclotomic-unit family:
 
-  2^(p-3) · (det convolutionMatrixLogNormEven p)² =
-    (quotientEigenvalue p 1)² · (regOfFamily ... : ℂ)²
+ 2^(p-3) · (det convolutionMatrixLogNormEven p)² =
+ (quotientEigenvalue p 1)² · (regOfFamily...: ℂ)²
 
 This isolates the matrix-restriction step from the abstract Frobenius
 det chain: after extracting the trivial-character row/column, the
@@ -52,7 +52,7 @@ factor `2^(p-3) = 4^((p-3)/2)` comes from `M_Sinnott = 2 · (A − B)`,
 so `regOfFamily² = 4^((p-3)/2) · det(A−B)² = 2^(p-3) · det(A−B)²`.
 
 The matrix-restriction is the substantive Sinnott regulator content;
-the abstract Frobenius det infrastructure (shipped) reduces PF-1 to
+the abstract Frobenius det infrastructure (shipped) reduces to
 this single named identity. -/
 def MatrixRestrictionToSinnott
     (K : Type) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
@@ -68,8 +68,8 @@ def MatrixRestrictionToSinnott
 nontrivial multiplicative characters of `CyclotomicEvenDelta p` and the
 even nontrivial Dirichlet characters mod `p`, identifying the products:
 
-  ∏ ξ ∈ univ.erase 1, DLS p (dirichletOfQuotientChar p ξ) =
-    ∏ χ ∈ evenNontrivialCharacters p, DLS p χ.
+ ∏ ξ ∈ univ.erase 1, DLS p (dirichletOfQuotientChar p ξ) =
+ ∏ χ ∈ evenNontrivialCharacters p, DLS p χ.
 
 This is the Pontryagin-duality identification between the dual of
 `(ZMod p)ˣ / ⟨-1⟩` and the even-character subgroup of the dual of
@@ -90,11 +90,11 @@ for `p` prime with `p > 2` (so `p ≠ 2`), the product equality holds.
 Strategy:
 1. The map `ξ ↦ dirichletOfQuotientChar p ξ` is injective (shipped).
 2. The image of `MulChar.erase 1` under this map lies in `evenNontrivialCharacters`
-   (image is even by `dirichletOfQuotientChar_even`; ≠ 1 since `ξ ≠ 1` and
-   the map is injective with `dirichletOfQuotientChar_one`).
+ (image is even by `dirichletOfQuotientChar_even`; ≠ 1 since `ξ ≠ 1` and
+ the map is injective with `dirichletOfQuotientChar_one`).
 3. Cardinalities match: both `MulChar.erase 1` and `evenNontrivialCharacters`
-   have card `(p-3)/2` (via shipped `nat_card_mulChar_cyclotomicEvenDelta_eq` +
-   `cyclotomicEvenDelta_card`, and `card_evenNontrivialCharacters`).
+ have card `(p-3)/2` (via shipped `nat_card_mulChar_cyclotomicEvenDelta_eq` +
+ `cyclotomicEvenDelta_card`, and `card_evenNontrivialCharacters`).
 4. Hence the map is a bijection. -/
 theorem quotientCharBijectionToEvenNontriv_proof (hp_two : 2 < p) :
     QuotientCharBijectionToEvenNontriv (p := p) := by
@@ -187,7 +187,7 @@ theorem FrobeniusDetIdentity_of_named_hypotheses
       p hp_two
   -- Step 2: from MatrixRestrictionToSinnott + h_det_sq.
   unfold MatrixRestrictionToSinnott at h_matrix
-  -- h_matrix : 2^(p-3) · det²(M_even) = qe(1)² · regOfFamily²
+  -- h_matrix: 2^(p-3) · det²(M_even) = qe(1)² · regOfFamily²
   unfold QuotientCharBijectionToEvenNontriv at h_bij
   -- Step 3: use quotientEigenvalue_trivial = (log p) / 2.
   have h_qe := quotientEigenvalue_trivial_eq_half_log_p p hp_two
@@ -211,9 +211,9 @@ theorem FrobeniusDetIdentity_of_named_hypotheses
     exact_mod_cast (Real.log_pos h_pos).ne'
   -- Step 7: combine h_det_sq + h_matrix + h_bij to derive
   -- regOfFamily² = (∏ DLS(χ⁻¹))².
-  -- h_det_sq : det²(M_even) = (log p)² · (∏ DLS(dχ ξ))² / 4^card
-  -- h_matrix : 2^(p-3) · det²(M_even) = ((log p)/2)² · regOfFamily²
-  -- h_bij : ∏_{ξ≠1} DLS(dχ ξ) = ∏_{χ even nontriv} DLS(χ)
+  -- h_det_sq: det²(M_even) = (log p)² · (∏ DLS(dχ ξ))² / 4^card
+  -- h_matrix: 2^(p-3) · det²(M_even) = ((log p)/2)² · regOfFamily²
+  -- h_bij: ∏_{ξ≠1} DLS(dχ ξ) = ∏_{χ even nontriv} DLS(χ)
   rw [h_bij] at h_det_sq
   -- Substitute h_det_sq into h_matrix:
   -- 2^(p-3) · ((log p)² · (∏ DLS χ)² / 4^card) = ((log p)/2)² · regOfFamily²
@@ -223,7 +223,7 @@ theorem FrobeniusDetIdentity_of_named_hypotheses
   -- (1/4) · (∏ DLS χ)² = regOfFamily² / 4
   -- (∏ DLS χ)² = regOfFamily²
   rw [h_det_sq] at h_matrix
-  -- h_matrix : 2^(p-3) · ((log p)² · (∏ DLS χ)² / 4^card) = ((log p)/2)² · regOfFamily²
+  -- h_matrix: 2^(p-3) · ((log p)² · (∏ DLS χ)² / 4^card) = ((log p)/2)² · regOfFamily²
   have h_two_pow_card : (4 : ℂ) ^ Fintype.card
       (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) =
       (2 : ℂ) ^ (p - 1) := by
@@ -234,7 +234,7 @@ theorem FrobeniusDetIdentity_of_named_hypotheses
     rcases h_p_odd with ⟨k, hk⟩
     omega
   rw [h_two_pow_card] at h_matrix
-  -- h_matrix : 2^(p-3) · ((log p)² · (∏ DLS χ)² / 2^(p-1)) = ((log p)/2)² · regOfFamily²
+  -- h_matrix: 2^(p-3) · ((log p)² · (∏ DLS χ)² / 2^(p-1)) = ((log p)/2)² · regOfFamily²
   have h_log_sq_ne : (((Real.log p : ℝ) : ℂ)) ^ 2 ≠ 0 := pow_ne_zero _ h_log_ne
   have h_two_ne : ((2 : ℂ) ^ (p - 1)) ≠ 0 := pow_ne_zero _ (by norm_num)
   have h_two_ne' : ((2 : ℂ) ^ (p - 3)) ≠ 0 := pow_ne_zero _ (by norm_num)
@@ -242,16 +242,16 @@ theorem FrobeniusDetIdentity_of_named_hypotheses
     rw [show p - 1 = (p - 3) + 2 from by omega, pow_add]
     ring
   rw [h_p_ge] at h_matrix
-  -- h_matrix : 2^(p-3) · ((log p)² · (∏)² / (4 · 2^(p-3))) = ((log p)/2)² · regOfFamily²
+  -- h_matrix: 2^(p-3) · ((log p)² · (∏)² / (4 · 2^(p-3))) = ((log p)/2)² · regOfFamily²
   -- LHS = (log p)² · (∏)² / 4. RHS = (log p)² / 4 · regOfFamily².
   -- Cancel (log p)²/4 from both sides: (∏)² = regOfFamily².
   field_simp at h_matrix
-  -- h_matrix : (∏ DLS χ)² · 4 = 4 · regOfFamily²
+  -- h_matrix: (∏ DLS χ)² · 4 = 4 · regOfFamily²
   -- Goal: regOfFamily² = (∏ DLS χ)²
   linear_combination -h_matrix / 4
 
 /-- **`FrobeniusDetIdentity` from `MatrixRestrictionToSinnott` alone**: with
-the proven `QuotientCharBijectionToEvenNontriv` discharged, PF-1 reduces to
+the proven `QuotientCharBijectionToEvenNontriv` discharged, reduces to
 the SINGLE named hypothesis `MatrixRestrictionToSinnott`. -/
 theorem FrobeniusDetIdentity_of_MatrixRestrictionToSinnott
     (K : Type) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
@@ -264,7 +264,7 @@ theorem FrobeniusDetIdentity_of_MatrixRestrictionToSinnott
     (quotientCharBijectionToEvenNontriv_proof (p := p) hp_two)
 
 /-- **`KummerDirichletDeterminant` from `MatrixRestrictionToSinnott` alone**:
-final compositional theorem reducing PF-1 (KummerDirichletDeterminant) to the
+final compositional theorem reducing (KummerDirichletDeterminant) to the
 single substantive hypothesis `MatrixRestrictionToSinnott`. -/
 theorem KummerDirichletDeterminant_of_MatrixRestrictionToSinnott
     (K : Type) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
@@ -294,7 +294,7 @@ theorem fintype_card_InfinitePlace_eq
     rw [this, Nat.totient_prime hp.out]
   have h_totally_complex := NumberField.IsTotallyComplex.finrank K
   rw [h_finrank_eq] at h_totally_complex
-  -- h_totally_complex : p - 1 = 2 * nrComplexPlaces K
+  -- h_totally_complex: p - 1 = 2 * nrComplexPlaces K
   -- Since K is totally complex, card InfinitePlace = nrComplexPlaces (no real places).
   rw [NumberField.InfinitePlace.card_eq_nrRealPlaces_add_nrComplexPlaces]
   rw [NumberField.IsTotallyComplex.nrRealPlaces_eq_zero (K := K), zero_add]
@@ -331,7 +331,7 @@ noncomputable def KplusInfinitePlaceEquivCyclotomicEvenDelta
 /-- **Sinnott matrix-entry decomposition wrapper**: gives the matrix `M_Sinnott[i, w]`
 in the form `2 (log w_K(ζ^(idx_i+2) - 1) - log w_K(ζ - 1))`.
 
-The K⁺-side cyclotomic-unit log-embedding matrix from
+The K⁺-side cyclotomic-unit log-embedding matrix
 `regOfFamily_cyclotomicUnitFamilyKplus_eq_det` has entries decomposed by
 `log_realCyclotomicUnit_at_Kplus_place_eq_sub_decomp` (per-entry). This is
 the matrix-level wrapper: every entry follows the per-entry decomposition.
@@ -457,7 +457,7 @@ noncomputable def sinnottMatrixB
 of the Sinnott log-embedding matrix
 `regOfFamily_cyclotomicUnitFamilyKplus_eq_det`.
 
-  `M_Sinnott = 2 · sinnottMatrixA - 2 · sinnottMatrixB`
+ `M_Sinnott = 2 · sinnottMatrixA - 2 · sinnottMatrixB`
 
 where `sinnottMatrixA` is the `(i, w)`-dependent part and
 `sinnottMatrixB` is the column-constant part. This is the matrix-form
@@ -513,7 +513,7 @@ theorem sinnottMatrix_eq_two_smul_A_sub_B
 
 /-- **`convolutionLogNormDescended` at the `q(a)` quotient class**: the descended
 log-norm function evaluated at the quotient class of a unit `a` equals the
-explicit ℝ-cast `log‖1 - stdAddChar(↑a)‖`. Direct from
+explicit ℝ-cast `log‖1 - stdAddChar(↑a)‖`. Direct
 `evenFunctionDescend_apply_mk` for the cyclotomic-unit log-norm. -/
 theorem convolutionLogNormDescended_apply_quotient
     (a : KummerCriterion.CyclotomicUnitDelta p) :
@@ -525,7 +525,7 @@ theorem convolutionLogNormDescended_apply_quotient
   rw [KummerCriterion.evenFunctionDescend_apply_mk]
 
 /-- **Squared det = qe(1)² · (∏ ξ≠1 qe(ξ))² (reformulation)**:
-extracting the trivial-character eigenvalue factor from
+extracting the trivial-character eigenvalue factor
 `det_convolutionMatrixLogNormEven_sq_eq_prod_quotientEigenvalue_sq`.
 
 This is the trivial-extracted form: `det²(M_even) = qe(1)² · (∏_{ξ≠1} qe(ξ))²`.

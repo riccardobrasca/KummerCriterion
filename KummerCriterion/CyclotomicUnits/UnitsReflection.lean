@@ -6,14 +6,12 @@ import KummerCriterion.CyclotomicUnits.SaturationIndex
 /-!
 # Cyclotomic-unit route to weak reflection
 
-This file assembles the completed cyclotomic-unit tickets:
+This file assembles the completed cyclotomic-unit route:
 
-* CU-13 turns Bernoulli numerator nonvanishing into Kummer-log determinant
-  nonvanishing.
-* CU-14 turns that determinant into p-saturation of `CPlus`.
-* CU-15 turns p-saturation into p-nondivisibility of the cyclotomic-unit
-  index.
-* CU-06 identifies the p-primary part of that index with `hPlus`.
+* Bernoulli numerator nonvanishing gives Kummer-log determinant nonvanishing.
+* That determinant gives p-saturation of `CPlus`.
+* p-saturation gives p-nondivisibility of the cyclotomic-unit index.
+* The p-primary part of that index is identified with `hPlus`.
 -/
 
 @[expose] public section
@@ -30,7 +28,7 @@ variable {K : Type} [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
 local notation3 "K⁺" => NumberField.maximalRealSubfield K
 
-/-- CU-16: Bernoulli numerator nonvanishing in the classical range implies
+/-- Bernoulli numerator nonvanishing in the classical range implies
 that `p` does not divide the real cyclotomic-unit index. -/
 theorem not_dvd_cyclotomicUnitIndex_of_bernoulli_nonzero
     (hp_odd : p ≠ 2)
@@ -73,7 +71,7 @@ theorem not_dvd_cyclotomicUnitIndex_of_bernoulli_nonzero
         (by have hp_two := (Fact.out : Nat.Prime p).two_le; omega)).index =
           (CPlus (p := p) (K := K) hp_three).index by rfl]
 
-/-- CU-17: contrapositive weak reflection from the cyclotomic-unit route. -/
+/-- Contrapositive weak reflection from the cyclotomic-unit route. -/
 theorem not_dvd_hPlus_of_not_dvd_hMinus_units
     (hp_odd : p ≠ 2) (hminus : ¬ (p : ℕ) ∣ hMinus K) :
     ¬ (p : ℕ) ∣ hPlus K := by
@@ -102,7 +100,7 @@ theorem not_dvd_hPlus_of_not_dvd_hMinus_units
       (p := p) (K := K) hp_odd hp_three).mpr hnormalized
   exact hindex hCPlus
 
-/-- CU-18: weak reflection by contrapositive from the cyclotomic-unit route. -/
+/-- Weak reflection by contrapositive from the cyclotomic-unit route. -/
 theorem weakReflection_dvd_hMinus_of_dvd_hPlus_units
     (hp_odd : p ≠ 2) (hplus : (p : ℕ) ∣ hPlus K) :
     (p : ℕ) ∣ hMinus K := by

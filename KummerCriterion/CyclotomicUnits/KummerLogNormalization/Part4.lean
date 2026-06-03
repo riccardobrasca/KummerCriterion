@@ -285,7 +285,7 @@ omit [NumberField.IsCMField K] in
 quotient denominator.
 
 This is where the common `varpi = dworkParameter` factor is cancelled, using
-regularity in the complete Dwork ring.  No cancellation in the finite quotient
+regularity in the complete Dwork ring. No cancellation in the finite quotient
 is used. -/
 theorem kummerLogDworkArtinHasseQuotientDenUnit_mul_normalized_eq_teich_mul_normalized
     (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) :
@@ -433,7 +433,7 @@ set_option maxHeartbeats 800000 in
 -- the coercion reductions deterministic.
 omit [NumberField.IsCMField K] in
 /-- The Dwork Artin-Hasse specialization represents the same normalized
-quotient as CU-11b modulo the Dwork `p`-level `(lambda)^(p-1)`. -/
+quotient as modulo the Dwork `p`-level `(lambda)^(p-1)`. -/
 theorem kummerLogDworkArtinHasseNormalizedQuotientArg_sub_algebraMap_mem_pow_pred
     (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) :
     kummerLogDworkArtinHasseNormalizedQuotientArg
@@ -503,7 +503,7 @@ theorem kummerLogDworkArtinHasseNormalizedQuotientArg_sub_algebraMap_mem_pow_pre
 
 omit [NumberField.IsCMField K] in
 /-- In the finite quotient used for the mod-`p` Kummer-log coefficients, the
-Dwork Artin-Hasse specialization reduces to the normalized CU-11b argument. -/
+Dwork Artin-Hasse specialization reduces to the normalized argument. -/
 theorem kummerLogDworkArtinHasseNormalizedQuotientArg_evalₐ_pow_pred
     (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) :
     AdicCompletion.evalₐ (lambdaIdeal p K) (p - 1)
@@ -569,14 +569,14 @@ theorem samePrimeFiniteLog_eq_sub_of_productCoord_sub_mem {N : ℕ}
           rw [hlogz]
 
 /-- Finite logarithm of the Dwork Artin-Hasse specialization, represented by
-the quotient-compatible CU-11b finite-log argument. -/
+the quotient-compatible finite-log argument. -/
 noncomputable def kummerLogDworkArtinHasseSpecializedFiniteLog
     (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) :
     ValuedIntegerRing p K ⧸ (lambdaIdeal p K) ^ ((p - 2) + 1) :=
   kummerLogNormalizedQuotientFiniteLog (p := p) (K := K) hp_three a (p - 2)
 
 omit [NumberField.IsCMField K] in
-/-- The CU-11b finite logarithm is the difference of the two normalized
+/-- The finite logarithm is the difference of the two normalized
 Artin-Hasse finite logarithms, after first proving the normalized quotient
 identity in the complete Dwork ring and then reducing modulo
 `varpi^(p - 1)`. -/

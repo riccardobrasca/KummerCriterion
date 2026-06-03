@@ -3,19 +3,19 @@ module
 public import KummerCriterion.KummerCongruence.Voronoi
 
 /-!
-# Kummer's congruence (T011)
+# Kummer's congruence 
 
 The classical Kummer congruence: for even positive integers
 `m ≡ n (mod p − 1)` with `(p − 1) ∤ n`, `p ∤ m`, `p ∤ n`,
 `p ∤ (m + 1)`, `p ∤ (n + 1)`,
 
-  `B_m / m ≡ B_n / n (mod p)`
+ `B_m / m ≡ B_n / n (mod p)`
 
 in `ℚ_[p]` (both `p`-integral). Proved from Voronoi's congruence plus
 a permutation by a primitive root `a` of `(ℤ/pℤ)^*`.
 
 See the umbrella `KummerCriterion.KummerCongruence` for the full
-strategy and how this feeds into T012 (the bridge theorem).
+strategy and how this feeds into (the bridge theorem).
 -/
 
 @[expose] public section
@@ -24,10 +24,10 @@ noncomputable section
 
 namespace KummerCriterion
 
-/-- **T011** (Kummer's congruence, Washington Cor 5.14 /
+/-- Kummer's congruence (Washington Cor 5.14 /
 Diekmann Cor 33). For even positive integers `m ≡ n (mod p-1)` with
 `(p-1) ∤ n`, `p ∤ m`, `p ∤ n`, `p ∤ (m+1)`, `p ∤ (n+1)`,
-  `B_m/m ≡ B_n/n (mod p)`,
+ `B_m/m ≡ B_n/n (mod p)`,
 with both sides `p`-integral.
 
 **Proof outline** (via Voronoi, `voronoi_congruence_mod_p`):
@@ -37,9 +37,9 @@ The RHSs agree mod `p` (since `a^m ≡ a^n`, `a^{m-1} ≡ a^{n-1}`,
 `m · n` (a `p`-unit when `p ∤ m · n`) yields the congruence.
 
 The extra divisibility hypotheses `¬ p ∣ m`, `¬ p ∣ n`, `¬ p ∣ (m+1)`,
-`¬ p ∣ (n+1)` arise from Voronoi's input (`¬ p ∣ (k+1)`) and from the
+`¬ p ∣ (n+1)` arise from Voronoi's input (`¬ p ∣ (k+1)`) and
 need to divide by `m` and `n` as `p`-units. They are all satisfied by
-the T012 caller (where `m = p·n+1`) and the HMinus callers (where
+the caller (where `m = p·n+1`) and the HMinus callers (where
 `m = t`, `n = j+1` with `j+1 < p - 1`). -/
 theorem bernoulli_div_sModEq_of_modEq
     {p : ℕ} [hp : Fact p.Prime] (hp_odd : p ≠ 2)
@@ -69,9 +69,9 @@ theorem bernoulli_div_sModEq_of_modEq
     intro hdvd
     have h_n_mod : n ≡ 0 [MOD (p - 1)] := h_mn_modEq.symm.trans (Nat.modEq_zero_iff_dvd.mpr hdvd)
     exact h_pSubOne_not_dvd_n (Nat.modEq_zero_iff_dvd.mp h_n_mod)
-  -- Pick a generator `g : (ZMod p)ˣ` of the unit group of `ZMod p`.
+  -- Pick a generator `g: (ZMod p)ˣ` of the unit group of `ZMod p`.
   obtain ⟨g, hg_gen⟩ := IsCyclic.exists_generator (α := (ZMod p)ˣ)
-  -- Define `a : ℕ := (g : ZMod p).val`.
+  -- Define `a: ℕ:= (g: ZMod p).val`.
   set a : ℕ := (g : ZMod p).val with ha_def
   -- `a < p` (from `ZMod.val_lt`).
   have ha_lt : a < p := ZMod.val_lt _
@@ -81,10 +81,10 @@ theorem bernoulli_div_sModEq_of_modEq
   have ha_coprime : ¬ (p : ℕ) ∣ a := by
     rw [Nat.coprime_comm] at ha_coprimeZ
     exact (hp.coprime_iff_not_dvd.mp ha_coprimeZ)
-  -- `((a : ℕ) : ZMod p) = (g : ZMod p)` since `a < p`.
+  -- `((a: ℕ): ZMod p) = (g: ZMod p)` since `a < p`.
   have ha_cast : ((a : ℕ) : ZMod p) = (g : ZMod p) := by
     rw [ha_def]; exact ZMod.natCast_zmod_val _
-  -- `orderOf (g : (ZMod p)ˣ) = p - 1` from generator + cyclic structure.
+  -- `orderOf (g: (ZMod p)ˣ) = p - 1` from generator + cyclic structure.
   have hg_order : orderOf g = p - 1 := by
     rw [orderOf_eq_card_of_forall_mem_zpowers hg_gen, Nat.card_eq_fintype_card, ZMod.card_units]
   -- Apply Voronoi to m and n.
@@ -103,8 +103,8 @@ theorem bernoulli_div_sModEq_of_modEq
   set Sn : ℕ := ∑ j ∈ Finset.range p, j ^ (n - 1) * (j * a / p) with hSn_def
   -- **Mod-p congruences.**
   -- (C1) `Am ≡ An (mod p)` in `ℤ_[p]` and (C2) `Am1 ≡ An1 (mod p)`.
-  -- Key: `(g : (ZMod p)ˣ)` has order `p-1`, `m ≡ n (mod p-1)` ⟹ `g^m = g^n`
-  -- ⟹ `(a : ZMod p)^m = (a : ZMod p)^n` ⟹ `((a:ℤ_[p])^m - (a:ℤ_[p])^n) ∈ maximalIdeal`.
+  -- Key: `(g: (ZMod p)ˣ)` has order `p-1`, `m ≡ n (mod p-1)` ⟹ `g^m = g^n`
+  -- ⟹ `(a: ZMod p)^m = (a: ZMod p)^n` ⟹ `((a:ℤ_[p])^m - (a:ℤ_[p])^n) ∈ maximalIdeal`.
   have h_gmn_eq : g ^ m = g ^ n := by
     rw [pow_eq_pow_iff_modEq, hg_order]; exact h_mn_modEq
   have h_mn1_modEq : (m - 1) ≡ (n - 1) [MOD (p - 1)] := by
@@ -125,7 +125,7 @@ theorem bernoulli_div_sModEq_of_modEq
     simpa [Units.val_pow_eq_pow_val] using
       congrArg (fun u : (ZMod p)ˣ => (u : ZMod p)) h_gmn1_eq
   -- Lift (C1), (C2) to `ℤ_[p]` via `toZMod`.
-  -- General helper: for `x y : ℤ_[p]` with `toZMod x = toZMod y`, `x - y ∈ maximalIdeal`.
+  -- General helper: for `x y: ℤ_[p]` with `toZMod x = toZMod y`, `x - y ∈ maximalIdeal`.
   have h_mk_eq_zmod : ∀ {x y : ℤ_[p]}, PadicInt.toZMod x = PadicInt.toZMod y →
       x - y ∈ Ideal.span ({(p : ℤ_[p])} : Set ℤ_[p]) := fun {x y} h => by
     have h_sub : PadicInt.toZMod (x - y) = 0 := by rw [map_sub, h, sub_self]
@@ -134,7 +134,7 @@ theorem bernoulli_div_sModEq_of_modEq
     rwa [PadicInt.maximalIdeal_eq_span_p] at h_ker
   have hpℤ_ne : (p : ℤ_[p]) ≠ 0 := Nat.cast_ne_zero.mpr hp.ne_zero
   have h_toZMod_a : PadicInt.toZMod (a : ℤ_[p]) = ((a : ℕ) : ZMod p) := by rw [map_natCast]
-  -- (C1): `Am - An = p * d_A` for some `d_A : ℤ_[p]`.
+  -- (C1): `Am - An = p * d_A` for some `d_A: ℤ_[p]`.
   have h_Am_An_toZMod : PadicInt.toZMod Am = PadicInt.toZMod An := by
     rw [hAm_def, hAn_def, map_pow, map_pow, h_toZMod_a]; exact h_mn_ZMod
   obtain ⟨d_A, hd_A⟩ := Ideal.mem_span_singleton.mp (h_mk_eq_zmod h_Am_An_toZMod)
@@ -144,9 +144,9 @@ theorem bernoulli_div_sModEq_of_modEq
   obtain ⟨d_A1, hd_A1⟩ := Ideal.mem_span_singleton.mp (h_mk_eq_zmod h_Am1_An1_toZMod)
   -- (C3): `Sm ≡ Sn (mod p)` in ℤ_[p] — pointwise bound on each summand.
   -- For j ∈ [0, p), `j^(m-1) ≡ j^(n-1) (mod p)`:
-  --   - j = 0: both are 0 since m-1, n-1 ≥ 1.
-  --   - j ≥ 1 with p ∤ j: (j : ZMod p)^(m-1) = (j : ZMod p)^(n-1) in (ZMod p)ˣ
-  --     via m-1 ≡ n-1 (mod p-1).
+  -- - j = 0: both are 0 since m-1, n-1 ≥ 1.
+  -- - j ≥ 1 with p ∤ j: (j: ZMod p)^(m-1) = (j: ZMod p)^(n-1) in (ZMod p)ˣ
+  -- via m-1 ≡ n-1 (mod p-1).
   have h_pow_pred_ZMod : ∀ j : ℕ, j < p → j ≠ 0 →
       ((j : ℕ) : ZMod p) ^ (m - 1) = ((j : ℕ) : ZMod p) ^ (n - 1) := by
     intro j hjp hj_ne
@@ -172,12 +172,12 @@ theorem bernoulli_div_sModEq_of_modEq
     · rw [hj_ne]
       simp [zero_pow (by omega : m - 1 ≠ 0), zero_pow (by omega : n - 1 ≠ 0)]
     · exact h_pow_pred_ZMod j hj hj_ne
-  -- Lift to ℤ_[p]: `(Sm : ℤ_[p]) - (Sn : ℤ_[p]) ∈ p · ℤ_[p]`.
+  -- Lift to ℤ_[p]: `(Sm: ℤ_[p]) - (Sn: ℤ_[p]) ∈ p · ℤ_[p]`.
   have h_Sm_Sn_toZMod' : PadicInt.toZMod ((Sm : ℤ_[p])) = PadicInt.toZMod ((Sn : ℤ_[p])) := by
     rw [map_natCast, map_natCast]; exact h_Sm_Sn_toZMod
   obtain ⟨d_S, hd_S⟩ := Ideal.mem_span_singleton.mp (h_mk_eq_zmod h_Sm_Sn_toZMod')
   -- **Unit-ness of `Am - 1`, `An - 1`**: `Am ≠ 1` in `ZMod p` (since `(p-1) ∤ m`).
-  -- General helper: if `(p-1) ∤ k`, then `(a : ℤ_[p])^k - 1` is a unit in `ℤ_[p]`.
+  -- General helper: if `(p-1) ∤ k`, then `(a: ℤ_[p])^k - 1` is a unit in `ℤ_[p]`.
   have h_ax_sub_one_unit : ∀ {k : ℕ}, ¬ (p - 1) ∣ k →
       IsUnit ((a : ℤ_[p]) ^ k - 1) := fun {k} hk => by
     rw [PadicInt.isUnit_iff]
@@ -217,7 +217,7 @@ theorem bernoulli_div_sModEq_of_modEq
   set SmZ : ℤ_[p] := ((Sm : ℕ) : ℤ_[p]) with hSmZ_def
   set SnZ : ℤ_[p] := ((Sn : ℕ) : ℤ_[p]) with hSnZ_def
   -- **Key equation in ℤ_[p]:**
-  --  `(An - 1) · Am1 · SmZ - (Am - 1) · An1 · SnZ = p · E`
+  -- `(An - 1) · Am1 · SmZ - (Am - 1) · An1 · SnZ = p · E`
   -- where `E = (Am - 1) · (d_A1 · SmZ + An1 · d_S) - d_A · Am1 · SmZ`.
   set E : ℤ_[p] := (Am - 1) * (d_A1 * SmZ + An1 * d_S) - d_A * Am1 * SmZ with hE_def
   have hE_eq : (An - 1) * Am1 * SmZ - (Am - 1) * An1 * SnZ = (p : ℤ_[p]) * E := by
@@ -230,8 +230,8 @@ theorem bernoulli_div_sModEq_of_modEq
   -- **Candidate witness.**
   refine ⟨AmInv * AnInv * E + AmInv * mInv * z_m - AnInv * nInv * z_n, ?_⟩
   -- Lift everything to ℚ_[p]: Define Q-versions.
-  -- Since `Am, An, Am1, An1 : ℤ_[p]`, their Q-cast via `↑` is
-  -- e.g. `((Am : ℤ_[p]) : ℚ_[p])` etc.
+  -- Since `Am, An, Am1, An1: ℤ_[p]`, their Q-cast via `↑` is
+  -- e.g. `((Am: ℤ_[p]): ℚ_[p])` etc.
   -- Use `set` for ℚ_[p] shorthands.
   set Am_Q : ℚ_[p] := (Am : ℚ_[p]) with hAm_Q_def
   set An_Q : ℚ_[p] := (An : ℚ_[p]) with hAn_Q_def
@@ -245,7 +245,7 @@ theorem bernoulli_div_sModEq_of_modEq
   set Bn_Q : ℚ_[p] := ((bernoulli n : ℚ) : ℚ_[p]) with hBn_Q_def
   have hmQ_ne : mQ ≠ 0 := Nat.cast_ne_zero.mpr hm_pos.ne'
   have hnQ_ne : nQ ≠ 0 := Nat.cast_ne_zero.mpr hn_pos.ne'
-  -- `Bm_div := B_m / m` in ℚ_[p].
+  -- `Bm_div:= B_m / m` in ℚ_[p].
   set Bm_div : ℚ_[p] := (((bernoulli m : ℚ) / m : ℚ) : ℚ_[p]) with hBm_div_def
   set Bn_div : ℚ_[p] := (((bernoulli n : ℚ) / n : ℚ) : ℚ_[p]) with hBn_div_def
   -- `mQ · Bm_div = Bm_Q`.
@@ -287,7 +287,7 @@ theorem bernoulli_div_sModEq_of_modEq
     have := congrArg (fun x : ℤ_[p] => (x : ℚ_[p])) hAnInv_mul
     rw [hAn_Q_def]; push_cast at this; exact this
   -- The final algebraic proof. Goal: Bm_div - Bn_div = p_Q · witness_Q where
-  --   witness = AmInv · AnInv · E + AmInv · mInv · z_m - AnInv · nInv · z_n.
+  -- witness = AmInv · AnInv · E + AmInv · mInv · z_m - AnInv · nInv · z_n.
   -- Rename for readability.
   set AmInv_Q : ℚ_[p] := ((AmInv : ℤ_[p]) : ℚ_[p]) with hAmInv_Q_def
   set AnInv_Q : ℚ_[p] := ((AnInv : ℤ_[p]) : ℚ_[p]) with hAnInv_Q_def
@@ -308,7 +308,7 @@ theorem bernoulli_div_sModEq_of_modEq
     rw [← h_Am_AmInv, h0, zero_mul]
   have h_An_sub_one_ne : An_Q - 1 ≠ 0 := fun h0 => one_ne_zero <| by
     rw [← h_An_AnInv, h0, zero_mul]
-  -- `Bm_div - Bn_div = p_Q · (AmInv_Q · AnInv_Q · E_Q + ...)`.
+  -- `Bm_div - Bn_div = p_Q · (AmInv_Q · AnInv_Q · E_Q +...)`.
   -- Multiply both sides by `(Am_Q - 1) · (An_Q - 1) · mQ · nQ`, use
   -- `h_mBm, h_nBn, hz_m_Q, hz_n_Q, hE_eq_Q`, and the unit relations.
   have h_key : (Am_Q - 1) * (An_Q - 1) * mQ * nQ * (Bm_div - Bn_div) =

@@ -137,7 +137,7 @@ theorem samePrimeFiniteLog_lambda_p_nsmul_eq_zero (N : ℕ) :
 
 set_option maxHeartbeats 1000000 in
 -- The quotient Artin-Hasse/Dwork-parameter comparison expands nested power-series substitutions.
-/-- Finite-quotient form of `E_p(G_p(lambda)) = zeta_p`.  This is the honest
+/-- Finite-quotient form of `E_p(G_p(lambda)) = zeta_p`. This is the honest
 statement currently available before introducing a general infinite
 power-series evaluation API on the completed ring. -/
 theorem dworkParameter_eval_exp_mod (N : ℕ) :

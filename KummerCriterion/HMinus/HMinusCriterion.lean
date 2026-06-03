@@ -1,7 +1,7 @@
 module
 
 public import Mathlib.NumberTheory.Bernoulli
-public import KummerCriterion.BernoulliGeneralized
+public import KummerCriterion.KummerCongruence.BernoulliGeneralized
 public import KummerCriterion.HMinus.KplusLocalCharacters
 public import KummerCriterion.HMinus.KplusPrimeArithmetic
 public import KummerCriterion.HMinus.KplusEulerProduct
@@ -19,7 +19,7 @@ public import KummerCriterion.HMinus.PadicCorollaries
 /-!
 # Bernoulli criterion from the relative class number formula
 
-This file starts L4/T024. The main theorem here is Diekmann Theorem 42 in the
+This file starts. The main theorem here is Diekmann Theorem 42 in the
 form needed later in the project: divisibility of the relative class number is
 equivalent to divisibility of one of the relevant even Bernoulli numerators.
 -/

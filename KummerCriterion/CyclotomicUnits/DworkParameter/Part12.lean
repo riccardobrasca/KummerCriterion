@@ -79,7 +79,7 @@ theorem rationalToLambdaCompletionRingHom_le_one_iff
         rationalToLambdaWithValRingHom_le_one_iff (p := p) (K := K) x
 
 /-- The rational `p`-adic integer ring, expressed as the integer subring of the
-rational adic completion.  This is canonically equivalent to `ℤ_[p]`, but it
+rational adic completion. This is canonically equivalent to `ℤ_[p]`, but it
 avoids bundled-prime transport noise in the Dwork-local algebra API. -/
 abbrev RationalPadicIntegerRing : Type :=
   (lambdaRationalHeightOneSpectrum p).adicCompletionIntegers ℚ
@@ -136,7 +136,7 @@ theorem algebraMap_rationalPadicInteger_dworkComplete_apply
   rfl
 
 /-- The finite power expansion map for the candidate `Z_p`-basis
-`1, varpi, ..., varpi^(p - 2)`. -/
+`1, varpi,..., varpi^(p - 2)`. -/
 def dworkParameterPowerLinearMap :
     (Fin (p - 1) → RationalPadicIntegerRing p) →ₗ[RationalPadicIntegerRing p]
       DworkCompleteIntegerRing p K where
@@ -304,7 +304,7 @@ theorem mem_lambdaIdeal_iff_valuation_le_exp_neg_one
   rw [hlam]
 
 /-- The global lambda residue field is represented by the rational classes
-`0, ..., p - 1`. -/
+`0,..., p - 1`. -/
 theorem globalCyclotomicResidue_natCast_fin_surjective :
     Function.Surjective
       (fun i : Fin p =>

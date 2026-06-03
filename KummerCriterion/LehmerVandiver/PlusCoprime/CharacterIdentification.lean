@@ -11,7 +11,7 @@ public import KummerCriterion.UnitQuotient.DeltaAction
 ## References
 
 * Washington, *Introduction to Cyclotomic Fields*, 2nd ed. (Springer
-  GTM 83), Lemma 8.2 / Lemma 8.4 (p. 156); proof of Cor 8.19 (p. 158).
+ GTM 83), Lemma 8.2 / Lemma 8.4 (p. 156); proof of Cor 8.19 (p. 158).
 -/
 
 @[expose] public section
@@ -33,7 +33,7 @@ section PairUp
 /-- **Cyclotomic-unit pair-up identity**: for `1 ≤ c < p` (so `(p - c)` is
 also in `Finset.Ico 1 p`),
 
-  `ζ^c · cyclotomicUnit p K (p - c) = -cyclotomicUnit p K c` in `𝓞 K`.
+ `ζ^c · cyclotomicUnit p K (p - c) = -cyclotomicUnit p K c` in `𝓞 K`.
 
 Equivalently `cyclotomicUnit p K (p - c) = -ζ^{-c} · cyclotomicUnit p K c`,
 expressed in the inversion-free multiplicative form.
@@ -86,10 +86,10 @@ theorem cyclotomicUnit_eq_neg_zeta_pow_mul_cyclotomicUnit_p_sub
   -- Apply zeta_pow_mul_cyclotomicUnit_p_sub_eq_neg with c = p - d.
   have h := zeta_pow_mul_cyclotomicUnit_p_sub_eq_neg
     (p := p) (K := K) (p - d) (Nat.sub_le _ _)
-  -- h : ζ^{p-d} · cyclotomicUnit (p - (p-d)) = -cyclotomicUnit (p-d).
+  -- h: ζ^{p-d} · cyclotomicUnit (p - (p-d)) = -cyclotomicUnit (p-d).
   -- p - (p - d) = d (using d ≤ p).
   rw [show p - (p - d) = d from Nat.sub_sub_self hd] at h
-  -- h : ζ^{p-d} · cyclotomicUnit d = -cyclotomicUnit (p-d).
+  -- h: ζ^{p-d} · cyclotomicUnit d = -cyclotomicUnit (p-d).
   -- Multiply both sides by ζ^d, use ζ^d · ζ^{p-d} = ζ^p = 1.
   have h_pow : ζ ^ d * ζ ^ (p - d) = 1 := by
     rw [← pow_add, Nat.add_sub_cancel' hd, hζ_p]

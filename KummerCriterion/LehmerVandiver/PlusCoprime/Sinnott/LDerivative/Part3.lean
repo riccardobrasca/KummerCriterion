@@ -19,7 +19,7 @@ variable (p : ℕ) [hp : Fact p.Prime]
 regulator of the cyclotomic-unit family equals
 `(∏_{χ even nontriv} DirichletLogSum p χ⁻¹)²` in ℂ.
 
-This is the **algebraic-side closed form** that PF-1's algebraic
+This is the **algebraic-side closed form** that algebraic
 side reduces to. Combining with the analytic identity
 `(hPlus · regulator)² · 2^(p-3) = (∏ DLS)²` (`hPlus_mul_regulator_sq_eq`)
 gives the corrected Sinnott target
@@ -47,11 +47,11 @@ theorem KummerDirichletDeterminant_of_FrobeniusDetIdentity
     LehmerVandiver.Sinnott.KummerDirichletDeterminant p K hp_odd hp_three := by
   unfold LehmerVandiver.Sinnott.KummerDirichletDeterminant
   unfold FrobeniusDetIdentity at h_frob
-  -- h_frob : ↑regOfFamily ^ 2 = (∏ DLS χ⁻¹)² in ℂ
+  -- h_frob: ↑regOfFamily ^ 2 = (∏ DLS χ⁻¹)² in ℂ
   have h_analytic := hPlus_mul_regulator_sq_eq (p := p) K hp_odd hp_three
-  -- h_analytic : (↑hPlus · ↑regulator)² = (∏ DLS χ⁻¹)² / 2^(p-3) in ℂ
+  -- h_analytic: (↑hPlus · ↑regulator)² = (∏ DLS χ⁻¹)² / 2^(p-3) in ℂ
   -- Combine: regOfFamily² = (∏ DLS)² = 2^(p-3) · (hPlus · regulator)²
-  --                      = (2^((p-3)/2) · hPlus · regulator)²
+  -- = (2^((p-3)/2) · hPlus · regulator)²
   have h_sq_eq_C : ((NumberField.Units.regOfFamily
       (cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three) : ℝ) : ℂ) ^ 2 =
       (((2 : ℝ) ^ ((p - 3) / 2) : ℝ) : ℂ) ^ 2 *
@@ -105,7 +105,7 @@ theorem KummerDirichletDeterminant_of_FrobeniusDetIdentity
 /-! ## Character matrix infrastructure for the Frobenius determinant formula
 
 The Frobenius determinant formula for cyclic groups says that for a function
-`f : G → ℂ` on a finite cyclic group `G` and the matrix `M[a, b] = f(a · b)`,
+`f: G → ℂ` on a finite cyclic group `G` and the matrix `M[a, b] = f(a · b)`,
 `det M = ∏_χ (∑_a χ(a) · f(a))`. Specialised to `G = (ZMod p)ˣ` for prime `p`,
 this is the key identity behind `FrobeniusDetIdentity`.
 
@@ -123,14 +123,14 @@ private theorem mulChar_sum_units_eq_sum_all (ψ : DirichletCharacter ℂ p) :
     ∑ a : (ZMod p)ˣ, ψ ((a : ZMod p)) = ∑ a : ZMod p, ψ a := by
   classical
   -- Bridge via Finset.sum_attach style:
-  -- ∑ a : ZMod p, ψ a = (a=0 term ψ 0 = 0) + ∑_{a ≠ 0} ψ a
-  --                  = ∑_{a ∈ Finset.univ.erase 0}, ψ a
-  --                  = ∑_a : (ZMod p)ˣ, ψ ((a : ZMod p))   (bijection)
+  -- ∑ a: ZMod p, ψ a = (a=0 term ψ 0 = 0) + ∑_{a ≠ 0} ψ a
+  -- = ∑_{a ∈ Finset.univ.erase 0}, ψ a
+  -- = ∑_a: (ZMod p)ˣ, ψ ((a: ZMod p)) (bijection)
   rw [← Finset.sum_erase_add _ _ (Finset.mem_univ (0 : ZMod p))]
   rw [ψ.map_zero, add_zero]
-  -- Goal: ∑ a : (ZMod p)ˣ, ψ ((a : ZMod p)) = ∑ a ∈ Finset.univ.erase 0, ψ a
+  -- Goal: ∑ a: (ZMod p)ˣ, ψ ((a: ZMod p)) = ∑ a ∈ Finset.univ.erase 0, ψ a
   refine Finset.sum_bij (fun (a : (ZMod p)ˣ) _ => (a : ZMod p)) ?_ ?_ ?_ ?_
-  · -- mem: a unit, (a : ZMod p) ≠ 0
+  · -- mem: a unit, (a: ZMod p) ≠ 0
     intro a _
     rw [Finset.mem_erase]
     refine ⟨a.isUnit.ne_zero, Finset.mem_univ _⟩
@@ -156,7 +156,7 @@ private theorem mulChar_sum_units_eq_sum_all (ψ : DirichletCharacter ℂ p) :
     exact ZMod.natCast_zmod_val b
   · intro a _; rfl
 
-/-- **Sin-norm bridge at units**: for a unit `a : (ZMod p)ˣ` in prime `p`,
+/-- **Sin-norm bridge at units**: for a unit `a: (ZMod p)ˣ` in prime `p`,
 `Real.log ‖1 - stdAddChar a‖ = Real.log (2 · |sin(π · a.val / p)|)`.
 
 Uses the project's `norm_one_sub_exp_two_pi_I_mul` identity. -/
@@ -179,7 +179,7 @@ theorem log_norm_one_sub_stdAddChar_unit (a : (ZMod p)ˣ) :
   ring_nf
 
 /-- **Sum of log-norm over units equals `log p`**: the unit-group sum
-`∑ a : (ZMod p)ˣ, log‖1 - stdAddChar(↑a)‖ = log p`.
+`∑ a: (ZMod p)ˣ, log‖1 - stdAddChar(↑a)‖ = log p`.
 
 Composes the sin-norm bridge `log_norm_one_sub_stdAddChar_unit` with the
 reindex `sum_units_val_eq_sum_Ico` and the cyclotomic product identity
@@ -222,12 +222,12 @@ theorem sum_units_logNorm_eq_log_p :
     refine Finset.sum_congr rfl (fun n hn => (h_eval n hn).symm)
   rw [h_sum_eq]
   -- LHS: ∑ n, (1)(↑n) · log(2|sin|). RHS: log p.
-  -- h_dls : -∑ n, (1)(↑n) · log(2|sin|) = -log p
+  -- h_dls: -∑ n, (1)(↑n) · log(2|sin|) = -log p
   -- So ∑ n, (1)(↑n) · log(2|sin|) = log p.
   linear_combination -h_dls
 
 /-- **Dirichlet character extension of a `CyclotomicEvenDelta` character**:
-for `ξ : MulChar (CyclotomicEvenDelta p) ℂ`, produce the natural Dirichlet
+for `ξ: MulChar (CyclotomicEvenDelta p) ℂ`, produce the natural Dirichlet
 character mod `p` that:
 - agrees with the pullback `ξ ∘ q` on units,
 - is 0 at 0.
@@ -242,8 +242,8 @@ noncomputable def dirichletOfQuotientChar
     ((KummerCriterion.evenDeltaCharacterPullback (p := p) ξ).toUnitHom.comp
       toUnits.toMonoidHom)
 
-/-- **Extension value on units**: for `ξ : MulChar (CyclotomicEvenDelta p) ℂ`
-and `a : (ZMod p)ˣ`, the Dirichlet extension at `↑a` equals `ξ (q a)`. -/
+/-- **Extension value on units**: for `ξ: MulChar (CyclotomicEvenDelta p) ℂ`
+and `a: (ZMod p)ˣ`, the Dirichlet extension at `↑a` equals `ξ (q a)`. -/
 theorem dirichletOfQuotientChar_apply_unit
     (ξ : MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ)
     (a : KummerCriterion.CyclotomicUnitDelta p) :
@@ -258,16 +258,16 @@ theorem dirichletOfQuotientChar_apply_unit
   change (KummerCriterion.evenDeltaCharacterPullback (p := p) ξ) a = _
   rfl
 
-/-- **Dirichlet extension is always even**: for any `ξ : MulChar (CyclotomicEvenDelta p) ℂ`,
+/-- **Dirichlet extension is always even**: for any `ξ: MulChar (CyclotomicEvenDelta p) ℂ`,
 the Dirichlet extension `dirichletOfQuotientChar p ξ` is an even character of
 `(ZMod p)`. This is because the extension factors through the quotient
 `(ZMod p)ˣ ⧸ ⟨-1⟩`, so the character value at `-1` equals the value at `1`. -/
 theorem dirichletOfQuotientChar_even
     (ξ : MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :
     (dirichletOfQuotientChar p ξ).Even := by
-  -- (dirichletOfQuotientChar ξ).Even := (dirichletOfQuotientChar ξ) (-1 : ZMod p) = 1.
+  -- (dirichletOfQuotientChar ξ).Even:= (dirichletOfQuotientChar ξ) (-1: ZMod p) = 1.
   change (dirichletOfQuotientChar p ξ) (-1 : ZMod p) = 1
-  -- Recast: (-1 : ZMod p) = ↑((-1 : (ZMod p)ˣ)). Then apply dirichletOfQuotientChar_apply_unit.
+  -- Recast: (-1: ZMod p) = ↑((-1: (ZMod p)ˣ)). Then apply dirichletOfQuotientChar_apply_unit.
   have h_cast : (-1 : ZMod p) = ((-1 : (ZMod p)ˣ) : ZMod p) := by
     rw [Units.val_neg, Units.val_one]
   rw [h_cast]
@@ -284,7 +284,7 @@ theorem dirichletOfQuotientChar_injective :
   intro ξ₁ ξ₂ h
   apply MulChar.ext
   intro ā
-  -- ā : (CyclotomicEvenDelta p)ˣ. Every element of CyclotomicEvenDelta is q(a) for some a.
+  -- ā: (CyclotomicEvenDelta p)ˣ. Every element of CyclotomicEvenDelta is q(a) for some a.
   have h_repr : ∃ a : KummerCriterion.CyclotomicUnitDelta p,
       KummerCriterion.cyclotomicEvenDeltaQuotient p a =
         ((ā : KummerCriterion.CyclotomicEvenDelta p)) := by
@@ -316,7 +316,7 @@ theorem dirichletOfQuotientChar_one :
   rw [MulChar.one_apply (Group.isUnit _)]
 
 /-- **Trivial-character product split on the quotient**: the product over
-all `ξ : MulChar (CyclotomicEvenDelta p) ℂ` of `DLS p (ext ξ)` factors as
+all `ξ: MulChar (CyclotomicEvenDelta p) ℂ` of `DLS p (ext ξ)` factors as
 `DLS p 1 · ∏_{ξ ≠ 1} DLS p (ext ξ)`. Parallel to
 `prod_dirichletCharacter_eq_trivial_mul_nontrivial`. -/
 theorem prod_mulChar_DLS_eq_trivial_mul_nontrivial :
@@ -355,7 +355,7 @@ theorem quotientEigenvalue_trivial_eq_half_log_p (hp_two : 2 < p) :
 mod `p`, the eigenvalue of the cyclotomic-unit convolution matrix at `χ`
 equals `-DirichletLogSum p χ`:
 
-  ∑_{a : (ZMod p)ˣ} χ(↑a) · log‖1 - stdAddChar(↑a)‖ = -DirichletLogSum p χ.
+ ∑_{a: (ZMod p)ˣ} χ(↑a) · log‖1 - stdAddChar(↑a)‖ = -DirichletLogSum p χ.
 
 Combines `mulChar_sum_units_eq_sum_all`-style bridge + the shipped
 `evenLValueLogSum_eq_neg_DirichletLogSum_inv` (at χ⁻¹, with double-inv
@@ -378,7 +378,7 @@ theorem frobenius_eigenvalue_eq_neg_DirichletLogSum
     rw [← Finset.sum_erase_add _ _ (Finset.mem_univ (0 : ZMod p))]
     -- a = 0 term: χ(0) · log‖1 - stdAddChar 0‖ = 0 · log 0 = 0
     rw [χ.map_zero, zero_mul, add_zero]
-    -- Sum over (ZMod p)ˣ = sum over univ.erase 0 (ZMod p). Bij a ↦ (a : ZMod p).
+    -- Sum over (ZMod p)ˣ = sum over univ.erase 0 (ZMod p). Bij a ↦ (a: ZMod p).
     refine Finset.sum_bij (fun (a : (ZMod p)ˣ) _ => (a : ZMod p)) ?_ ?_ ?_ ?_
     · intro a _
       rw [Finset.mem_erase]
@@ -403,7 +403,7 @@ theorem frobenius_eigenvalue_eq_neg_DirichletLogSum
       exact ZMod.natCast_zmod_val b
     · intro a _; rfl
   rw [h_units_sum_eq]
-  -- Step 2: convert ∑ a : ZMod p, χ(a) · log|...| to evenLValueLogSum p χ⁻¹.
+  -- Step 2: convert ∑ a: ZMod p, χ(a) · log|...| to evenLValueLogSum p χ⁻¹.
   have h_sum_eq_evenL : ∑ a : ZMod p,
         χ a * ((Real.log ‖(1 : ℂ) -
           ZMod.stdAddChar (N := p) a‖ : ℝ) : ℂ) =
@@ -416,12 +416,12 @@ theorem frobenius_eigenvalue_eq_neg_DirichletLogSum
   rw [evenLValueLogSum_eq_neg_DirichletLogSum_inv]
   rw [inv_inv]
 
-/-- **General quotient-eigenvalue identification**: for
-`ξ : MulChar (CyclotomicEvenDelta p) ℂ` and `p > 2`, the quotient
+/-- **General quotient-eigenvalue identification**:
+`ξ: MulChar (CyclotomicEvenDelta p) ℂ` and `p > 2`, the quotient
 eigenvalue relates to the DLS at the Dirichlet extension
 `dirichletOfQuotientChar p ξ`:
 
-  2 · quotientEigenvalue p ξ = -DirichletLogSum p (dirichletOfQuotientChar p ξ).
+ 2 · quotientEigenvalue p ξ = -DirichletLogSum p (dirichletOfQuotientChar p ξ).
 
 Direct composition of:
 - `two_mul_quotientEigenvalue_eq_sum_full` (full-group character sum form).
@@ -449,7 +449,7 @@ theorem two_mul_quotientEigenvalue_eq_neg_DLS
 `two_mul_quotientEigenvalue_eq_neg_DLS` and dividing by 4 gives the
 clean identity
 
-  (quotientEigenvalue p ξ)² = (DirichletLogSum p (dirichletOfQuotientChar p ξ))² / 4.
+ (quotientEigenvalue p ξ)² = (DirichletLogSum p (dirichletOfQuotientChar p ξ))² / 4.
 
 This is the key form used in the squared Frobenius determinant
 identity, since it eliminates signs and the explicit factor of 2. -/
@@ -468,8 +468,8 @@ theorem quotientEigenvalue_sq_eq_DLS_sq_div_four
 in eigenvalue form with the squared-eigenvalue identification
 `quotientEigenvalue_sq_eq_DLS_sq_div_four`:
 
-  det(convolutionMatrixLogNormEven p)² =
-    (∏ ξ : MulChar, DLS p (dirichletOfQuotientChar p ξ))² / 4^(card MulChar). -/
+ det(convolutionMatrixLogNormEven p)² =
+ (∏ ξ: MulChar, DLS p (dirichletOfQuotientChar p ξ))² / 4^(card MulChar). -/
 theorem det_convolutionMatrixLogNormEven_sq_eq_prod_DLS_sq_div_four_pow
     (hp_two : 2 < p) :
     haveI : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=

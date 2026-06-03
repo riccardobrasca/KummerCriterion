@@ -21,7 +21,7 @@ abbrev dworkParameterIdeal : Ideal (DworkCompleteIntegerRing p K) :=
   Ideal.span ({dworkParameter p K} : Set (DworkCompleteIntegerRing p K))
 
 /-- The corrected Dwork parameter generates the same completed ideal as
-`lambda`.  This is the completion-side uniformizer statement. -/
+`lambda`. This is the completion-side uniformizer statement. -/
 theorem dworkParameterIdeal_eq_dworkCompleteLambdaIdeal :
     dworkParameterIdeal p K = dworkCompleteLambdaIdeal p K := by
   rcases dworkParameter_eq_dworkCompleteLambda_mul_unit (p := p) (K := K)
@@ -92,7 +92,7 @@ theorem dworkRamificationUnit_mul_natCast_prime
     (p := p) (K := K) hp_two]
 
 /-- The ramification unit is congruent to `-1` to the Artin-Hasse tail
-precision.  The weaker first-order version is
+precision. The weaker first-order version is
 `dworkRamificationUnit_add_one_mem_dworkParameterIdeal`; this strengthened
 form is what makes the folded `p`-term purely linear modulo
 `varpi^(p - 1)`. -/
@@ -118,7 +118,7 @@ theorem dworkRamificationUnit_add_one_mem_dworkParameterIdeal_pow_tail
 /-- Integral form of the folded same-prime `p`-term.
 
 If `Y = varpi * Z`, then `epsilon_varpi * varpi * Z^p` is the integral element
-whose product with `p` is `Y^p`.  This is the precise integral replacement for
+whose product with `p` is `Y^p`. This is the precise integral replacement
 the formal expression `Y^p / p`. -/
 theorem natCast_prime_mul_dworkRamificationCorrection
     (hp_two : 2 < p) (Z : DworkCompleteIntegerRing p K) :
@@ -154,7 +154,7 @@ theorem natCast_prime_mul_dworkRamificationCorrection_of_eq
     (p := p) (K := K) hp_two Z
 
 omit [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K] in
-/-- Frobenius congruence modulo the ramified prime-power ideal.  If two
+/-- Frobenius congruence modulo the ramified prime-power ideal. If two
 elements are congruent modulo `I`, then their `p`-th powers are congruent
 modulo `I^(p - 1)` as soon as `p ∈ I^(p - 1)`. -/
 theorem pow_prime_sub_pow_mem_ideal_pow_pred_of_sub_mem {R : Type*} [CommRing R]
@@ -289,7 +289,7 @@ theorem dworkParameter_pow_regular (n : ℕ)
         dworkParameter_regular (p := p) (K := K) hmul
       exact ih hn
 
-/-- Multiplication by `p` is injective in the complete Dwork ring.  The proof
+/-- Multiplication by `p` is injective in the complete Dwork ring. The proof
 uses the ramification identity only in the complete ring, where powers of the
 Dwork parameter are regular. -/
 theorem natCast_prime_dworkComplete_regular

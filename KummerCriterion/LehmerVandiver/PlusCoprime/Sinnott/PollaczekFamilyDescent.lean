@@ -6,7 +6,7 @@ import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
 
 The Pollaczek unit `pollaczekUnitPlus p K i = ∏_b cyclotomicRealUnit b ^ exp_b`
 is by construction a finite product of real cyclotomic units. Each
-`cyclotomicRealUnit b` (for `b ∈ {2, ..., (p-1)/2}`) descends to the K⁺-side
+`cyclotomicRealUnit b` (for `b ∈ {2,..., (p-1)/2}`) descends to the K⁺-side
 family element `cyclotomicUnitFamilyKplus (b - 2)`. The b=1 term is trivial.
 
 Hence the K⁺-side preimage `v` of `pollaczekUnitPlus` is the corresponding
@@ -38,9 +38,9 @@ The K⁺-side preimage `pollaczekUnitPlusKplus` maps under `algebraMap` to
 the K-side `pollaczekUnitPlus p K i`. This requires:
 * Distributing `algebraMap` through the product.
 * For each `j`, `algebraMap (family j) = cyclotomicRealUnit (j+2)`
-  (= the σ-symmetric K-side cyclotomic unit at `j+2`).
+ (= the σ-symmetric K-side cyclotomic unit at `j+2`).
 * `pollaczekUnitPlus = pollaczekUnit · σ(pollaczekUnit) =
-   ∏_b cyclotomicRealUnit(b)^{exp_b}` (σ-distribution over product).
+ ∏_b cyclotomicRealUnit(b)^{exp_b}` (σ-distribution over product).
 -/
 
 /-! ## Proof of `AlgebraMapPollaczekUnitPlusKplus_eq`
@@ -49,10 +49,10 @@ The claim: image of `pollaczekUnitPlusKplus` under `algebraMap` equals
 `pollaczekUnitPlus` in `𝓞 K`. Proof outline:
 
 1. `algebraMap` distributes through products and powers.
-2. `algebraMap (family j) = (cyclotomicRealUnit (j+2) : 𝓞 K)`
-   (via `algebraMap_realCyclotomicUnitPlus` + unit-value identity).
+2. `algebraMap (family j) = (cyclotomicRealUnit (j+2): 𝓞 K)`
+ (via `algebraMap_realCyclotomicUnitPlus` + unit-value identity).
 3. `pollaczekUnitPlus = ∏_b cyclotomicRealUnit(b)^{exp_b}` (σ-distribution
-   over the Pollaczek product).
+ over the Pollaczek product).
 4. The b=1 term is trivial (`cyclotomicRealUnit 1 = 1`).
 5. Reindex `b = j + 2` to match. -/
 

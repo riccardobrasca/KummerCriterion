@@ -3,7 +3,7 @@ module
 public import KummerCriterion.LehmerVandiver.Primary
 
 /-!
-# Complex conjugation preserves primarity (ticket LehmerVandiverb2b)
+# Complex conjugation preserves primarity
 
 For a CM cyclotomic field `K = ℚ(ζ_p)`, complex conjugation `σ` sends `ζ` to
 `ζ^{p-1}`. Hence `σ(ζ - 1) = ζ^{p-1} - 1 = -ζ^{p-1}(ζ - 1)`, and `σ(ζ - 1)`
@@ -19,7 +19,7 @@ toward Vandiver Lemma 1.
 
 * Washington, *Introduction to Cyclotomic Fields*, §6.4.
 * `KummerCriterion.TotallyRealSubfield.Conjugation`
-  (`complexConj_apply_zeta`).
+ (`complexConj_apply_zeta`).
 -/
 
 @[expose] public section
@@ -44,10 +44,10 @@ noncomputable def zetaSubOneConjUnit : (𝓞 K)ˣ :=
   (-1 : (𝓞 K)ˣ) * (zeta_spec p ℚ K).unit' ^ (p - 1)
 
 omit [NumberField K] in
-/-- Helper: `((-1 : (𝓞 K)ˣ) : 𝓞 K) = -1`. -/
+/-- Helper: `((-1: (𝓞 K)ˣ): 𝓞 K) = -1`. -/
 private theorem coe_neg_one_unit : ((-1 : (𝓞 K)ˣ) : 𝓞 K) = -1 := rfl
 
-/-- Helper: `((zeta_spec p ℚ K).unit' : 𝓞 K) = (zeta_spec p ℚ K).toInteger`. -/
+/-- Helper: `((zeta_spec p ℚ K).unit': 𝓞 K) = (zeta_spec p ℚ K).toInteger`. -/
 private theorem coe_unit'_eq_toInteger :
     ((zeta_spec p ℚ K).unit' : 𝓞 K) = (zeta_spec p ℚ K).toInteger :=
   rfl

@@ -204,8 +204,8 @@ theorem valuedLambdaQuotientDworkCoeffModP_scaledNormalizedFiniteLog_eq_smul
     scaledDworkParameterNormalizedFiniteLogApprox] using hcoord
 
 omit [NumberField.IsCMField K] in
-/-- CU-11f2b2c reduced to the unscaled normalized Artin-Hasse finite-log
-coordinate.  The scaled denominator contributes by the cyclotomic action,
+/-- reduced to the unscaled normalized Artin-Hasse finite-log
+coordinate. The scaled denominator contributes by the cyclotomic action,
 hence the factor `1 - c^i`. -/
 theorem valuedLambdaQuotientDworkCoeffModP_specializedFiniteLog_eq_one_sub_pow_mul_unscaled
     (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) (i : Fin (p - 1)) :

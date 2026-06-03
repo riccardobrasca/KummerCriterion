@@ -11,7 +11,7 @@ public import KummerCriterion.UnitQuotient.DeltaAction
 /-!
 # Cyclotomic action on lambda-local and completed units
 
-This file starts REF-11b.  It proves that the cyclotomic
+This file starts. It proves that the cyclotomic
 `Delta = (ZMod p)^*` automorphisms preserve the distinguished prime
 `lambda = (zeta_p - 1)`, hence act on the localization at `lambda` and preserve
 the local principal-unit filtration. It also lifts those automorphisms through

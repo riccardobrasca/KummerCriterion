@@ -1,12 +1,12 @@
 module
 
 public import KummerCriterion.ZetaFactorisation.Basic
-public import KummerCriterion.NumberFieldEulerProduct
+public import KummerCriterion.ZetaFactorisation.NumberFieldEulerProduct
 
 /-!
 # Euler-product assembly for cyclotomic zeta factorisation
 
-This module contains the global Euler-product arguments for
+This module contains the global Euler-product arguments
 `KummerCriterion.ZetaFactorisation`.
 -/
 

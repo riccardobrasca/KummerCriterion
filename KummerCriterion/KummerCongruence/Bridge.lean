@@ -1,29 +1,30 @@
 module
 
 public import KummerCriterion.KummerCongruence.Kummer
-public import KummerCriterion.Characters
+public import KummerCriterion.KummerCongruence.Characters
 
 /-!
-# Kummer congruences — Bridge (T012) and boundary (T013)
+# Kummer congruences - Bridge and boundary
 
 This module proves the two "bridge" congruences between classical and
 generalized Bernoulli numbers:
 
-- **T012** (`bernoulliGen_teichmuller_pow_sModEq_div`): for odd `n` with
-  `(p − 1) ∤ (n + 1)`,
-    `B_{1, ω^n} ≡ B_{n+1} / (n+1) (mod p)`.
-  Combines the sharper Teichmüller congruence (Step 1, in
-  `KummerCriterion.Characters`) with Step 2 (power-sum mod `p²`) and
-  T011 (Kummer's congruence).
+- `bernoulliGen_teichmuller_pow_sModEq_div`: for odd `n` with
+ `(p − 1) ∤ (n + 1)`,
+ `B_{1, ω^n} ≡ B_{n+1} / (n+1) (mod p)`.
+ Combines the sharper Teichmüller congruence (Step 1, in
+ `KummerCriterion.KummerCongruence.Characters`) with Step 2 (power-sum mod `p²`) and
+ (Kummer's congruence).
 
-- **T013** (boundary case): at `n = p − 2`, the RHS `B_{p−1}/(p−1)` has a
-  `p` in its denominator (von Staudt–Clausen), so T012 does not apply
-  directly. Instead,
-    `B_{1, ω^{p−2}} ≡ bernoulli (p−1) (mod ℤ_[p])`
-  (`bernoulliGen_teichmuller_inv_sub_bernoulli_mem_padicInt`), via T008
-  and T010. We also record the Diekmann-page-51 boundary factor
-  `2p · (−1/2) · B_{1, ω^{p−2}} = 1 + p · z`
-  (`boundary_teichmuller_factor_eq_one_add_p_mul`).
+- Boundary case: at `n = p − 2`, the RHS `B_{p−1}/(p−1)` has a
+ `p` in its denominator (von Staudt–Clausen), so does not apply
+ directly. Instead,
+ `B_{1, ω^{p−2}} ≡ bernoulli (p−1) (mod ℤ_[p])`
+ (`bernoulliGen_teichmuller_inv_sub_bernoulli_mem_padicInt`), via
+ the inverse Teichmüller comparison and the von Staudt–Clausen calculation.
+ We also record the Diekmann-page-51 boundary factor
+ `2p · (−1/2) · B_{1, ω^{p−2}} = 1 + p · z`
+ (`boundary_teichmuller_factor_eq_one_add_p_mul`).
 -/
 
 @[expose] public section
@@ -32,23 +33,23 @@ noncomputable section
 
 namespace KummerCriterion
 
-/-! ### T012 — Bridge `B_{1, ω^n} ≡ B_{n+1}/(n+1) (mod p)` -/
+/-! ### Bridge `B_{1, ω^n} ≡ B_{n+1}/(n+1) (mod p)` -/
 
-/-- **T012** (Diekmann Cor 34 / Erickson App. A.1.26).
+/-- Bridge congruence (Diekmann Cor 34 / Erickson App. A.1.26).
 For `n` odd with `n ≢ -1 (mod p-1)` (i.e. `(p-1) ∤ (n+1)`),
-  `B_{1, ω^n} ≡ B_{n+1}/(n+1) (mod p)`
+ `B_{1, ω^n} ≡ B_{n+1}/(n+1) (mod p)`
 as elements of `ℚ_[p]` (both p-adic integers).
 
-**Proof** (Erickson, elementary): let `t := p·n + 1`, which is even
+**Proof** (Erickson, elementary): let `t:= p·n + 1`, which is even
 (as `n` is odd and `p` is odd). Then:
 1. `p · B_{1, ω^n} = ∑ ω(a)^n · (a.val) ≡ ∑ (a.val)^{p·n + 1} (mod p²)`
-   by the sharper Teichmüller congruence
-   `ω(a) ≡ (a.val)^p (mod p²)` (Step 1).
+ by the sharper Teichmüller congruence
+ `ω(a) ≡ (a.val)^p (mod p²)` (Step 1).
 2. `∑ (a.val)^t ≡ p · B_t (mod p²)` by Step 2.
 3. Combining, `p · B_{1, ω^n} ≡ p · B_t (mod p²)`, so
-   `B_{1, ω^n} ≡ B_t (mod p)`.
-4. `t ≡ n + 1 (mod p-1)` with `(p-1) ∤ (n+1)`, so Step 3 (T011) gives
-   `B_t / t ≡ B_{n+1} / (n+1) (mod p)`.
+ `B_{1, ω^n} ≡ B_t (mod p)`.
+4. `t ≡ n + 1 (mod p-1)` with `(p-1) ∤ (n+1)`, so Step 3 gives
+ `B_t / t ≡ B_{n+1} / (n+1) (mod p)`.
 5. `t ≡ 1 (mod p)`, so `B_t ≡ B_{n+1}/(n+1) (mod p)`.
 6. Combining steps 3 and 5: `B_{1, ω^n} ≡ B_{n+1}/(n+1) (mod p)`. -/
 theorem bernoulliGen_teichmuller_pow_sModEq_div
@@ -69,7 +70,7 @@ theorem bernoulliGen_teichmuller_pow_sModEq_div
   set t : ℕ := p * n + 1 with ht_def
   have hpQ_ne : (p : ℚ_[p]) ≠ 0 := by exact_mod_cast hp.ne_zero
   -- Auxiliary: `t + 1 ≤ p² - 3p + 2 < p²`, so `∀ j ≤ t, j + 1 < p^3`.
-  -- From `hn_small : n + 1 < p - 1`, we have `n ≤ p - 3`.
+  -- From `hn_small: n + 1 < p - 1`, we have `n ≤ p - 3`.
   have hn_le_pm3 : n ≤ p - 3 := by omega
   have h_t_lt_p_sq : t + 1 < p^2 := by
     -- t + 1 = p·n + 2, n ≤ p - 3, so p·n + 2 ≤ p·(p-3) + 2 < p² for p ≥ 3.
@@ -94,7 +95,7 @@ theorem bernoulliGen_teichmuller_pow_sModEq_div
         _ < p^2 := by nlinarith [hp.one_lt]
         _ < p^3 := h_p_sq_lt_p_cube
     exact absurd (Nat.le_of_dvd (Nat.succ_pos j) hdvd) (by omega)
-  /- **Ingredient 1** (from Step 1 + T006). -/
+  /- **Ingredient 1**: Teichmüller congruence plus the `BernoulliGen` sum formula. -/
   have h_ingr1 : ∃ z : ℤ_[p],
       (p : ℚ_[p]) * BernoulliGen ((teichmullerCharQp p) ^ n) 1 -
           (∑ k ∈ Finset.range p, (k : ℚ_[p]) ^ t) =
@@ -112,7 +113,7 @@ theorem bernoulliGen_teichmuller_pow_sModEq_div
       omega
     have hωQ_ne_one : (teichmullerCharQp p) ^ n ≠ 1 :=
       teichmullerCharQp_pow_ne_one_of_not_dvd (p := p) hn_not_dvd
-    -- T006 in ℚ_[p].
+    -- in ℚ_[p].
     have hT006 := natCast_mul_BernoulliGen_one_of_ne_one
       (R := ℚ_[p]) (N := p) (χ := (teichmullerCharQp p) ^ n) hωQ_ne_one
     -- Pointwise ℤ_[p] bound.
@@ -202,7 +203,7 @@ theorem bernoulliGen_teichmuller_pow_sModEq_div
       exact p_mul_bernoulli_mem_padicInt_restricted hp_odd hj_two hj_even
         (fun j' hj' => h_below_t j' (Nat.le_trans hj' hj.le))
   obtain ⟨z₂, hz₂⟩ := h_ingr2
-  /- **Ingredient 3** (T011 + `t ≡ 1 (mod p)` + Adams' integrality). -/
+  /- **Ingredient 3**: Kummer congruence, `t ≡ 1 (mod p)`, and Adams' integrality. -/
   have h_ingr3 : ∃ z : ℤ_[p],
       (((bernoulli t : ℚ) : ℚ_[p])) -
           (((bernoulli (n + 1) : ℚ) / (n + 1) : ℚ) : ℚ_[p]) =
@@ -246,7 +247,7 @@ theorem bernoulliGen_teichmuller_pow_sModEq_div
       change ((hn1_unit.unit * hn1_unit.unit⁻¹ : (ℤ_[p])ˣ).val : ℤ_[p]) = 1; simp
     have hn1Inv_mul_Qp : ((n + 1 : ℕ) : ℚ_[p]) * ((n1Inv : ℤ_[p]) : ℚ_[p]) = 1 := by
       simpa using congrArg (fun x : ℤ_[p] => (x : ℚ_[p])) hn1Inv_mul
-    -- `b := bn1 · n1Inv`, so `B_{n+1}/(n+1) = b` in ℚ_[p].
+    -- `b:= bn1 · n1Inv`, so `B_{n+1}/(n+1) = b` in ℚ_[p].
     set b : ℤ_[p] := bn1 * n1Inv with hb_def
     have hb : (((bernoulli (n + 1) : ℚ) / (n + 1 : ℕ) : ℚ) : ℚ_[p]) = ((b : ℤ_[p]) : ℚ_[p]) := by
       have h_div : (((bernoulli (n + 1) : ℚ) / (n + 1 : ℕ) : ℚ) : ℚ_[p]) =
@@ -278,8 +279,8 @@ theorem bernoulliGen_teichmuller_pow_sModEq_div
     push_cast; rw [ht_sub]; ring
   obtain ⟨z₃, hz₃⟩ := h_ingr3
   /- **Combine**: from `hz₁` and `hz₂`, `p · (B_{1,ω^n} - B_t) ∈ p² · ℤ_[p]`,
-     so dividing by `p`, `B_{1,ω^n} - B_t ∈ p · ℤ_[p]`. Adding `hz₃` gives
-     `B_{1,ω^n} - B_{n+1}/(n+1) ∈ p · ℤ_[p]`. -/
+ so dividing by `p`, `B_{1,ω^n} - B_t ∈ p · ℤ_[p]`. Adding `hz₃` gives
+ `B_{1,ω^n} - B_{n+1}/(n+1) ∈ p · ℤ_[p]`. -/
   refine ⟨z₁ + z₂ + z₃, ?_⟩
   have h_bridge : BernoulliGen ((teichmullerCharQp p) ^ n) 1 -
       ((bernoulli t : ℚ) : ℚ_[p]) = (p : ℚ_[p]) * ((z₁ : ℚ_[p]) + (z₂ : ℚ_[p])) :=
@@ -294,13 +295,14 @@ theorem bernoulliGen_teichmuller_pow_sModEq_div
           rw [h_bridge, hz₃]
     _ = (p : ℚ_[p]) * ((z₁ + z₂ + z₃ : ℤ_[p]) : ℚ_[p]) := by push_cast; ring
 
-/-! ### T013 — Boundary case `χ = ω^{p-2}`
+/-! ### Boundary case `χ = ω^{p-2}`
 
 At the boundary `n = p - 2`, the naive bridge
-`B_{1, ω^n} ≡ B_{n+1} / (n+1) (mod p)` from T012 would require the
+`B_{1, ω^n} ≡ B_{n+1} / (n+1) (mod p)` would require the
 RHS `B_{p-1} / (p-1)` to be `p`-integral, but `B_{p-1}` has `p` in its
-denominator by Von Staudt–Clausen (T010). Combining T008 and T010
-directly, both `B_{1, ω^{p-2}}` and `bernoulli (p-1)` differ from
+denominator by Von Staudt–Clausen. Combining the inverse Teichmüller comparison
+with the Bernoulli denominator calculation
+directly, both `B_{1, ω^{p-2}}` and `bernoulli (p-1)` differ
 `-1/p` by a `p`-adic integer, so their **difference** is a `p`-adic
 integer. -/
 

@@ -1,13 +1,13 @@
 module
 
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.KummerArtinHasseValuationLocalModel
+public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseValuationLocalModel
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
 
 /-!
 # The rational `p`-adic base place for the lambda-local correction
 
 This file records the rational height-one prime `(p)` and proves that the
-cyclotomic `lambda` prime lies over it.  These are the concrete inputs for
+cyclotomic `lambda` prime lies over it. These are the concrete inputs
 extending the rational map `ℚ → K` to the corresponding valuation completions.
 -/
 

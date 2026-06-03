@@ -1,7 +1,7 @@
 module
 
 public import KummerCriterion.Reflection.Local.Basic
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.KummerArtinHasseCompletionMap
+public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseCompletionMap
 public import Mathlib.RingTheory.Trace.Defs
 import Mathlib.Tactic
 
@@ -9,15 +9,15 @@ import Mathlib.Tactic
 # Valuation-completion trace source for the Kummer--Artin--Hasse `A` term
 
 The earlier local logarithm files are written in the project's adic completed
-integer ring `LambdaLocalIntegerRing`.  The trace needed for the explicit
+integer ring `LambdaLocalIntegerRing`. The trace needed for the explicit
 Kummer--Artin--Hasse correction, however, is the finite `Q_p`-linear trace on
 the valuation completion of `K` at `lambda`.
 
-This file makes the trace-source API use the valuation-completion model from
-the start.  The old adic logarithm stack remains useful infrastructure, but it
+This file makes the trace-source API use the valuation-completion model
+the start. The old adic logarithm stack remains useful infrastructure, but it
 is not the final source of the `A` term consumed by reciprocity.
 
-The `< p` truncated logarithm is kept as a named summand.  The active finite
+The `< p` truncated logarithm is kept as a named summand. The active finite
 approximation to the full p-adic logarithm for the Kummer--Artin--Hasse
 `A`-term is `log_≤p(u) = log_<p(u) + (u - 1)^p / p`; the missing `n = p`
 term is essential on the `μ_p` torsion direction in `U_1`.

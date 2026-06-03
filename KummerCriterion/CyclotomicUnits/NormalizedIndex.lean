@@ -203,8 +203,8 @@ theorem cyclotomicUnitIndex_primeConductor_pPrimary_of_five_le (hp_ge_five : 5 �
   cyclotomicUnitIndex_primeConductor_pPrimary_aux
     (p := p) (K := K) (by omega) (by omega) (by omega) hp_ge_five
 
-/-- CU-06: the prime-conductor cyclotomic-unit index theorem for the TeX
-normalized subgroup `C⁺ = <-1, ε₂, ..., ε_g>`, in odd-primary form. -/
+/-- the prime-conductor cyclotomic-unit index theorem for the TeX
+normalized subgroup `C⁺ = <-1, ε₂,..., ε_g>`, in odd-primary form. -/
 theorem cyclotomicUnitIndex_primeConductor_pPrimary (hp_odd : p ≠ 2) :
     p ∣ (normalizedCPlus (p := p) (K := K) hp_odd
         (by have hp_two := (Fact.out : Nat.Prime p).two_le; omega)).index ↔

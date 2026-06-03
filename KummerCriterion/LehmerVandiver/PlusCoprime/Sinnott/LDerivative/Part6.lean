@@ -15,7 +15,7 @@ namespace Sinnott
 
 variable (p : ℕ) [hp : Fact p.Prime]
 
-/-- **`q(familyIndexAsUnit i) ≠ 1`** in `CyclotomicEvenDelta p`. Direct from
+/-- **`q(familyIndexAsUnit i) ≠ 1`** in `CyclotomicEvenDelta p`. Direct
 `familyIndexAsUnit_ne_one_and_neg_one`: q-equality with 1 means the unit
 itself is in `⟨-1⟩ = {1, -1}`. -/
 theorem familyIndexAsUnit_quotient_ne_one
@@ -191,7 +191,7 @@ theorem familyIndexAsUnit_quotient_injective
     omega
 
 /-- **Row-side bijection** (cardinality form): the family-index set
-`{w_K⁺ // w ≠ w₀}` bijects to `{c : CyclotomicEvenDelta p // c ≠ 1}`.
+`{w_K⁺ // w ≠ w₀}` bijects to `{c: CyclotomicEvenDelta p // c ≠ 1}`.
 
 Both have cardinality `(p-3)/2`. Established via `Fintype.equivOfCardEq` after
 proving the cardinality equality via the canonical embedding-index bijection. -/
@@ -221,7 +221,7 @@ noncomputable def familyIndexEquivNonTrivialCE
   rfl
 
 /-- **Row-side bijection bundle** (functional form): for each family-index `i`,
-`q(familyIndexAsUnit i)` lies in `{c : CyclotomicEvenDelta p // c ≠ 1}`.
+`q(familyIndexAsUnit i)` lies in `{c: CyclotomicEvenDelta p // c ≠ 1}`.
 
 Packages `familyIndexAsUnit_quotient_ne_one` into a function with codomain
 restricted to the non-trivial subtype. -/
@@ -253,8 +253,8 @@ theorem familyIndexAsCEnotOne_injective
 /-- **Row-side bijection** as an `Equiv` via `familyIndexAsCEnotOne`.
 
 Bundles `familyIndexAsCEnotOne_injective` + cardinality equality
-(`familyIndexEquivNonTrivialCE`) into a noncomputable `Equiv` from
-the family-index set to `{c : CyclotomicEvenDelta p // c ≠ 1}`. -/
+(`familyIndexEquivNonTrivialCE`) into a noncomputable `Equiv`
+the family-index set to `{c: CyclotomicEvenDelta p // c ≠ 1}`. -/
 noncomputable def familyIndexAsCEnotOneEquiv
     (K : Type) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
     [NumberField.IsCMField K] (hp_odd : p ≠ 2) (hp_three : 3 ≤ p)
@@ -287,7 +287,7 @@ theorem familyIndexAsCEnotOneEquiv_apply
         (familyIndexAsUnit p K hp_odd hp_three i) :=
   rfl
 
-/-- **Cardinality of `{c : CyclotomicEvenDelta p // c ≠ 1}`** equals `(p-3)/2`.
+/-- **Cardinality of `{c: CyclotomicEvenDelta p // c ≠ 1}`** equals `(p-3)/2`.
 
 Direct from `Fintype.card_subtype_compl` + `cyclotomicEvenDelta_card`. -/
 theorem fintype_card_nonTrivialCE_eq (hp_two : 2 < p) :

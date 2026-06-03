@@ -145,7 +145,7 @@ theorem selfInverse_character_image_units_eq_one_or_neg_one {χ : DirichletChara
     apply Units.ext
     simpa using hχ
 
-/-- The hard bridge for `T023d1g1a3`: under the chosen equivalence, the
+/-- The hard bridge for the sign-invariant trace route: under the chosen equivalence, the
 quadratic complex Dirichlet character corresponds to the unique nontrivial
 order-`2` unit `-1`. -/
 theorem complexCharacterMulEquivUnits_quadraticCharComplex (hp₂ : p ≠ 2) :

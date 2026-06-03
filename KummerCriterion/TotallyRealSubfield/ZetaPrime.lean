@@ -87,7 +87,7 @@ lemma complexConj_apply_zeta [IsCMField K] :
   rfl
 
 /-- Complex conjugation `c` acts as the identity on the residue field
-`𝓞 K / 𝔓`. Equivalently, `c(x) ≡ x (mod 𝔓)` for every `x : 𝓞 K`.
+`𝓞 K / 𝔓`. Equivalently, `c(x) ≡ x (mod 𝔓)` for every `x: 𝓞 K`.
 
 Proved by induction on `Algebra.adjoin ℤ {hζ.toInteger} = ⊤`: the base
 case uses that both `hζ.toInteger` and `c(hζ.toInteger) = hζ.toInteger^{p-1}`
@@ -173,7 +173,7 @@ lemma complexConj_pi_mul_complexConj_pi [IsCMField K] :
   ext
   exact complexConj_apply_apply K _
 
-/-- The real uniformizer `piPlus : 𝓞_{K⁺}`, whose image in `𝓞 K` is `π · c(π)`. -/
+/-- The real uniformizer `piPlus: 𝓞_{K⁺}`, whose image in `𝓞 K` is `π · c(π)`. -/
 noncomputable def piPlus [IsCMField K] : 𝓞 (K⁺) := by
   have hfix := complexConj_pi_mul_complexConj_pi p K
   rw [RingOfIntegers.ext_iff, coe_ringOfIntegersComplexConj,

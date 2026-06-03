@@ -4,7 +4,7 @@ import KummerCriterion.HMinus.KplusLocalCharacters
 import KummerCriterion.HMinus.LValueReduction.LValues
 import KummerCriterion.UnitQuotient.PermutationCharacters
 import KummerCriterion.UnitQuotient.FreeCharacterProfile
-import KummerCriterion.UnitQuotient.FreeLatticeComparison.ConjugationTrace
+import KummerCriterion.UnitQuotient.ConjugationTrace
 import Mathlib.NumberTheory.LSeries.DirichletContinuation
 import Mathlib.RingTheory.RootsOfUnity.Lemmas
 
@@ -14,8 +14,8 @@ import Mathlib.RingTheory.RootsOfUnity.Lemmas
 For an even nontrivial Dirichlet character χ mod p, the classical
 **Dirichlet/Kummer formula**:
 
-  `L'(0, χ̄) = -∑_{a=1}^{p-1} χ(a) · log|1 - ζ^a|`
-            = `-∑_{a=1}^{p-1} χ(a) · log|2 sin(πa/p)|`
+ `L'(0, χ̄) = -∑_{a=1}^{p-1} χ(a) · log|1 - ζ^a|`
+ = `-∑_{a=1}^{p-1} χ(a) · log|2 sin(πa/p)|`
 
 connects the L-function derivative at zero to logs of cyclotomic units.
 
@@ -33,7 +33,7 @@ What's needed: the closed-form of `L(0, χ)` (= `-B_{1,χ}`) and
 ## References
 
 * Washington, *Introduction to Cyclotomic Fields*, 2nd ed., §4.2
-  (L-functions and Bernoulli polynomials).
+ (L-functions and Bernoulli polynomials).
 * Mathlib `Mathlib.NumberTheory.LSeries.DirichletContinuation`.
 -/
 
@@ -75,7 +75,7 @@ theorem norm_one_sub_stdAddChar_neg (a : ZMod p) :
   exact Complex.norm_conj _
 
 /-- **The log-norm function is even under negation of the unit argument**:
-for `a : (ZMod p)ˣ`, `log‖1 - stdAddChar(↑(-a))‖ = log‖1 - stdAddChar(↑a)‖`.
+for `a: (ZMod p)ˣ`, `log‖1 - stdAddChar(↑(-a))‖ = log‖1 - stdAddChar(↑a)‖`.
 Foundation for descending the convolution log-norm to the quotient. -/
 theorem log_norm_one_sub_stdAddChar_unit_neg (a : (ZMod p)ˣ) :
     Real.log ‖(1 : ℂ) - ZMod.stdAddChar (N := p) ((↑(-a) : ZMod p))‖ =
@@ -85,11 +85,11 @@ theorem log_norm_one_sub_stdAddChar_unit_neg (a : (ZMod p)ˣ) :
   rw [h_cast, norm_one_sub_stdAddChar_neg]
 
 /-- **Descended convolution log-norm**: the log-norm function
-`f(a) = log‖1 - stdAddChar(↑a)‖` (for `a : (ZMod p)ˣ`) descends to a
+`f(a) = log‖1 - stdAddChar(↑a)‖` (for `a: (ZMod p)ˣ`) descends to a
 function on the `{±1}`-quotient `CyclotomicEvenDelta p` via
 `evenFunctionDescend`. This is the function whose convolution matrix
 on the quotient gives the non-singular Frobenius determinant formula
-for PF-1's matrix-restriction. -/
+for matrix-restriction. -/
 noncomputable def convolutionLogNormDescended :
     KummerCriterion.CyclotomicEvenDelta p → ℂ :=
   KummerCriterion.evenFunctionDescend (p := p)
@@ -120,7 +120,7 @@ noncomputable def convolutionMatrixLogNormEven :
   Matrix.of fun a b => convolutionLogNormDescended p (a * b)
 
 /-- **Generic convolution matrix on `CyclotomicEvenDelta p`**: for a function
-`f : CyclotomicEvenDelta p → ℂ`, the multiplication-convolution matrix with
+`f: CyclotomicEvenDelta p → ℂ`, the multiplication-convolution matrix with
 entries `M[a, b] = f(a · b)`. This is the abstract version of which
 `convolutionMatrixLogNormEven` is the special case at the descended log-norm. -/
 noncomputable def convolutionMatrixOnEven
@@ -178,8 +178,8 @@ noncomputable def quotCharEquivQuot :
 /-- **Matrix-level eigenvalue formula on the quotient**: for the multiplicative
 convolution matrix `convolutionMatrixOnEven f`:
 
-  `(characterMatrixOnEven · convolutionMatrixOnEven f)[ξ, b] =
-    ξ(b⁻¹) · (∑_a ξ(a) · f(a))`.
+ `(characterMatrixOnEven · convolutionMatrixOnEven f)[ξ, b] =
+ ξ(b⁻¹) · (∑_a ξ(a) · f(a))`.
 
 Direct parallel of `characterMatrix_mul_convolutionMatrix_apply` on the
 quotient: reindex via `a ↦ a · b⁻¹` and use character multiplicativity. -/
@@ -268,7 +268,7 @@ theorem characterMatrixSquareOnEven_mul_convolutionMatrixOnEven_eq_diag_mul_inv
 
 /-- **Square determinant identity on the quotient**:
 
-  det(F_square) · det(M) = (∏ k, λ_{e.symm k}) · det(F'_square),
+ det(F_square) · det(M) = (∏ k, λ_{e.symm k}) · det(F'_square),
 
 where `λ_χ = ∑ a, χ(a) · f(a)`. -/
 theorem det_characterMatrixSquareOnEven_mul_convolutionMatrixOnEven
@@ -320,7 +320,7 @@ theorem det_inverseCharacterMatrixSquareOnEven_sq_eq_det_characterMatrixSquareOn
 /-- **Squared Frobenius determinant identity on the quotient (conditional
 on `det F ≠ 0`)**:
 
-  det(convolutionMatrixOnEven f)² = (∏_k λ_{e.symm k})²
+ det(convolutionMatrixOnEven f)² = (∏_k λ_{e.symm k})²
 
 where `λ_χ = ∑ a, χ(a) · f(a)`. Parallel of
 `det_convolutionMatrix_sq_eq_prod_lambda_sq`. -/
@@ -406,7 +406,7 @@ theorem characterMatrixSquareOnEven_mul_inverseCharacterMatrixSquareOnEven_trans
       exact (quotCharEquivQuot p).symm.injective h_inv_cancel
     exact MulChar.sum_eq_zero_of_ne_one h_ne
 
-/-- **`characterMatrixSquareOnEven` has nonzero determinant**: from the
+/-- **`characterMatrixSquareOnEven` has nonzero determinant**:
 orthogonality `F · F'ᵀ = (card G) · I`, taking determinants gives
 `det(F) · det(F'ᵀ) = (card G)^(card G)`, non-zero for card G > 0.
 Hence `det(F) ≠ 0`. -/
@@ -420,7 +420,7 @@ theorem det_characterMatrixSquareOnEven_ne_zero (hp_two : 2 < p) :
   have h_det_orth := congrArg Matrix.det h_orth
   rw [Matrix.det_mul, h_det_zero, zero_mul] at h_det_orth
   rw [Matrix.det_smul, Matrix.det_one, mul_one] at h_det_orth
-  -- h_det_orth : 0 = card^(card)
+  -- h_det_orth: 0 = card^(card)
   have h_card_pos : 0 < Fintype.card (KummerCriterion.CyclotomicEvenDelta p) := by
     rw [KummerCriterion.cyclotomicEvenDelta_card (p := p) hp_two]
     omega
@@ -436,7 +436,7 @@ combining `det_convolutionMatrixOnEven_sq_eq_prod_lambda_sq` with
 convolution matrix on `CyclotomicEvenDelta p` equals the squared product
 of eigenvalues:
 
-  det(convolutionMatrixOnEven p f)² = (∏_k λ_{e.symm k})²
+ det(convolutionMatrixOnEven p f)² = (∏_k λ_{e.symm k})²
 
 where `λ_χ = ∑ a, χ(a) · f(a)`. Unconditional for `p > 2`. -/
 theorem det_convolutionMatrixOnEven_sq_eq_prod_lambda_sq_unconditional
@@ -448,10 +448,10 @@ theorem det_convolutionMatrixOnEven_sq_eq_prod_lambda_sq_unconditional
   det_convolutionMatrixOnEven_sq_eq_prod_lambda_sq (p := p) f
     (det_characterMatrixSquareOnEven_ne_zero (p := p) hp_two)
 
-/-- **Quotient eigenvalue at character `ξ`**: for
-`ξ : MulChar (CyclotomicEvenDelta p) ℂ`,
+/-- **Quotient eigenvalue at character `ξ`**:
+`ξ: MulChar (CyclotomicEvenDelta p) ℂ`,
 the eigenvalue of `convolutionMatrixLogNormEven` at the descended character is
-`∑ ā : CyclotomicEvenDelta p, ξ(ā) · convolutionLogNormDescended(ā)`. This is
+`∑ ā: CyclotomicEvenDelta p, ξ(ā) · convolutionLogNormDescended(ā)`. This is
 the natural Frobenius eigenvalue on the quotient. -/
 noncomputable def quotientEigenvalue
     (ξ : MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) : ℂ :=
@@ -482,8 +482,8 @@ theorem det_convolutionMatrixLogNormEven_sq_eq_prod_quotientEigenvalue_sq
   rw [prod_lambda_eq_prod_quotientEigenvalue]
 
 /-- **Product reindexed via the Pontryagin equivalence**: the product over
-`k : CyclotomicEvenDelta p` of a function evaluated at `(quotCharEquivQuot.symm k)`
-equals the product over `ξ : MulChar (CyclotomicEvenDelta p) ℂ` directly. -/
+`k: CyclotomicEvenDelta p` of a function evaluated at `(quotCharEquivQuot.symm k)`
+equals the product over `ξ: MulChar (CyclotomicEvenDelta p) ℂ` directly. -/
 theorem prod_quot_eq_prod_mulChar
     (f : MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ → ℂ) :
     haveI : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=
@@ -499,7 +499,7 @@ theorem prod_quot_eq_prod_mulChar
     (fun k => f ((quotCharEquivQuot p).symm k))
     (fun ξ => by simp only [Equiv.symm_apply_apply])).symm
 
-/-- **Half-sum identity**: for any even function `f : (ZMod p)ˣ → ℂ`
+/-- **Half-sum identity**: for any even function `f: (ZMod p)ˣ → ℂ`
 (with `f(-a) = f(a)`), summing over the full group gives twice the sum
 over the `{±1}`-quotient `CyclotomicEvenDelta p` (for `p > 2`).
 
@@ -565,9 +565,9 @@ theorem sum_full_eq_two_mul_sum_descended (f : KummerCriterion.CyclotomicUnitDel
   ring
 
 /-- **Twice quotient eigenvalue = full-group sum at the pullback character**:
-for `ξ : MulChar (CyclotomicEvenDelta p) ℂ` and `p > 2`,
+for `ξ: MulChar (CyclotomicEvenDelta p) ℂ` and `p > 2`,
 `2 · quotientEigenvalue p ξ = ∑_a (pullback ξ)(a) · log‖1 - stdAddChar(↑a)‖`,
-summing over `a : (ZMod p)ˣ` (the unit-group). Direct application of the
+summing over `a: (ZMod p)ˣ` (the unit-group). Direct application of the
 half-sum identity `sum_full_eq_two_mul_sum_descended` to the even function
 `f(a) = (pullback ξ)(a) · log-norm(↑a)`. -/
 theorem two_mul_quotientEigenvalue_eq_sum_full
@@ -588,7 +588,7 @@ theorem two_mul_quotientEigenvalue_eq_sum_full
         ξ (KummerCriterion.cyclotomicEvenDeltaQuotient p a)
     rw [KummerCriterion.cyclotomicEvenDeltaQuotient_neg]
   have h_half := sum_full_eq_two_mul_sum_descended (p := p) f hf_even hp_two
-  -- h_half : ∑ a, f a = 2 * ∑ b, evenFunctionDescend f hf_even b
+  -- h_half: ∑ a, f a = 2 * ∑ b, evenFunctionDescend f hf_even b
   -- Show: quotientEigenvalue p ξ = ∑ b, evenFunctionDescend f hf_even b
   have h_quot_eq : quotientEigenvalue p ξ =
       ∑ b : KummerCriterion.CyclotomicEvenDelta p,
@@ -604,15 +604,15 @@ theorem two_mul_quotientEigenvalue_eq_sum_full
     rw [KummerCriterion.evenFunctionDescend_apply_mk]
     simp only [hf_def]
     -- Goal: ξ ↑a * convolutionLogNormDescended ↑a =
-    --       pullback ξ a * log-norm a
+    -- pullback ξ a * log-norm a
     unfold convolutionLogNormDescended
     rw [KummerCriterion.evenFunctionDescend_apply_mk]
     -- Use pullback def: `ξ ↑a = pullback ξ a`.
     rfl
   rw [h_quot_eq, ← h_half]
 
-/-- **Sum reindex `(ZMod p)ˣ → Finset.Ico 1 p`**: for any function `F : ℕ → ℂ`,
-the sum over the unit group equals the sum over `{1, ..., p-1}` via the
+/-- **Sum reindex `(ZMod p)ˣ → Finset.Ico 1 p`**: for any function `F: ℕ → ℂ`,
+the sum over the unit group equals the sum over `{1,..., p-1}` via the
 bijection `a ↦ a.val`. Standard reindexing for prime `p`. -/
 theorem sum_units_val_eq_sum_Ico (F : ℕ → ℂ) :
     ∑ a : (ZMod p)ˣ, F ((a : ZMod p).val) = ∑ n ∈ Finset.Ico 1 p, F n := by
@@ -637,11 +637,11 @@ theorem sum_units_val_eq_sum_Ico (F : ℕ → ℂ) :
     exact Nat.mod_eq_of_lt hn.2
 
 /-- **Quotient eigenvalue at the trivial character (sum form)**: at the
-trivial MulChar `1 : MulChar (CyclotomicEvenDelta p) ℂ`,
-`2 · quotientEigenvalue p 1 = ∑ a : (ZMod p)ˣ, log‖1 - stdAddChar(↑a)‖`.
+trivial MulChar `1: MulChar (CyclotomicEvenDelta p) ℂ`,
+`2 · quotientEigenvalue p 1 = ∑ a: (ZMod p)ˣ, log‖1 - stdAddChar(↑a)‖`.
 
 Direct from `two_mul_quotientEigenvalue_eq_sum_full` + the fact that
-`(pullback 1)(a) = 1` for `a : (ZMod p)ˣ` (since every group element is a unit). -/
+`(pullback 1)(a) = 1` for `a: (ZMod p)ˣ` (since every group element is a unit). -/
 theorem two_mul_quotientEigenvalue_trivial_eq_sum_logNorm (hp_two : 2 < p) :
     2 * quotientEigenvalue p (1 : MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) =
       ∑ a : KummerCriterion.CyclotomicUnitDelta p,

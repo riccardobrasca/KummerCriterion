@@ -11,7 +11,7 @@ public import Mathlib.Data.ZMod.Basic
 /-!
 # Unit quotients: power quotients and `Δ`-components
 
-This file is the `T040b` layer.  It defines the quotient `E / E^(p^N)` for
+This file is the power-quotient component layer. It defines the quotient `E / E^(p^N)`
 `E = 𝒪_Kˣ`, records the exponent-killing lemma for the quotient map, and
 packages the `Δ = (ZMod p)ˣ`-component size data used by reflection.
 

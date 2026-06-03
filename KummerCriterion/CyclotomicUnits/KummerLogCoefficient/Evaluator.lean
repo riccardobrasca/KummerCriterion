@@ -137,7 +137,7 @@ theorem kummerLogDworkArtinHasseSpecializedFiniteLogCoeffModP_eq
 omit [NumberField.IsCMField K] in
 /-- Once the finite Artin-Hasse specialization coefficient has been identified
 with the formal `ZMod p[X]` coefficient, it rewrites to the assembled Kummer
-right-hand side from CU-11e. -/
+right-hand side. -/
 theorem kummerLogDworkArtinHasseSpecializedFiniteLogCoeffModP_eq_congrRhs_of_eq_formal
     (hp_three : 3 ≤ p) (hp_five : 5 ≤ p)
     (j a : Fin (kummerLogRank p))

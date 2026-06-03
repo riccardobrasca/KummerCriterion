@@ -1,6 +1,6 @@
 module
 
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.KummerArtinHassePadicBase
+public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHassePadicBase
 public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 public import Mathlib.RingTheory.Valuation.Extension
 public import Mathlib.Topology.Algebra.Valued.WithZeroMulInt
@@ -9,7 +9,7 @@ public import Mathlib.Topology.Algebra.Valued.WithZeroMulInt
 # The rational `p`-adic map into the lambda completion
 
 This file proves the valuation-comparison input needed to extend the rational
-map `ℚ → K` to completions.  The comparison is concrete: the cyclotomic
+map `ℚ → K` to completions. The comparison is concrete: the cyclotomic
 `lambda` prime lies over `(p)`, so the lambda valuation on `K`, restricted to
 `ℚ`, is equivalent to the rational `p`-adic valuation.
 -/
@@ -141,7 +141,7 @@ def rationalToLambdaWithValRingHom :
     (lambdaValuation_comap_rat_isEquiv (p := p) (K := K)).orderRingIso.toRingHom
 
 /-- Continuity of the rational `p`-adic valued map into the lambda-valued
-cyclotomic field.  This is the theorem consumed by
+cyclotomic field. This is the theorem consumed by
 `UniformSpace.Completion.mapRingHom`. -/
 theorem continuous_rationalToLambdaWithValRingHom :
     Continuous (rationalToLambdaWithValRingHom (p := p) (K := K)) := by

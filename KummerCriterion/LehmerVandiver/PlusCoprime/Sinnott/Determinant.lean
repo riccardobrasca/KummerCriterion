@@ -9,11 +9,11 @@ The Kummer-Dirichlet determinant identity for cyclotomic units.
 For real cyclotomic units `realCyclotomicUnit k = (1-ζ^k)(1-ζ^{-k}) /
 ((1-ζ)(1-ζ^{-1}))`, applying a complex embedding `φ(ζ) = e^{2πi a/p}`:
 
-  `|φ(realCyclotomicUnit k)| = sin²(πak/p) / sin²(πa/p)`
+ `|φ(realCyclotomicUnit k)| = sin²(πak/p) / sin²(πa/p)`
 
 The log-embedding matrix has entries
 
-  `log|φ_a(realCyclotomicUnit k)| = 2 log|sin(πak/p)| - 2 log|sin(πa/p)|`
+ `log|φ_a(realCyclotomicUnit k)| = 2 log|sin(πak/p)| - 2 log|sin(πa/p)|`
 
 Its determinant evaluates via character orthogonality + Dirichlet's
 class number formula derivation to a product of L-values.

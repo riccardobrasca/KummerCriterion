@@ -34,8 +34,8 @@ def RegOfFamilySqEqProdNontrivialQeSq
 perturbation of the shifted-convolution submatrix has determinant
 equal (up to sign) to the product of nontrivial eigenvalues:
 
-  `(det(sinnottMatrixA p K − sinnottMatrixB p K) : ℂ)² =
-      (∏_{ξ ≠ 1} quotientEigenvalue p ξ)²`.
+ `(det(sinnottMatrixA p K − sinnottMatrixB p K): ℂ)² =
+ (∏_{ξ ≠ 1} quotientEigenvalue p ξ)²`.
 
 This is the **substantive content** of Sinnott's identity at the
 algebraic-side determinant level. The proof is via the rank-1
@@ -93,7 +93,7 @@ theorem matrixRestrictionToSinnott_of_regOfFamily_sq_eq_prod_nontrivial_qe_sq
 
 /-- **`KummerDirichletDeterminant` from the eigenvalue-product hypothesis**:
 final synthesis chain. Assuming the substantive eigenvalue-product identity
-`RegOfFamilySqEqProdNontrivialQeSq`, the entire PF-1 chain
+`RegOfFamilySqEqProdNontrivialQeSq`, the entire chain
 `MatrixRestrictionToSinnott → FrobeniusDetIdentity → KummerDirichletDeterminant`
 discharges to `KummerDirichletDeterminant` (= `regOfFamily = hPlus · regulator(K⁺)`). -/
 theorem KummerDirichletDeterminant_of_regOfFamilySqEqProdNontrivialQeSq
@@ -110,7 +110,7 @@ theorem KummerDirichletDeterminant_of_regOfFamilySqEqProdNontrivialQeSq
 /-- **Existence of an embedding-index for a K-place** (cyclotomic K).
 
 For any infinite place `w` of `K = ℚ(ζ_p)`, the underlying ring hom
-`w.embedding : K →+* ℂ` sends `ζ_K` to a primitive `p`-th root of unity
+`w.embedding: K →+* ℂ` sends `ζ_K` to a primitive `p`-th root of unity
 in ℂ, which by `Complex.isPrimitiveRoot_iff` equals `stdAddChar(a)`
 (`= exp(2πi · a/p)`) for some unique `a` with `a < p` and `a.Coprime p`.
 As an element of `(ZMod p)ˣ` (via `ZMod.unitOfCoprime`), this is the
@@ -151,9 +151,9 @@ theorem exists_embedding_index
   -- Convert to (ZMod p)ˣ via ZMod.unitOfCoprime, then express stdAddChar via stdAddChar_coe.
   refine ⟨ZMod.unitOfCoprime a ha_cop, ?_⟩
   rw [← ha_eq]
-  -- Goal: exp(2πI · (a/p)) = stdAddChar (↑(unitOfCoprime a ha_cop) : ZMod p)
+  -- Goal: exp(2πI · (a/p)) = stdAddChar (↑(unitOfCoprime a ha_cop): ZMod p)
   rw [ZMod.coe_unitOfCoprime]
-  -- Now: exp(2πI · (a/p)) = stdAddChar (a : ZMod p).
+  -- Now: exp(2πI · (a/p)) = stdAddChar (a: ZMod p).
   have h_coe : ((a : ZMod p) : ZMod p) = ((a : ℤ) : ZMod p) := by push_cast; rfl
   rw [show ((a : ℕ) : ZMod p) = ((a : ℤ) : ZMod p) from by push_cast; rfl]
   rw [ZMod.stdAddChar_coe (a : ℤ)]
@@ -163,7 +163,7 @@ theorem exists_embedding_index
 /-- **Embedding-index function** of a K-place (cyclotomic K).
 
 Concrete extraction (via `Classical.choose` on `exists_embedding_index`)
-of the unique `a : (ZMod p)ˣ` such that `w.embedding ζ_K = stdAddChar(a)`. -/
+of the unique `a: (ZMod p)ˣ` such that `w.embedding ζ_K = stdAddChar(a)`. -/
 noncomputable def embeddingIndex
     (K : Type) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
     (w : NumberField.InfinitePlace K) : (ZMod p)ˣ :=
@@ -265,7 +265,7 @@ theorem sinnottMatrixB_apply_eq_log_stdAddChar
         ((embeddingIndex (p := p) K w_K : ZMod p))‖ from by
     rw [← neg_sub, norm_neg]]
 
-/-- **K⁺-place embedding-index-quotient**: for `v : InfinitePlace K⁺`, the
+/-- **K⁺-place embedding-index-quotient**: for `v: InfinitePlace K⁺`, the
 embedding-index of the corresponding K-place `(equivInfinitePlace K).symm v`,
 viewed mod `⟨-1⟩` in `CyclotomicEvenDelta p`.
 
@@ -283,7 +283,7 @@ noncomputable def kplusEmbeddingIndexQuotient
       ((NumberField.IsCMField.equivInfinitePlace K).symm v))
 
 /-- **Family-index as a `ZMod p`-unit**: for any cyclotomic-unit family index
-`i : Fin ((p-3)/2)`, the natural number `idx_i + 2` (the actual cyclotomic-unit
+`i: Fin ((p-3)/2)`, the natural number `idx_i + 2` (the actual cyclotomic-unit
 exponent) gives a non-zero element of `ZMod p`, hence a unit.
 
 Using `ZMod.unitOfCoprime` after proving coprimality. -/
@@ -316,7 +316,7 @@ noncomputable def familyIndexAsUnit
   omega
 
 /-- **`familyIndexAsUnit` value in `ZMod p`**: the underlying `ZMod p` element
-of `familyIndexAsUnit p K hp_odd hp_three i` is `(idx_i + 2 : ZMod p)`. -/
+of `familyIndexAsUnit p K hp_odd hp_three i` is `(idx_i + 2: ZMod p)`. -/
 theorem familyIndexAsUnit_val
     (K : Type) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
     [NumberField.IsCMField K] (hp_odd : p ≠ 2) (hp_three : 3 ≤ p)
@@ -337,11 +337,11 @@ theorem familyIndexAsUnit_val
 /-- **Matrix-level identification of `sinnottMatrixA`** with a convolution-matrix
 value: under the embedding-index and `familyIndexAsUnit` parameterisations,
 
-  `sinnottMatrixA p K [i, w]
-    = convolutionLogNormDescended p (q(embeddingIndex K w_K · familyIndexAsUnit i))`
+ `sinnottMatrixA p K [i, w]
+ = convolutionLogNormDescended p (q(embeddingIndex K w_K · familyIndexAsUnit i))`
 
-where `q : (ZMod p)ˣ → CyclotomicEvenDelta p` is the quotient, and the
-multiplication is in `(ZMod p)ˣ`. This is the per-entry bridge from the
+where `q: (ZMod p)ˣ → CyclotomicEvenDelta p` is the quotient, and the
+multiplication is in `(ZMod p)ˣ`. This is the per-entry bridge
 Sinnott log-evaluation to the convolution descent. -/
 theorem sinnottMatrixA_apply_eq_convolutionLogNormDescended
     (K : Type) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
@@ -370,10 +370,10 @@ theorem sinnottMatrixA_apply_eq_convolutionLogNormDescended
 under the canonical bijections, each entry of `sinnottMatrixA` is a single
 value of the quotient convolution matrix:
 
-  `(sinnottMatrixA p K [i, w] : ℂ)
-    = convolutionMatrixLogNormEven p
-        (kplusEmbeddingIndexQuotient w.val)
-        (q(familyIndexAsUnit i))`.
+ `(sinnottMatrixA p K [i, w]: ℂ)
+ = convolutionMatrixLogNormEven p
+ (kplusEmbeddingIndexQuotient w.val)
+ (q(familyIndexAsUnit i))`.
 
 This realises the matrix-level identification of the Sinnott A-matrix with
 a "shifted" (canonically-bijected) submatrix of `convolutionMatrixLogNormEven p`.
@@ -402,8 +402,8 @@ theorem sinnottMatrixA_apply_eq_convolutionMatrixLogNormEven
 
 /-- **Sinnott B-matrix entry as a `convolutionMatrixLogNormEven` value at index `1`**:
 
-  `(sinnottMatrixB p K [i, w] : ℂ)
-    = convolutionMatrixLogNormEven p (kplusEmbeddingIndexQuotient w.val) 1`.
+ `(sinnottMatrixB p K [i, w]: ℂ)
+ = convolutionMatrixLogNormEven p (kplusEmbeddingIndexQuotient w.val) 1`.
 
 The B-matrix entry corresponds to the value of `M_even` at column 1 (the
 "trivial" quotient element). -/
@@ -428,7 +428,7 @@ theorem sinnottMatrixB_apply_eq_convolutionMatrixLogNormEven
 /-- **Sinnott (A - B)-matrix entries as differences of convolution-matrix
 entries**: the per-entry identification
 `(A - B)[i, w] = M_even[k(v), q(famIdx i)] - M_even[k(v), 1]`
-where `k(v) := kplusEmbeddingIndexQuotient v`.
+where `k(v):= kplusEmbeddingIndexQuotient v`.
 
 This is the entry-level form of "(A - B) is the column-1-subtracted submatrix
 of M_even" — the structural fact the matrix-restriction step relies on. -/
@@ -454,7 +454,7 @@ theorem sinnottMatrix_A_sub_B_apply_eq_sub
     sinnottMatrixB_apply_eq_convolutionMatrixLogNormEven p K i w]
 
 /-- **Embedding-index uniquely determines the K-place embedding** (cyclotomic K):
-two K-places `w₁ w₂ : InfinitePlace K` have the same embedding-index iff their
+two K-places `w₁ w₂: InfinitePlace K` have the same embedding-index iff their
 underlying embeddings agree.
 
 For K = ℚ(ζ_p), an embedding K →+* ℂ is determined by its value on the generator
@@ -479,7 +479,7 @@ theorem embeddingIndex_eq_iff_embedding_eq
         w₂.embedding (((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K)) := by
       rw [embeddingIndex_spec, embeddingIndex_spec, h_eq]
     -- Convert to AlgHom form using uniqueness ℚ →+* ℂ.
-    -- w.embedding : K →+* ℂ. Lift to K →ₐ[ℚ] ℂ.
+    -- w.embedding: K →+* ℂ. Lift to K →ₐ[ℚ] ℂ.
     -- For NumberField K, K is a ℚ-algebra, ℂ is a ℚ-algebra, and any ring hom is ℚ-algebra.
     have h_pb : IsPrimitiveRoot
         (((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K)) p := by
@@ -535,7 +535,7 @@ theorem embeddingIndex_injective
   rw [← NumberField.InfinitePlace.mk_embedding w₁,
       ← NumberField.InfinitePlace.mk_embedding w₂, h_emb]
 
-/-- **Negation of `stdAddChar`-argument equals `Complex.conj`**: for any `a : ZMod p`
+/-- **Negation of `stdAddChar`-argument equals `Complex.conj`**: for any `a: ZMod p`
 (`p ≠ 0`), `stdAddChar(-a) = conj(stdAddChar(a))`.
 
 `stdAddChar(a)` lies on the unit circle, so `stdAddChar(a)⁻¹ = conj(stdAddChar(a))`.
@@ -630,7 +630,7 @@ theorem embeddingIndex_quotient_eq_implies_place_eq
   rw [QuotientGroup.eq] at h_qg
   rw [KummerCriterion.CyclotomicEvenDeltaSubgroup, Subgroup.mem_zpowers_iff] at h_qg
   obtain ⟨k, hk⟩ := h_qg
-  -- hk : (-1)^k = (embIdx w₁)⁻¹ * embIdx w₂. So embIdx w₂ = embIdx w₁ * (-1)^k.
+  -- hk: (-1)^k = (embIdx w₁)⁻¹ * embIdx w₂. So embIdx w₂ = embIdx w₁ * (-1)^k.
   have h_sq : ((-1 : KummerCriterion.CyclotomicUnitDelta p)) ^ (2 : ℕ) = 1 := by
     rw [sq, neg_one_mul, neg_neg]
   rw [zpow_eq_zpow_emod' k h_sq] at hk
@@ -708,7 +708,7 @@ noncomputable def KplusInfinitePlaceEquivCyclotomicEvenDelta_canonical
     (kplusEmbeddingIndexQuotient_bijective (p := p) K hp_two)
 
 /-- **Family-index value as ZMod p is in `[2, (p-1)/2]`**: structural fact
-that `(familyIndexAsUnit i : ZMod p).val` lies in `[2, (p-1)/2]`. -/
+that `(familyIndexAsUnit i: ZMod p).val` lies in `[2, (p-1)/2]`. -/
 theorem familyIndexAsUnit_val_in_range
     (K : Type) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
     [NumberField.IsCMField K] (hp_odd : p ≠ 2) (hp_three : 3 ≤ p)
@@ -735,7 +735,7 @@ theorem familyIndexAsUnit_val_in_range
       j.val + 2 := by
     have h_val_spec :=
       familyIndexAsUnit_val (p := p) (K := K) hp_odd hp_three i
-    -- h_val_spec : ((familyIndexAsUnit i : ZMod p)) = ((j.val + 2 : ℕ) : ZMod p)
+    -- h_val_spec: ((familyIndexAsUnit i: ZMod p)) = ((j.val + 2: ℕ): ZMod p)
     rw [h_val_spec, ZMod.val_natCast, Nat.mod_eq_of_lt h_lt_p]
   refine ⟨?_, ?_⟩
   · rw [h_val_eq]; omega

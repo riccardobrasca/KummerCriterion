@@ -1,6 +1,6 @@
 import KummerCriterion.LValueAtOne.Even
 import KummerCriterion.GaussSum.Basic
-import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge.Part1
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge
 import Mathlib.NumberTheory.LSeries.Nonvanishing
 import KummerCriterion.CyclotomicUnits.DeletedFourier
 
@@ -22,7 +22,7 @@ namespace CyclotomicUnits
 variable (p : ℕ) [Fact p.Prime]
 
 /-- A noncanonical equivalence between nontrivial characters of the even
-quotient and non-identity elements of the even quotient.  It is used only for
+quotient and non-identity elements of the even quotient. It is used only
 determinant reindexing; the determinant statements below are independent of
 which equivalence is chosen. -/
 noncomputable def cyclotomicEvenNontrivCharEquivNonidentity (hp_two : 2 < p) :

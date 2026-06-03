@@ -7,12 +7,12 @@ public import Mathlib.LinearAlgebra.Vandermonde
 # The finite-field Vandermonde determinant for Kummer's logarithmic matrix
 
 This file proves the pure finite-field determinant input for the
-cyclotomic-unit route.  In the eventual `p`-adic calculation, the
-Teichmüller lift of `a` reduces modulo `p` to `(a : ZMod p)`, so the
+cyclotomic-unit route. In the eventual `p`-adic calculation, the
+Teichmüller lift of `a` reduces modulo `p` to `(a: ZMod p)`, so the
 matrix proved non-singular here is the mod-`p` reduction of
 
 ```text
-omega(a)^(2*j) - 1,     1 <= j <= (p - 3) / 2,  2 <= a <= (p - 1) / 2.
+omega(a)^(2*j) - 1, 1 <= j <= (p - 3) / 2, 2 <= a <= (p - 1) / 2.
 ```
 -/
 
@@ -33,7 +33,7 @@ variable (p : ℕ) [Fact p.Prime]
 abbrev kummerLogRank : ℕ :=
   (p - 3) / 2
 
-/-- The column index `a = 2, ..., (p - 1) / 2`. -/
+/-- The column index `a = 2,..., (p - 1) / 2`. -/
 abbrev kummerLogColumnIndex (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) : ℕ :=
   CPlusGeneratorIndex (p := p) hp_three a
 
@@ -152,7 +152,7 @@ theorem teichmullerEvenNode_ne_one (hp_three : 3 ≤ p) (a : Fin (kummerLogRank 
         omega)
       hAp1
 
-/-- The polynomial `1 + X + ... + X^j`. -/
+/-- The polynomial `1 + X +... + X^j`. -/
 def geomPolynomial (j : Fin (kummerLogRank p)) : (ZMod p)[X] :=
   ∑ i ∈ Finset.range ((j : ℕ) + 1), (X : (ZMod p)[X]) ^ i
 

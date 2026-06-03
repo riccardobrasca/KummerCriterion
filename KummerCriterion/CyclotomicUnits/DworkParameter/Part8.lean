@@ -231,7 +231,7 @@ theorem dworkCompleteConjugateLambda_evalₐ_one :
       (p := p) (K := K))
 
 /-- The inverse-series parameter obtained by evaluating `G_p` at the conjugate
-lambda coordinate `zeta_p⁻¹ - 1`.  The remaining CU-09d bridge is to identify
+lambda coordinate `zeta_p⁻¹ - 1`. The remaining bridge is to identify
 this element with the image of `dworkParameter` under an honest completed
 complex-conjugation automorphism. -/
 def dworkConjugateParameter : DworkCompleteIntegerRing p K :=

@@ -6,7 +6,7 @@ public import KummerCriterion.CyclotomicUnits.DworkParameter.Part17
 # Full cyclotomic action on the Dwork completion
 
 This file extends the complex-conjugation lift from `Part8Conjugation` to the
-full cyclotomic Galois group.  The trace/augmentation argument for the exact
+full cyclotomic Galois group. The trace/augmentation argument for the exact
 Kummer-log constant term needs this genuine completion automorphism rather than
 only the involution at `-1`.
 -/

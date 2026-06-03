@@ -19,7 +19,7 @@ public import Mathlib.NumberTheory.MulChar.Basic
 public import Mathlib.GroupTheory.OrderOfElement
 public import Mathlib.NumberTheory.GaussSum
 public import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.Stickelberger.Part1
+public import KummerCriterion.Reflection.ResidueSymbol.Stickelberger
 public import Mathlib.NumberTheory.JacobiSum.Basic
 public import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
 public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
@@ -45,8 +45,8 @@ public import Mathlib.RingTheory.Ideal.GoingUp
 public import Mathlib.Algebra.Group.Prod
 public import Mathlib.Data.ZMod.Units
 public import KummerCriterion.TotallyRealSubfield.Conjugation
-public import KummerCriterion.UnitQuotient.FreeLatticeComparison.ConjugationTrace
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.PrincipalUnitFactor.Part2.Part3
+public import KummerCriterion.UnitQuotient.ConjugationTrace
+public import KummerCriterion.Reflection.ResidueSymbol.PrincipalUnitFactor
 
 /-!
 # Trace source for the Kummer logarithm columns

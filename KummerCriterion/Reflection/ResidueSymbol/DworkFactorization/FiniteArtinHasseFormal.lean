@@ -1,9 +1,9 @@
 module
 
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.DworkFactorization.Basic.Part1
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.ArtinHasse.Part1
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.ArtinHasse.Part2
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.Stickelberger.Part1
+public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.Basic
+public import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part1
+public import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part2
+public import KummerCriterion.Reflection.ResidueSymbol.Stickelberger
 public import Mathlib.FieldTheory.Finite.Basic
 public import Mathlib.GroupTheory.SpecificGroups.Cyclic
 public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
@@ -18,8 +18,8 @@ public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
 public import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
 public import Mathlib.RingTheory.Localization.Basic
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork.Part1
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork.Part2
+public import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part1
+public import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part2
 public import Mathlib.RingTheory.PowerSeries.Substitution
 public import Mathlib.RingTheory.PowerSeries.Basic
 public import Mathlib.RingTheory.PowerSeries.Trunc
@@ -47,9 +47,9 @@ public import Mathlib.RingTheory.WittVector.TeichmullerSeries
 public import Mathlib.Algebra.CharP.Lemmas
 public import Mathlib.Data.Fintype.Fin
 public import Mathlib.RingTheory.Nilpotent.Basic
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.DworkFactorization.FiniteLogBounds
+public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogBounds
 public import Mathlib.RingTheory.DedekindDomain.AdicValuation
-public import KummerCriterion.Reflection.ResidueSymbol.Furtwaengler.DworkFactorization.FiniteLogFormal
+public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogFormal
 
 /-!
 # Formal Artin-Hasse logarithm identity

@@ -150,7 +150,7 @@ theorem hPlus_dvd_h [IsCMField K] : h⁺ ∣ h := by
   exact Subgroup.card_dvd_of_injective (classGroupMap K)
     (classGroupMap_injective p hp_odd K)
 
-/-- The *relative class number* `h⁻ := h / h⁺`, written locally as `h⁻`. -/
+/-- The *relative class number* `h⁻:= h / h⁺`, written locally as `h⁻`. -/
 noncomputable def hMinus [IsCMField K] : ℕ := h / h⁺
 
 local notation3 "h⁻" => KummerCriterion.hMinus K

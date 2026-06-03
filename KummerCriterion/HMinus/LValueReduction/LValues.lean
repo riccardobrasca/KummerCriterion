@@ -97,8 +97,8 @@ lemma card_oddCharacters (hp_odd' : p ≠ 2) :
   rw [hhalf]
   simpa [O, oddCharacters] using hcard_odd
 
-/-- **T023d2**: For an odd Dirichlet character modulo a prime `p`, the Gauss
-sum contribution from the inverse pair `(χ, χ⁻¹)` is `-(p : ℂ)`. -/
+/-- For an odd Dirichlet character modulo a prime `p`, the Gauss
+sum contribution from the inverse pair `(χ, χ⁻¹)` is `-(p: ℂ)`. -/
 theorem odd_gaussSum_mul_gaussSum_inv_stdAddChar
     {χ : DirichletCharacter ℂ p} (hχ_odd : χ.Odd) :
     gaussSum χ (ZMod.stdAddChar (N := p)) *
@@ -114,7 +114,7 @@ theorem odd_gaussSum_mul_gaussSum_inv_stdAddChar
   rw [hχ_odd]
   simp
 
-/-- **T023d3**: An odd self-inverse Dirichlet character modulo a prime `p` is
+/-- An odd self-inverse Dirichlet character modulo a prime `p` is
 the quadratic character. -/
 theorem odd_selfInverse_character_eq_quadratic
     (hp_odd' : p ≠ 2) {χ : DirichletCharacter ℂ p}
@@ -127,14 +127,14 @@ theorem odd_selfInverse_character_eq_quadratic
       rw [MulChar.one_apply (isUnit_one.neg)])
   exact nontrivial_selfInverse_character_eq_quadratic (p := p) hp_odd' hχ_ne_one hχself
 
-/-- **T023d3**: In the `p ≡ 3 [ZMOD 4]` case, the quadratic character is odd. -/
+/-- In the `p ≡ 3 [ZMOD 4]` case, the quadratic character is odd. -/
 theorem quadraticCharComplex_odd_of_mod_four_eq_three_lvalue
     (hp_odd' : p ≠ 2) (hp₄ : p % 4 = 3) :
     (quadraticCharComplex p).Odd := by
   simpa [DirichletCharacter.Odd] using
     quadraticCharComplex_eval_neg_one_of_mod_four_eq_three (p := p) hp_odd' hp₄
 
-/-- **T023d3**: If an odd self-inverse character exists modulo `p`, then
+/-- If an odd self-inverse character exists modulo `p`, then
 necessarily `p ≡ 3 [ZMOD 4]`. -/
 theorem odd_selfInverse_character_mod_four_eq_three
     (hp_odd' : p ≠ 2) {χ : DirichletCharacter ℂ p}
@@ -155,7 +155,7 @@ theorem odd_selfInverse_character_mod_four_eq_three
   have hp_mod4_lt : p % 4 < 4 := Nat.mod_lt _ (by decide)
   omega
 
-/-- **T023d3**: In the `p ≡ 1 [ZMOD 4]` case, no odd Dirichlet character is
+/-- In the `p ≡ 1 [ZMOD 4]` case, no odd Dirichlet character is
 self-inverse. -/
 theorem odd_character_ne_inv_of_mod_four_eq_one
     (hp_odd' : p ≠ 2) (hp₄ : p % 4 = 1) {χ : DirichletCharacter ℂ p}
@@ -166,7 +166,7 @@ theorem odd_character_ne_inv_of_mod_four_eq_one
   omega
 
 /-- Factor the universal odd-side scalar
-`((((Real.pi : ℝ) : ℂ) * Complex.I) / p)` out of the weighted Gauss product
+`((((Real.pi: ℝ): ℂ) * Complex.I) / p)` out of the weighted Gauss product
 and rewrite it as a single power. -/
 theorem odd_weightedGaussProduct_eq_scalar_pow_mul (hp_odd' : p ≠ 2) :
     Finset.prod (oddCharacters (p := p)) (fun χ =>

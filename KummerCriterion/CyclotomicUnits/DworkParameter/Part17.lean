@@ -9,7 +9,7 @@ noncomputable section
 /-!
 # Scaled Dwork parameter, exact Artin--Hasse value
 
-This file finishes CU-09g3b: the principal-unit logarithm-kernel uniqueness
+This file finishes the principal-unit logarithm-kernel uniqueness
 step identifying the completed Artin--Hasse value at a Teichmuller multiple of
 the Dwork parameter with the corresponding power of the cyclotomic root.
 -/
