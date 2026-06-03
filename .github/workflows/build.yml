@@ -44,7 +44,6 @@ jobs:
         with:
           use-mathlib-cache: true
           use-github-cache: false
-          build-args: "BernoulliRegular"
 
       - name: Compile blueprint and homepage
         uses: dwrensha/docgen-action@a3f8189646977363717917b605e6de25f9704656
