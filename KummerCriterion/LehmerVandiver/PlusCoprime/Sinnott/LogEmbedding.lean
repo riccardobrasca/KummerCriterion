@@ -1,8 +1,9 @@
 module
 
-public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
-public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.PollaczekFamilyDescent
-public import Mathlib.NumberTheory.NumberField.Units.DirichletTheorem
+public import KummerCriterion.HMinus.ClassNumberFormula
+public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.IndexFormula
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.PollaczekFamilyDescent
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # Logarithmic embedding of cyclotomic-unit family elements

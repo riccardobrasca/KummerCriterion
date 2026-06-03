@@ -1,9 +1,7 @@
 module
 
-public import Mathlib.LinearAlgebra.Basis.Defs
-public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
 public import KummerCriterion.GaussSum.SignInvariant.Operator
+import KummerCriterion.GaussSum.SignInvariant.Trace
 
 /-!
 # Determinant-ready block decomposition for quadratic Gauss sums

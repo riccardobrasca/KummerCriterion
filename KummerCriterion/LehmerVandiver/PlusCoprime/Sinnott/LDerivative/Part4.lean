@@ -1,6 +1,10 @@
 module
 
 public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part3
+public import KummerCriterion.UnitQuotient.FreeCharacterProfile
+import KummerCriterion.HMinus.KplusLocalCharacters
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part2
+import KummerCriterion.UnitQuotient.FreeCharacterProfile
 
 @[expose] public section
 

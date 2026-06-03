@@ -1,6 +1,13 @@
 module
 
 public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part1
+public import KummerCriterion.HMinus.LValueReduction.Factors
+public import KummerCriterion.LValueAtOne.Defs
+public import KummerCriterion.ZetaFactorisation.Basic
+import KummerCriterion.HMinus.KplusLocalCharacters
+import KummerCriterion.HMinus.LValueReduction.LValues
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.Determinant
+import Mathlib.RingTheory.RootsOfUnity.Lemmas
 
 @[expose] public section
 

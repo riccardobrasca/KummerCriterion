@@ -1,6 +1,26 @@
 module
 
 public import KummerCriterion.CyclotomicUnits.KummerLogNormalization.Part1
+import KummerCriterion.CyclotomicUnits.DworkParameter.Part18
+import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part2
+import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.Basic
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.NormNum.BigOperators
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFactorial
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 
 @[expose] public section
 

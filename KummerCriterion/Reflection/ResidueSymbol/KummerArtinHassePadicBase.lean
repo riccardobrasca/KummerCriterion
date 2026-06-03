@@ -1,7 +1,7 @@
 module
 
-public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseValuationLocalModel
-public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
+public import KummerCriterion.TotallyRealSubfield.ZetaPrime
+import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
 
 /-!
 # The rational `p`-adic base place for the lambda-local correction

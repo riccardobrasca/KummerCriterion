@@ -1,18 +1,9 @@
 module
 
-public import Mathlib.NumberTheory.Bernoulli
-public import KummerCriterion.KummerCongruence.VonStaudtClausen
-public import KummerCriterion.KummerCongruence.Voronoi
-public import KummerCriterion.KummerCongruence.Kummer
-public import KummerCriterion.KummerCongruence.Bridge
-public import KummerCriterion.HMinus.LValueReduction.Factors
-public import KummerCriterion.HMinus.LValueReduction.LValues
-public import KummerCriterion.HMinus.LValueReduction.Assembly
-public import KummerCriterion.HMinus.LValueReduction.GaussGoal
-public import KummerCriterion.HMinus.LValueReduction.GaussPairing
-public import KummerCriterion.HMinus.LValueReduction.GaussProduct
-public import KummerCriterion.HMinus.LValueReduction.Final
-public import KummerCriterion.HMinus.LValueReduction.Teichmuller
+public import KummerCriterion.KummerCongruence.BernoulliGeneralized
+public import KummerCriterion.TotallyRealSubfield.ClassGroup
+import KummerCriterion.HMinus.LValueReduction.Teichmuller
+import KummerCriterion.KummerCongruence.Bridge
 
 /-!
 # `h⁻` mod `p` corollaries

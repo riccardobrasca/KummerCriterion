@@ -1,6 +1,9 @@
 module
 
-public import KummerCriterion.HMinus.HMinusCriterion
+public import KummerCriterion.TotallyRealSubfield.ClassGroup
+public import Mathlib.NumberTheory.Bernoulli
+import KummerCriterion.HMinus.HMinusCriterion
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # Minus class-number criterion for the cyclotomic-unit route

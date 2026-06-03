@@ -1,6 +1,10 @@
 module
 
-public import KummerCriterion.KummerCongruence.VonStaudtClausen
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+import KummerCriterion.KummerCongruence.VonStaudtClausen
+import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+import Mathlib.CategoryTheory.Category.Init
 
 /-!
 # Kummer congruences — Voronoi's congruence (Cohen Prop 9.5.20)

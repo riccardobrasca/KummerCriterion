@@ -1,7 +1,10 @@
 module
 
-public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LogEmbedding
-public import Mathlib.Analysis.SpecialFunctions.Complex.Circle
+public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
+import FltRegular.NumberTheory.Cyclotomic.CyclRat
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Factorial.DoubleFactorial
 
 /-!
 # LV-SIN-B: Vandermonde-style determinant evaluation

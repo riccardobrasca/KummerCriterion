@@ -1,6 +1,8 @@
 module
 
-public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part7
+public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part5
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part7
+import KummerCriterion.UnitQuotient.FreeCharacterProfile
 
 /-!
 # Bridge from substantive matrix content to RegOf-squared form

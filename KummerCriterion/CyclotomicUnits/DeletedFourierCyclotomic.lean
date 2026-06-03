@@ -1,10 +1,10 @@
 module
 
-public import KummerCriterion.LValueAtOne.Even
-public import KummerCriterion.GaussSum.Basic
-public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge
-public import Mathlib.NumberTheory.LSeries.Nonvanishing
 public import KummerCriterion.CyclotomicUnits.DeletedFourier
+public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part6
+public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part6
 
 /-!
 # Deleted Fourier determinant on the even cyclotomic quotient

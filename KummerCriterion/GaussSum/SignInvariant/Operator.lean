@@ -1,6 +1,7 @@
 module
 
-public import KummerCriterion.GaussSum.SignInvariant.Trace
+public import Mathlib.Analysis.Fourier.ZMod
+import KummerCriterion.GaussSum.SignInvariant.Trace
 
 /-!
 # Finite-Fourier sign invariants for quadratic Gauss sums

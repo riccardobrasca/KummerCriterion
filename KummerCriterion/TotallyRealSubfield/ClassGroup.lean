@@ -1,6 +1,12 @@
 module
 
-public import KummerCriterion.TotallyRealSubfield.FixedAssociate
+public import KummerCriterion.TotallyRealSubfield.Basic
+public import KummerCriterion.TotallyRealSubfield.ClassGroupExtension
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
+import KummerCriterion.TotallyRealSubfield.Conjugation
+import KummerCriterion.TotallyRealSubfield.FixedAssociate
+import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
+import Mathlib.RingTheory.Flat.TorsionFree
 
 /-!
 # Class-group descent for the totally real subfield

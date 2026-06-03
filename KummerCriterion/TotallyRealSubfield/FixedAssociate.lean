@@ -1,6 +1,7 @@
 module
 
-public import KummerCriterion.TotallyRealSubfield.Conjugation
+public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
+import KummerCriterion.TotallyRealSubfield.Conjugation
 
 /-!
 # Fixed-associate descent

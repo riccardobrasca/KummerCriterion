@@ -1,9 +1,30 @@
 module
 
-public import KummerCriterion.CyclotomicUnits.ClassNumber
-public import KummerCriterion.CyclotomicUnits.KummerLogDeterminant
-public import KummerCriterion.CyclotomicUnits.LogDomain
-public import KummerCriterion.CyclotomicUnits.SaturationIndex
+public import KummerCriterion.CyclotomicUnits.Subgroup
+public import KummerCriterion.TotallyRealSubfield.ClassGroup
+public import Mathlib.NumberTheory.Bernoulli
+import KummerCriterion.CyclotomicUnits.ClassNumber
+import KummerCriterion.CyclotomicUnits.HMinusCriterion
+import KummerCriterion.CyclotomicUnits.KummerLogDeterminant
+import KummerCriterion.CyclotomicUnits.LogDomain
+import KummerCriterion.CyclotomicUnits.NormalizedIndex
+import KummerCriterion.CyclotomicUnits.SaturationIndex
+import KummerCriterion.HMinus.HMinusCriterion
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Tactic.NormNum.BigOperators
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFactorial
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
 
 /-!
 # Cyclotomic-unit route to weak reflection

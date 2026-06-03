@@ -1,6 +1,5 @@
 module
 
-public import KummerCriterion.ZetaFactorisation.Basic
 public import KummerCriterion.ZetaFactorisation.NumberFieldEulerProduct
 
 /-!

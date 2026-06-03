@@ -1,7 +1,6 @@
 module
 
 public import KummerCriterion.TotallyRealSubfield.ZetaPrime
-public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 
 /-!
 # Valuation-completion model for the lambda-local Kummer--Artin--Hasse trace

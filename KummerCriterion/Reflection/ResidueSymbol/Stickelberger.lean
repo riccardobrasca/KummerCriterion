@@ -1,16 +1,11 @@
 module
 
-public import Mathlib.FieldTheory.Finite.Basic
-public import Mathlib.GroupTheory.SpecificGroups.Cyclic
-public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-public import Mathlib.NumberTheory.MulChar.Basic
-public import Mathlib.GroupTheory.OrderOfElement
-public import Mathlib.NumberTheory.GaussSum
-public import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
-public import Mathlib.NumberTheory.JacobiSum.Basic
-public import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
-public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
+public import Mathlib.RingTheory.Ideal.Defs
+import Mathlib.CategoryTheory.Category.Init
+import Mathlib.Combinatorics.Matroid.Init
+import Mathlib.MeasureTheory.Integral.Bochner.Basic
+import Mathlib.NumberTheory.ArithmeticFunction.Misc
+import Mathlib.Tactic.Positivity.Finset
 
 /-!
 # Stickelberger-style prime factorization of residue Gauss sums
@@ -27,7 +22,6 @@ namespace KummerCriterion
 
 namespace Furtwaengler
 
-variable {R : Type*} [CommRing R] [Fintype R]
 variable {R' : Type*} [CommRing R']
 
 /-- If `x - 1` lies in an ideal, then so does `x^n - 1`. -/

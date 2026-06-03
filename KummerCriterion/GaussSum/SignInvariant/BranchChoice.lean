@@ -1,8 +1,10 @@
 module
 
-public import Mathlib.NumberTheory.DirichletCharacter.Orthogonality
 public import KummerCriterion.GaussSum.SignInvariant.BlockDeterminant
-public import KummerCriterion.GaussSum.SignInvariant.VandermondeEndpoint
+import KummerCriterion.GaussSum.SignInvariant.VandermondeEndpoint
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Factorial.DoubleFactorial
 
 /-!
 # Branch choice for the quadratic Gauss sum

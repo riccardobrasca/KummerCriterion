@@ -2,6 +2,7 @@ module
 
 public import KummerCriterion.HMinus.KplusPrimeArithmetic
 public import KummerCriterion.ZetaFactorisation.NumberFieldEulerProduct
+import KummerCriterion.ZetaFactorisation.EulerProduct
 
 /-!
 # `K⁺` Euler product and residue bridge

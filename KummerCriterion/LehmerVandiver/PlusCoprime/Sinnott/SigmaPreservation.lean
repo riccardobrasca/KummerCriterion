@@ -1,15 +1,8 @@
 module
 
-public import Mathlib.Logic.Basic
-public import Mathlib.Data.Nat.Prime.Basic
-public import Mathlib.Algebra.Field.Defs
-public import Mathlib.NumberTheory.NumberField.Basic
-public import Mathlib.NumberTheory.Cyclotomic.Basic
 public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part1
-import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
-import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3
-public import Mathlib.NumberTheory.NumberField.CMField
 import KummerCriterion.TotallyRealSubfield.ZetaPrime
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # σ-preservation of `cyclotomicUnitsSubgroup`

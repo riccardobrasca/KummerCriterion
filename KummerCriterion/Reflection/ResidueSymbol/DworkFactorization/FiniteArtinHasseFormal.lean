@@ -1,55 +1,26 @@
 module
 
-public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.Basic
 public import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part1
-public import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part2
-public import KummerCriterion.Reflection.ResidueSymbol.Stickelberger
-public import Mathlib.FieldTheory.Finite.Basic
-public import Mathlib.GroupTheory.SpecificGroups.Cyclic
-public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-public import Mathlib.NumberTheory.MulChar.Basic
-public import Mathlib.GroupTheory.OrderOfElement
-public import Mathlib.NumberTheory.GaussSum
-public import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
-public import Mathlib.NumberTheory.JacobiSum.Basic
-public import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
-public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
-public import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
-public import Mathlib.RingTheory.Localization.Basic
-public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
-public import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part1
-public import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part2
-public import Mathlib.RingTheory.PowerSeries.Substitution
-public import Mathlib.RingTheory.PowerSeries.Basic
-public import Mathlib.RingTheory.PowerSeries.Trunc
-public import Mathlib.RingTheory.PowerSeries.Exp
-public import Mathlib.Data.Nat.Log
-public import Mathlib.NumberTheory.Padics.PadicVal.Basic
-public import Mathlib.Data.Nat.Digits.Defs
-public import Mathlib.Data.Nat.Digits.Lemmas
-public import Mathlib.FieldTheory.Finite.Trace
-public import Mathlib.Algebra.GroupWithZero.Units.Equiv
-public import Mathlib.Algebra.BigOperators.Ring.Finset
-public import Mathlib.Data.Nat.Choose.Multinomial
-public import Mathlib.Data.Nat.Prime.Factorial
-public import Mathlib.Algebra.BigOperators.Associated
-public import Mathlib.Data.Fintype.Units
-public import Mathlib.FieldTheory.Finite.GaloisField
-public import Mathlib.Algebra.Ring.Associated
-public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
-public import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
-public import Mathlib.NumberTheory.NumberField.Ideal.Basic
-public import Mathlib.Data.Nat.ModEq
-public import Mathlib.FieldTheory.Perfect
-public import Mathlib.RingTheory.WittVector.Frobenius
-public import Mathlib.RingTheory.WittVector.TeichmullerSeries
-public import Mathlib.Algebra.CharP.Lemmas
-public import Mathlib.Data.Fintype.Fin
-public import Mathlib.RingTheory.Nilpotent.Basic
-public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogBounds
-public import Mathlib.RingTheory.DedekindDomain.AdicValuation
-public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogFormal
+public import Mathlib.RingTheory.PowerSeries.Log
+import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogFormal
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.NormNum.BigOperators
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFactorial
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 
 /-!
 # Formal Artin-Hasse logarithm identity

@@ -1,7 +1,9 @@
 module
 
-public import KummerCriterion.HMinus.ClassNumberFormula
-public import KummerCriterion.HMinus.KplusEulerProduct
+public import KummerCriterion.TotallyRealSubfield.Basic
+public import Mathlib.NumberTheory.NumberField.DedekindZeta
+import KummerCriterion.HMinus.ClassNumberFormula
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # Class-number factors for `hMinus` reduction

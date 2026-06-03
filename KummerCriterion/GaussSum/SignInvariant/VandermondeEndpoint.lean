@@ -1,6 +1,8 @@
 module
 
-public import KummerCriterion.GaussSum.SignInvariant.VandermondeScalar
+public import KummerCriterion.GaussSum.SignInvariant.Vandermonde
+import KummerCriterion.GaussSum.SignInvariant.VandermondeScalar
+import KummerCriterion.LValueAtOne.ComplexBounds
 
 /-!
 # Final endpoint for the Vandermonde determinant route

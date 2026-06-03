@@ -1,6 +1,7 @@
 module
 
 public import KummerCriterion.LehmerVandiver.Primary
+import KummerCriterion.TotallyRealSubfield.ZetaPrime
 
 /-!
 # Complex conjugation preserves primarity

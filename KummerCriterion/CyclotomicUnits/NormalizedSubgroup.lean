@@ -5,6 +5,7 @@ public import KummerCriterion.CyclotomicUnits.Subgroup
 import KummerCriterion.CyclotomicUnits.IndexComparison
 public import Mathlib.GroupTheory.Rank
 import Mathlib.GroupTheory.Schreier
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # The normalized real cyclotomic-unit subgroup

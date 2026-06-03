@@ -1,20 +1,11 @@
 module
 
-public import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
-public import Mathlib.Analysis.Normed.Ring.InfiniteSum
 public import Mathlib.Data.Finite.Vector
-public import Mathlib.Data.Finsupp.Multiset
-public import Mathlib.Data.Sym.Card
 public import Mathlib.NumberTheory.DirichletCharacter.Orthogonality
-public import Mathlib.NumberTheory.EulerProduct.DirichletLSeries
 public import Mathlib.NumberTheory.LSeries.DirichletContinuation
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
-public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
-public import Mathlib.NumberTheory.NumberField.DedekindZeta
 public import Mathlib.NumberTheory.NumberField.Ideal.KummerDedekind
-public import Mathlib.NumberTheory.NumberField.Ideal.Asymptotics
-public import Mathlib.RingTheory.Polynomial.Cyclotomic.Expand
-public import Mathlib.RingTheory.Polynomial.Cyclotomic.Factorization
+import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
 
 /-!
 # Basic cyclotomic zeta-factorisation infrastructure

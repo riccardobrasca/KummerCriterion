@@ -1,10 +1,6 @@
 module
 
-public import KummerCriterion.TotallyRealSubfield.Basic
-public import KummerCriterion.TotallyRealSubfield.ZetaPrime
-public import KummerCriterion.TotallyRealSubfield.Conjugation
-public import KummerCriterion.TotallyRealSubfield.FixedAssociate
-public import KummerCriterion.TotallyRealSubfield.ClassGroup
+public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
 
 /-!
 # Primary elements of cyclotomic rings of integers

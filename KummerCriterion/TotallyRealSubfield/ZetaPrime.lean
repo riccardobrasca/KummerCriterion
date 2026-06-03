@@ -1,6 +1,9 @@
 module
 
-public import KummerCriterion.TotallyRealSubfield.Basic
+public import FltRegular.NumberTheory.Cyclotomic.CyclRat
+public import Mathlib.NumberTheory.NumberField.CMField
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
+import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
 
 /-!
 # `ζ_p - 1` prime arithmetic

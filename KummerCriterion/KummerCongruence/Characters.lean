@@ -2,11 +2,10 @@ module
 
 public import Mathlib.NumberTheory.Padics.RingHoms
 public import Mathlib.RingTheory.Teichmuller
-public import Mathlib.FieldTheory.Perfect
-public import Mathlib.FieldTheory.Finite.Basic
-public import Mathlib.Algebra.CharP.Algebra
-public import Mathlib.NumberTheory.DirichletCharacter.Orthogonality
-public import Mathlib.RingTheory.RootsOfUnity.EnoughRootsOfUnity
+public import Mathlib.NumberTheory.DirichletCharacter.Basic
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+import Mathlib.CategoryTheory.Category.Init
+import Mathlib.FieldTheory.Finite.Basic
 
 /-!
 # Characters of `Gal(ℚ(ζ_p)/ℚ)` - Teichmüller character

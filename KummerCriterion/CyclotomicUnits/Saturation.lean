@@ -1,8 +1,7 @@
 module
 
 public import KummerCriterion.CyclotomicUnits.Subgroup
-public import Mathlib.Algebra.Group.Subgroup.Finite
-public import Mathlib.Data.ZMod.Basic
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # Exact p-saturation for the real cyclotomic-unit subgroup

@@ -1,6 +1,9 @@
 module
 
-public import KummerCriterion.LValueAtOne.Defs
+public import Mathlib.NumberTheory.LSeries.HurwitzZetaOdd
+import Mathlib.CategoryTheory.Category.Init
+import Mathlib.Combinatorics.Matroid.Init
+import Mathlib.NumberTheory.ArithmeticFunction.Misc
 
 /-!
 # Trigonometric and Abel-summation lemmas for `LValueAtOne`

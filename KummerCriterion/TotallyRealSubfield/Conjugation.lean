@@ -1,7 +1,7 @@
 module
 
 public import KummerCriterion.TotallyRealSubfield.ZetaPrime
-import FltRegular.NumberTheory.Cyclotomic.MoreLemmas
+public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
 
 /-!
 # Conjugation and unit classification

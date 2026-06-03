@@ -1,6 +1,22 @@
 module
 
-public import KummerCriterion.CyclotomicUnits.KummerLogCoefficient.Evaluator
+public import KummerCriterion.CyclotomicUnits.Vandermonde
+public import KummerCriterion.UnitQuotient.Components
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Tactic.NormNum.BigOperators
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFactorial
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
 
 /-!
 # Formal-to-finite evaluator bridge for Kummer logarithm coefficients
@@ -18,13 +34,10 @@ noncomputable section
 
 open NumberField
 open NumberField.IsCMField
-open KummerCriterion.Reflection.Local
-open scoped BigOperators NumberField PowerSeries
+open scoped BigOperators NumberField
 
 namespace KummerCriterion
 namespace CyclotomicUnits
-
-open PadicLogSetup PadicLogSetup.DworkParameter
 
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]

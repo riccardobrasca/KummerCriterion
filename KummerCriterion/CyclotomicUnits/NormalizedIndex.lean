@@ -1,10 +1,11 @@
 module
 
 public import KummerCriterion.CyclotomicUnits.IndexFormula
-public import KummerCriterion.CyclotomicUnits.IndexDeterminant
 public import KummerCriterion.CyclotomicUnits.NormalizedSubgroup
-public import KummerCriterion.HMinus.ClassNumberFormula
-public import Mathlib.NumberTheory.NumberField.Cyclotomic.PID
+import KummerCriterion.CyclotomicUnits.IndexDeterminant
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge
+import KummerCriterion.TotallyRealSubfield.ClassGroup
+import Mathlib.NumberTheory.NumberField.Cyclotomic.PID
 
 /-!
 # Normalized cyclotomic-unit index theorem

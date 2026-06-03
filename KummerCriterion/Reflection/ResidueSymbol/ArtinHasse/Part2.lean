@@ -1,29 +1,11 @@
 module
 
-public import KummerCriterion.Reflection.ResidueSymbol.Stickelberger
-public import Mathlib.FieldTheory.Finite.Basic
-public import Mathlib.GroupTheory.SpecificGroups.Cyclic
-public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-public import Mathlib.NumberTheory.MulChar.Basic
-public import Mathlib.GroupTheory.OrderOfElement
-public import Mathlib.NumberTheory.GaussSum
-public import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
-public import Mathlib.NumberTheory.JacobiSum.Basic
-public import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
-public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
-public import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
-public import Mathlib.RingTheory.Localization.Basic
-public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
-public import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part1
-public import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part2
-public import Mathlib.RingTheory.PowerSeries.Substitution
-public import Mathlib.RingTheory.PowerSeries.Basic
-public import Mathlib.RingTheory.PowerSeries.Trunc
-public import Mathlib.RingTheory.PowerSeries.Exp
-public import Mathlib.Data.Nat.Log
-public import Mathlib.NumberTheory.Padics.PadicVal.Basic
 public import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part1
+import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part2
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.CategoryTheory.Category.Init
+import Mathlib.Combinatorics.Matroid.Init
+import Mathlib.NumberTheory.ArithmeticFunction.Misc
 
 /-!
 # Artin-Hasse exponential power series
@@ -54,8 +36,6 @@ substantive Dieudonné-Dwork content) is proved separately.
 @[expose] public section
 
 noncomputable section
-
-open scoped NumberField
 
 namespace KummerCriterion
 

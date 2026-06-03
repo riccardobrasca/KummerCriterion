@@ -1,51 +1,11 @@
 module
 
-public import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part1
-public import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part2
-public import KummerCriterion.Reflection.ResidueSymbol.Stickelberger
-public import Mathlib.FieldTheory.Finite.Basic
-public import Mathlib.GroupTheory.SpecificGroups.Cyclic
-public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
-public import Mathlib.NumberTheory.MulChar.Basic
-public import Mathlib.GroupTheory.OrderOfElement
-public import Mathlib.NumberTheory.GaussSum
-public import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
-public import Mathlib.NumberTheory.JacobiSum.Basic
-public import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
-public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
-public import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
-public import Mathlib.RingTheory.Localization.Basic
-public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
-public import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part1
-public import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part2
 public import Mathlib.RingTheory.PowerSeries.Substitution
-public import Mathlib.RingTheory.PowerSeries.Basic
-public import Mathlib.RingTheory.PowerSeries.Trunc
-public import Mathlib.RingTheory.PowerSeries.Exp
-public import Mathlib.Data.Nat.Log
-public import Mathlib.NumberTheory.Padics.PadicVal.Basic
-public import Mathlib.Data.Nat.Digits.Defs
-public import Mathlib.Data.Nat.Digits.Lemmas
-public import Mathlib.FieldTheory.Finite.Trace
-public import Mathlib.Algebra.GroupWithZero.Units.Equiv
-public import Mathlib.Algebra.BigOperators.Ring.Finset
-public import Mathlib.Data.Nat.Choose.Multinomial
-public import Mathlib.Data.Nat.Prime.Factorial
-public import Mathlib.Algebra.BigOperators.Associated
-public import Mathlib.Data.Fintype.Units
-public import Mathlib.FieldTheory.Finite.GaloisField
-public import Mathlib.Algebra.Ring.Associated
-public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
-public import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
-public import Mathlib.NumberTheory.NumberField.Ideal.Basic
-public import Mathlib.Data.Nat.ModEq
-public import Mathlib.FieldTheory.Perfect
-public import Mathlib.RingTheory.WittVector.Frobenius
-public import Mathlib.RingTheory.WittVector.TeichmullerSeries
-public import Mathlib.Algebra.CharP.Lemmas
-public import Mathlib.Data.Fintype.Fin
-public import Mathlib.RingTheory.Nilpotent.Basic
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.CategoryTheory.Category.Init
+import Mathlib.Combinatorics.Matroid.Init
+import Mathlib.NumberTheory.ArithmeticFunction.Misc
+import Mathlib.RingTheory.WittVector.IsPoly
 
 /-!
 # Basic Dwork factorization algebra
@@ -56,8 +16,6 @@ Split from `DworkFactorization.lean`.
 @[expose] public section
 
 noncomputable section
-
-open scoped NumberField
 
 namespace KummerCriterion
 

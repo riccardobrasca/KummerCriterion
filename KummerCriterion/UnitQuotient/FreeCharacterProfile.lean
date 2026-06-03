@@ -1,12 +1,11 @@
 module
 
 public import KummerCriterion.UnitQuotient.PermutationCharacters
-public import KummerCriterion.UnitQuotient.DeltaAction
-public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
-public import Mathlib.LinearAlgebra.FreeModule.ModN
-public import Mathlib.GroupTheory.Coset.Card
-public import Mathlib.RingTheory.ZMod.UnitsCyclic
-public import Mathlib.RingTheory.ZMod.Torsion
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.CategoryTheory.Category.Init
+import Mathlib.Combinatorics.Matroid.Init
+import Mathlib.Data.Nat.Factorial.DoubleFactorial
+import Mathlib.NumberTheory.ArithmeticFunction.Misc
 
 /-!
 # Unit quotients: the free character profile

@@ -1,6 +1,7 @@
 module
 
-public import KummerCriterion.HMinus.LValueReduction.GaussPairing
+public import KummerCriterion.HMinus.LValueReduction.GaussGoal
+import KummerCriterion.HMinus.LValueReduction.GaussPairing
 
 /-!
 # The raw odd Gauss-product formula

@@ -1,6 +1,11 @@
 module
 
-public import KummerCriterion.KummerCongruence.Voronoi
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+import KummerCriterion.KummerCongruence.Voronoi
+import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+import Mathlib.CategoryTheory.Category.Init
+import Mathlib.NumberTheory.Padics.RingHoms
 
 /-!
 # Kummer's congruence 

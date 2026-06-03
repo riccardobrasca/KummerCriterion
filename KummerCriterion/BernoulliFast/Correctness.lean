@@ -6,7 +6,7 @@ Authors: Bernoulli-Regular project contributors
 module
 
 public import KummerCriterion.BernoulliFast.Computation
-import Mathlib.Data.List.GetD
+public import Mathlib.NumberTheory.Bernoulli
 
 /-!
 # Correctness of `bernoulliCompute`

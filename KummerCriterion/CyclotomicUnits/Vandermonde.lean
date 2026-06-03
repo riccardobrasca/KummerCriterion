@@ -1,7 +1,7 @@
 module
 
 public import KummerCriterion.CyclotomicUnits.Subgroup
-public import Mathlib.LinearAlgebra.Vandermonde
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # The finite-field Vandermonde determinant for Kummer's logarithmic matrix

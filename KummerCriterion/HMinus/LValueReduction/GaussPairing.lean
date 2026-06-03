@@ -1,7 +1,9 @@
 module
 
-public import KummerCriterion.GaussSum.QuadraticEndpoint
-public import KummerCriterion.HMinus.LValueReduction.GaussGoal
+public import KummerCriterion.GaussSum.Basic
+public import KummerCriterion.ZetaFactorisation.Basic
+import KummerCriterion.GaussSum.QuadraticEndpoint
+import KummerCriterion.HMinus.LValueReduction.LValues
 
 /-!
 # Pairing odd characters in the raw Gauss product

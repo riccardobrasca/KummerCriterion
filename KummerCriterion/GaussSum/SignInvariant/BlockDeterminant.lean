@@ -1,8 +1,10 @@
 module
 
-public import Mathlib.GroupTheory.Perm.Cycle.Type
 public import Mathlib.LinearAlgebra.Matrix.Permutation
 public import KummerCriterion.GaussSum.SignInvariant.BlockDecomposition
+public import KummerCriterion.GaussSum.Basic
+public import Mathlib.NumberTheory.DirichletCharacter.Orthogonality
+import KummerCriterion.GaussSum.SignInvariant.Trace
 
 /-!
 # Determinant bookkeeping for the block decomposition

@@ -1,6 +1,10 @@
 module
 
-public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part2
+public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part1
+public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LogEmbedding
+public import KummerCriterion.ZetaFactorisation.Basic
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.Determinant
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part2
 
 @[expose] public section
 

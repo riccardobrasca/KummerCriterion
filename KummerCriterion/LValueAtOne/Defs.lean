@@ -1,10 +1,6 @@
 module
 
-public import Mathlib.Analysis.Complex.AbelLimit
-public import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
-public import Mathlib.NumberTheory.DirichletCharacter.GaussSum
 public import Mathlib.NumberTheory.LSeries.DirichletContinuation
-public import Mathlib.NumberTheory.LSeries.HurwitzZetaValues
 public import KummerCriterion.KummerCongruence.BernoulliGeneralized
 
 /-!

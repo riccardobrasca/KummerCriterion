@@ -1,19 +1,35 @@
 module
 
 public import KummerCriterion.CyclotomicUnits.PadicLogSetup
-public import Mathlib.Algebra.CharP.Lemmas
-public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
-public import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
-public import KummerCriterion.Reflection.Local.Basic
-public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteArtinHasseFormal
-public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogBounds
-public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogFormal
-public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.Basic
 public import Mathlib.RingTheory.AdicCompletion.Algebra
-public import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
-public import Mathlib.RingTheory.AdicCompletion.Completeness
-public import Mathlib.RingTheory.AdicCompletion.Topology
-public import Mathlib.RingTheory.Flat.TorsionFree
+public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHassePadicBase
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Mathlib.RingTheory.Henselian
+import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part2
+import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogBounds
+import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseCompletionMap
+import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
+import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
+import Mathlib.RingTheory.AdicCompletion.Completeness
+import Mathlib.RingTheory.Flat.TorsionFree
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.NormNum.BigOperators
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFactorial
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 
 /-!
 # The corrected Dwork parameter

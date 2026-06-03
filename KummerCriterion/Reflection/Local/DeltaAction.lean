@@ -2,11 +2,8 @@ module
 
 public import KummerCriterion.Reflection.Local.Basic
 public import Mathlib.RingTheory.AdicCompletion.Algebra
-public import Mathlib.RingTheory.AdicCompletion.Completeness
-public import Mathlib.RingTheory.Henselian
-public import KummerCriterion.Reflection.Local.Graded
-public import Mathlib.Algebra.Module.ZMod
 public import KummerCriterion.UnitQuotient.DeltaAction
+public import Mathlib.Algebra.Lie.OfAssociative
 
 /-!
 # Cyclotomic action on lambda-local and completed units

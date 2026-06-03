@@ -1,16 +1,8 @@
 module
 
-public import Mathlib.RingTheory.PowerSeries.Substitution
 public import Mathlib.RingTheory.PowerSeries.Expand
-public import Mathlib.RingTheory.PowerSeries.Inverse
-public import Mathlib.RingTheory.PowerSeries.Trunc
-public import Mathlib.RingTheory.PowerSeries.Basic
-public import Mathlib.Tactic.Ring
-public import Mathlib.Data.Rat.Defs
-public import Mathlib.Data.Rat.Lemmas
-public import Mathlib.Data.Nat.GCD.Basic
-public import Mathlib.Data.ZMod.Basic
-public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.Algebra.Field.ZMod
+import Mathlib.FieldTheory.Finite.Basic
 
 /-!
 # Dieudonné-Dwork criterion for `r`-integrality of power series

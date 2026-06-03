@@ -1,17 +1,8 @@
 module
 
-import Mathlib.NumberTheory.RamificationInertia.Galois
-import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
-import Mathlib.RingTheory.Ideal.GoingUp
 
-public import KummerCriterion.TotallyRealSubfield.Basic
-public import KummerCriterion.TotallyRealSubfield.ZetaPrime
-public import KummerCriterion.TotallyRealSubfield.Conjugation
-public import KummerCriterion.TotallyRealSubfield.FixedAssociate
-public import KummerCriterion.TotallyRealSubfield.ClassGroup
 public import KummerCriterion.ZetaFactorisation.Basic
-public import KummerCriterion.ZetaFactorisation.EulerProduct
-public import KummerCriterion.ZetaFactorisation.Residue
+public import FltRegular.NumberTheory.Cyclotomic.CyclRat
 
 /-!
 # `K⁺` local even-character data
@@ -24,7 +15,6 @@ Residue-degree and local-factor identities for the maximal real subfield side.
 noncomputable section
 
 open NumberField
-open NumberField.IsCMField
 open scoped BigOperators Pointwise
 
 namespace KummerCriterion

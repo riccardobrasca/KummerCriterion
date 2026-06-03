@@ -1,7 +1,25 @@
 module
 
-public import KummerCriterion.CyclotomicUnits.DworkParameter.Part15
 public import KummerCriterion.KummerCongruence.Characters
+public import KummerCriterion.CyclotomicUnits.DworkParameter.Part13
+import KummerCriterion.CyclotomicUnits.DworkParameter.Part8Tail
+import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogBounds
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.NormNum.BigOperators
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFactorial
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 
 @[expose] public section
 

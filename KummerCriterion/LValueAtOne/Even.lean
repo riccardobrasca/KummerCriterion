@@ -1,6 +1,7 @@
 module
 
-public import KummerCriterion.LValueAtOne.Cosine
+public import KummerCriterion.LValueAtOne.Defs
+import KummerCriterion.LValueAtOne.Cosine
 
 /-!
 # Even-character `L(1, χ)` formulas

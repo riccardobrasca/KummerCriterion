@@ -1,6 +1,10 @@
 module
 
-public import KummerCriterion.HMinus.LValueReduction.LValues
+public import KummerCriterion.LValueAtOne.Defs
+public import KummerCriterion.TotallyRealSubfield.ClassGroup
+public import KummerCriterion.ZetaFactorisation.Basic
+public import Mathlib.NumberTheory.NumberField.DedekindZeta
+import KummerCriterion.HMinus.LValueReduction.LValues
 
 /-!
 # Generic `hMinus` assembly lemmas

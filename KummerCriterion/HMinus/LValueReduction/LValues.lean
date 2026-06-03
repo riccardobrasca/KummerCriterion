@@ -1,15 +1,14 @@
 module
 
-public import KummerCriterion.GaussSum.SignInvariant.BranchChoice
-public import KummerCriterion.GaussSum.SignInvariant.Trace
 public import KummerCriterion.HMinus.LValueReduction.Factors
 public import KummerCriterion.LValueAtOne.Defs
-public import KummerCriterion.LValueAtOne.ComplexBounds
-public import KummerCriterion.LValueAtOne.DirichletBounds
-public import KummerCriterion.LValueAtOne.Cosine
-public import KummerCriterion.LValueAtOne.Sine
-public import KummerCriterion.LValueAtOne.Odd
-public import KummerCriterion.LValueAtOne.Even
+public import KummerCriterion.GaussSum.Basic
+public import KummerCriterion.ZetaFactorisation.Basic
+import KummerCriterion.GaussSum.SignInvariant.BranchChoice
+import KummerCriterion.GaussSum.SignInvariant.Trace
+import KummerCriterion.HMinus.KplusEulerProduct
+import KummerCriterion.LValueAtOne.Even
+import KummerCriterion.LValueAtOne.Odd
 
 /-!
 # `L(1, χ)` evaluations for `hMinus`

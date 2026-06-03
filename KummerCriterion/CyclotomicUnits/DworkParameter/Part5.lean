@@ -1,6 +1,25 @@
 module
 
 public import KummerCriterion.CyclotomicUnits.DworkParameter.Part4
+public import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteArtinHasseFormal
+import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part2
+import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogBounds
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.NormNum.BigOperators
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFactorial
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 
 @[expose] public section
 
@@ -111,8 +130,8 @@ theorem samePrimeFiniteArtinHasseExpCoordPoly_map_eq_quotientSeries
         Ideal.pow_le_pow_right hle (Ideal.pow_mem_pow hx d)
       have hxzero : q (x ^ d) = 0 := Ideal.Quotient.eq_zero_iff_mem.mpr hxpow
       have hpowmap : (q x) ^ d = q (x ^ d) := (map_pow q x d).symm
-      rw [hpoly, map_zero]
-      rw [hpowmap, hxzero, zero_mul]
+      rw [hpoly, map_zero, hpowmap, hxzero]
+      simp
 
 theorem quotient_mk_samePrimeFiniteArtinHasseExpCoordPoly_pow_coeff_eq
     (N n d : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) :

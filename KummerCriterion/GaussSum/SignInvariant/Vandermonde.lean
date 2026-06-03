@@ -1,6 +1,5 @@
 module
 
-public import Mathlib.LinearAlgebra.Vandermonde
 public import KummerCriterion.GaussSum.SignInvariant.Operator
 
 /-!

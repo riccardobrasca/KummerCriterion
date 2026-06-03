@@ -2,9 +2,10 @@ module
 
 public import KummerCriterion.CyclotomicUnits.Basic
 import KummerCriterion.LehmerVandiver.PlusCoprime.CharacterIdentification
-public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
-public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
-import Mathlib.Data.ZMod.Units
+import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
+import KummerCriterion.TotallyRealSubfield.Basic
+import KummerCriterion.TotallyRealSubfield.ZetaPrime
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # Normalized cyclotomic units

@@ -1,17 +1,8 @@
 module
 
 public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
-import KummerCriterion.LehmerVandiver.PrimaryUnits.Part1
-import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
-import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3
-import Mathlib.NumberTheory.NumberField.CMField
-import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
-import KummerCriterion.LehmerVandiver.PlusCoprime.CharacterIdentification
-import Mathlib.RingTheory.Ideal.Quotient.Basic
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
-import Mathlib.RingTheory.IntegralDomain
-import Mathlib.FieldTheory.Finite.Basic
-import KummerCriterion.TotallyRealSubfield.ClassGroup
+public import KummerCriterion.TotallyRealSubfield.Basic
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # Sinnott index formula: structural decomposition

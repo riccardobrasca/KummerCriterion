@@ -1,14 +1,15 @@
 module
 
-public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.Determinant
-public import KummerCriterion.LValueAtOne.Defs
-public import KummerCriterion.HMinus.KplusLocalCharacters
-public import KummerCriterion.HMinus.LValueReduction.LValues
 public import KummerCriterion.UnitQuotient.PermutationCharacters
-public import KummerCriterion.UnitQuotient.FreeCharacterProfile
-public import KummerCriterion.UnitQuotient.ConjugationTrace
-public import Mathlib.NumberTheory.LSeries.DirichletContinuation
-public import Mathlib.RingTheory.RootsOfUnity.Lemmas
+public import FltRegular.NumberTheory.Cyclotomic.CyclRat
+public import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
+public import Mathlib.NumberTheory.DirichletCharacter.Basic
+public import Mathlib.NumberTheory.MulChar.Duality
+import KummerCriterion.GaussSum.SignInvariant.Trace
+import KummerCriterion.UnitQuotient.FreeCharacterProfile
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.Data.Nat.Factorial.DoubleFactorial
 
 /-!
 # LV-SIN-C: `L'(0, χ)` formula via cyclotomic-unit logs

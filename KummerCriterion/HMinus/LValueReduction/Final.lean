@@ -1,7 +1,13 @@
 module
 
-public import KummerCriterion.HMinus.LValueReduction.Assembly
-public import KummerCriterion.HMinus.LValueReduction.GaussProduct
+public import KummerCriterion.HMinus.LValueReduction.GaussGoal
+public import KummerCriterion.LValueAtOne.Defs
+public import KummerCriterion.TotallyRealSubfield.ClassGroup
+import KummerCriterion.HMinus.LValueReduction.Assembly
+import KummerCriterion.HMinus.LValueReduction.GaussProduct
+import KummerCriterion.HMinus.LValueReduction.LValues
+import KummerCriterion.ZetaFactorisation.EulerProduct
+import KummerCriterion.ZetaFactorisation.Residue
 
 /-!
 # Final `hMinus` formulas

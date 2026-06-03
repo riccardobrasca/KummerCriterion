@@ -1,7 +1,7 @@
 module
 
 public import Mathlib.RingTheory.PowerSeries.Log
-public import Mathlib.RingTheory.PowerSeries.WellKnown
+import Mathlib.RingTheory.PowerSeries.WellKnown
 
 /-!
 # Formal logarithm identities for the finite logarithm

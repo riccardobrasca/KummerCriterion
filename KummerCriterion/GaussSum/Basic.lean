@@ -1,11 +1,9 @@
 module
 
-public import Mathlib.NumberTheory.DirichletCharacter.GaussSum
-public import Mathlib.NumberTheory.JacobiSum.Basic
-public import Mathlib.NumberTheory.LegendreSymbol.Basic
-public import Mathlib.NumberTheory.MulChar.Lemmas
-public import Mathlib.Analysis.Fourier.ZMod
 public import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
+public import Mathlib.NumberTheory.DirichletCharacter.Basic
+public import Mathlib.NumberTheory.GaussSum
+public import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
 
 /-!
 # Gauss sums for Dirichlet characters modulo a prime

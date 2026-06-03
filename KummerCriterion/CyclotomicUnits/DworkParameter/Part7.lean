@@ -1,6 +1,24 @@
 module
 
 public import KummerCriterion.CyclotomicUnits.DworkParameter.Part6
+import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.Basic
+import Mathlib.RingTheory.WittVector.IsPoly
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.NormNum.BigOperators
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFactorial
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 
 @[expose] public section
 
@@ -452,6 +470,8 @@ theorem mem_ideal_smul_top_iff_self
       Submodule.smul_mem_smul hx Submodule.mem_top
     simpa [smul_eq_mul] using h
 
+set_option maxHeartbeats 400000 in
+-- Required for the `simpa` call.
 theorem factor_evalₐ_eq_evalₐ
     {M N : ℕ} (hMN : M ≤ N)
     (x : DworkCompleteIntegerRing p K) :

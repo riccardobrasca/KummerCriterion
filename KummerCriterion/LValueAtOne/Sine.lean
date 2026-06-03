@@ -1,7 +1,12 @@
 module
 
-public import KummerCriterion.LValueAtOne.ComplexBounds
-public import KummerCriterion.LValueAtOne.DirichletBounds
+public import Mathlib.NumberTheory.LSeries.HurwitzZetaOdd
+import KummerCriterion.LValueAtOne.ComplexBounds
+import KummerCriterion.LValueAtOne.DirichletBounds
+import Mathlib.Analysis.Complex.AbelLimit
+import Mathlib.CategoryTheory.Category.Init
+import Mathlib.Combinatorics.Matroid.Init
+import Mathlib.NumberTheory.ArithmeticFunction.Misc
 
 /-!
 # Sine boundary values for `LValueAtOne`

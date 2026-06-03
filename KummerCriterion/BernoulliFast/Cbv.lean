@@ -5,13 +5,26 @@ Authors: Bernoulli-Regular project contributors
 -/
 module
 
-public import KummerCriterion.BernoulliFast.Correctness
-public import Lean.Meta.Sym.LitValues
-public import Lean.Meta.Sym.InferType
-public import Lean.Meta.Sym.Simp.SimpM
-public meta import Lean.Meta.Tactic.Cbv
-import Mathlib.Data.List.Defs
-import Mathlib.Tactic
+public import KummerCriterion.BernoulliFast.Computation
+public meta import Lean.Meta.Sym.LitValues
+public import Mathlib.NumberTheory.Bernoulli
+import KummerCriterion.BernoulliFast.Correctness
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.NormNum.BigOperators
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFactorial
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.ReduceModChar
 
 /-!
 # `cbv`-optimized Bernoulli number evaluation

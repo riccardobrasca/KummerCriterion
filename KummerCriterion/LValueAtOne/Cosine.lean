@@ -1,7 +1,10 @@
 module
 
-public import KummerCriterion.LValueAtOne.ComplexBounds
-public import KummerCriterion.LValueAtOne.DirichletBounds
+public import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
+public import Mathlib.NumberTheory.LSeries.HurwitzZetaEven
+import KummerCriterion.LValueAtOne.ComplexBounds
+import KummerCriterion.LValueAtOne.DirichletBounds
+import Mathlib.Analysis.Complex.AbelLimit
 
 /-!
 # Cosine boundary values for `LValueAtOne`

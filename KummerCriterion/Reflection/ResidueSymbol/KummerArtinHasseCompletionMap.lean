@@ -2,8 +2,8 @@ module
 
 public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHassePadicBase
 public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
-public import Mathlib.RingTheory.Valuation.Extension
-public import Mathlib.Topology.Algebra.Valued.WithZeroMulInt
+public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseValuationLocalModel
+import Mathlib.Topology.Algebra.Valued.WithZeroMulInt
 
 /-!
 # The rational `p`-adic map into the lambda completion

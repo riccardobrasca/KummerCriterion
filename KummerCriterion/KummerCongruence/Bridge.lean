@@ -1,7 +1,9 @@
 module
 
-public import KummerCriterion.KummerCongruence.Kummer
-public import KummerCriterion.KummerCongruence.Characters
+public import KummerCriterion.KummerCongruence.BernoulliGeneralized
+import KummerCriterion.KummerCongruence.Kummer
+import KummerCriterion.KummerCongruence.VonStaudtClausen
+import Mathlib.CategoryTheory.Category.Init
 
 /-!
 # Kummer congruences - Bridge and boundary

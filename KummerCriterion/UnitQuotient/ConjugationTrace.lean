@@ -1,6 +1,9 @@
 module
 
-public import KummerCriterion.UnitQuotient.FreeCharacterProfile
+public import KummerCriterion.UnitQuotient.DeltaAction
+public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
+public import Mathlib.NumberTheory.NumberField.CMField
+import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
 
 /-!
 # Unit quotients: complex conjugation and augmentation traces

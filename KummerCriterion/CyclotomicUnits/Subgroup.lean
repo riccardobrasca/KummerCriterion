@@ -1,6 +1,7 @@
 module
 
 public import KummerCriterion.CyclotomicUnits.Basic
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # The real cyclotomic-unit subgroup

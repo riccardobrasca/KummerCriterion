@@ -1,15 +1,8 @@
 module
 
-public import Mathlib.Algebra.Group.Nat.Even
-public import Mathlib.RingTheory.RootsOfUnity.Lemmas
 public import KummerCriterion.GaussSum.SignInvariant.Vandermonde
-public import KummerCriterion.LValueAtOne.Defs
-public import KummerCriterion.LValueAtOne.ComplexBounds
-public import KummerCriterion.LValueAtOne.DirichletBounds
-public import KummerCriterion.LValueAtOne.Cosine
-public import KummerCriterion.LValueAtOne.Sine
-public import KummerCriterion.LValueAtOne.Odd
-public import KummerCriterion.LValueAtOne.Even
+import KummerCriterion.LValueAtOne.ComplexBounds
+import Mathlib.RingTheory.RootsOfUnity.Lemmas
 
 /-!
 # Scalar preliminaries for the Vandermonde determinant route

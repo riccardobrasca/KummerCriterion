@@ -1,8 +1,7 @@
 module
 
-public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part1
-public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part2
 public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part3
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # Real cyclotomic units

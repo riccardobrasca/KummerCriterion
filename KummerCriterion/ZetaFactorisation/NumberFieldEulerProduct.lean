@@ -1,6 +1,8 @@
 module
 
 public import KummerCriterion.ZetaFactorisation.Basic
+public import Mathlib.NumberTheory.NumberField.DedekindZeta
+import Mathlib.Data.Sym.Card
 
 /-!
 # Generic number-field Euler-product infrastructure

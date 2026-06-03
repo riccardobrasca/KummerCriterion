@@ -1,11 +1,8 @@
 module
 
-public import Mathlib.NumberTheory.DirichletCharacter.Basic
 public import Mathlib.NumberTheory.BernoulliPolynomials
-public import Mathlib.NumberTheory.Padics.PadicVal.Basic
-public import Mathlib.Data.Nat.Prime.Factorial
-public import Mathlib.Data.Nat.Choose.Dvd
 public import KummerCriterion.KummerCongruence.Characters
+import Mathlib.CategoryTheory.Category.Init
 
 /-!
 # Generalized Bernoulli numbers `B_{n, χ}`

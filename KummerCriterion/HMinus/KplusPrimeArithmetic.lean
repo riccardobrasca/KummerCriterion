@@ -1,9 +1,10 @@
 module
 
-import Mathlib.NumberTheory.RamificationInertia.Galois
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
-import Mathlib.RingTheory.Ideal.GoingUp
 public import KummerCriterion.HMinus.KplusLocalCharacters
+public import KummerCriterion.TotallyRealSubfield.Basic
+public import KummerCriterion.TotallyRealSubfield.ZetaPrime
+import Mathlib.RingTheory.Flat.TorsionFree
 
 /-!
 # `K⁺` prime arithmetic

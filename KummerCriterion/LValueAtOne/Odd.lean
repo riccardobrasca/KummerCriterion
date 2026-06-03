@@ -1,6 +1,7 @@
 module
 
-public import KummerCriterion.LValueAtOne.Sine
+public import KummerCriterion.LValueAtOne.Defs
+import KummerCriterion.LValueAtOne.Sine
 
 /-!
 # Odd-character `L(1, χ)` formulas

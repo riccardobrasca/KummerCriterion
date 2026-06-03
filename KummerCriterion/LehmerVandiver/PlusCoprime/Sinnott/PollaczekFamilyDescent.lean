@@ -1,7 +1,8 @@
 module
 
-public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.IndexFormula
-import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
+public import KummerCriterion.HMinus.ClassNumberFormula
+public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # `PollaczekInFamily` — Pollaczek descent to the family subgroup

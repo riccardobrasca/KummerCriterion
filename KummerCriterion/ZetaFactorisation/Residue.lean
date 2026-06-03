@@ -1,6 +1,8 @@
 module
 
-public import KummerCriterion.ZetaFactorisation.EulerProduct
+public import KummerCriterion.ZetaFactorisation.Basic
+public import Mathlib.NumberTheory.NumberField.DedekindZeta
+import KummerCriterion.ZetaFactorisation.EulerProduct
 
 /-!
 # Residue statements for cyclotomic zeta factorisation

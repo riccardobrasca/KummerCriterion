@@ -1,15 +1,11 @@
 module
 
-public import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
-public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
 public import KummerCriterion.TotallyRealSubfield.Basic
 public import KummerCriterion.TotallyRealSubfield.ZetaPrime
-public import KummerCriterion.TotallyRealSubfield.Conjugation
-public import KummerCriterion.TotallyRealSubfield.FixedAssociate
-public import KummerCriterion.TotallyRealSubfield.ClassGroup
-public import KummerCriterion.ZetaFactorisation.Basic
-public import KummerCriterion.ZetaFactorisation.EulerProduct
-public import KummerCriterion.ZetaFactorisation.Residue
+public import Mathlib.NumberTheory.NumberField.DedekindZeta
+import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
+import KummerCriterion.ZetaFactorisation.Basic
+import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
 
 /-!
 # Analytic class number formula for `K` and `K⁺`

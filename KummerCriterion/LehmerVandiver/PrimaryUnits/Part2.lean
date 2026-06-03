@@ -1,11 +1,8 @@
 module
 
-public import KummerCriterion.LehmerVandiver.PrimaryConj
-public import KummerCriterion.TotallyRealSubfield.ZetaPrime
-public import KummerCriterion.HMinus.KplusPrimeArithmetic
-public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
-public import FltRegular.NumberTheory.Cyclotomic.MoreLemmas
 public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part1
+public import FltRegular.NumberTheory.Cyclotomic.CyclRat
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # Primary units of `𝓞 K⁺`

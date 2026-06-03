@@ -1,7 +1,12 @@
 module
 
 public import KummerCriterion.KummerCongruence.BernoulliGeneralized
-public import KummerCriterion.HMinus.LValueReduction.Final
+public import FltRegular.NumberTheory.Cyclotomic.CyclRat
+public import KummerCriterion.TotallyRealSubfield.ClassGroup
+public import KummerCriterion.ZetaFactorisation.Basic
+import KummerCriterion.GaussSum.SignInvariant.BlockDecomposition
+import KummerCriterion.HMinus.LValueReduction.Final
+import KummerCriterion.HMinus.LValueReduction.LValues
 
 /-!
 # Teichmüller reindexing for `hMinus`

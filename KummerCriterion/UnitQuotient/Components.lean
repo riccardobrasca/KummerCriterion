@@ -1,12 +1,10 @@
 module
 
-public import Mathlib.NumberTheory.NumberField.Units.DirichletTheorem
-public import Mathlib.LinearAlgebra.Basis.Defs
-public import Mathlib.Algebra.MonoidAlgebra.Basic
-public import Mathlib.NumberTheory.MulChar.Basic
-public import Mathlib.NumberTheory.MulChar.Duality
-public import Mathlib.RingTheory.Idempotents
-public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Algebra.Field.ZMod
+import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
+import Mathlib.CategoryTheory.Category.Init
+import Mathlib.Combinatorics.Matroid.Init
+import Mathlib.Data.Nat.Factorial.DoubleFactorial
 
 /-!
 # Unit quotients: power quotients and `Δ`-components
@@ -30,7 +28,6 @@ namespace KummerCriterion
 set_option linter.unusedSectionVars false
 
 variable (p N : ℕ) [Fact p.Prime]
-variable (K : Type*) [Field K] [NumberField K]
 
 /-- The Galois character group `Δ = (ZMod p)ˣ` indexing unit-quotient
 components. -/

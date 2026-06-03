@@ -1,6 +1,8 @@
 module
 
-public import KummerCriterion.HMinus.LValueReduction.LValues
+public import KummerCriterion.HMinus.LValueReduction.Factors
+public import KummerCriterion.ZetaFactorisation.Basic
+import KummerCriterion.HMinus.LValueReduction.LValues
 
 /-!
 # The cyclotomic Gauss-product target

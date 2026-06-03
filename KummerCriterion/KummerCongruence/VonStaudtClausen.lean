@@ -1,7 +1,9 @@
 module
 
-public import KummerCriterion.KummerCongruence.BernoulliGeneralized
 public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+import Mathlib.CategoryTheory.Category.Init
 
 /-!
 # Kummer congruences - Von Staudt–Clausen + Step 2 (power-sum mod `p²`)

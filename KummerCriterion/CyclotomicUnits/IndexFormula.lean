@@ -1,8 +1,8 @@
 module
 
-public import KummerCriterion.CyclotomicUnits.Subgroup
 public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LogEmbedding
-public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.IndexFormula
+import KummerCriterion.CyclotomicUnits.Subgroup
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # P-primary cyclotomic-unit index formula

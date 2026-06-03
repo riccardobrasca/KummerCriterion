@@ -1,20 +1,9 @@
 module
 
 public import Mathlib.NumberTheory.Bernoulli
-public import KummerCriterion.KummerCongruence.BernoulliGeneralized
-public import KummerCriterion.HMinus.KplusLocalCharacters
-public import KummerCriterion.HMinus.KplusPrimeArithmetic
-public import KummerCriterion.HMinus.KplusEulerProduct
-public import KummerCriterion.HMinus.ClassNumberFormula
-public import KummerCriterion.HMinus.LValueReduction.Factors
-public import KummerCriterion.HMinus.LValueReduction.LValues
-public import KummerCriterion.HMinus.LValueReduction.Assembly
-public import KummerCriterion.HMinus.LValueReduction.GaussGoal
-public import KummerCriterion.HMinus.LValueReduction.GaussPairing
-public import KummerCriterion.HMinus.LValueReduction.GaussProduct
-public import KummerCriterion.HMinus.LValueReduction.Final
-public import KummerCriterion.HMinus.LValueReduction.Teichmuller
-public import KummerCriterion.HMinus.PadicCorollaries
+public import KummerCriterion.TotallyRealSubfield.ClassGroup
+import KummerCriterion.HMinus.PadicCorollaries
+import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # Bernoulli criterion from the relative class number formula

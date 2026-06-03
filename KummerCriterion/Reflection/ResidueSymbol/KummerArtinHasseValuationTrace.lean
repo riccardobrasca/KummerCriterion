@@ -1,6 +1,6 @@
 module
 
-public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseCompletionMap
+public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseValuationLocalModel
 
 /-!
 # Valuation-completion trace source for the Kummer--Artin--Hasse `A` term

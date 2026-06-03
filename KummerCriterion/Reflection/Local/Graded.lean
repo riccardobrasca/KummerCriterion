@@ -1,13 +1,7 @@
 module
 
-public import Mathlib.RingTheory.Ideal.Cotangent
-public import Mathlib.RingTheory.Ideal.IsPrincipalPowQuotient
-public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
-public import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
-public import Mathlib.Algebra.CharP.Lemmas
-public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
-public import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
 public import KummerCriterion.Reflection.Local.Basic
+import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
 
 /-!
 # First graded piece of the principal-unit filtration
