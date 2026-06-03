@@ -196,7 +196,7 @@ def deltaZeroConstOneDirichletCharacterFamily :
 
 theorem linearIndependent_deltaZeroConstOneDirichletCharacterFamily :
     LinearIndependent ℂ (deltaZeroConstOneDirichletCharacterFamily (p := p)) := by
-  simpa [deltaZeroConstOneDirichletCharacterFamily] using
+  simpa [deltaZeroConstOneDirichletCharacterFamily] using!
     (linearIndependent_constOneDirichletCharacterFamily (p := p)).option
       (x := deltaZeroFunction (p := p))
       (deltaZero_not_mem_span_constOneDirichletCharacterFamily (p := p))
@@ -360,8 +360,8 @@ theorem toMatrix_deltaZeroConstOneDirichletCharacterBasis_normalizedDft :
                 ((normalizedDftConstOneBasisPerm (p := p)) j))) i = 0 := by
       simp [Module.Basis.repr_self, hij]
     simpa only [Matrix.mul_diagonal, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply,
-      Equiv.Perm.coe_inv, Option.mem_def, Option.some.injEq, ite_mul, one_mul, zero_mul, hneq']
-      using hsingle
+      Equiv.Perm.coe_inv, Option.mem_def, Option.some.injEq, ite_mul, one_mul, zero_mul, hneq',
+      if_false] using hsingle
 
 theorem det_normalizedDft_eq_sign_mul_prod_basisScalars :
     LinearMap.det (normalizedDft p) =

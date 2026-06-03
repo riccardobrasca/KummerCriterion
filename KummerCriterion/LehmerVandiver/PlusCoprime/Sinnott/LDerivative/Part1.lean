@@ -146,7 +146,6 @@ noncomputable def convolutionLogNormDescended :
     (fun a : KummerCriterion.CyclotomicUnitDelta p =>
       ((Real.log ‖(1 : ℂ) - ZMod.stdAddChar (N := p) ((a : ZMod p))‖ : ℝ) : ℂ))
     (fun a => by
-      dsimp only
       have h := log_norm_one_sub_stdAddChar_unit_neg (p := p) a
       exact_mod_cast h)
 
@@ -449,7 +448,6 @@ theorem characterMatrixSquareOnEven_mul_inverseCharacterMatrixSquareOnEven_trans
       have h_inv_cancel : ((quotCharEquivQuot p).symm k) =
           ((quotCharEquivQuot p).symm k') := by
         have := congrArg (· * ((quotCharEquivQuot p).symm k')) h_eq
-        simp only at this
         rw [mul_assoc, inv_mul_cancel, mul_one, one_mul] at this
         exact this
       exact (quotCharEquivQuot p).symm.injective h_inv_cancel
@@ -669,7 +667,6 @@ theorem sum_units_val_eq_sum_Ico (F : ℕ → ℂ) :
     refine ⟨ZMod.unitOfCoprime n
       (Nat.coprime_comm.mp (Nat.coprime_of_lt_prime (by omega) hn.2 hp.out)),
       Finset.mem_univ _, ?_⟩
-    simp only
     rw [ZMod.coe_unitOfCoprime, ZMod.val_natCast]
     exact Nat.mod_eq_of_lt hn.2
 

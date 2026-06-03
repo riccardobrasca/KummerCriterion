@@ -355,7 +355,7 @@ theorem subst_neg_log_exp_mul_expSeries :
     simpa using
       (PowerSeries.subst_C (a := logSeries p) (r := (1 : ℚ)))
   rw [h1] at h
-  simpa [expSeries, mul_comm] using h
+  simpa [expSeries, Furtwaengler.artinHasseExpSeries, mul_comm] using h
 
 /-- Formal identity `E_p(-T) = E_p(T)^{-1}`, stated without choosing the
 inverse: the product is `1`. -/
@@ -576,7 +576,7 @@ theorem inverseSeries_mapTo_subst_expMinusOneSeries_subst_neg_inverse
   let hInner : Furtwaengler.DieudonneDwork.IsRIntegralPS p inner :=
     hH.subst hNegInv hNegInv0
   have hInner0 : PowerSeries.constantCoeff inner = 0 := by
-    simpa [inner] using
+    simpa [inner] using!
       PowerSeries.constantCoeff_subst_eq_zero
         (by simp : PowerSeries.constantCoeff (-(inverseSeries p)) = 0)
         (expMinusOneSeries p) (expMinusOneSeries_constantCoeff p)

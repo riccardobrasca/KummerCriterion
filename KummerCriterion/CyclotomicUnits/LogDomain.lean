@@ -287,7 +287,7 @@ theorem completedLogCoord_factorPow
           exact False.elim (Nat.not_succ_le_zero M hMN)
       | succ N =>
           have hMN' : M ≤ N := Nat.succ_le_succ_iff.mp hMN
-          simpa using
+          simpa [completedLogCoord] using!
             samePrimeFiniteLog_factorPow
               (p := p) (K := K) hMN'
               (completedLogArg_mem (p := p) (K := K) u)

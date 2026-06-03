@@ -126,7 +126,7 @@ theorem valuedLambdaQuotientDworkCoeffModP_quotientMap_cyclotomic
         (DworkCompleteIntegerRing p K) x) i
   rw [dworkCompleteCyclotomicEquiv_algebraMap_valuedInteger
     (p := p) (K := K) a x] at hcoord
-  simpa [valuedLambdaQuotientDworkCoeffModP_mk] using hcoord
+  simpa [valuedLambdaQuotientDworkCoeffModP_mk] using! hcoord
 
 omit [NumberField.IsCMField K] in
 /-- The finite Dwork Artin-Hasse specialization coefficient selected by a

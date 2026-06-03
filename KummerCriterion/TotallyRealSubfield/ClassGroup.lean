@@ -1,6 +1,6 @@
 module
 
-public import KummerCriterion.TotallyRealSubfield.ClassGroupExtension
+public import Mathlib.RingTheory.ClassGroup.ExtendedHom
 public import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
 import KummerCriterion.TotallyRealSubfield.Conjugation
 import KummerCriterion.TotallyRealSubfield.FixedAssociate
@@ -67,7 +67,7 @@ theorem indexRealUnits_eq_one [IsCMField K] :
   have hp2 : 2 < p := lt_of_le_of_ne hp.1.two_le (Ne.symm hp_odd)
   have hζ := IsCyclotomicExtension.zeta_spec p ℚ K
   have hzeta_torsion : hζ.unit' ∈ NumberField.Units.torsion K := by
-    refine (CommGroup.mem_torsion _ _).2 (isOfFinOrder_iff_pow_eq_one.2 ⟨p, by omega, ?_⟩)
+    refine (CommGroup.mem_torsion _).2 (isOfFinOrder_iff_pow_eq_one.2 ⟨p, by omega, ?_⟩)
     exact hζ.unit'_pow
   have hrange :
       (IsCMField.unitsMulComplexConjInv K).range =
@@ -77,7 +77,7 @@ theorem indexRealUnits_eq_one [IsCMField K] :
       obtain ⟨m, hm⟩ := unit_inv_conj_is_root_of_unity hζ u hp2
       refine ⟨⟨hζ.unit' ^ m, (NumberField.Units.torsion K).pow_mem hzeta_torsion m⟩, ?_⟩
       apply Subtype.ext
-      simpa [pow_two] using hm.symm
+      simpa [pow_two] using! hm.symm
     · rintro x ⟨u, rfl⟩
       exact ⟨u, by simp [pow_two]⟩
   have hrange_idx : (IsCMField.unitsMulComplexConjInv K).range.index = 2 := by
@@ -217,7 +217,7 @@ theorem isPrincipal_of_isPrincipal_map_Kplus [IsCMField K]
 inclusion `𝒪_{K⁺} ↪ 𝒪_K`. -/
 abbrev classGroupMap [IsCMField K] :
     ClassGroup (𝓞 (K⁺)) →* ClassGroup (𝓞 K) :=
-  ClassGroup.extensionMap (𝓞 (K⁺)) (𝓞 K)
+  ClassGroup.extendedHom (𝓞 (K⁺)) (𝓞 K)
 
 include hp_odd in
 /-- **Diekmann Prop 55**, monoid-hom form. The class-group map
@@ -234,7 +234,7 @@ theorem classGroupMap_injective [IsCMField K] :
       (FaithfulSMul.algebraMap_injective _ _)).not.mpr
       (mem_nonZeroDivisors_iff_ne_zero.mp I.2)
   rw [← ClassGroup.mk0_eq_one_iff (mem_nonZeroDivisors_iff_ne_zero.mpr hne),
-    ← ClassGroup.extensionMap_mk0]
+    ← ClassGroup.extendedHom_mk0]
   exact hc
 
 local notation3 "h" => KummerCriterion.h K

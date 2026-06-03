@@ -75,7 +75,7 @@ lemma complexConj_apply_zeta [IsCMField K] :
       ((zeta_spec p ℚ K).toInteger : 𝓞 K) ^ (p - 1) := by
   have hζ := IsCyclotomicExtension.zeta_spec p ℚ K
   have hzeta_torsion : hζ.unit' ∈ NumberField.Units.torsion K :=
-    (CommGroup.mem_torsion _ _).2
+    (CommGroup.mem_torsion _).2
       (isOfFinOrder_iff_pow_eq_one.2 ⟨p, hp.1.pos, hζ.unit'_pow⟩)
   have hconj := unitsComplexConj_torsion (K := K) ⟨hζ.unit', hzeta_torsion⟩
   have h1 : (unitsComplexConj K hζ.unit' : 𝓞 K) = (hζ.unit'⁻¹ : (𝓞 K)ˣ) :=

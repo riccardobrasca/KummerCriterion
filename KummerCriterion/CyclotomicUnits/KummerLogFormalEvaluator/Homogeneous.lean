@@ -144,7 +144,6 @@ theorem valuedLambdaQuotientDworkCoeffModP_samePrimeFiniteLogTerm_p_eq_ramificat
       dworkParameter p K * Z ^ p
   have hp_ne : p ≠ 0 := (Fact.out : Nat.Prime p).ne_zero
   have hord : ordCompl[p] p = 1 := by
-    change p / (p ^ p.factorization p) = 1
     rw [Nat.Prime.factorization_self (Fact.out : Nat.Prime p)]
     rw [pow_one]
     exact Nat.div_self (Fact.out : Nat.Prime p).pos

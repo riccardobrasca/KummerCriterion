@@ -69,14 +69,14 @@ theorem cyclotomicGalEquivZMod_complexConjGal_eq_neg_one
   let c : Gal(K / ℚ) := cyclotomicComplexConjGal (p := p) K hp_gt_two
   have hζ := IsCyclotomicExtension.zeta_spec p ℚ K
   have hzeta_torsion : hζ.unit' ∈ NumberField.Units.torsion K :=
-    (CommGroup.mem_torsion _ _).2
+    (CommGroup.mem_torsion _).2
       (isOfFinOrder_iff_pow_eq_one.2
         ⟨p, (Fact.out : p.Prime).pos, hζ.unit'_pow⟩)
   have hconj_inv :
       NumberField.IsCMField.complexConj K
           (IsCyclotomicExtension.zeta p ℚ K) =
         (IsCyclotomicExtension.zeta p ℚ K)⁻¹ := by
-    simpa using
+    simpa using!
       NumberField.IsCMField.complexConj_torsion (K := K) ⟨hζ.unit', hzeta_torsion⟩
   have hζ_inv :
       (IsCyclotomicExtension.zeta p ℚ K)⁻¹ =
@@ -434,7 +434,7 @@ theorem kummerLogColumnCoord_factorPow
           exact False.elim (Nat.not_succ_le_zero M hMN)
       | succ N =>
           have hMN' : M ≤ N := Nat.succ_le_succ_iff.mp hMN
-          simpa using
+          simpa [kummerLogColumnCoord] using!
             kummerLogColumnFiniteLog_factorPow
               (p := p) (K := K) hp_three a hMN'
 

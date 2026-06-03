@@ -63,8 +63,6 @@ theorem unitsComplexConj_unitsComplexConj (u : (𝓞 K)ˣ) :
   change ringOfIntegersComplexConj K
       (ringOfIntegersComplexConj K (u : 𝓞 K)) = (u : 𝓞 K)
   apply RingOfIntegers.ext
-  change ((ringOfIntegersComplexConj K
-      (ringOfIntegersComplexConj K (u : 𝓞 K))) : K) = ((u : 𝓞 K) : K)
   rw [coe_ringOfIntegersComplexConj, coe_ringOfIntegersComplexConj]
   exact complexConj_apply_apply K _
 

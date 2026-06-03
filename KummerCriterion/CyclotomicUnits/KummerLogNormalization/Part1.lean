@@ -780,7 +780,7 @@ theorem kummerLogDworkArtinHasseQuotientDenUnit_mul_exp_sub_one
   simpa [S, R, ζi, valuedCyclotomicZetaInteger,
     kummerLogDworkArtinHasseQuotientDenUnit,
     kummerLogValuedCyclotomicQuotientDenUnit_coe, map_sub, map_mul, map_pow,
-    AdicCompletion.algebraMap_apply] using hmap
+    AdicCompletion.algebraMap_apply] using! hmap
 
 omit [NumberField.IsCMField K] in
 /-- The normalized Artin-Hasse numerator `(E_p(T)-1)/T` over the Dwork

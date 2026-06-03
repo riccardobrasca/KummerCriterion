@@ -206,7 +206,7 @@ lemma primesOverFinsetContractionToPlus_fiber_eq_singleton_or_pair {ℓ : ℕ} [
         simp [Pconj]
     · intro hQ
       have hQ' : Q = P ∨ Q = Pconj := by
-        simpa [hfix] using hQ
+        simpa [hfix] using! hQ
       rcases hQ' with hQP | hQconj
       · rw [hQP]
         exact hP_fiber

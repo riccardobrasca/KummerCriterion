@@ -65,7 +65,7 @@ theorem generator_unit_eq_zeta_pow [IsCMField K]
       have hc_pi' : ringOfIntegersComplexConj K π = -hζ.toInteger ^ (p - 1) * π := by
         rw [show π = hζ.toInteger - 1 by rfl, map_sub, map_one, complexConj_apply_zeta]
         linear_combination zeta_toInteger_pow_pred_mul p K
-      simpa [γ, π, mul_assoc, mul_left_comm, mul_comm] using hc_pi'
+      simpa [γ, π, mul_assoc, mul_left_comm, mul_comm] using! hc_pi'
     have hγ_mul : γ ^ e * hζ.unit' ^ e = 1 := by
       have hγhu : γ * hζ.unit' = (-1 : (𝓞 K)ˣ) := by
         dsimp [γ]

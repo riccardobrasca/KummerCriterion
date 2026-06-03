@@ -53,7 +53,7 @@ omit [NumberField.IsCMField K] in
 theorem dworkParameterPowerLinearMap_repr
     (x : DworkCompleteIntegerRing p K) :
     dworkParameterPowerLinearMap p K ((dworkParameterPowerBasis p K).repr x) = x := by
-  simpa [dworkParameterPowerLinearMap_apply, dworkParameterPowerBasis_apply] using
+  simpa [dworkParameterPowerLinearMap_apply, dworkParameterPowerBasis_apply] using!
     (dworkParameterPowerBasis p K).sum_repr x
 
 omit [NumberField.IsCMField K] in

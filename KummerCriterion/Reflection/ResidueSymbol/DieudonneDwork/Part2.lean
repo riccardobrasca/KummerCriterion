@@ -81,7 +81,7 @@ theorem mapTo_subst {r : ℕ} {A : Type*} [CommRing A]
           rw [toSubringPS_subst hF hG hG0]
     _ = PowerSeries.subst (PowerSeries.map φ hG.toSubringPS)
           (PowerSeries.map φ hF.toSubringPS) := by
-          simpa using PowerSeries.map_subst (h := φ) hsubst hF.toSubringPS
+          simpa using! PowerSeries.map_subst (h := φ) hsubst hF.toSubringPS
     _ = PowerSeries.subst (hG.mapTo φ) (hF.mapTo φ) := by
           rw [← mapTo_eq_map_toSubringPS φ hG, ← mapTo_eq_map_toSubringPS φ hF]
 
@@ -407,7 +407,7 @@ theorem dieudonneDwork_mpr
         let SF : PowerSeries ℚ := PowerSeries.subst (PowerSeries.X ^ r) F
         let Q : PowerSeries ℚ := F ^ r * SF⁻¹ - 1
         have hS0 : PowerSeries.constantCoeff SF = 1 := by
-          simpa [SF, hF1] using PowerSeries.constantCoeff_subst_X_pow (R := ℚ) hr F
+          simpa [SF, hF1] using! PowerSeries.constantCoeff_subst_X_pow (R := ℚ) hr F
         have hQ0 : (PowerSeries.coeff (R := ℚ) 0) Q = 0 := by
           simp [Q, SF, hF1, hS0]
         have hQpos :

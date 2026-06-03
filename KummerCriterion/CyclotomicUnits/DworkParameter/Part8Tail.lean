@@ -541,7 +541,7 @@ theorem dworkParameterFiniteArtinHasseLogCoord_factorPow
           exact False.elim (Nat.not_succ_le_zero M hMN)
       | succ N =>
           have hMN' : M ≤ N := Nat.succ_le_succ_iff.mp hMN
-          simpa using
+          simpa [dworkParameterFiniteArtinHasseLogCoord] using!
             dworkParameterFiniteArtinHasseLog_factorPow (p := p) (K := K) hMN'
 
 /-- The completed Artin--Hasse logarithm of the Dwork parameter, assembled
@@ -634,7 +634,7 @@ theorem dworkParameterFiniteArtinHasseLog_eq_zero (N : ℕ) :
   have h :=
     congrArg (AdicCompletion.evalₐ (lambdaIdeal p K) (N + 1))
       (artinHasseLog_eval_dworkParameter_eq_zero (p := p) (K := K))
-  simpa using h
+  simpa [dworkParameterFiniteArtinHasseLogCoord] using! h
 
 end DworkParameter
 end PadicLogSetup

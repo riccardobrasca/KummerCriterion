@@ -456,8 +456,7 @@ theorem coeff_mul_left_multiple_pos_right_integral_lt {r n : ℕ} {F G : PowerSe
     · exact IsRIntegralRat.zero r
     · intro p hp
       by_cases hp0 : p.1 = 0
-      · dsimp [qTerm]
-        rw [dif_pos hp0]
+      · rw [dif_pos hp0]
         exact IsRIntegralRat.zero r
       · have hp1pos : 0 < p.1 := Nat.pos_of_ne_zero hp0
         have hp2lt : p.2 < n := by
@@ -550,14 +549,13 @@ theorem toSubringPS_subst {r : ℕ} {F G : PowerSeries ℚ}
         = PowerSeries.subst G F := by
           simp [ι]
     _ = PowerSeries.map ι (PowerSeries.subst hG.toSubringPS hF.toSubringPS) := by
-          symm
           calc
-            PowerSeries.map ι (PowerSeries.subst hG.toSubringPS hF.toSubringPS)
-                = PowerSeries.subst (PowerSeries.map ι hG.toSubringPS)
-                    (PowerSeries.map ι hF.toSubringPS) := by
-                  simpa using PowerSeries.map_subst (h := ι) hsubst hF.toSubringPS
-            _ = PowerSeries.subst G F := by
-                  simp [ι]
+            PowerSeries.subst G F =
+                PowerSeries.subst (PowerSeries.map ι hG.toSubringPS)
+                  (PowerSeries.map ι hF.toSubringPS) := by
+              simp [ι]
+            _ = PowerSeries.map ι (PowerSeries.subst hG.toSubringPS hF.toSubringPS) := by
+              simpa using! (PowerSeries.map_subst (h := ι) hsubst hF.toSubringPS).symm
 
 /-- Coefficientwise reduction modulo `r` of an `r`-integral rational power
 series. -/

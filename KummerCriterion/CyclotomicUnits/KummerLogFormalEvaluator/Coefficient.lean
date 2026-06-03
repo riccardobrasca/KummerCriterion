@@ -477,7 +477,7 @@ theorem concreteKummerLogMatrix_eq_two_mul_specializedFiniteLogCoeffModP
           (concreteKummerLogVector (p := p) (K := K) hp_three a :
             DworkCompleteIntegerRing p K) = 2 • z := by
     rw [factor_evalₐ_eq_evalₐ (p := p) (K := K) hle] at hvec_factor
-    simpa [z, hle, map_nsmul] using hvec_factor
+    simpa [z, hle, map_nsmul] using! hvec_factor
   calc
     concreteKummerLogMatrix (p := p) (K := K) hp_three hp_five j a
         = valuedLambdaQuotientDworkCoeffModP (p := p) (K := K) i

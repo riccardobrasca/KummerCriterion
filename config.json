@@ -1,6 +1,6 @@
 {
-    "challenge_module": "KummerCriterion.Challenge",
-    "solution_module": "KummerCriterion.Solution",
+    "challenge_module": "Challenge",
+    "solution_module": "Solution",
     "theorem_names": ["fermatLastTheoremFor_le100_of_ne_irregular"],
     "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
     "enable_nanoda": false

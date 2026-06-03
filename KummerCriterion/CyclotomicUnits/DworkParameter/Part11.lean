@@ -274,7 +274,6 @@ theorem dwork_pow_prime_sub_pow_mem_parameterIdeal_pow_pred_of_sub_mem
   have hpI :
       (p : DworkCompleteIntegerRing p K) ∈
         (dworkParameterIdeal p K) ^ (p - 1) := by
-    change (p : DworkCompleteIntegerRing p K) ∈ (dworkParameterIdeal p K) ^ (p - 1)
     rw [← span_natCast_prime_dworkComplete_eq_parameterIdeal_pow_pred
       (p := p) (K := K)]
     exact Ideal.mem_span_singleton_self (p : DworkCompleteIntegerRing p K)

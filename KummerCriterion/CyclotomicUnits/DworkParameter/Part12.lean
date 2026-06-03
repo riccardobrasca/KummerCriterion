@@ -359,7 +359,7 @@ theorem mem_lambdaIdeal_iff_valuation_le_exp_neg_one
   have hlam :
       Valued.v (valuedCyclotomicLambdaInteger p K : ValuedCompletion p K) =
         WithZero.exp (-1 : ℤ) := by
-    simpa [valuedCyclotomicLambda] using
+    simpa [valuedCyclotomicLambda] using!
       valuedCyclotomicLambda_valuation (p := p) (K := K)
   rw [hlam]
 
@@ -477,7 +477,7 @@ theorem exists_global_fin_valuation_sub_le_exp_neg_one_of_valuation_le_one
         WithZero.exp (-1 : ℤ) := by
     rw [v.valuation_of_algebraMap]
     have hpow : n - algebraMap ℤ (𝓞 K) (i : ℤ) * d ∈ v.asIdeal ^ 1 := by
-      simpa [v, I, Reflection.Local.cyclotomicLambda] using hmem
+      simpa [v, I, Reflection.Local.cyclotomicLambda] using! hmem
     exact (v.intValuation_le_pow_iff_mem
       (n - algebraMap ℤ (𝓞 K) (i : ℤ) * d) 1).mpr hpow
   have hdval :
@@ -510,7 +510,7 @@ theorem exists_completion_fin_valuation_sub_le_exp_neg_one_of_valuation_le_one
   have hlam :
       Valued.v (valuedCyclotomicLambdaInteger p K : ValuedCompletion p K) =
         WithZero.exp (-1 : ℤ) := by
-    simpa [valuedCyclotomicLambda] using
+    simpa [valuedCyclotomicLambda] using!
       valuedCyclotomicLambda_valuation (p := p) (K := K)
   have hA' : IsClopen {x : ValuedCompletion p K | Valued.v.restrict x ≤ 1} :=
     Valued.isClopen_closedBall
@@ -582,9 +582,9 @@ theorem exists_completion_fin_valuation_sub_le_exp_neg_one_of_valuation_le_one
               Valued.v
                   (((y -
                     ((i : ℕ) : WithVal (v.valuation K))) :
-                    WithVal (v.valuation K)) :
+                  WithVal (v.valuation K)) :
                     ValuedCompletion p K) ≤ WithZero.exp (-1 : ℤ) := by
-            simpa [v, Valued.valuedCompletion_apply, WithVal.apply_ofVal] using hi
+            simpa [v, Valued.valuedCompletion_apply, WithVal.apply_ofVal] using! hi
           change
             Valued.v
                 ((y : ValuedCompletion p K) - ((i : ℕ) : ValuedCompletion p K)) ≤

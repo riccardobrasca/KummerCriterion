@@ -655,7 +655,7 @@ theorem dworkParameterFiniteArtinHasseTailCoord_factorPow
           exact False.elim (Nat.not_succ_le_zero M hMN)
       | succ N =>
           have hMN' : M ≤ N := Nat.succ_le_succ_iff.mp hMN
-          simpa using
+          simpa [dworkParameterFiniteArtinHasseTailCoord] using!
             dworkParameterFiniteArtinHasseTail_factorPow
               (p := p) (K := K) hp_two hMN'
 
@@ -682,7 +682,7 @@ theorem dworkParameterFiniteArtinHasseTailUnitCoord_factorPow
           exact False.elim (Nat.not_succ_le_zero M hMN)
       | succ N =>
           have hMN' : M ≤ N := Nat.succ_le_succ_iff.mp hMN
-          simpa using
+          simpa [dworkParameterFiniteArtinHasseTailUnitCoord] using!
             dworkParameterFiniteArtinHasseTailUnit_factorPow
               (p := p) (K := K) hp_two hMN'
 

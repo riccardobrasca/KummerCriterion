@@ -774,7 +774,7 @@ theorem evalIntegralPowerSeries_inverse_zetaPowSubOne_eq_scaledDworkParameter
                 (PowerSeries.subst (integralExpMinusOneSeries p K)
                   (integralInverseSeries p K)) =
               PowerSeries.subst H G := by
-          simpa [G, H] using
+          simpa [G, H] using!
             (PowerSeries.map_subst (h := q) hsubst (integralInverseSeries p K))
         rw [hmap_subst] at h
         simpa [G, H] using h

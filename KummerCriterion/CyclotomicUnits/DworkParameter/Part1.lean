@@ -273,7 +273,7 @@ def dworkCompleteLambda : DworkCompleteIntegerRing p K :=
     (valuedCyclotomicLambdaInteger p K)
 
 /-- The lambda ideal is finitely generated, since it is principal. -/
-instance lambdaIdeal_fg : (lambdaIdeal p K).FG := by
+lemma lambdaIdeal_fg : (lambdaIdeal p K).FG := by
   rw [lambdaIdeal]
   exact Submodule.fg_span_singleton (valuedCyclotomicLambdaInteger p K)
 
@@ -440,7 +440,7 @@ theorem valuedCyclotomicLambdaInteger_ne_zero :
   have hv_lam :
       Valued.v (valuedCyclotomicLambdaInteger p K : ValuedCompletion p K) =
         WithZero.exp (-1 : ℤ) := by
-    simpa [valuedCyclotomicLambda] using
+    simpa [valuedCyclotomicLambda] using!
       valuedCyclotomicLambda_valuation (p := p) (K := K)
   rw [hv_lam] at hv_zero
   norm_num at hv_zero

@@ -292,7 +292,7 @@ theorem valuedLambdaQuotientDworkCoeffModP_evalₐ
         =
       valuedLambdaQuotientDworkCoeffModP (p := p) (K := K) i
         (Ideal.Quotient.mk ((lambdaIdeal p K) ^ (p - 1)) r) := by
-          simpa [I] using congrArg
+          simpa only [I] using congrArg
             (valuedLambdaQuotientDworkCoeffModP (p := p) (K := K) i) hr.symm
     _ =
       rationalPadicIntegerToZMod p

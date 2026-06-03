@@ -79,7 +79,6 @@ lemma voronoi_permutation
   · intros j _; simp only [Finset.mem_range]; exact Nat.mod_lt _ hp.pos
   · intros i hi
     simp only [Finset.mem_range] at hi
-    dsimp only
     rw [show ((i * a) % p * b) % p = (i * a * b) % p by
       rw [Nat.mul_mod, Nat.mod_mod, ← Nat.mul_mod]]
     have h_zmod : ((i * a * b : ℕ) : ZMod p) = (i : ZMod p) := by
@@ -89,7 +88,6 @@ lemma voronoi_permutation
     rw [(ZMod.natCast_eq_natCast_iff _ _ _).mp h_zmod, Nat.mod_eq_of_lt hi]
   · intros j hj
     simp only [Finset.mem_range] at hj
-    dsimp only
     rw [show ((j * b) % p * a) % p = (j * b * a) % p by
       rw [Nat.mul_mod, Nat.mod_mod, ← Nat.mul_mod]]
     have h_zmod : ((j * b * a : ℕ) : ZMod p) = (j : ZMod p) := by

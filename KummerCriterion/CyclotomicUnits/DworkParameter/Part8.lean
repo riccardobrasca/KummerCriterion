@@ -148,7 +148,7 @@ theorem dworkCompleteLambda_mul_eq_zero
     (hx : dworkCompleteLambda p K * x = 0) :
     x = 0 := by
   have hx_smul : valuedCyclotomicLambdaInteger p K • x = 0 := by
-    simpa [dworkCompleteLambda, Algebra.smul_def] using hx
+    simpa [dworkCompleteLambda, Algebra.smul_def] using! hx
   exact dworkComplete_smul_eq_zero_of_ne_zero
     (p := p) (K := K)
     (valuedCyclotomicLambdaInteger_ne_zero (p := p) (K := K)) hx_smul
@@ -433,7 +433,7 @@ theorem evalIntegralPowerSeriesMod_expMinusOne_neg_dworkParameter_eq_conjugateLa
                       (dworkParameterApprox p K (M + 1))
                 rw [dworkParameter_evalₐ]
           _ = gamma := by
-                simpa [A, q, φ, G, lambdabar, gamma, I] using
+                simpa [A, q, φ, G, lambdabar, gamma, I] using!
                   quotient_mk_dworkParameterApprox_eq_trunc_eval
                     (p := p) (K := K) (M + 1)
       have hlambdaNil : lambdabar ^ (M + 1) = 0 := by
@@ -512,7 +512,7 @@ theorem evalIntegralPowerSeriesMod_expMinusOne_neg_dworkParameter_eq_conjugateLa
       have hseries :
           PowerSeries.subst (-G) H * (1 + (PowerSeries.X : PowerSeries A)) =
             -(PowerSeries.X : PowerSeries A) := by
-        simpa [G, H] using
+        simpa [G, H] using!
           FormalDwork.expMinusOneSeries_mapTo_subst_neg_inverse_mul_one_add_X_eq_neg_X
             (p := p) φ hp_two
       have hevalSeries := congrArg
@@ -645,7 +645,7 @@ theorem dworkConjugateParameter_eq_neg_dworkParameter (hp_two : 2 < p) :
                       (dworkParameterApprox p K (M + 1))
                 rw [dworkParameter_evalₐ]
           _ = gamma := by
-                simpa [A, q, φ, G, lambdabar, gamma, I] using
+                simpa [A, q, φ, G, lambdabar, gamma, I] using!
                   quotient_mk_dworkParameterApprox_eq_trunc_eval
                     (p := p) (K := K) (M + 1)
       have hExpConj :
@@ -709,7 +709,7 @@ theorem dworkConjugateParameter_eq_neg_dworkParameter (hp_two : 2 < p) :
         exact map_zero φ
       have hInner0 :
           PowerSeries.constantCoeff (PowerSeries.subst (-G) H) = 0 := by
-        simpa using
+        simpa using!
           PowerSeries.constantCoeff_subst_eq_zero
             hNegG0 H
             hH0
@@ -773,7 +773,7 @@ theorem dworkConjugateParameter_eq_neg_dworkParameter (hp_two : 2 < p) :
               hInnerEval
       have hseriesInv :
           PowerSeries.subst (PowerSeries.subst (-G) H) G = -G := by
-        simpa [G, H] using
+        simpa [G, H] using!
           FormalDwork.inverseSeries_mapTo_subst_expMinusOneSeries_subst_neg_inverse
             (p := p) φ
       have hevalInv := congrArg

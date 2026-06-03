@@ -197,7 +197,7 @@ theorem lambdaValuation_algebraMap_rat_le_one_iff_den (x : ℚ) :
       simpa [lambdaRationalHeightOneSpectrum] using
         (lambdaRationalHeightOneSpectrum p).isPrime
     exact (Ideal.IsPrime.notMem_of_isCoprime_of_mem
-      (by simpa using x.isCoprime_num_den.symm.intCast) hdenZ) hnumZ
+      (by simpa using! x.isCoprime_num_den.symm.intCast) hdenZ) hnumZ
   have hx :
       algebraMap ℚ K x =
         (algebraMap ℤ (𝓞 K) x.num : K) /
@@ -261,7 +261,7 @@ theorem continuous_rationalToLambdaWithValRingHom :
         vK (algebraMap (𝓞 K) K (algebraMap ℤ (𝓞 K) (p : ℤ))) < 1 :=
       ((lambdaHeightOneSpectrum p K).valuation_lt_one_iff_mem
         (K := K) (algebraMap ℤ (𝓞 K) (p : ℤ))).mpr hp_mem_zeta
-    simpa [targetP, vK] using h
+    simpa [targetP, vK] using! h
   have hp_tendsto : Tendsto (fun n : ℕ => targetP ^ n) atTop (𝓝 0) :=
     Valued.tendsto_zero_pow_of_v_lt_one hp_lt
   refine (uniformContinuous_of_continuousAt_zero
@@ -296,7 +296,7 @@ theorem continuous_rationalToLambdaWithValRingHom :
     rwa [Valuation.restrict_lt_iff] at hx
   have hx_rat :
       vQ ((WithVal.equiv vQ) x) < vQ ((p : ℚ) ^ n) := by
-    simpa [sourceP, vQ] using hx_val
+    simpa [sourceP, vQ] using! hx_val
   have hx_comap :
       (vK.comap (algebraMap ℚ K)) ((WithVal.equiv vQ) x) <
         (vK.comap (algebraMap ℚ K)) ((p : ℚ) ^ n) :=
@@ -305,7 +305,7 @@ theorem continuous_rationalToLambdaWithValRingHom :
       Valued.v (rationalToLambdaWithValRingHom (p := p) (K := K) x) <
         Valued.v (targetP ^ n) := by
     simpa [rationalToLambdaWithValRingHom, rationalToLambdaComapWithValRingHom,
-      targetP, sourceP, vQ, vK, Valuation.comap_apply, map_pow] using hx_comap
+      targetP, sourceP, vQ, vK, Valuation.comap_apply, map_pow] using! hx_comap
   exact hx_target.trans <| by
     have hn' : Valued.v.restrict (targetP ^ n) < γ.1 := hn n le_rfl
     rwa [Valuation.restrict_lt_iff_lt_embedding] at hn'
@@ -343,7 +343,7 @@ theorem continuous_algebraMap_rationalCompletionToLambdaAlgebra :
     Continuous (algebraMap ((lambdaRationalHeightOneSpectrum p).adicCompletion ℚ)
       (LambdaValuedCompletion p K)) := by
   change Continuous (rationalToLambdaCompletionRingHom (p := p) (K := K))
-  simpa [rationalToLambdaCompletionRingHom] using
+  simpa [rationalToLambdaCompletionRingHom] using!
     (UniformSpace.Completion.continuous_map
       (f := rationalToLambdaWithValRingHom (p := p) (K := K)))
 

@@ -298,9 +298,9 @@ noncomputable def familyIndexAsUnit
   rw [Nat.coprime_comm, h_p_prime.coprime_iff_not_dvd]
   intro h_dvd
   have h_lt_p : ((j : ℕ) + 2 : ℕ) < p := by
-    change j.val + 2 < p; omega
+    omega
   have h_pos : 0 < ((j : ℕ) + 2 : ℕ) := by
-    change 0 < j.val + 2; omega
+    omega
   have := Nat.le_of_dvd h_pos h_dvd
   omega
 

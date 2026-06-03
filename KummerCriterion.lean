@@ -108,7 +108,6 @@ import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogBoun
 import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogFormal
 import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseCompletionMap
 import KummerCriterion.TotallyRealSubfield.ClassGroup
-import KummerCriterion.TotallyRealSubfield.ClassGroupExtension
 import KummerCriterion.TotallyRealSubfield.Conjugation
 import KummerCriterion.TotallyRealSubfield.FixedAssociate
 import KummerCriterion.TotallyRealSubfield.ZetaPrime

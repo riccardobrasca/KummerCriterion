@@ -73,7 +73,7 @@ theorem valuedCompletionCyclotomicEquiv_rationalToLambdaCompletionRingHom
   have hecont : Continuous (valuedCompletionCyclotomicEquiv (p := p) K a) :=
     continuous_valuedCompletionCyclotomicEquiv (p := p) (K := K) a
   have hfcont : Continuous (rationalToLambdaCompletionRingHom (p := p) (K := K)) := by
-    simpa [rationalToLambdaCompletionRingHom] using
+    simpa [rationalToLambdaCompletionRingHom] using!
       (UniformSpace.Completion.continuous_map
         (f := rationalToLambdaWithValRingHom (p := p) (K := K)))
   induction x using UniformSpace.Completion.induction_on with

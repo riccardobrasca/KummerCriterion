@@ -97,7 +97,7 @@ theorem zmodEquivFin_symm_apply (i : Fin p) :
       exact (hp.out.ne_zero rfl).elim
   | succ n =>
       apply Fin.ext
-      simpa [ZMod.finEquiv] using (ZMod.val_natCast_of_lt i.is_lt).symm
+      simpa [ZMod.finEquiv] using! (ZMod.val_natCast_of_lt i.is_lt).symm
 
 /-- The normalized Fourier matrix reindexed by `Fin p`. -/
 noncomputable def normalizedFourierMatrixFin : Matrix (Fin p) (Fin p) ℂ :=

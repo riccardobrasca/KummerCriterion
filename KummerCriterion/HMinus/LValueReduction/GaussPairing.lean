@@ -101,7 +101,8 @@ theorem oddCharacterInvClass_eq_pair
             Quotient.mk (oddCharacterInvSetoid (p := p)) χ) (oddCharacters (p := p)) := by
       simpa [oddCharacterInvClass] using hψ
     have hrel : ψ = χ ∨ ψ = χ⁻¹ := by
-      simpa [oddCharacterInvSetoid] using Quotient.exact (Finset.mem_filter.mp hψ').2
+      change (oddCharacterInvSetoid (p := p)).r ψ χ
+      exact Quotient.exact (Finset.mem_filter.mp hψ').2
     simpa [oddCharacterInvPair, Finset.mem_insert, Finset.mem_singleton] using hrel
   · intro hψ
     have hψ' :
@@ -266,7 +267,8 @@ theorem oddCharacterInvClassWithoutQuadratic_eq_pair
           (oddCharactersWithoutQuadratic (p := p)) := by
       simpa [oddCharacterInvClassWithoutQuadratic] using hψ
     have hrel : ψ = χ ∨ ψ = χ⁻¹ := by
-      simpa [oddCharacterInvSetoid] using Quotient.exact (Finset.mem_filter.mp hψ').2
+      change (oddCharacterInvSetoid (p := p)).r ψ χ
+      exact Quotient.exact (Finset.mem_filter.mp hψ').2
     simpa [oddCharacterInvPair, Finset.mem_insert, Finset.mem_singleton] using hrel
   · intro hψ
     have hψ' :

@@ -573,7 +573,7 @@ theorem cosZeta_one_eq_boundary {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) :
       Complex.continuous_ofReal.continuousAt.tendsto
     have hcomp : Tendsto (fun s : ℝ => HurwitzZeta.cosZeta x (s : ℂ)) (𝓝 (1 : ℝ))
         (𝓝 (HurwitzZeta.cosZeta x 1)) := by
-      simpa [Function.comp] using hcomplex.comp hreal
+      simpa [Function.comp] using! hcomplex.comp hreal
     exact hcomp.mono_left nhdsWithin_le_nhds
   simpa [boundary] using (tendsto_nhds_unique hcos_right hcos_cont).symm
 

@@ -37,7 +37,7 @@ lemma idealNormMultiplicity_p_pow_eq_one (k : ℕ) :
     have hncard : (Ideal.primesOver (rationalPrimeIdeal p) (𝓞 K)).ncard = 1 :=
       ncard_primesOver_at_p_eq_one (p := p) (K := K)
     rw [← hcoe, Set.ncard_coe_finset] at hncard
-    simpa using hncard
+    simpa [primesOverFinset] using hncard
   obtain ⟨P, hP⟩ := Finset.card_eq_one.mp hcard
   have hPmem : P ∈ Ideal.primesOver (rationalPrimeIdeal p) (𝓞 K) := by
     have hPfin : P ∈ primesOverFinset K p := by

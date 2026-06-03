@@ -130,7 +130,7 @@ theorem not_dvd_index_of_pSaturated (hp_three : 3 ≤ p)
     intro g hg
     have hg_torsion : g ∈ NumberField.Units.torsion K⁺ := by
       change g ∈ CommGroup.torsion (𝓞 K⁺)ˣ
-      exact (CommGroup.mem_torsion (𝓞 K⁺)ˣ g).mpr
+      exact (CommGroup.mem_torsion g).mpr
         (isOfFinOrder_iff_pow_eq_one.mpr ⟨p, (Fact.out : Nat.Prime p).pos, hg⟩)
     simpa [H] using
       torsionKplus_le_CPlus (p := p) (K := K) hp_three hg_torsion

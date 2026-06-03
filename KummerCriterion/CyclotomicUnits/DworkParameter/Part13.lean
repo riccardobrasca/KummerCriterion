@@ -431,7 +431,7 @@ theorem dworkParameter_residue_error_mul_pow_mem
         exact Ideal.mem_span_singleton_self (dworkParameter p K)) s
   have hmul :
       (y - algebraMap (RationalPadicIntegerRing p) S b) * varpi ^ s ∈ I * I ^ s :=
-    Ideal.mul_mem_mul (by simpa [I] using hb) hvarpi_pow
+    Ideal.mul_mem_mul (by simpa [I] using! hb) hvarpi_pow
   have hmul1 :
       (y - algebraMap (RationalPadicIntegerRing p) S b) * varpi ^ s ∈ I ^ 1 * I ^ s := by
     simpa using hmul
@@ -558,7 +558,7 @@ theorem dworkParameterPowerLinearMap_oneStepCorrection_of_residue_lift
   rcases hres y with ⟨b, hb⟩
   have hz_sub :
       z - algebraMap R₀ S b * varpi ^ s ∈ I ^ (s + 1) := by
-    simpa [S, I, varpi] using
+    simpa [S, I, varpi] using!
       dworkParameter_power_residue_error_mem (p := p) (K := K)
         (z := z) (y := y) (b := b) s hyz.symm hb
   have hmul_mem :

@@ -61,7 +61,7 @@ lemma faulhaber_term_mem_p_sq
     have hw_mul : ((2 : ℕ) : ℤ_[p]) * w = 1 := by
       change ((h2_unit.unit * h2_unit.unit⁻¹ : (ℤ_[p])ˣ).val : ℤ_[p]) = 1; simp
     have hw_mul_Qp : (2 : ℚ_[p]) * ((w : ℤ_[p]) : ℚ_[p]) = 1 := by
-      simpa using congrArg (fun x : ℤ_[p] => (x : ℚ_[p])) hw_mul
+      simpa using! congrArg (fun x : ℤ_[p] => (x : ℚ_[p])) hw_mul
     refine ⟨-((Nat.choose (t + 1) 1 : ℤ_[p]) * w * (p : ℤ_[p]) ^ (t - 2)), ?_⟩
     rw [_root_.bernoulli_one,
       show (t + 1 - 1 : ℕ) = 2 + (t - 2) by omega, pow_add]

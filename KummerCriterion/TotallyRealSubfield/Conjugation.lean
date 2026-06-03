@@ -64,7 +64,7 @@ theorem conj_unit_mul_eq_one [IsCMField K]
     apply RingOfIntegers.ext
     simp [coe_ringOfIntegersComplexConj, complexConj_apply_apply]
   have hu1 : a = (unitsComplexConj K u : (𝓞 K)ˣ) * ringOfIntegersComplexConj K a := by
-    simpa [hcc, unitsComplexConj, map_mul] using congrArg (ringOfIntegersComplexConj K) hu
+    simpa [hcc, unitsComplexConj, map_mul] using! congrArg (ringOfIntegersComplexConj K) hu
   rw [hu] at hu1
   have hu2 : a = (((unitsComplexConj K u * u : (𝓞 K)ˣ) : 𝓞 K) * a) := by
     simpa [mul_assoc] using hu1
@@ -122,7 +122,7 @@ theorem conj_zeta_pow [IsCMField K]
     (m : ℕ) :
     complexConj K (hζ.unit' ^ m : (𝓞 K)ˣ) = ((hζ.unit' ^ m)⁻¹ : (𝓞 K)ˣ) := by
   have hzeta_torsion : hζ.unit' ∈ NumberField.Units.torsion K := by
-    refine (CommGroup.mem_torsion _ _).2 (isOfFinOrder_iff_pow_eq_one.2 ⟨p, hp.1.pos, ?_⟩)
+    refine (CommGroup.mem_torsion _).2 (isOfFinOrder_iff_pow_eq_one.2 ⟨p, hp.1.pos, ?_⟩)
     exact hζ.unit'_pow
   have hbase : unitsComplexConj K hζ.unit' = (hζ.unit'⁻¹ : (𝓞 K)ˣ) := by
     simpa using unitsComplexConj_torsion K ⟨hζ.unit', hzeta_torsion⟩

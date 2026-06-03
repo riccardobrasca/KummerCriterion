@@ -134,7 +134,7 @@ lemma maximalRealSubfield_torsion_eq_one_or_neg_one
   let r : ℝ := hφ.embedding (u : L)
   have hur : ((r : ℂ)) = φ (u : L) :=
     hφ.coe_embedding_apply (u : L)
-  have hu_fin : IsOfFinOrder u := (CommGroup.mem_torsion _ u).1 x.prop
+  have hu_fin : IsOfFinOrder u := (CommGroup.mem_torsion u).1 x.prop
   obtain ⟨n, hn, hu_pow⟩ := isOfFinOrder_iff_pow_eq_one.mp hu_fin
   have hnorm : ‖φ (u : L)‖ = 1 :=
     Complex.norm_eq_one_of_pow_eq_one
@@ -369,7 +369,7 @@ lemma one_add_zetaInteger_isUnit (hp_odd' : p ≠ 2) :
 set_option linter.unusedSectionVars false in
 lemma zetaInteger_pow_eq_one :
     (((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) ^ p : 𝓞 K) = 1 := by
-  simpa using
+  simpa using!
     congrArg (fun u : (𝓞 K)ˣ => (u : 𝓞 K))
       (IsCyclotomicExtension.zeta_spec p ℚ K).unit'_pow
 
@@ -398,7 +398,7 @@ lemma one_add_zetaInteger_pow_pred_isUnit (hp_odd' : p ≠ 2) :
     IsUnit (1 + ((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) ^ (p - 1)) := by
   let ζi : 𝓞 K := (IsCyclotomicExtension.zeta_spec p ℚ K).toInteger
   have hzeta_unit : IsUnit (ζi ^ (p - 1) : 𝓞 K) := by
-    simpa using (IsCyclotomicExtension.zeta_spec p ℚ K).unit'.isUnit.pow (p - 1)
+    simpa using! (IsCyclotomicExtension.zeta_spec p ℚ K).unit'.isUnit.pow (p - 1)
   have hmul : (ζi ^ (p - 1) : 𝓞 K) * (1 + ζi) = 1 + ζi ^ (p - 1) := by
     rw [mul_add, mul_one, zetaInteger_pow_pred_mul_eq_one (p := p) (K := K)]
     ring
@@ -440,7 +440,7 @@ lemma aeval_zetaInteger_quadratic_eq_zero :
             norm_num
   simpa [Polynomial.aeval_def, algebraMap_piPlus_eq_two_sub_zeta_sub_zetaPowPred,
     pow_two, map_sub, add_assoc, add_left_comm, add_comm, mul_assoc, mul_left_comm, mul_comm]
-    using hcalc
+    using! hcalc
 
 set_option linter.unusedSectionVars false in
 lemma minpoly_maximalRealSubfield_zetaInteger_eq_quadratic (hp_odd' : p ≠ 2) :
