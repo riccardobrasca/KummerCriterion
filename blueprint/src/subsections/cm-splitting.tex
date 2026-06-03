@@ -39,8 +39,8 @@ The proof uses the faithfully-flat criterion in terms of prime spectra.
 Flatness is available for the ring-of-integers extension.  To prove
 faithfulness, one starts with a prime ideal of $\mathcal O_{L^+}$ and applies
 lying-over to obtain a prime ideal of $\mathcal O_L$ above it.  The induced map
-on prime spectra is therefore surjective, which is exactly the hypothesis of
-`Module.FaithfullyFlat.of_comap_surjective`.
+on prime spectra is therefore surjective.  This proves faithful flatness by the
+prime-spectrum criterion.
 \end{proof}
 
 \begin{theorem}\label{thm:map-comap-ring-of-integers}
@@ -53,8 +53,7 @@ followed by contraction is the identity:
 \]
 \end{theorem}
 \begin{proof}\leanok
-This is the standard ideal-theoretic consequence of faithful flatness:
-`Ideal.comap_map_eq_self_of_faithfullyFlat`, applied to
+Apply the ideal-theoretic contraction lemma for faithful flatness, using
 \cref{thm:ring-of-integers-faithfully-flat}.
 \end{proof}
 

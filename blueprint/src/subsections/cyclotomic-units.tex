@@ -59,7 +59,7 @@ dividing a power of $2$.  Since $p$ is odd, passing between the two indices
 does not change $p$-divisibility.
 \end{proof}
 
-\section{Exact $p$-saturation}
+\section{\texorpdfstring{Exact $p$-saturation}{Exact p-saturation}}
 
 \begin{definition}\label{def:EPlus}
   \lean{KummerCriterion.EPlus}\leanok
@@ -182,8 +182,8 @@ Vandermonde determinant is therefore a product of nonzero differences.
 \begin{theorem}\label{thm:kummer-det-bernoulli-factor}
   \lean{KummerCriterion.CyclotomicUnits.concreteKummerLogMatrix_det_ne_zero_iff_forall_bernoulliFactor_ne_zero}\leanok
   \uses{thm:kummer-log-vandermonde, thm:vandermonde-nonzero}
-The Kummer logarithm determinant is nonzero if and only if every diagonal
-Bernoulli factor is nonzero.
+The Kummer logarithm determinant is nonzero exactly when every Bernoulli diagonal
+factor is nonzero.
 \end{theorem}
 \begin{proof}\leanok
 Use the diagonal-times-Vandermonde factorisation.  The Vandermonde determinant
@@ -294,8 +294,7 @@ hypothesis required by \cref{thm:CPlus-pSaturated-exponents}.
 \begin{definition}\label{def:cyclotomicUnitIndexSubgroup}
   \lean{KummerCriterion.cyclotomicUnitIndexSubgroup}\leanok
   \uses{def:normalizedCPlus}
-The subgroup used by the prime-conductor index theorem is the normalized
-cyclotomic-unit subgroup.
+The index-theorem subgroup is the normalized cyclotomic-unit subgroup.
 \end{definition}
 
 \begin{theorem}\label{thm:index-subgroup-eq-CPlus}
