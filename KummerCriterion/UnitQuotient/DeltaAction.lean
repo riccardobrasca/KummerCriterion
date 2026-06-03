@@ -1,11 +1,6 @@
 module
 
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
-public import Mathlib.Algebra.Field.ZMod
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.CategoryTheory.Category.Init
-import Mathlib.Combinatorics.Matroid.Init
-import Mathlib.Data.Nat.Factorial.DoubleFactorial
 
 /-!
 # Unit quotients: power quotients and `Δ`-components

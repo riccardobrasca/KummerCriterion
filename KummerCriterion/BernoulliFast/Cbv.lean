@@ -7,7 +7,6 @@ module
 
 public import KummerCriterion.BernoulliFast.Correctness
 public meta import Lean.Meta.Sym.LitValues
-public import Mathlib.NumberTheory.Bernoulli
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.NormNum.BigOperators
 import Mathlib.Tactic.NormNum.Irrational

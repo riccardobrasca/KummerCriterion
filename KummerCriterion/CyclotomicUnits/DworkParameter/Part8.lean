@@ -18,12 +18,6 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
-public import Mathlib.RingTheory.Ideal.Defs
-import Mathlib.CategoryTheory.Category.Init
-import Mathlib.Combinatorics.Matroid.Init
-import Mathlib.MeasureTheory.Integral.Bochner.Basic
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
-import Mathlib.Tactic.Positivity.Finset
 
 /-!
 # Stickelberger-style prime factorization of residue Gauss sums

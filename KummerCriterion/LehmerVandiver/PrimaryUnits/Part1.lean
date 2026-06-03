@@ -1,7 +1,6 @@
 module
 
 public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
-import FltRegular.NumberTheory.Cyclotomic.CyclRat
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
 import KummerCriterion.TotallyRealSubfield.ZetaPrime

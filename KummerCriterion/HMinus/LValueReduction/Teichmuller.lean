@@ -1,12 +1,8 @@
 module
 
-public import KummerCriterion.KummerCongruence.BernoulliGeneralized
 public import FltRegular.NumberTheory.Cyclotomic.CyclRat
-public import KummerCriterion.TotallyRealSubfield.ClassGroup
-public import KummerCriterion.ZetaFactorisation.Basic
 import KummerCriterion.GaussSum.SignInvariant.BlockDeterminant
 import KummerCriterion.HMinus.LValueReduction.LValues
-public import Mathlib.NumberTheory.NumberField.DedekindZeta
 import KummerCriterion.ZetaFactorisation.EulerProduct
 public import KummerCriterion.HMinus.LValueReduction.GaussGoal
 public import KummerCriterion.LValueAtOne.Odd

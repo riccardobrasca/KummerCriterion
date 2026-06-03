@@ -1,7 +1,6 @@
 module
 
 public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part4
-public import KummerCriterion.UnitQuotient.DeltaAction
 
 @[expose] public section
 

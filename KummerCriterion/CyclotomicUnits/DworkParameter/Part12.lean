@@ -1,7 +1,6 @@
 module
 
 public import KummerCriterion.CyclotomicUnits.DworkParameter.Part11
-public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseCompletionMap
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.NormNum.BigOperators
 import Mathlib.Tactic.NormNum.Irrational
@@ -18,8 +17,6 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
-public import KummerCriterion.Reflection.Local.DeltaAction
-import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
 
 /-!
 # First graded piece of the principal-unit filtration

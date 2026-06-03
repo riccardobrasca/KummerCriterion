@@ -3,13 +3,7 @@ module
 public import KummerCriterion.GaussSum.Basic
 public import KummerCriterion.ZetaFactorisation.Basic
 import KummerCriterion.HMinus.LValueReduction.LValues
-public import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
-public import Mathlib.NumberTheory.GaussSum
-public import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
 import KummerCriterion.GaussSum.SignInvariant.BranchChoice
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Data.Nat.Factorial.DoubleFactorial
 
 /-!
 # Final quadratic Gauss-sum endpoint

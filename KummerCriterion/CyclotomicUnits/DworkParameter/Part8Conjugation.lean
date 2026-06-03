@@ -1,7 +1,6 @@
 module
 
 public import KummerCriterion.CyclotomicUnits.DworkParameter.Part8
-public import KummerCriterion.Reflection.Local.DeltaAction
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.NormNum.BigOperators
 import Mathlib.Tactic.NormNum.Irrational

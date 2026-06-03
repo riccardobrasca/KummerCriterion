@@ -1,13 +1,9 @@
 module
 
 public import KummerCriterion.CyclotomicUnits.NormalizedUnits
-public import KummerCriterion.CyclotomicUnits.Saturation
 public import Mathlib.GroupTheory.Rank
 import Mathlib.GroupTheory.Schreier
 import Mathlib.Analysis.SpecialFunctions.Bernstein
-public import Mathlib.GroupTheory.Index
-public import Mathlib.Data.Nat.Prime.Defs
-import Mathlib.Data.Nat.Prime.Basic
 
 /-!
 # Odd-primary subgroup index comparison

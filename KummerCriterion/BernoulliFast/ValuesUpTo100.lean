@@ -17,10 +17,6 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
-public meta import Mathlib.Tactic.ToAdditive
-public meta import Mathlib.Tactic.ToDual
-public meta import Std.Do.Triple.SpecLemmas
-import Mathlib.Data.Nat.Factorial.DoubleFactorial
 
 /-!
 # Tactic for certifying Bernoulli number values

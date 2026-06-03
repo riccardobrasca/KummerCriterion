@@ -6,18 +6,6 @@ Authors: Bernoulli-Regular project contributors
 module
 
 public import Mathlib.NumberTheory.Bernoulli
-public import Mathlib.Data.Rat.Init
-public import Mathlib.Tactic.ToAdditive
-public import Mathlib.Tactic.ToDual
-import Mathlib.Analysis.Normed.Group.Basic
-import Mathlib.Data.EReal.Operations
-import Mathlib.Data.Nat.Factorial.DoubleFactorial
-import Mathlib.Data.Nat.Totient
-import Mathlib.Data.Sym.Sym2.Init
-import Mathlib.Tactic.ContinuousFunctionalCalculus
-import Mathlib.Tactic.NormNum.GCD
-import Mathlib.Tactic.Positivity.Finset
-import Mathlib.Topology.MetricSpace.Bounded
 
 /-!
 # Fast computable Bernoulli numbers

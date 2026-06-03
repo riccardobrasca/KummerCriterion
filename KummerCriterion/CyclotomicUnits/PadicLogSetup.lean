@@ -4,7 +4,6 @@ public import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part1
 import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part2
 import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part2
 public import KummerCriterion.Reflection.Local.DeltaAction
-import Mathlib.RingTheory.Henselian
 public import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseCompletionMap
 
 /-!

@@ -1,10 +1,8 @@
 module
 
-public import KummerCriterion.CyclotomicUnits.Saturation
 public import KummerCriterion.CyclotomicUnits.DworkParameter.Part18
 public import KummerCriterion.CyclotomicUnits.KummerLogTrace
 import KummerCriterion.CyclotomicUnits.DworkParameter.Part8Tail
-import KummerCriterion.CyclotomicUnits.DworkParameter.Part12
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.NormNum.BigOperators

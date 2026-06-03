@@ -1,13 +1,6 @@
 module
 
 public import KummerCriterion.UnitQuotient.DeltaAction
-public import Mathlib.FieldTheory.Finite.Basic
-public import Mathlib.NumberTheory.MulChar.Basic
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.CategoryTheory.Category.Init
-import Mathlib.Combinatorics.Matroid.Init
-import Mathlib.Data.Nat.Factorial.DoubleFactorial
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
 
 /-!
 # Unit quotients: the even permutation representation

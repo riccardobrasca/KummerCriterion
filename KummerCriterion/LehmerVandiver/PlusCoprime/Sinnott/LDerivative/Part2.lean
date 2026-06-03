@@ -7,11 +7,6 @@ public import KummerCriterion.ZetaFactorisation.Basic
 import KummerCriterion.HMinus.KplusLocalCharacters
 import KummerCriterion.HMinus.LValueReduction.LValues
 import Mathlib.RingTheory.RootsOfUnity.Lemmas
-public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
-import FltRegular.NumberTheory.Cyclotomic.CyclRat
-import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Data.Nat.Factorial.DoubleFactorial
 
 /-!
 # LV-SIN-B: Vandermonde-style determinant evaluation

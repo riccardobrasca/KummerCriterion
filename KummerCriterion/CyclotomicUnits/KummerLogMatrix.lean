@@ -20,9 +20,6 @@ import Mathlib.Tactic.NormNum.Ordinal
 import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
-public import KummerCriterion.UnitQuotient.DeltaAction
-public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
-public import Mathlib.NumberTheory.NumberField.CMField
 
 /-!
 # Unit quotients: complex conjugation and augmentation traces

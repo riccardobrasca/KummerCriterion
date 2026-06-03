@@ -3,15 +3,8 @@ module
 public import KummerCriterion.UnitQuotient.PermutationCharacters
 public import FltRegular.NumberTheory.Cyclotomic.CyclRat
 public import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
-public import Mathlib.NumberTheory.DirichletCharacter.Basic
-public import Mathlib.NumberTheory.MulChar.Duality
 import KummerCriterion.GaussSum.SignInvariant.Trace
 import Mathlib.Analysis.SpecialFunctions.Bernstein
-import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
-import Mathlib.Data.Nat.Factorial.DoubleFactorial
-import Mathlib.CategoryTheory.Category.Init
-import Mathlib.Combinatorics.Matroid.Init
-import Mathlib.NumberTheory.ArithmeticFunction.Misc
 
 /-!
 # Unit quotients: the free character profile

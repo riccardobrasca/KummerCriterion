@@ -3,11 +3,8 @@ module
 public import KummerCriterion.CyclotomicUnits.NormalizedSubgroup
 import KummerCriterion.CyclotomicUnits.IndexDeterminant
 import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge
-import KummerCriterion.TotallyRealSubfield.ClassGroup
 import Mathlib.NumberTheory.NumberField.Cyclotomic.PID
 public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LogEmbedding
-import KummerCriterion.CyclotomicUnits.Saturation
-import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!
 # P-primary cyclotomic-unit index formula

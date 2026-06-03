@@ -8,7 +8,6 @@ import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
 import Mathlib.RingTheory.Flat.TorsionFree
 public import Mathlib.NumberTheory.NumberField.CMField
 public import Mathlib.NumberTheory.NumberField.ClassNumber
-import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
 
 /-!
 # Basic CM data for the totally real subfield

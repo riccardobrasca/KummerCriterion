@@ -1,7 +1,5 @@
 module
 
-public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part5
-import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part1
 public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part6
 
 @[expose] public section

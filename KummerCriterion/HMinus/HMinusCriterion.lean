@@ -4,6 +4,7 @@ public import Mathlib.NumberTheory.Bernoulli
 public import KummerCriterion.TotallyRealSubfield.ClassGroup
 import KummerCriterion.HMinus.PadicCorollaries
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+public import Mathlib.NumberTheory.Padics.PadicIntegers
 
 /-!
 # Bernoulli criterion from the relative class number formula

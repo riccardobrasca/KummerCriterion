@@ -1,7 +1,6 @@
 module
 
 public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part3
-public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part1
 import KummerCriterion.HMinus.KplusLocalCharacters
 import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part2
 
