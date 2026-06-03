@@ -19,7 +19,7 @@ Substituting this identity immediately yields the desired special value.
 
 \begin{theorem}[Special value at zero]
   \label{thm:L0-eq-neg-B1}
-  \lean{BernoulliRegular.odd_LFunction_zero_eq_neg_BernoulliGen_one}
+  \lean{KummerCriterion.odd_LFunction_zero_eq_neg_BernoulliGen_one}
   \leanok
   \uses{lem:gen-bernoulli-one-intermediate, prop:gen-bernoulli-zero}
 Let $p$ be an odd prime and let $\chi$ be a non-trivial odd Dirichlet
@@ -65,7 +65,7 @@ where
 is the Gauss sum of $\chi$.
 
 \begin{proposition}\label{thm:fe-reduction}
-  \lean{BernoulliRegular.odd_LFunction_one_eq_oddLValueRhs_of_LFunction_inv_zero}
+  \lean{KummerCriterion.odd_LFunction_one_eq_oddLValueRhs_of_LFunction_inv_zero}
   \leanok
   \uses{def:gauss-sum, def:gen-bernoulli, def:even-odd}
 Let $p$ be an odd prime and let $\chi$ be a primitive odd Dirichlet
@@ -105,7 +105,7 @@ gives the stated formula.
 
 \begin{corollary}[Odd character formula at \texorpdfstring{$s=1$}{s=1}]
   \label{cor:L1-odd}
-  \lean{BernoulliRegular.odd_LFunction_one_eq_oddLValueRhs}
+  \lean{KummerCriterion.odd_LFunction_one_eq_oddLValueRhs}
   \leanok
   \uses{thm:L0-eq-neg-B1, thm:fe-reduction}
 Let $p$ be an odd prime and let $\chi$ be a non-trivial odd Dirichlet

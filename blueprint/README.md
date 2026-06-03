@@ -48,6 +48,6 @@ version is built.
 
 ## Status
 
-The route to `BernoulliRegular.KummerCriterion` is documented in the chapters
+The route to `KummerCriterion` is documented in the chapters
 included by `src/content.tex`, which is the authoritative table of contents
 for the blueprint.

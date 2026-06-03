@@ -16,7 +16,7 @@ following criterion.
 
 \begin{theorem}[Minus class-number criterion]
   \label{thm:hminus-bernoulli-final}
-  \lean{BernoulliRegular.p_dvd_hMinus_iff_p_dvd_some_bernoulli}
+  \lean{KummerCriterion.p_dvd_hMinus_iff_p_dvd_some_bernoulli}
   \leanok
   \uses{thm:hminus-formula, thm:boundary-character-bernoulli,
     thm:bernoulli-padicInt-below, cor:bernoulli-den-coprime}
@@ -59,7 +59,7 @@ We shall also use the contrapositive form of this criterion.
 
 \begin{corollary}[Non-divisibility of $h^-$ gives Bernoulli non-divisibility]
   \label{cor:hminus-not-dvd-bernoulli-nonzero}
-  \lean{BernoulliRegular.bernoulli_nonzero_of_not_dvd_hMinus}
+  \lean{KummerCriterion.bernoulli_nonzero_of_not_dvd_hMinus}
   \leanok
   \uses{thm:hminus-bernoulli-final}
 If $p\nmid h^-(K)$, then for every $j$ with $1\le j$ and $2j\le p-3$,
@@ -81,7 +81,7 @@ contrapositive of the minus criterion into a statement about $h^+$.
 
 \begin{theorem}[Contrapositive plus-to-minus divisibility]
   \label{thm:not-dvd-hplus-of-not-dvd-hminus-units}
-  \lean{BernoulliRegular.not_dvd_hPlus_of_not_dvd_hMinus_units}
+  \lean{KummerCriterion.not_dvd_hPlus_of_not_dvd_hMinus_units}
   \leanok
   \uses{cor:hminus-not-dvd-bernoulli-nonzero, thm:bernoulli-nonzero-index,
     thm:cyclotomic-unit-index-hplus, lem:CPlus-index-normalized-index}
@@ -123,7 +123,7 @@ $p\nmid h^+(K)$.
 
 \begin{corollary}[Plus divisibility implies minus divisibility]
   \label{cor:hplus-to-hminus-units}
-  \lean{BernoulliRegular.weakReflection_dvd_hMinus_of_dvd_hPlus_units}
+  \lean{KummerCriterion.weakReflection_dvd_hMinus_of_dvd_hPlus_units}
   \leanok
   \uses{thm:not-dvd-hplus-of-not-dvd-hminus-units}
 If
@@ -154,7 +154,7 @@ to divisibility of the minus class number.
 
 \begin{theorem}[Total class-number divisibility]
   \label{thm:dvd-h-iff-dvd-hminus-units}
-  \lean{BernoulliRegular.dvd_h_iff_dvd_hMinus_of_dvd_hPlus_imp}
+  \lean{KummerCriterion.dvd_h_iff_dvd_hMinus_of_dvd_hPlus_imp}
   \leanok
   \uses{thm:h-factorisation, cor:hplus-to-hminus-units}
 For odd $p$, assume that
@@ -187,7 +187,7 @@ Thus $p\mid h^-(K)$ in all cases.
 
 \begin{theorem}[Total class number and Bernoulli numerators]
   \label{thm:dvd-h-iff-bernoulli-units}
-  \lean{BernoulliRegular.dvd_h_iff_exists_dvd_bernoulli_units}
+  \lean{KummerCriterion.dvd_h_iff_exists_dvd_bernoulli_units}
   \leanok
   \uses{thm:dvd-h-iff-dvd-hminus-units, thm:hminus-bernoulli-final,
     cor:hplus-to-hminus-units}
@@ -212,7 +212,7 @@ existence of a divisible Bernoulli numerator in Kummer's range.
 
 \begin{theorem}[Kummer's criterion]
   \label{thm:kummer-final}
-  \lean{BernoulliRegular.KummerCriterion}
+  \lean{KummerCriterion}
   \leanok
   \uses{thm:dvd-h-iff-bernoulli-units}
 Let $p$ be an odd prime. Then

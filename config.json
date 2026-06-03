@@ -1,6 +1,6 @@
 {
-    "challenge_module": "BernoulliRegular.Challenge",
-    "solution_module": "BernoulliRegular.Solution",
+    "challenge_module": "KummerCriterion.Challenge",
+    "solution_module": "KummerCriterion.Solution",
     "theorem_names": ["fermatLastTheoremFor_le100_of_ne_irregular"],
     "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
     "enable_nanoda": false

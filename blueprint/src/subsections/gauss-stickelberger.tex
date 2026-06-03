@@ -20,7 +20,7 @@ where the additive character is \(a \mapsto e^{2\pi i a/p}\).
 \end{definition}
 
 \begin{proposition}\label{prop:gauss-norm}
-  \lean{BernoulliRegular.gaussSum_mul_gaussSum_inv_stdAddChar}\leanok
+  \lean{KummerCriterion.gaussSum_mul_gaussSum_inv_stdAddChar}\leanok
   \uses{def:gauss-sum}
 For a non-trivial Dirichlet character $\chi$ modulo $p$,
 \[
@@ -57,7 +57,7 @@ evaluation and is used in the $L(1,\chi)$ formula of
 \section{The Stickelberger element}
 
 \begin{definition}\label{def:stickelberger}
-  \lean{BernoulliRegular.stickelbergerElement}\leanok
+  \lean{KummerCriterion.stickelbergerElement}\leanok
   \uses{def:dirichlet-character}
 The \emph{Stickelberger element} is
 \[
@@ -72,7 +72,7 @@ the usual integral Stickelberger ideal.
 \end{definition}
 
 \begin{theorem}[Stickelberger's theorem]\label{thm:stickelberger}
-  \lean{BernoulliRegular.stickelbergerCharacterCoefficientGroupRingTarget_annihilates_primeClass}
+  \lean{KummerCriterion.stickelbergerCharacterCoefficientGroupRingTarget_annihilates_primeClass}
   \leanok
   \uses{def:stickelberger, def:gauss-sum}
 The integral Stickelberger ideal $I_\theta \subset \Z[(\Z/p\Z)^\times]$
@@ -97,7 +97,7 @@ Herbrand's theorem converts Stickelberger annihilation into a divisibility
 statement for generalised Bernoulli numbers:
 
 \begin{theorem}[Herbrand bridge]\label{thm:herbrand}
-  \lean{BernoulliRegular.generalizedBernoulliPDivisible_of_nontrivial_oddComponent}
+  \lean{KummerCriterion.generalizedBernoulliPDivisible_of_nontrivial_oddComponent}
   \leanok
   \uses{thm:stickelberger, def:gen-bernoulli, def:even-odd}
 Let $\chi$ be an odd Dirichlet character modulo $p$. If the

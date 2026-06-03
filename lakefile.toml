@@ -1,5 +1,5 @@
 name = "KummerCriterion"
-defaultTargets = ["BernoulliRegular"]
+defaultTargets = ["KummerCriterion"]
 
 [leanOptions]
 pp.unicode.fun = true
@@ -26,5 +26,5 @@ git = "https://github.com/PatrickMassot/checkdecls.git"
 rev = "master"
 
 [[lean_lib]]
-name = "BernoulliRegular"
-globs = ["BernoulliRegular"]
+name = "KummerCriterion"
+globs = ["KummerCriterion"]

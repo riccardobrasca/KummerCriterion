@@ -17,14 +17,14 @@ cyclotomic field from that of its maximal real subfield.
 
 \section[The class numbers h, h+, and h-]{The class numbers $h$, $h^+$, and $h^-$}
 
-\begin{definition}\label{def:class-number-h}\lean{BernoulliRegular.h}\leanok
+\begin{definition}\label{def:class-number-h}\lean{KummerCriterion.h}\leanok
 The class number of $\Qzetap$ is
 \[
   \hp \;:=\; \abs{\Cl{\OK[\Qzetap]}}.
 \]
 \end{definition}
 
-\begin{definition}\label{def:class-number-hplus}\lean{BernoulliRegular.hPlus}\leanok
+\begin{definition}\label{def:class-number-hplus}\lean{KummerCriterion.hPlus}\leanok
 The \emph{plus class number} is the class number of the maximal real subfield:
 \[
   \hplus \;:=\; \abs{\Cl{\OK[\Qzetapplus]}}.
@@ -62,7 +62,7 @@ The basic descent input is that the ring extension
 $\mathcal O^+ \subseteq \mathcal O$ is well-behaved.
 
 \begin{theorem}\label{thm:ring-of-integers-faithfully-flat}
-  \lean{BernoulliRegular.ringOfIntegers_faithfullyFlat_maximalRealSubfield}\leanok
+  \lean{KummerCriterion.ringOfIntegers_faithfullyFlat_maximalRealSubfield}\leanok
   \uses{def:cm-real-subfield}
 The ring of integers $\mathcal O_{\Q(\zeta_p)}$ is faithfully flat over
 $\mathcal O_{\Q(\zeta_p)^+}$.
@@ -84,7 +84,7 @@ $\mathfrak Q$ maps to $\mathfrak q$ under the comap.
 Faithful flatness gives the standard extension-contraction identity:
 
 \begin{theorem}\label{thm:map-comap-ring-of-integers}
-  \lean{BernoulliRegular.map_comap_eq_ringOfIntegers}\leanok
+  \lean{KummerCriterion.map_comap_eq_ringOfIntegers}\leanok
   \uses{thm:ring-of-integers-faithfully-flat}
 For every ideal $J \subseteq \mathcal O_{\Q(\zeta_p)^+}$ one has
 \[
@@ -105,7 +105,7 @@ Consequently, principality of an extended ideal descends as soon as one can
 exhibit a generator that already lives in the smaller ring of integers.
 
 \begin{theorem}\label{thm:is-principal-map-span-singleton}
-  \lean{BernoulliRegular.isPrincipal_of_map_eq_span_singleton_of_mem}\leanok
+  \lean{KummerCriterion.isPrincipal_of_map_eq_span_singleton_of_mem}\leanok
   \uses{thm:map-comap-ring-of-integers}
 Let $I$ be an ideal of $\mathcal O_{\Q(\zeta_p)^+}$. If
 \[
@@ -145,7 +145,7 @@ of complex conjugation on $\mathcal O$.  Because $I$ comes from the real
 subfield, the extended ideal $I \mathcal O$ is fixed by conjugation.
 
 \begin{theorem}\label{thm:ideal-map-conj}
-  \lean{BernoulliRegular.ideal_map_conj_eq}\leanok
+  \lean{KummerCriterion.ideal_map_conj_eq}\leanok
   \uses{def:cm-real-subfield}
 If $I$ is an ideal of $\mathcal O_{\Q(\zeta_p)^+}$, then the extended ideal
 $I\mathcal O_{\Q(\zeta_p)}$ is fixed by complex conjugation.
@@ -166,7 +166,7 @@ Hence $a$ and $\overline a$ generate the same principal ideal, so they differ
 by a unit.
 
 \begin{theorem}\label{thm:conj-generator-associated}
-  \lean{BernoulliRegular.conj_generator_associated}\leanok
+  \lean{KummerCriterion.conj_generator_associated}\leanok
   \uses{thm:ideal-map-conj}
 There exists a unit $u \in \mathcal O_{\Q(\zeta_p)}^\times$ such that
 \[
@@ -185,7 +185,7 @@ Applying conjugation a second time recovers $a$, which forces the unit $u$ to
 be antisymmetric under conjugation.
 
 \begin{theorem}\label{thm:conj-unit-mul-one}
-  \lean{BernoulliRegular.conj_unit_mul_eq_one}\leanok
+  \lean{KummerCriterion.conj_unit_mul_eq_one}\leanok
   \uses{thm:conj-generator-associated}
 The unit $u$ satisfies
 \[
@@ -207,7 +207,7 @@ for $\zeta_p$ and $\langle \zeta \rangle$ for the cyclic group of $p$-th roots
 of unity.
 
 \begin{theorem}\label{thm:antisymmetric-unit-classification}
-  \lean{BernoulliRegular.antisymmetric_unit_eq_neg_one_pow_mul_zeta_pow}\leanok
+  \lean{KummerCriterion.antisymmetric_unit_eq_neg_one_pow_mul_zeta_pow}\leanok
   \uses{thm:conj-unit-mul-one}
 If $u \in \mathcal O_{\Q(\zeta_p)}^\times$ satisfies $u\overline u = 1$, then
 there exist integers $k,n$ such that
@@ -253,7 +253,7 @@ $\mathcal O^+ \subseteq \mathcal O$ ramifies totally at $P^+$ with
 $e(P / P^+) = 2$, that is, $P^+ \mathcal O = P^2$.
 
 \begin{theorem}[Ramification at $\pi$]\label{thm:ramificationIdx-zetaPrimePlus}
-  \lean{BernoulliRegular.ramificationIdx_zetaPrimePlus_eq_two}\leanok
+  \lean{KummerCriterion.ramificationIdx_zetaPrimePlus_eq_two}\leanok
   \uses{def:cm-real-subfield}
 The ramification index of $P^+$ in $\mathcal O$ equals $2$:
 \[
@@ -270,7 +270,7 @@ above $p$ in the maximal real subfield.
 
 \begin{lemma}[Even multiplicity of $\pi$ in a descended generator]
   \label{thm:multiplicity-zetaPrime-even}
-  \lean{BernoulliRegular.multiplicity_zetaPrime_even_of_map_eq_span}\leanok
+  \lean{KummerCriterion.multiplicity_zetaPrime_even_of_map_eq_span}\leanok
   \uses{thm:ramificationIdx-zetaPrimePlus}
 If $I$ is a nonzero ideal of $\mathcal O^+$ with
 $I \mathcal O = (a)$ and $a \ne 0$, then $v_\pi(a)$ is even.
@@ -293,7 +293,7 @@ refined to remove the possible $-1$:
 
 \begin{theorem}[Pure $\zeta$-power form of the unit]
   \label{thm:generator-unit-eq-zeta-pow}
-  \lean{BernoulliRegular.generator_unit_eq_zeta_pow}\leanok
+  \lean{KummerCriterion.generator_unit_eq_zeta_pow}\leanok
   \uses{thm:antisymmetric-unit-classification, thm:multiplicity-zetaPrime-even}
 With $I, a, u$ as above and writing $u = (-1)^k \zeta^n$, the integer $k$ is
 necessarily even, so there exists $n$ with $u = \zeta^n$.
@@ -327,7 +327,7 @@ $2$).  Therefore $k$ must be even, and $(-1)^k = 1$.
 \subsection*{Constructing the conjugation-fixed associate}
 
 \begin{theorem}\label{thm:conj-fixed-associate}
-  \lean{BernoulliRegular.exists_conj_fixed_associate_of_classification}\leanok
+  \lean{KummerCriterion.exists_conj_fixed_associate_of_classification}\leanok
   \uses{thm:generator-unit-eq-zeta-pow}
 There exists $b \in \mathcal O_{\Q(\zeta_p)}$ such that
 \[
@@ -359,7 +359,7 @@ An algebraic integer of $\mathcal O$ fixed by complex conjugation lies in the
 image of $\mathcal O^+$.
 
 \begin{theorem}\label{thm:mem-ring-of-integers-conj-self}
-  \lean{BernoulliRegular.mem_ringOfIntegers_of_conj_eq_self}\leanok
+  \lean{KummerCriterion.mem_ringOfIntegers_of_conj_eq_self}\leanok
   \uses{thm:conj-fixed-associate}
 If $b \in \mathcal O_{\Q(\zeta_p)}$ satisfies $\overline b = b$, then
 $b$ lies in the image of
@@ -377,7 +377,7 @@ Combining this with faithful-flat descent gives principality downstairs.
 
 \begin{theorem}[Diekmann Proposition 55 / Washington 4.14]
   \label{thm:is-principal-after-extension}
-  \lean{BernoulliRegular.isPrincipal_of_isPrincipal_map_Kplus}\leanok
+  \lean{KummerCriterion.isPrincipal_of_isPrincipal_map_Kplus}\leanok
   \uses{thm:is-principal-map-span-singleton, thm:mem-ring-of-integers-conj-self,
         thm:conj-fixed-associate}
 Let $I$ be an ideal of $\mathcal O_{\Q(\zeta_p)^+}$. If the extended ideal
@@ -409,7 +409,7 @@ principal.
 The descent theorem immediately gives injectivity on class groups.
 
 \begin{theorem}\label{thm:class-group-map-injective}
-  \lean{BernoulliRegular.classGroupMap_injective}\leanok
+  \lean{KummerCriterion.classGroupMap_injective}\leanok
   \uses{thm:is-principal-after-extension}
 The extension map
 \[
@@ -431,7 +431,7 @@ Since both class groups are finite, injectivity implies divisibility of their
 cardinalities.
 
 \begin{theorem}[$\hplus$ divides $\hp$]\label{thm:hplus-divides-h}
-  \lean{BernoulliRegular.hPlus_dvd_h}\leanok
+  \lean{KummerCriterion.hPlus_dvd_h}\leanok
   \uses{thm:class-group-map-injective, def:class-number-h, def:class-number-hplus}
 The class number $\hplus$ of $\Qzetapplus$ divides the class number $\hp$ of
 $\Qzetap$.
@@ -447,7 +447,7 @@ the ambient group.
 
 This justifies the definition of the relative class number.
 
-\begin{definition}\label{def:class-number-hminus}\lean{BernoulliRegular.hMinus}\leanok
+\begin{definition}\label{def:class-number-hminus}\lean{KummerCriterion.hMinus}\leanok
   \uses{thm:hplus-divides-h}
 The \emph{relative class number} is defined by
 \[
@@ -457,7 +457,7 @@ The \emph{relative class number} is defined by
 
 We shall also use the factorisation and positivity statements below.
 
-\begin{theorem}\label{thm:h-factorisation}\lean{BernoulliRegular.h_eq_hPlus_mul_hMinus}\leanok
+\begin{theorem}\label{thm:h-factorisation}\lean{KummerCriterion.h_eq_hPlus_mul_hMinus}\leanok
   \uses{def:class-number-hminus, thm:hplus-divides-h}
 One has
 \[
@@ -471,7 +471,7 @@ Immediate from \cref{def:class-number-hminus} and
 $\hminus$, and multiplying back recovers $\hp$.
 \end{proof}
 
-\begin{theorem}\label{thm:hminus-positive}\lean{BernoulliRegular.hMinus_pos}\leanok
+\begin{theorem}\label{thm:hminus-positive}\lean{KummerCriterion.hMinus_pos}\leanok
   \uses{def:class-number-hminus, thm:hplus-divides-h}
 The relative class number $\hminus$ is strictly positive.
 \end{theorem}

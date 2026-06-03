@@ -31,7 +31,7 @@ representative range.
 
 \begin{theorem}[One-sided Kummer principal reciprocity]
   \label{thm:abandoned-oskr}
-  \lean{BernoulliRegular.Furtwaengler.oneSidedKummerPrincipalReciprocity_canonical}
+  \lean{KummerCriterion.Furtwaengler.oneSidedKummerPrincipalReciprocity_canonical}
   \notready
 Let \(\alpha,\beta\in\mathcal O_K\) be nonzero, coprime, and prime to \(p\).
 Assume that \(\alpha\) is a \(p\)-th power in the
@@ -71,7 +71,7 @@ trivial by multiplicativity in the denominator.
 
 \begin{theorem}[Component reflection]
   \label{thm:abandoned-component-reflection}
-  \lean{BernoulliRegular.weakReflection_componentNontrivial}
+  \lean{KummerCriterion.weakReflection_componentNontrivial}
   \leanok
   \uses{thm:abandoned-oskr}
 Let \(i\) be an even reflection index.  If the \(i\)-component of
@@ -137,7 +137,7 @@ is the interior even case handled by the preceding argument.
 
 \begin{theorem}[Reflection-route plus-to-minus implication]
   \label{thm:abandoned-reflection-plus-minus}
-  \lean{BernoulliRegular.weakReflection_dvd_hMinus_of_dvd_hPlus}
+  \lean{KummerCriterion.weakReflection_dvd_hMinus_of_dvd_hPlus}
   \leanok
   \uses{thm:abandoned-component-reflection}
 For an odd prime \(p\),
@@ -193,7 +193,7 @@ integer-denominator Eisenstein reciprocity theorem:
 
 \begin{theorem}[Ireland--Rosen integer reciprocity]
   \label{thm:ireland-rosen-integer-reciprocity}
-  \lean{BernoulliRegular.Furtwaengler.IrelandRosen.eisensteinReciprocity_theorem1}
+  \lean{KummerCriterion.Furtwaengler.IrelandRosen.eisensteinReciprocity_theorem1}
   \leanok
 Let \(\alpha\in\mathcal O_K\) be primary and prime to \(p\), and let
 \(a\in\Z\) be nonzero, prime to \(p\), and coprime to \((\alpha)\).  Then

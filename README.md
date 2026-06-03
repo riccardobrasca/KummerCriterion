@@ -11,14 +11,14 @@ hard to check directly. Kummer's criterion replaces it with a finite, purely
 arithmetic test on Bernoulli numbers.
 
 The main theorem lives in
-[`BernoulliRegular/Main.lean`](BernoulliRegular/Main.lean):
+[`KummerCriterion/Main.lean`](KummerCriterion/Main.lean):
 
 ```lean
 /-- **Kummer's criterion.**
 
 An odd prime `p` is regular iff `p` does not divide the numerator of any
 Bernoulli number `B_2, B_4, ..., B_{p-3}`. -/
-theorem KummerCriterion
+theorem _root_.KummerCriterion
     {p : ℕ} [hp : Fact p.Prime] (hp_odd : p ≠ 2) :
     IsRegularPrime p ↔
       ∀ k, 1 ≤ k → 2 * k ≤ p - 3 → ¬ (p : ℤ) ∣ (bernoulli (2 * k)).num
@@ -49,7 +49,7 @@ majority of exponents below 100 directly from regularity (the three irregular
 exponents 37, 59, 67 being handled by other means).
 
 This is packaged as a self-contained theorem in
-[`BernoulliRegular/BernoulliFast/FermatLastTheoremUpTo100.lean`](BernoulliRegular/BernoulliFast/FermatLastTheoremUpTo100.lean):
+[`KummerCriterion/BernoulliFast/FermatLastTheoremUpTo100.lean`](KummerCriterion/BernoulliFast/FermatLastTheoremUpTo100.lean):
 
 ```lean
 /-- Fermat's Last Theorem for every exponent up to `100` except `2`, the

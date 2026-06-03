@@ -71,8 +71,8 @@ status:
     - "Classical.choice"
     - "Quot.sound"
   main_results:                  # list the main results of the project
-    - declaration: "BernoulliRegular.fermatLastTheoremFor_le100_of_ne_irregular"
-      file: "BernoulliRegular/BernoulliFast/FermatLastTheoremUpTo100.lean"
+    - declaration: "KummerCriterion.fermatLastTheoremFor_le100_of_ne_irregular"
+      file: "KummerCriterion/BernoulliFast/FermatLastTheoremUpTo100.lean"
       sorry_count: 0
       axioms:
         - "propext"

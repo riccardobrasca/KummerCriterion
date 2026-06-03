@@ -18,7 +18,7 @@ numbers \(B_m/m\) with no upper bound on the exponents.
 
 \begin{theorem}[Full divided Kummer congruence]
   \label{thm:full-divided-kummer}
-  \lean{BernoulliRegular.bernoulli_div_sModEq_of_modEq_full}
+  \lean{KummerCriterion.bernoulli_div_sModEq_of_modEq_full}
   \leanok
 Let \(p\) be an odd prime.  Let \(m,n>0\) be even natural numbers such that
 \[
@@ -48,7 +48,7 @@ first input is the strong Faulhaber congruence
 \]
 for positive even \(h\) with \((p-1)\nmid h\).  In Lean this is
 the strong Faulhaber lemma%
-\lean{BernoulliRegular.sum_range_pow_sub_p_mul_bernoulli_strong}.
+\lean{KummerCriterion.sum_range_pow_sub_p_mul_bernoulli_strong}.
 It expands the power sum by mathlib's Faulhaber formula and proves that every
 non-leading summand contains the required \(hp^2\)-factor.  The delicate
 terms are handled with von Staudt-Clausen denominator control and binomial
@@ -63,7 +63,7 @@ The second input is the strong Voronoi congruence
 \]
 for every \(a\) prime to \(p\), formalized as
 the strong Voronoi theorem%
-\lean{BernoulliRegular.voronoi_congruence_mod_p_strong}.
+\lean{KummerCriterion.voronoi_congruence_mod_p_strong}.
 This substitutes the strong Faulhaber congruence into a higher-modulus
 Voronoi sum identity and cancels the nonzero rational factor \(hp\) in
 \(\Q_p\).
@@ -77,13 +77,13 @@ Voronoi congruence by this unit proves
 \]
 recorded as
 the Voronoi integrality lemma%
-\lean{BernoulliRegular.bernoulli_div_self_mem_padicInt_of_not_sub_one_dvd_voronoi}.
+\lean{KummerCriterion.bernoulli_div_self_mem_padicInt_of_not_sub_one_dvd_voronoi}.
 
 Finally apply the strong Voronoi congruence to \(m\) and \(n\).  The factors
 \(a^m\) and \(a^n\) agree because \(m\equiv n\pmod{p-1}\), and the floor sums
 are congruent modulo \(p\) because their predecessor exponents are congruent;
 this is the floor-sum comparison%
-\lean{BernoulliRegular.voronoi_floor_sum_sModEq_of_pred_modEq}.
+\lean{KummerCriterion.voronoi_floor_sum_sModEq_of_pred_modEq}.
 The already-proved \(p\)-integrality of \(B_m/m\) and \(B_n/n\) lets the
 comparison be carried out inside \(\Z_p\), and the difference is a multiple
 of \(p\) in \(\Q_p\).
@@ -98,7 +98,7 @@ irregular prime.
 
 \begin{theorem}[Carlitz divisor criterion]
   \label{thm:carlitz-divisor-criterion}
-  \lean{BernoulliRegular.not_isRegularPrime_iff_exists_dvd_bernoulli_div_self_num}
+  \lean{KummerCriterion.not_isRegularPrime_iff_exists_dvd_bernoulli_div_self_num}
   \leanok
   \uses{thm:full-divided-kummer, thm:kummer-final}
 Let \(q\) be an odd prime.  Then \(q\) is not regular if and only if there is
@@ -121,7 +121,7 @@ Set \(m=2k\).  The range bound implies \(q\nmid m\), so \(m\) is a unit in
 \]
 The Lean helper is
 the divisibility-through-division lemma%
-\lean{BernoulliRegular.dvd_bernoulli_div_self_num_of_dvd_bernoulli_num}.
+\lean{KummerCriterion.dvd_bernoulli_div_self_num_of_dvd_bernoulli_num}.
 
 Conversely assume \(q\mid\operatorname{num}(B_m/m)\) for some positive even
 \(m\).  Von Staudt-Clausen excludes the boundary:
@@ -131,7 +131,7 @@ Conversely assume \(q\mid\operatorname{num}(B_m/m)\) for some positive even
 because if \(q-1\mid m\), then \(q\) cannot divide the reduced numerator of
 \(B_m/m\).  This is
 the boundary-exclusion lemma%
-\lean{BernoulliRegular.sub_one_not_dvd_of_dvd_num_bernoulli_div_self}.
+\lean{KummerCriterion.sub_one_not_dvd_of_dvd_num_bernoulli_div_self}.
 Let \(m'\) be the least nonnegative residue of \(m\) modulo \(q-1\).  The
 boundary exclusion makes \(m'>0\), and parity gives that \(m'\) is even.  It
 also satisfies \(m'<q-1\), hence
@@ -144,7 +144,7 @@ Apply \cref{thm:full-divided-kummer} to \(m\) and \(m'\).  Since
 \(B_m/m\) to \(B_{m'}/m'\), and then to \(B_{m'}\).  The transfer is formalized
 by
 the \(p\)-adic numerator-transfer lemma%
-\lean{BernoulliRegular.dvd_bernoulli_num_of_padic_congruent_residue}.
+\lean{KummerCriterion.dvd_bernoulli_num_of_padic_congruent_residue}.
 Now \(m'=2(m'/2)\) lies in Kummer's range, so Kummer's criterion gives that
 \(q\) is not regular.
 \end{proof}
@@ -156,7 +156,7 @@ which is divisible by \(q-1\) for every prime \(q\in S\).
 
 \begin{definition}[Divisor-closed base]
   \label{def:irregular-base}
-  \lean{BernoulliRegular.irregularBase}
+  \lean{KummerCriterion.irregularBase}
   \leanok
 For a finite set \(S\subset\N\), set
 \[
@@ -175,7 +175,7 @@ that if a prime \(q\) divides \(C(S)\), then \(q-1\mid C(S)\) as well.
 
 \begin{theorem}[A new numerator prime outside a finite set]
   \label{thm:numerator-prime-for-carlitz-base}
-  \lean{BernoulliRegular.exists_numerator_prime_for_carlitz_base}
+  \lean{KummerCriterion.exists_numerator_prime_for_carlitz_base}
   \leanok
   \uses{def:irregular-base}
 For every finite set \(S\subset\N\), there are natural numbers \(M\) and \(p\)
@@ -193,7 +193,7 @@ such that
 \begin{proof}\leanok
 Start with \(C=C(S)\).  The growth theorem
 for divided Bernoulli numbers%
-\lean{BernoulliRegular.exists_large_even_multiple_abs_bernoulli_div_self_gt_one}
+\lean{KummerCriterion.exists_large_even_multiple_abs_bernoulli_div_self_gt_one}
 chooses \(t\) such that
 \[
   \left|\frac{B_{C2^t}}{C2^t}\right|>1.
@@ -205,7 +205,7 @@ Since the rational number \(B_M/M\) has absolute value greater than \(1\), its
 reduced numerator has absolute value greater than \(1\), hence has a prime
 divisor \(p\), by
 the numerator-prime lemma%
-\lean{BernoulliRegular.exists_prime_dvd_num_of_one_lt_abs}.
+\lean{KummerCriterion.exists_prime_dvd_num_of_one_lt_abs}.
 
 It remains to prove that this prime was not already in \(S\).  Suppose
 \(p\in S\).  Then \(p-1\mid M\) by construction.  But von Staudt-Clausen gives
@@ -217,7 +217,7 @@ the exclusion
 \]
 namely
 the von Staudt numerator-exclusion lemma%
-\lean{BernoulliRegular.not_dvd_num_bernoulli_div_self_of_sub_one_dvd}.
+\lean{KummerCriterion.not_dvd_num_bernoulli_div_self_of_sub_one_dvd}.
 This contradicts the choice of \(p\).  The same exclusion also proves
 \(p\ne 2\), since \(p=2\) would make \(p-1=1\) divide \(M\).
 \end{proof}
@@ -226,7 +226,7 @@ This contradicts the choice of \(p\).  The same exclusion also proves
 
 \begin{theorem}[Finite-set escape]
   \label{thm:irregular-prime-outside-finite-set}
-  \lean{BernoulliRegular.exists_not_isRegularPrime_not_mem_carlitz}
+  \lean{KummerCriterion.exists_not_isRegularPrime_not_mem_carlitz}
   \leanok
   \uses{thm:numerator-prime-for-carlitz-base, thm:carlitz-divisor-criterion}
 For every finite set \(S\subset\N\), there is a prime \(p\notin S\) such that
@@ -248,7 +248,7 @@ regular.
 
 \begin{theorem}[Infinitely many irregular primes]
   \label{thm:infinitely-many-irregular-primes}
-  \lean{BernoulliRegular.infinite_not_isRegularPrime}
+  \lean{KummerCriterion.infinite_not_isRegularPrime}
   \leanok
   \uses{thm:irregular-prime-outside-finite-set}
 The set
@@ -265,7 +265,7 @@ elements.  By \cref{thm:irregular-prime-outside-finite-set}, there is a prime
 \(S\).  Hence no finite set covers all irregular primes, so the set is
 infinite.  The finite-set-to-infinite conversion is the elementary lemma
 that no finite cover implies infinitude%
-\lean{BernoulliRegular.infinite_of_forall_finite_set_not_cover}.
+\lean{KummerCriterion.infinite_of_forall_finite_set_not_cover}.
 \end{proof}
 
 The checked proof contains no bundled Kummer provider or side-condition

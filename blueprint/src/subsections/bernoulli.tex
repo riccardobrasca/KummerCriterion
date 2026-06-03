@@ -17,7 +17,7 @@ polynomial.
 
 \begin{definition}[Generalised Bernoulli number]
   \label{def:gen-bernoulli}
-  \lean{BernoulliRegular.BernoulliGen}\leanok
+  \lean{KummerCriterion.BernoulliGen}\leanok
   \uses{def:dirichlet-character}
 Let $N \ge 1$, let $R$ be a commutative $\Q$-algebra and let
 $\chi : (\Z/N\Z) \to R$ be a Dirichlet character (with $\chi(0) = 0$).
@@ -39,7 +39,7 @@ the classical Bernoulli number: $\Bgen{n}{\mathbf{1}} = B_n$.
 
 \begin{proposition}[$\Bgen{0}{\chi} = 0$ for non-trivial $\chi$]
   \label{prop:gen-bernoulli-zero}
-  \lean{BernoulliRegular.BernoulliGen_zero_of_ne_one}\leanok
+  \lean{KummerCriterion.BernoulliGen_zero_of_ne_one}\leanok
   \uses{def:gen-bernoulli}
 Let $R$ be an integral domain and let $\chi$ be a Dirichlet character
 modulo $N \ge 1$ valued in $R$ with $\chi \ne \mathbf{1}$. Then
@@ -69,7 +69,7 @@ $\hminus$; we record three forms used throughout.
 
 \begin{lemma}[Intermediate form for $\Bgen{1}{\chi}$]
   \label{lem:gen-bernoulli-one-intermediate}
-  \lean{BernoulliRegular.BernoulliGen_one_of_ne_one}\leanok
+  \lean{KummerCriterion.BernoulliGen_one_of_ne_one}\leanok
   \uses{def:gen-bernoulli}
 Let $R$ be an integral domain and $\chi : (\Z/N\Z) \to R$ a non-trivial
 Dirichlet character. Then
@@ -95,7 +95,7 @@ for non-trivial $\chi$ by the character-sum identity used in
 
 \begin{lemma}[Cleared form of $\Bgen{1}{\chi}$]
   \label{lem:gen-bernoulli-one-cleared}
-  \lean{BernoulliRegular.natCast_mul_BernoulliGen_one_of_ne_one}\leanok
+  \lean{KummerCriterion.natCast_mul_BernoulliGen_one_of_ne_one}\leanok
   \uses{lem:gen-bernoulli-one-intermediate}
 For $\chi$ as in the previous lemma,
 \[
@@ -114,7 +114,7 @@ algebra map $\Q \to R$ commutes with multiplication by $N \in \N$.
 
 \begin{proposition}[Parity vanishing at $n = 1$]
   \label{prop:gen-bernoulli-one-even}
-  \lean{BernoulliRegular.BernoulliGen_one_eq_zero_of_even_ne_one}\leanok
+  \lean{KummerCriterion.BernoulliGen_one_eq_zero_of_even_ne_one}\leanok
   \uses{lem:gen-bernoulli-one-cleared, def:even-odd}
 Let $R$ be an integral domain in which $2 \ne 0$ and let $\chi$ be a
 non-trivial \emph{even} Dirichlet character modulo $N > 1$ valued in
@@ -193,7 +193,7 @@ for $\hminus$.
 
 \begin{theorem}[$p$-integrality of $B_k$ for $k < p - 1$]
   \label{thm:bernoulli-padicInt-below}
-  \lean{BernoulliRegular.bernoulli_mem_padicInt_of_lt_sub_one}\leanok
+  \lean{KummerCriterion.bernoulli_mem_padicInt_of_lt_sub_one}\leanok
   \uses{def:gen-bernoulli}
 Let $p$ be an odd prime and let $0 \le k < p - 1$. Then
 $B_k \in \Q$ lies in $\Z_p$; equivalently, there exists $z \in \Z_p$
@@ -218,7 +218,7 @@ $\Z_p$ and we may divide. Hence $B_k \in \Z_p$.
 
 \begin{corollary}[Denominator coprimality]
   \label{cor:bernoulli-den-coprime}
-  \lean{BernoulliRegular.prime_not_dvd_bernoulli_den_of_lt_sub_one}\leanok
+  \lean{KummerCriterion.prime_not_dvd_bernoulli_den_of_lt_sub_one}\leanok
   \uses{thm:bernoulli-padicInt-below}
 For $p$ an odd prime and $0 \le n < p - 1$,
 \[
@@ -244,7 +244,7 @@ exactly:
 
 \begin{theorem}[Von Staudt--Clausen, $p$-local form at $n = p - 1$]
   \label{thm:von-staudt-clausen}
-  \lean{BernoulliRegular.bernoulli_pSubOne_add_inv_p_mem_padicInt}\leanok
+  \lean{KummerCriterion.bernoulli_pSubOne_add_inv_p_mem_padicInt}\leanok
   \uses{thm:bernoulli-padicInt-below}
 For $p$ an odd prime,
 \[
@@ -297,7 +297,7 @@ We use the $\Q_p$-valued Teichm\"uller character
 
 \begin{theorem}[Boundary character contribution]
   \label{thm:boundary-character-bernoulli}
-  \lean{BernoulliRegular.bernoulliGen_teichmuller_inverse_eq_p_sub_one_div_p_add_padicInt}
+  \lean{KummerCriterion.bernoulliGen_teichmuller_inverse_eq_p_sub_one_div_p_add_padicInt}
   \leanok
   \uses{lem:gen-bernoulli-one-cleared, def:teichmuller}
 For $p$ an odd prime there exists $z \in \Z_p$ with

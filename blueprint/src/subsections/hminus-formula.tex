@@ -30,7 +30,7 @@ Since every odd character modulo $p$ is non-trivial, every factor on the right
 is holomorphic at $s=1$. Taking residues at $s=1$ therefore gives:
 
 \begin{proposition}\label{prop:odd-L-product-residue}
-  \lean{BernoulliRegular.residue_ready_factorization_even_odd}
+  \lean{KummerCriterion.residue_ready_factorization_even_odd}
   \leanok
   \uses{def:cm-real-subfield, def:dirichlet-character, def:even-odd}
 One has
@@ -71,8 +71,8 @@ For the cyclotomic fields under consideration one uses the standard identities
 Combining these with the definition \(h^- = h_K/h_{K^+}\) gives:
 
 \begin{proposition}\label{prop:relative-class-number-L-product}
-  \lean{BernoulliRegular.hMinus_formula_via_residues}
-  \lean{BernoulliRegular.hMinus_formula_of_residue_and_hPlus_cyclotomic_and_gauss}
+  \lean{KummerCriterion.hMinus_formula_via_residues}
+  \lean{KummerCriterion.hMinus_formula_of_residue_and_hPlus_cyclotomic_and_gauss}
   \leanok
   \uses{prop:odd-L-product-residue, thm:h-factorisation, def:class-number-h,
     def:class-number-hplus, def:class-number-hminus}
@@ -123,8 +123,8 @@ shows that each inverse pair of odd characters contributes \(-p\) to the
 product of all odd Gauss sums.
 
 \begin{lemma}\label{lem:odd-gauss-product}
-  \lean{BernoulliRegular.rawGaussProduct}
-  \lean{BernoulliRegular.cyclotomicHGaussGoal_holds}
+  \lean{KummerCriterion.rawGaussProduct}
+  \lean{KummerCriterion.cyclotomicHGaussGoal_holds}
   \leanok
   \uses{def:gauss-sum, prop:gauss-norm, def:even-odd}
 One has
@@ -162,7 +162,7 @@ Hence
 
 \begin{theorem}[Analytic formula for \texorpdfstring{$\hminus$}{h-}]
   \label{thm:hminus-formula}
-  \lean{BernoulliRegular.hMinus_formula}
+  \lean{KummerCriterion.hMinus_formula}
   \leanok
   \uses{prop:relative-class-number-L-product, cor:L1-odd, lem:odd-gauss-product,
     def:gen-bernoulli}
