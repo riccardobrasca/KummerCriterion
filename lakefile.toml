@@ -1,4 +1,4 @@
-name = "«flt-regular-bernoulli»"
+name = "KummerCriterion"
 defaultTargets = ["BernoulliRegular"]
 
 [leanOptions]
