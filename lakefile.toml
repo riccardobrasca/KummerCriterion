@@ -28,3 +28,12 @@ rev = "master"
 [[lean_lib]]
 name = "KummerCriterion"
 globs = ["KummerCriterion"]
+
+# Trusted challenge and solution-wrapper modules for leanprover/comparator.  `Challenge` imports
+# only Mathlib; `Solution` imports this project and delegates to
+# `KummerCriterion.fermatLastTheoremFor_le100_of_ne_irregular`.
+[[lean_lib]]
+name = "Challenge"
+
+[[lean_lib]]
+name = "Solution"
