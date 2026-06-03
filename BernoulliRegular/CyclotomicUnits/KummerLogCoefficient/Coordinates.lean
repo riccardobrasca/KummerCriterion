@@ -158,9 +158,6 @@ theorem dworkFixedEvenPowerBasis_repr_eq_powerBasis_repr
   symm
   simpa [a, dworkEvenCoeffExtend, i.2] using hi
 
-
-omit [NumberField.IsCMField K] in
-
 omit [NumberField.IsCMField K] in
 theorem lambdaIdeal_pow_pred_le_comap_dworkParameterIdeal_pow_pred :
     (lambdaIdeal p K) ^ (p - 1) ≤
@@ -286,8 +283,6 @@ theorem valuedLambdaQuotientDworkCoeffModP_evalₐ
             (p := p) (K := K) hmem i).symm
 
 omit [NumberField.IsCMField K] in
-
-omit [NumberField.IsCMField K] in
 theorem dworkParameterPowerBasis_repr_powerLinearMap
     (a : Fin (p - 1) → RationalPadicIntegerRing p) :
     (dworkParameterPowerBasis p K).repr
@@ -397,17 +392,9 @@ theorem dworkParameterQuotientCoeffModP_mk_sub
       ((dworkParameterPowerBasis p K).repr y i)
   rw [map_sub]
 
-omit [NumberField.IsCMField K] in
-
 set_option maxHeartbeats 800000 in
 -- The quotient type in this additive extensionality lemma unfolds the completed
 -- Dwork ideal comparison enough that the default heartbeat limit is tight.
-omit [NumberField.IsCMField K] in
-
-omit [NumberField.IsCMField K] in
-
-omit [NumberField.IsCMField K] in
-
 omit [NumberField.IsCMField K] in
 theorem valuedLambdaQuotientDworkCoeffModP_add
     (i : Fin (p - 1))
@@ -560,9 +547,6 @@ theorem dworkParameterQuotientCoeffModP_mk_algebraMap_mul_pow_of_lt
   rw [← dworkParameterPowerLinearMap_single_coeff
     (p := p) (K := K) (i := (⟨n, hn⟩ : Fin (p - 1))) (c := c)]
   rw [dworkParameterQuotientCoeffModP_mk_powerLinearMap]
-
-
-omit [NumberField.IsCMField K] in
 
 omit [NumberField.IsCMField K] in
 /-- Below the Kummer precision, powers of the finite Dwork approximant have

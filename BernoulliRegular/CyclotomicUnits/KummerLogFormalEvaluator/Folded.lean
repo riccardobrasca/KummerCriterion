@@ -94,13 +94,6 @@ noncomputable def scaledDworkParameterNormalizedFiniteLogApprox
       (scaledDworkParameterNormalizedCoordApprox_mem_lambdaIdeal
         (p := p) (K := K) a (p - 2)))
 
-
-
-
-
-
-
-
 omit [NumberField.IsCMField K] in
 /-- The scaled normalized Artin-Hasse finite logarithm is the cyclotomic image
 of the unscaled normalized finite logarithm at the Kummer precision. -/
@@ -243,7 +236,6 @@ theorem valuedLambdaQuotientDworkCoeffModP_specializedFiniteLog_eq_one_sub_pow_m
   rw [valuedLambdaQuotientDworkCoeffModP_scaledNormalizedFiniteLog_eq_smul
     (p := p) (K := K) δ i]
   ring
-
 
 end CyclotomicUnits
 end BernoulliRegular

@@ -827,7 +827,6 @@ theorem samePrimeFiniteLogProductHomogeneousGrid_eq_degree_sum (N : ℕ)
               else 0) := by
         rw [Finset.sum_comm]
 
-
 end DworkParameter
 end PadicLogSetup
 end CyclotomicUnits

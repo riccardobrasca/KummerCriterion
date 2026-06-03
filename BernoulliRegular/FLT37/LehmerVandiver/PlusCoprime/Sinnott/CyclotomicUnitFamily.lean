@@ -1,8 +1,13 @@
 import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
-import BernoulliRegular.FLT37.CyclotomicUnitsKplus
+import BernoulliRegular.FLT37.PrimaryConj
+import FltRegular.CaseII.AuxLemmas
+import BernoulliRegular.HMinus.KplusPrimeArithmetic
+import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
+import BernoulliRegular.FLT37.PrimaryUnits.Part1
+import BernoulliRegular.FLT37.PrimaryUnits.Part2
+import BernoulliRegular.FLT37.PrimaryUnits.Part3
 import BernoulliRegular.HMinus.ClassNumberFormula
 import Mathlib.NumberTheory.NumberField.Units.Regulator
-
 
 /-!
 # Max-rank family of real cyclotomic units
@@ -75,19 +80,14 @@ theorem unitsComplexConj_cyclotomicRealUnit {a : ℕ} (ha : a.Coprime p) (hp_two
   unfold cyclotomicRealUnit
   rw [map_mul, unitsComplexConj_unitsComplexConj, mul_comm]
 
-
 set_option backward.isDefEq.respectTransparency false in
-
 /-! ## Indexed family of real cyclotomic units
 
 The standard family is indexed by `a ∈ {2, 3, ..., (p-1)/2}` (cardinality
 `(p-3)/2 = rank K⁺`). Using a Fin-typed index lets us apply mathlib's
 `regOfFamily_div_regulator`. -/
 
-
-
 set_option backward.isDefEq.respectTransparency false in
-
 /-! ## Unit-form K⁺ cyclotomic units and Fin-indexed family -/
 
 set_option backward.isDefEq.respectTransparency false in

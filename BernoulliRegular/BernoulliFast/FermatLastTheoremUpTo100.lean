@@ -16,7 +16,6 @@ The composite exponent `74 = 2 * 37` is also excluded because reducing FLT for
 
 namespace BernoulliRegular
 
-
 private theorem fermatLastTheoremFor_of_isRegularPrime_dvd
     {p n : ℕ} (hp_prime : p.Prime)
     (hp_reg : letI : Fact p.Prime := ⟨hp_prime⟩; IsRegularPrime p)

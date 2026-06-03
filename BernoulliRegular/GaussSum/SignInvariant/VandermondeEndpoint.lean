@@ -285,7 +285,6 @@ theorem det_normalizedDft_eq_I_pow_orderHalf (hp2 : p ≠ 2) :
     _ = Complex.I ^ ((p - 1) / 2) := by
           simpa [n] using BernoulliRegular.negI_pow_orderHalfMul_eq_I_pow_half (p := p) hp2
 
-
 /-- If `p ≡ 3 (mod 4)`, the determinant route lands in the imaginary branch. -/
 theorem det_normalizedDft_eq_negOnePow_mul_I_of_mod_four_eq_three
     (hp2 : p ≠ 2) (hp4 : p % 4 = 3) :

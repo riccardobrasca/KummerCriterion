@@ -1,7 +1,32 @@
 module
 
-public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.KummerArtinHasseTeichmuller
-public import BernoulliRegular.Reflection.SingularKummer.LocalizationKernel.Part1
+public import Mathlib.RingTheory.Teichmuller
+public import Mathlib.Algebra.Module.ZMod
+public import Mathlib.RingTheory.AdicCompletion.Algebra
+public import Mathlib.RingTheory.AdicCompletion.Completeness
+public import Mathlib.RingTheory.Henselian
+public import BernoulliRegular.Reflection.Local.Graded
+public import Mathlib.FieldTheory.Finiteness
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Mathlib.RingTheory.Ideal.Quotient.PowTransition
+public import Mathlib.RingTheory.ZMod.UnitsCyclic
+public import BernoulliRegular.Reflection.Local.DeltaAction
+public import Mathlib.Algebra.Module.Equiv.Basic
+public import Mathlib.Algebra.Exact
+public import Mathlib.RingTheory.ClassGroup
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import BernoulliRegular.UnitQuotient.Components
+public import BernoulliRegular.UnitQuotient.FreeLatticeComparison.ConjugationTrace
+public import Mathlib.RepresentationTheory.Basic
+public import Mathlib.LinearAlgebra.Projection
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
+public import Mathlib.Data.Nat.Factorization.Basic
+public import Mathlib.GroupTheory.Torsion
+public import BernoulliRegular.Characters
+public import BernoulliRegular.UnitQuotient.DeltaAction
+public import BernoulliRegular.Reflection.SingularKummer.Localization
 
 /-!
 # Global lambda decomposition for the Kummer--Artin--Hasse correction
@@ -90,20 +115,6 @@ theorem lambdaPiFieldUnit_valuation
         Ideal.span ({lambdaPiIntegral p K} : Set (𝓞 K)) := rfl
   exact (lambdaHeightOne p K).intValuation_singleton
     (lambdaPiIntegral_ne_zero (p := p) (K := K)) hspan
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 end KummerArtinHasse
 end Furtwaengler

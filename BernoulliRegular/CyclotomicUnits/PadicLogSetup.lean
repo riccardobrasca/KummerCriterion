@@ -2,7 +2,31 @@ module
 
 public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.KummerArtinHasseGlobalDecomposition
 public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.KummerArtinHasseValuationTrace
-public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.ArtinHasse
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.ArtinHasse.Part1
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.ArtinHasse.Part2
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.Stickelberger.Part1
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.NumberTheory.MulChar.Basic
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.NumberTheory.GaussSum
+public import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
+public import Mathlib.NumberTheory.JacobiSum.Basic
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
+public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
+public import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
+public import Mathlib.RingTheory.Localization.Basic
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork.Part1
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork.Part2
+public import Mathlib.RingTheory.PowerSeries.Substitution
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.RingTheory.PowerSeries.Trunc
+public import Mathlib.RingTheory.PowerSeries.Exp
+public import Mathlib.Data.Nat.Log
+public import Mathlib.NumberTheory.Padics.PadicVal.Basic
 public import Mathlib.RingTheory.PowerSeries.Log
 
 /-!
@@ -62,24 +86,19 @@ complete local ring, this is the corrected Dwork parameter from CU-09. -/
 abbrev inverseSeries : PowerSeries ℚ :=
   Furtwaengler.artinHasseExpInverseSeries p
 
-
 theorem logSeries_hasSubst :
     PowerSeries.HasSubst (logSeries p) :=
   Furtwaengler.artinHasseLogSeries_hasSubst p
-
 
 @[simp]
 theorem expMinusOneSeries_constantCoeff :
     PowerSeries.constantCoeff (expMinusOneSeries p) = 0 :=
   Furtwaengler.artinHasseExpMinusOneSeries_constantCoeff p
 
-
 @[simp]
 theorem inverseSeries_constantCoeff :
     PowerSeries.constantCoeff (inverseSeries p) = 0 :=
   Furtwaengler.artinHasseExpInverseSeries_constantCoeff p
-
-
 
 theorem inverseSeries_hasSubst :
     PowerSeries.HasSubst (inverseSeries p) :=
@@ -99,7 +118,6 @@ theorem expMinusOneSeries_subst_inverse :
       (PowerSeries.X : PowerSeries ℚ) :=
   Furtwaengler.artinHasseExpMinusOneSeries_subst_inverse p
 
-
 /-- The other formal inverse identity: `G_p(E_p(T)-1) = T`. -/
 theorem inverseSeries_subst_expMinusOneSeries :
     (inverseSeries p).subst (expMinusOneSeries p) =
@@ -114,8 +132,6 @@ theorem inverseSeries_subst_expMinusOneSeries :
     Furtwaengler.artinHasseExpInverseSeries] using
     PowerSeries.subst_substInv_left P (by simp [P, expMinusOneSeries])
 
-
-
 /-- Integral-coefficient form of `E_p(G_p(T)) = 1 + T`, transported to any
 coefficient ring receiving the `p`-integral rational coefficients. -/
 theorem expSeries_mapTo_subst_inverse
@@ -128,8 +144,6 @@ theorem expSeries_mapTo_subst_inverse
           fun n => Furtwaengler.artinHasseExpSeries_coeff_isRIntegral p n).mapTo φ) =
       1 + (PowerSeries.X : PowerSeries A) :=
   Furtwaengler.artinHasseExpSeries_mapTo_subst_inverse p φ
-
-
 
 /-- For odd `p`, the Artin-Hasse logarithm is an odd formal series. -/
 theorem logSeries_rescale_neg (hp_two : 2 < p) :
@@ -439,15 +453,6 @@ theorem inverseSeries_mapTo_subst_expMinusOneSeries_subst_neg_inverse
     _ = -(hInv.mapTo φ) :=
           Furtwaengler.DieudonneDwork.IsRIntegralPS.mapTo_neg φ hInv
 
-
-
-
-
-
-
-
-
-
 omit [Fact p.Prime] in
 /-- The lambda-valuation exponent predicted for the `n`th tail summand,
 assuming `v(varpi)=1` and `v(p)=p-1`. -/
@@ -504,19 +509,6 @@ end FormalDwork
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /-- The valuation-completion integer ring used for finite trace formulas. -/
 abbrev ValuedIntegerRing : Type _ :=
   Furtwaengler.KummerArtinHasse.LambdaValuedIntegerRing p K
@@ -541,7 +533,6 @@ def valuedCyclotomicZetaInteger : ValuedIntegerRing p K :=
 def valuedCyclotomicZeta : ValuedCompletion p K :=
   Furtwaengler.KummerArtinHasse.lambdaValuedZeta p K
 
-
 @[simp]
 theorem valuedCyclotomicZeta_pow_eq_one :
     valuedCyclotomicZeta p K ^ p = 1 := by
@@ -549,14 +540,9 @@ theorem valuedCyclotomicZeta_pow_eq_one :
       (IsCyclotomicExtension.zeta p ℚ K)) ^ p = 1
   rw [← map_pow, (IsCyclotomicExtension.zeta_spec p ℚ K).pow_eq_one, map_one]
 
-
-
-
-
 /-- The global field unit attached to `zeta_p - 1`. -/
 def globalCyclotomicLambdaFieldUnit : Kˣ :=
   Furtwaengler.KummerArtinHasse.lambdaPiFieldUnit p K
-
 
 theorem globalCyclotomicLambdaFieldUnit_valuation :
     (Furtwaengler.KummerArtinHasse.lambdaHeightOne p K).valuation K
@@ -576,8 +562,6 @@ theorem valuedCyclotomicLambda_valuation :
         ((globalCyclotomicLambdaFieldUnit p K : K) : ValuedCompletion p K) from rfl]
   rw [Valued.valuedCompletion_apply]
   exact globalCyclotomicLambdaFieldUnit_valuation (p := p) (K := K)
-
-
 
 end PadicLogSetup
 end CyclotomicUnits

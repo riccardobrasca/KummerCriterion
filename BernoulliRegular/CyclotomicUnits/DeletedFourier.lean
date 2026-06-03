@@ -23,7 +23,6 @@ namespace CyclotomicUnits
 /-- The non-identity elements of a group. -/
 abbrev Nonidentity (G : Type*) [One G] := {g : G // g ≠ 1}
 
-
 /-- The nontrivial multiplicative characters of a group. -/
 abbrev NontrivChar (G : Type*) [CommMonoid G] :=
   {χ : MulChar G ℂ // χ ≠ 1}
@@ -50,7 +49,6 @@ theorem sum_subtype_ne_eq_sum_erase {α : Type*} [Fintype α] [DecidableEq α]
 section FiniteGroup
 
 variable {G : Type*} [CommGroup G] [Fintype G]
-
 
 /-- The deleted set has one fewer element than the group. -/
 theorem card_nonidentity_add_one [DecidableEq G] :
@@ -115,7 +113,6 @@ theorem sum_nonidentity_inv_mulChar_mul
 /-- Fourier coefficient with the inverse-character convention. -/
 def deletedFourierCoeff (q : G → ℂ) (χ : MulChar G ℂ) : ℂ :=
   ∑ h : G, q h * (χ h)⁻¹
-
 
 /-- The deleted character matrix, with rows reindexed by an equivalence
 between nontrivial characters and non-identity elements. -/
@@ -256,10 +253,6 @@ def deletedConvolutionMatrixOnNonidentity (q : G → ℂ) :
     Matrix (Nonidentity G) (Nonidentity G) ℂ :=
   Matrix.of fun h k => q (h.val * k.val⁻¹) - q h.val
 
-
-
-omit [Fintype G] in
-
 omit [Fintype G] in
 /-- Reindexing the literal deleted convolution matrix by `ρ` gives the
 character-indexed matrix used in the diagonalization proof. -/
@@ -320,9 +313,6 @@ theorem det_deletedConvolutionMatrixOnNonidentity_eq_prod_deletedFourierCoeff
     (G := G) ρ q
   rw [deletedConvolutionMatrix_eq_submatrix] at h
   rwa [Matrix.det_submatrix_equiv_self] at h
-
-
-
 
 /-- Inversion preserves the deleted index set. -/
 def nonidentityInvEquiv : Nonidentity G ≃ Nonidentity G where

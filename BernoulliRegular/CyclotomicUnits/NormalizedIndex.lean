@@ -220,7 +220,6 @@ theorem cyclotomicUnitIndex_primeConductor_pPrimary (hp_odd : p ≠ 2) :
     exact cyclotomicUnitIndex_primeConductor_pPrimary_of_five_le
       (p := p) (K := K) hp_ge_five
 
-
 end BernoulliRegular
 
 end

@@ -108,7 +108,6 @@ theorem toZModPS_eq_of_eq {r : ℕ} {F G : PowerSeries ℚ}
   subst h
   exact toZModPS_congr_proof hF hG
 
-
 @[simp]
 theorem toZModPS_one (r : ℕ) :
     (IsRIntegralPS.one r).toZModPS = (1 : PowerSeries (ZMod r)) := by
@@ -116,8 +115,6 @@ theorem toZModPS_one (r : ℕ) :
   by_cases hn : n = 0
   · simp [toZModPS, hn]
   · simp [toZModPS, hn]
-
-
 
 theorem toZModPS_sub {r : ℕ} {F G : PowerSeries ℚ}
     (hF : IsRIntegralPS r F) (hG : IsRIntegralPS r G) :
@@ -181,7 +178,6 @@ theorem toZModPS_subst_X_pow {r k : ℕ} (hk : k ≠ 0) {F : PowerSeries ℚ}
   · simp [toZModPS, PowerSeries.coeff_subst_X_pow, hk, hkn, IsRIntegralRat.toZMod]
   · simp [toZModPS, PowerSeries.coeff_subst_X_pow, hk, hkn, IsRIntegralRat.toZMod]
 
-
 /-- Freshman's dream for `r`-integral power series: if `F ∈ ℚ[[T]]` has
 `r`-integral coefficients, then every coefficient of `F ^ r - F(T ^ r)` is an
 `r`-multiple in the localized sense encoded by `IsRIntegralRat`. -/
@@ -216,8 +212,6 @@ theorem pow_r_sub_subst_X_pow_r_in_r_smul
     have hc := congrArg ((PowerSeries.coeff (R := ZMod r) n)) hred
     simpa [hDiff] using hc
   exact IsRIntegralRat.exists_eq_natCast_mul_of_toZMod_eq_zero (hDiff n) hz
-
-
 
 private theorem coeff_pow_add_C_mul_X_pow
     {A : PowerSeries ℚ} {n k : ℕ} (hn : 0 < n)
@@ -516,7 +510,6 @@ theorem dieudonneDwork_mpr
           mul_left_cancel₀ hrQ hmain
         rw [hcoeff]
         exact hqD.sub hqA
-
 
 end IsRIntegralPS
 

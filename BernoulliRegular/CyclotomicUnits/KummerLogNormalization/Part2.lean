@@ -437,7 +437,6 @@ theorem evalₐ_artinHasseNormalized_scaledDworkParameter_eq_mk_normalizedApprox
   exact (quotient_mk_scaledDworkParameterNormalizedApprox_eq_evalIntegralPowerSeriesMod
     (p := p) (K := K) a N).symm
 
-
 omit [NumberField.IsCMField K] in
 theorem samePrimeFiniteArtinHasseNormalizedCoord_eq_positive_sum
     (N : ℕ) (x : ValuedIntegerRing p K) :

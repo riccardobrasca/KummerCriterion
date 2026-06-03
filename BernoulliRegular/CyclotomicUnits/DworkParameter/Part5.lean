@@ -17,7 +17,6 @@ namespace DworkParameter
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-
 /-- Unsigned homogeneous finite-log term attached to the degree-`d`
 coefficient of `(E_N(x)-1)^n`. -/
 noncomputable def samePrimeFiniteArtinHasseExpCoordLogHomogeneousCore
@@ -538,7 +537,6 @@ theorem samePrimeFiniteArtinHasseLogHomogeneousNumerator_factorial_weighted_sub_
   exact Ideal.pow_le_pow_right htarget hweighted
 
 set_option linter.style.longLine false in
-
 set_option linter.style.longLine false in
 set_option maxHeartbeats 800000 in
 -- The proof compares two expanded quotient sums after rewriting a formal
@@ -764,7 +762,6 @@ theorem samePrimeFiniteArtinHasseLogHomogeneousNumerator_factorial_weighted_sub_
     rw [hsplit]
     exact I.add_mem hdiff hsumM_sub
   simpa [d, I, D, target] using hmain
-
 
 end DworkParameter
 end PadicLogSetup

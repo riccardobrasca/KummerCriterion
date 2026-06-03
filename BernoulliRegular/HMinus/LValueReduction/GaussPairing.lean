@@ -55,7 +55,6 @@ noncomputable def oddCharacterInvPair (χ : DirichletCharacter ℂ p) :
   classical
   exact {χ, χ⁻¹}
 
-
 theorem oddCharacterInvClass_eq_pair
     {χ : DirichletCharacter ℂ p} (hχ : χ ∈ oddCharacters (p := p)) :
     oddCharacterInvClass (p := p) χ = oddCharacterInvPair (p := p) χ := by

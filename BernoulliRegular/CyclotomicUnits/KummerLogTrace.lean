@@ -1,7 +1,52 @@
 module
 
 public import BernoulliRegular.CyclotomicUnits.KummerLogMatrix
-public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.PrincipalUnitFactor.Part3
+public import Mathlib.LinearAlgebra.SModEq.Pow
+public import BernoulliRegular.FLT37.PrimaryUnits.Part1
+public import BernoulliRegular.FLT37.PrimaryUnits.Part2
+public import BernoulliRegular.FLT37.PrimaryUnits.Part3
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
+public import BernoulliRegular.FLT37.Primary
+public import BernoulliRegular.UnitQuotient.DeltaAction
+public import Mathlib.NumberTheory.NumberField.Ideal.Basic
+public import Mathlib.RingTheory.Ideal.Int
+public import Mathlib.NumberTheory.MulChar.Basic
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.NumberTheory.GaussSum
+public import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.Stickelberger.Part1
+public import Mathlib.NumberTheory.JacobiSum.Basic
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
+public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
+public import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
+public import Mathlib.RingTheory.Localization.Basic
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
+public import Mathlib.Data.Nat.Digits.Defs
+public import Mathlib.Data.Nat.Digits.Lemmas
+public import Mathlib.FieldTheory.Finite.Trace
+public import Mathlib.Algebra.GroupWithZero.Units.Equiv
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Data.Nat.Choose.Multinomial
+public import Mathlib.Data.Nat.Prime.Factorial
+public import Mathlib.Algebra.BigOperators.Associated
+public import Mathlib.Data.Fintype.Units
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.Algebra.Ring.Associated
+public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
+public import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
+public import Mathlib.Data.Nat.ModEq
+public import Mathlib.NumberTheory.Cyclotomic.Basic
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Mathlib.Algebra.Group.Prod
+public import Mathlib.Data.ZMod.Units
+public import BernoulliRegular.TotallyRealSubfield.Conjugation
+public import BernoulliRegular.UnitQuotient.FreeLatticeComparison.ConjugationTrace
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.PrincipalUnitFactor.Part2.Part3
 
 /-!
 # Trace source for the Kummer logarithm columns
@@ -60,8 +105,6 @@ noncomputable def concreteKummerLogVector
     [NumberField.IsCMField K] (hp_three : 3 ≤ p) :
     KummerLogVector (p := p) (K := K) :=
   fun a => kummerLogFixedColumn (p := p) (K := K) hp_three a
-
-
 
 /-- The reduced Kummer coefficient of the concrete logarithm vector is the
 mod-`p` reduction of the matching even-power Dwork coordinate. -/

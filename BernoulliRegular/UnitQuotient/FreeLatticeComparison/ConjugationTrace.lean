@@ -1,6 +1,6 @@
 module
 
-public import BernoulliRegular.UnitQuotient.FreeLatticeComparison.AugmentationTrace
+public import BernoulliRegular.UnitQuotient.FreeCharacterProfile
 
 /-!
 # Unit quotients: complex conjugation and augmentation traces
@@ -28,9 +28,6 @@ attribute [local instance] NumberField.Units.instZLattice_unitLattice
 
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
-
-
-
 
 /-- Complex conjugation as a rational Galois automorphism of the cyclotomic
 field. -/
@@ -104,20 +101,6 @@ theorem cyclotomicSigmaOfUnit_neg_one_eq_complexConjGal
   apply (cyclotomicGalEquivZMod (p := p) K).injective
   rw [cyclotomicGalEquivZMod_sigmaOfUnit,
     cyclotomicGalEquivZMod_complexConjGal_eq_neg_one (p := p) (K := K) hp_gt_two]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 end BernoulliRegular
 

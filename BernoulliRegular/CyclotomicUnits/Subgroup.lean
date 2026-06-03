@@ -66,14 +66,11 @@ theorem CPlusGenerator_mem (hp_three : 3 ≤ p) (i : Fin ((p - 3) / 2)) :
     CPlusGenerator (p := p) (K := K) hp_three i ∈ CPlus (p := p) (K := K) hp_three :=
   Subgroup.subset_closure (by right; exact ⟨i, rfl⟩)
 
-
-
 /-- An odd prime does not divide the sign factor `2`. -/
 theorem prime_not_dvd_sign_factor (hp_odd : p ≠ 2) : ¬ p ∣ (2 : ℕ) := by
   intro hp_dvd_two
   have hp_le_two : p ≤ 2 := Nat.le_of_dvd (by norm_num) hp_dvd_two
   exact hp_odd (le_antisymm hp_le_two (Fact.out : Nat.Prime p).two_le)
-
 
 end BernoulliRegular
 

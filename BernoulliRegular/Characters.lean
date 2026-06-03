@@ -96,7 +96,6 @@ lemma teichmuller_zero : teichmuller p 0 = 0 := map_zero _
 @[simp]
 lemma teichmuller_one : teichmuller p 1 = 1 := map_one _
 
-
 /-- `ω(a) ≡ a (mod p)` for every `a ∈ ZMod p`. -/
 @[simp]
 lemma toZMod_teichmuller (a : ZMod p) : PadicInt.toZMod (teichmuller p a) = a := by
@@ -115,8 +114,6 @@ lemma toZMod_teichmuller (a : ZMod p) : PadicInt.toZMod (teichmuller p a) = a :=
 /-- `ω(a)^(p-1) = 1` for nonzero `a ∈ ZMod p`. -/
 lemma teichmuller_pow_sub_one {a : ZMod p} (ha : a ≠ 0) : teichmuller p a ^ (p - 1) = 1 := by
   rw [← map_pow, ZMod.pow_card_sub_one_eq_one ha, map_one]
-
-
 
 /-- `ω` is injective on `ZMod p` (follows from `toZMod ∘ ω = id`). -/
 lemma teichmuller_injective : Function.Injective (teichmuller p) := fun _ _ hab => by
@@ -190,10 +187,7 @@ lemma teichmuller_isPrimitiveRoot_of_generator {g : (ZMod p)ˣ}
       rw [orderOf_eq_card_of_forall_mem_zpowers hg_gen, Nat.card_eq_fintype_card, ZMod.card_units]
     rw [← h_order]; exact orderOf_dvd_of_pow_eq_one h_units
 
-
-
 /-! ### T002: the character group is cyclic of order `p - 1` -/
-
 
 /-- `ω^(p-1) = 1` in the Dirichlet character group: the `(p-1)`-th power
 of the Teichmüller character is the trivial character. This is the
@@ -219,11 +213,7 @@ lemma orderOf_teichmullerChar : orderOf (teichmullerChar p) = p - 1 := by
   simp only [MulChar.pow_apply_coe, teichmullerChar_apply, MulChar.one_apply_coe] at h_apply
   exact (teichmuller_isPrimitiveRoot_of_generator hg_gen).2 _ h_apply
 
-
-
-
 /-! ### T004 — Character sum identity (Diekmann Lemma 24) -/
-
 
 /-! ### T003 — Character parity (Diekmann Lemmas 23, 25) -/
 
@@ -240,15 +230,11 @@ lemma teichmuller_neg_one (hp_odd : p ≠ 2) : teichmuller p (-1) = -1 := by
     exact absurd (by simpa using congrArg PadicInt.toZMod h1) ZMod.neg_one_ne_one
   · exact h_neg
 
-
-
 /-- `ω^i(-1) = (-1)^i` for `p` an odd prime. -/
 lemma teichmullerChar_pow_apply_neg_one (hp_odd : p ≠ 2) (i : ℕ) :
     ((teichmullerChar p) ^ i) (-1 : ZMod p) = (-1 : ℤ_[p]) ^ i := by
   rcases Nat.eq_zero_or_pos i with rfl | hi
   · rw [pow_zero, pow_zero]; exact MulChar.one_apply isUnit_one.neg
   · rw [MulChar.pow_apply' _ hi.ne', teichmullerChar_apply, teichmuller_neg_one hp_odd]
-
-
 
 end BernoulliRegular

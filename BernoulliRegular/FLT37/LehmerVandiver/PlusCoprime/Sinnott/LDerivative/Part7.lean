@@ -15,9 +15,6 @@ namespace Sinnott
 
 variable (p : ℕ) [hp : Fact p.Prime]
 
-
-
-
 /-- **Sinnott `(A - B)` entry via shifted bijection**:
 `(A - B)[i, w]` re-expressed using `kplusEmbeddingIndexQuotientShifted` (which
 sends w₀ → 1). The entry's column reference shifts to
@@ -52,17 +49,6 @@ theorem sinnottMatrix_A_sub_B_apply_eq_sub_shifted
       kplusEmbeddingIndexQuotient p K
         NumberField.Units.dirichletUnitTheorem.w₀ =
       kplusEmbeddingIndexQuotient p K w.val by group]
-
-
-
-
-
-
-
-
-
-
-
 
 /-- **Determinant of Sinnott matrix in `2^((p-3)/2) · det(A-B)` form**: the
 factor-of-2 extraction at the determinant level. -/

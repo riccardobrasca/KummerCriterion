@@ -20,7 +20,6 @@ open Furtwaengler.KummerArtinHasse
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-
 theorem rationalToLambdaWithValRingHom_le_one_iff
     (x : WithVal ((lambdaRationalHeightOneSpectrum p).valuation ℚ)) :
     Valued.v (rationalToLambdaWithValRingHom (p := p) (K := K) x) ≤ 1 ↔
@@ -128,7 +127,6 @@ instance instAlgebraRationalPadicIntegerDworkComplete :
   ((algebraMap (ValuedIntegerRing p K) (DworkCompleteIntegerRing p K)).comp
     (rationalPadicIntegerToValuedInteger (p := p) (K := K))).toAlgebra
 
-
 @[simp]
 theorem algebraMap_rationalPadicInteger_dworkComplete_apply
     (x : RationalPadicIntegerRing p) :
@@ -136,9 +134,6 @@ theorem algebraMap_rationalPadicInteger_dworkComplete_apply
       algebraMap (ValuedIntegerRing p K) (DworkCompleteIntegerRing p K)
         (rationalPadicIntegerToValuedInteger (p := p) (K := K) x) :=
   rfl
-
-
-
 
 /-- The finite power expansion map for the candidate `Z_p`-basis
 `1, varpi, ..., varpi^(p - 2)`. -/
@@ -204,8 +199,6 @@ theorem dworkParameterPowerLinearMap_single_coeff
   · intro hi
     simp at hi
 
-
-
 /-- Once the finite power expansion map is bijective, its image of the standard
 function basis is the desired basis of the Dwork completion. -/
 noncomputable def dworkParameterPowerBasisOfBijective
@@ -226,9 +219,6 @@ theorem dworkParameterPowerBasisOfBijective_apply
       (Pi.single i (1 : RationalPadicIntegerRing p)) =
     dworkParameter p K ^ (i : ℕ)
   exact dworkParameterPowerLinearMap_single (p := p) (K := K) i
-
-
-
 
 /-- Dwork-side parameter-ideal denominator bookkeeping:
 `(varpi)^(m(p-1)+s) = (p^m) (varpi)^s`. -/
@@ -275,7 +265,6 @@ theorem natCast_prime_pow_mem_dworkParameterIdeal_pow_mul_pred (m : ℕ) :
     (show (1 : DworkCompleteIntegerRing p K) ∈
       (dworkParameterIdeal p K) ^ 0 by simp)
   rwa [mul_one] at hmul
-
 
 theorem mem_lambdaIdeal_iff_valuation_le_lambda
     (x : ValuedIntegerRing p K) :
@@ -551,7 +540,6 @@ theorem exists_completion_fin_valuation_sub_le_exp_neg_one_of_valuation_le_one
     · exact (hxnotA hxA).elim
     · exact hxB
   simpa [B] using hxB
-
 
 theorem valuedInteger_residue_lift_rationalPadicInteger
     (x : ValuedIntegerRing p K) :

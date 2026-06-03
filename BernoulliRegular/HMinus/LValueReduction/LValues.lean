@@ -3,7 +3,13 @@ module
 public import BernoulliRegular.GaussSum.SignInvariant.BranchChoice
 public import BernoulliRegular.GaussSum.SignInvariant.Trace
 public import BernoulliRegular.HMinus.LValueReduction.Factors
-public import BernoulliRegular.LValueAtOne
+public import BernoulliRegular.LValueAtOne.Defs
+public import BernoulliRegular.LValueAtOne.ComplexBounds
+public import BernoulliRegular.LValueAtOne.DirichletBounds
+public import BernoulliRegular.LValueAtOne.Cosine
+public import BernoulliRegular.LValueAtOne.Sine
+public import BernoulliRegular.LValueAtOne.Odd
+public import BernoulliRegular.LValueAtOne.Even
 
 /-!
 # `L(1, χ)` evaluations for `hMinus`
@@ -149,7 +155,6 @@ theorem odd_selfInverse_character_mod_four_eq_three
   have hp_mod4_lt : p % 4 < 4 := Nat.mod_lt _ (by decide)
   omega
 
-
 /-- **T023d3**: In the `p ≡ 1 [ZMOD 4]` case, no odd Dirichlet character is
 self-inverse. -/
 theorem odd_character_ne_inv_of_mod_four_eq_one
@@ -244,7 +249,6 @@ theorem hPlus_formula_of_evenLValues (hp_odd' : p ≠ 2) :
   hPlus_formula_of_evenLValues_cyclotomicFactor (p := p) (K := K) hp_odd'
 
 set_option linter.unusedSectionVars false
-
 
 /-- Split the product of the odd `L(1, χ)` right-hand sides into the Gauss-sum
 factor and the Bernoulli factor. -/

@@ -19,7 +19,6 @@ namespace DworkParameter
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-
 namespace Conjugation
 
 open Furtwaengler.KummerArtinHasse

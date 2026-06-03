@@ -82,13 +82,10 @@ noncomputable def rationalPadicTeichmuller (a : ZMod p) :
   padicIntToRationalPadicIntegerRingEquiv (p := p)
     (BernoulliRegular.teichmuller p a)
 
-
 @[simp]
 theorem rationalPadicTeichmuller_one :
     rationalPadicTeichmuller p 1 = 1 := by
   simp [rationalPadicTeichmuller]
-
-
 
 theorem rationalPadicTeichmuller_pow_prime (a : ZMod p) :
     rationalPadicTeichmuller p a ^ p =
@@ -99,8 +96,6 @@ theorem rationalPadicTeichmuller_pow_prime (a : ZMod p) :
       padicIntToRationalPadicIntegerRingEquiv (p := p)
         (BernoulliRegular.teichmuller p a)
   rw [← map_pow, BernoulliRegular.teichmuller_pow_card (p := p) a]
-
-
 
 /-- The residue map on the rational completed integer coefficient ring,
 transported from mathlib's `PadicInt.toZMod`. -/
@@ -174,7 +169,6 @@ noncomputable def scaledDworkParameter (a : ZMod p) :
   algebraMap (RationalPadicIntegerRing p) (DworkCompleteIntegerRing p K)
       (rationalPadicTeichmuller p a) *
     dworkParameter p K
-
 
 @[simp]
 theorem scaledDworkParameter_one :
@@ -554,9 +548,6 @@ noncomputable def rationalPadicTeichmullerValued (a : ZMod p) :
   rationalPadicIntegerToValuedInteger (p := p) (K := K)
     (rationalPadicTeichmuller p a)
 
-
-
-
 theorem rationalPadicTeichmullerValued_pow_prime (a : ZMod p) :
     rationalPadicTeichmullerValued p K a ^ p =
       rationalPadicTeichmullerValued p K a := by
@@ -713,14 +704,6 @@ theorem scaledDworkParameterFiniteArtinHasseLog_eq_zero
     scaledDworkParameterFiniteArtinHasseLog (p := p) (K := K) a N = 0 := by
   rw [scaledDworkParameterFiniteArtinHasseLog_eq_teichmuller_mul,
     dworkParameterFiniteArtinHasseLog_eq_zero, mul_zero]
-
-
-
-
-
-
-
-
 
 /-- Completed Artin-Hasse exponential at the scaled Dwork parameter.  CU-09g3
 will identify this element with `zeta_p^a`. -/

@@ -1,4 +1,4 @@
-import BernoulliRegular.CyclotomicUnits.KummerLogFormalEvaluator
+import BernoulliRegular.CyclotomicUnits.KummerLogFormalEvaluator.Coefficient
 import BernoulliRegular.CyclotomicUnits.KummerLogLinearAlgebra
 import BernoulliRegular.CyclotomicUnits.Vandermonde
 

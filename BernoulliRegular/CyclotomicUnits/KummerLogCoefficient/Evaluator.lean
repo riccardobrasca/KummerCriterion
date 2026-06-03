@@ -25,8 +25,6 @@ variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 variable [NumberField.IsCMField K]
 
-
-
 omit [NumberField.IsCMField K] in
 /-- The cyclotomic action multiplies the `i`-th Dwork power-basis coordinate
 by the corresponding residue power. -/
@@ -135,7 +133,6 @@ theorem kummerLogDworkArtinHasseSpecializedFiniteLogCoeffModP_eq
           (kummerLogDworkArtinHasseSpecializedFiniteLog
             (p := p) (K := K) hp_three a)) :=
   rfl
-
 
 omit [NumberField.IsCMField K] in
 /-- Once the finite Artin-Hasse specialization coefficient has been identified

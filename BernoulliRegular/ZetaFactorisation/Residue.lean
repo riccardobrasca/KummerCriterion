@@ -65,8 +65,6 @@ theorem tendsto_sub_one_mul_dedekindZeta_via_LProducts :
   filter_upwards [self_mem_nhdsWithin] with s hs
   rw [dedekindZeta_eq_riemannZeta_mul_nontrivialLProduct_of_one_lt_re p K (by exact_mod_cast hs)]
 
-
-
 end ZetaFactorisation
 
 end BernoulliRegular

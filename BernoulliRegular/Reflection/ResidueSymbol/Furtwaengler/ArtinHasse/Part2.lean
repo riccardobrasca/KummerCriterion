@@ -1,14 +1,28 @@
 module
 
-public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.ConcreteSetup
-public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.Stickelberger.Part1
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.NumberTheory.MulChar.Basic
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.NumberTheory.GaussSum
+public import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
+public import Mathlib.NumberTheory.JacobiSum.Basic
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
+public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
+public import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
+public import Mathlib.RingTheory.Localization.Basic
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork.Part1
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork.Part2
 public import Mathlib.RingTheory.PowerSeries.Substitution
 public import Mathlib.RingTheory.PowerSeries.Basic
 public import Mathlib.RingTheory.PowerSeries.Trunc
 public import Mathlib.RingTheory.PowerSeries.Exp
 public import Mathlib.Data.Nat.Log
 public import Mathlib.NumberTheory.Padics.PadicVal.Basic
-public import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
 public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.ArtinHasse.Part1
 
 /-!
@@ -56,7 +70,6 @@ theorem artinHasseExpMinusOneSeries_isRIntegral
     fun n => artinHasseExpSeries_coeff_isRIntegral r n
   exact hE.sub (DieudonneDwork.IsRIntegralPS.one r)
 
-
 theorem artinHasseExpInverseSeries_isRIntegral
     (r : ℕ) [Fact (Nat.Prime r)] :
     DieudonneDwork.IsRIntegralPS r (artinHasseExpInverseSeries r) := by
@@ -74,8 +87,6 @@ theorem artinHasseExpInverseSeries_isRIntegral
     DieudonneDwork.IsRIntegralPS.substInv_of_constantCoeff_zero_coeff_one
       (P := P) hP hP0 hcoeff
   simpa [artinHasseExpInverseSeries, P] using hinv
-
-
 
 /-- The formal inverse identity transported through any coefficient map out
 of the localized Artin-Hasse coefficient ring. -/
@@ -107,7 +118,6 @@ theorem artinHasseExpSeries_mapTo_subst_inverse
     _ = 1 + (PowerSeries.X : PowerSeries A) := by
           simp
 
-
 private theorem exists_inverse_mod_pow_of_not_mem_maximal
     {A : Type*} [CommRing A] {I : Ideal A} [I.IsMaximal] {x : A} {e : ℕ}
     (he : e ≠ 0) (hx : x ∉ I) :
@@ -120,7 +130,6 @@ private theorem exists_inverse_mod_pow_of_not_mem_maximal
   have hzero : Ideal.Quotient.mk (I ^ e) (x * y - 1) = 0 := by
     rw [map_sub, map_mul, hxu, map_one, sub_self]
   exact Ideal.Quotient.eq_zero_iff_mem.mp hzero
-
 
 end Furtwaengler
 

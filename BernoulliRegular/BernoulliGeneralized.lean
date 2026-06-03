@@ -26,10 +26,8 @@ agree when `χ` is primitive of conductor `N`; the
 generating-function equivalence is not needed downstream in this
 project.
 
-Mathlib does not yet contain generalized Bernoulli numbers (see the
-`TODO: Extend to cover Dirichlet L-functions` comment in
-`Mathlib.NumberTheory.LSeries.HurwitzZetaValues`), so this is a fresh
-definition.
+Mathlib does not yet provide generalized Bernoulli numbers, so this is a
+fresh definition.
 
 ## Main definitions
 
@@ -70,8 +68,6 @@ noncomputable def BernoulliGen [NeZero N]
   (N : R) ^ (n - 1) *
     ∑ a : ZMod N, χ a *
       algebraMap ℚ R ((Polynomial.bernoulli n).eval ((a.val : ℚ) / N))
-
-
 
 /-- Intermediate form (T006): for a non-trivial Dirichlet character `χ`,
 the `1/2` constant term in `B_1(a/N) = a/N - 1/2` does not contribute
@@ -240,10 +236,6 @@ Because `χ` is even, `χ(-a) = χ(a)`; and on `ZMod N`,
 `Nontrivial (ZMod N)`, automatic from `Fact (1 < N)`). Dividing by
 `2 ≠ 0` (CharZero) gives the result. -/
 
-
-
-
-
 /-! ### T010 — Von Staudt–Clausen (p-local case at `n = p-1`)
 
 The full Von Staudt–Clausen theorem states, for `n ≥ 2` even:
@@ -268,7 +260,6 @@ Proof outline:
    `k ≥ 3` vanish; even `k ∈ [2, p-3]` have a factor `C(p, k)` divisible
    by `p` combined with `p`-integral `bernoulli k` (step 1). Combining,
    `p · bernoulli (p-1) + 1 ∈ p · ℤ_[p]`. -/
-
 
 /-- Bernoulli numbers below the boundary `p - 1` are `p`-adic integers.
 
@@ -429,6 +420,5 @@ lemma exists_padicInt_bernoulli_factor {p : ℕ} [hp : Fact p.Prime] (hp_odd : p
       simp [hcoef_unit]
     rw [ha_unit, ← not_iff_not, PadicInt.not_isUnit_iff, PadicInt.norm_intCast_lt_one_iff]
     simp
-
 
 end BernoulliRegular

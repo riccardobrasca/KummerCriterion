@@ -109,8 +109,6 @@ use only `p · B_j ∈ ℤ_[p]` (weaker than Adams's `B_j/j ∈ ℤ_[p]`).
 Adams is consequently only needed at `k < p - 1` in the Main pipeline.
 -/
 
-
-
 /-- **Pointwise Faulhaber term bound** (helper for Step 2): for `i < t`
 with `t` even and `t ≥ 2`, each Faulhaber summand `B_i · C(t+1, i) · p^{t+1-i}`
 is in `p² · ℤ_p`.

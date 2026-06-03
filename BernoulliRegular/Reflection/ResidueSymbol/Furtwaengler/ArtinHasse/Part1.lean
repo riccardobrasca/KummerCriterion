@@ -1,14 +1,28 @@
 module
 
-public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.ConcreteSetup
-public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.Stickelberger.Part1
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.NumberTheory.MulChar.Basic
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.NumberTheory.GaussSum
+public import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
+public import Mathlib.NumberTheory.JacobiSum.Basic
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
+public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
+public import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
+public import Mathlib.RingTheory.Localization.Basic
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork.Part1
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork.Part2
 public import Mathlib.RingTheory.PowerSeries.Substitution
 public import Mathlib.RingTheory.PowerSeries.Basic
 public import Mathlib.RingTheory.PowerSeries.Trunc
 public import Mathlib.RingTheory.PowerSeries.Exp
 public import Mathlib.Data.Nat.Log
 public import Mathlib.NumberTheory.Padics.PadicVal.Basic
-public import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
 
 /-!
 # Artin-Hasse exponential power series
@@ -74,7 +88,6 @@ noncomputable def artinHasseLogSeries (r : ℕ) [Fact (Nat.Prime r)] :
   unfold artinHasseLogSeries
   rw [PowerSeries.constantCoeff_mk]
   simp
-
 
 theorem artinHasseLogSeries_hasSubst (r : ℕ) [Fact (Nat.Prime r)] :
     PowerSeries.HasSubst (artinHasseLogSeries r) :=
@@ -244,7 +257,6 @@ noncomputable def artinHasseExpInverseSeries (r : ℕ) [Fact (Nat.Prime r)] :
     exact invertibleOfNonzero (by norm_num : (1 : ℚ) ≠ 0)
   simp [artinHasseExpInverseSeries, P, hcoeff]
 
-
 /-- Formal right-inverse identity for `artinHasseExpInverseSeries`. -/
 theorem artinHasseExpMinusOneSeries_subst_inverse
     (r : ℕ) [Fact (Nat.Prime r)] :
@@ -277,7 +289,6 @@ theorem artinHasseExpSeries_subst_inverse
       (PowerSeries.subst_C (a := artinHasseExpInverseSeries r) (r := (1 : ℚ)))
   rw [hone] at hinv
   simpa [add_comm] using hinv
-
 
 private theorem artinHasseLogSeries_coeff_eq_of_pow
     (r : ℕ) [Fact (Nat.Prime r)] (k : ℕ) :
@@ -604,7 +615,6 @@ theorem artinHasseExpSeries_coeff_isRIntegral
     have hquot := artinHasseExpSeries_dwork_quotient_eq_rescale_exp r
     simpa [hquot] using rescale_exp_sub_one_coeff_rMultiple r n hn
   exact hps n
-
 
 private theorem rescale_exp_coeff_mul_eq_choose_mul_coeff
     (r : ℕ) [Fact (Nat.Prime r)] (i j : ℕ) :

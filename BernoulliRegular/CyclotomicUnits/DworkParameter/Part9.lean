@@ -17,7 +17,6 @@ namespace DworkParameter
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-
 theorem samePrimeArtinHasseLogTermNumerator_zero
     {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) :
     samePrimeArtinHasseLogTermNumerator (p := p) (K := K) 0 x hx = x := by
@@ -621,8 +620,6 @@ noncomputable def dworkParameterFiniteArtinHasseTailCoord (N : ℕ) :
   | 0 => 0
   | N + 1 => dworkParameterFiniteArtinHasseTail (p := p) (K := K) N
 
-
-
 theorem dworkParameterFiniteArtinHasseTailCoord_factorPow
     (hp_two : 2 < p) {M N : ℕ} (hMN : M ≤ N) :
     Ideal.Quotient.factorPow (lambdaIdeal p K) hMN
@@ -649,8 +646,6 @@ noncomputable def dworkParameterFiniteArtinHasseTailUnitCoord (N : ℕ) :
   match N with
   | 0 => 0
   | N + 1 => dworkParameterFiniteArtinHasseTailUnit (p := p) (K := K) N
-
-
 
 theorem dworkParameterFiniteArtinHasseTailUnitCoord_factorPow
     (hp_two : 2 < p) {M N : ℕ} (hMN : M ≤ N) :
@@ -876,7 +871,6 @@ theorem artinHasseTailUnit_eq_one_add_artinHasseTail (hp_two : 2 < p) :
       rw [artinHasseTailUnit_evalₐ_succ, map_add, map_one,
         artinHasseTail_evalₐ_succ]
       rfl
-
 
 end DworkParameter
 end PadicLogSetup

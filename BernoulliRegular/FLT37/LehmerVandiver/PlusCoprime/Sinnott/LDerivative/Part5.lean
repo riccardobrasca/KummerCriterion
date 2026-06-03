@@ -91,7 +91,6 @@ theorem matrixRestrictionToSinnott_of_regOfFamily_sq_eq_prod_nontrivial_qe_sq
   rw [h]
   ring
 
-
 /-- **`KummerDirichletDeterminant` from the eigenvalue-product hypothesis**:
 final synthesis chain. Assuming the substantive eigenvalue-product identity
 `RegOfFamilySqEqProdNontrivialQeSq`, the entire PF-1 chain
@@ -178,7 +177,6 @@ theorem embeddingIndex_spec
     w.embedding (((BernoulliRegular.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K)) =
       ZMod.stdAddChar (N := p) ((embeddingIndex (p := p) K w : ZMod p)) :=
   Classical.choose_spec (exists_embedding_index (p := p) K w)
-
 
 /-- **Sinnott `A`-matrix entry in `stdAddChar` form**: under the embedding-index
 identification, the per-entry expression of `sinnottMatrixA p K [i, w]` becomes
@@ -454,9 +452,6 @@ theorem sinnottMatrix_A_sub_B_apply_eq_sub
   push_cast
   rw [sinnottMatrixA_apply_eq_convolutionMatrixLogNormEven p K hp_odd hp_three i w,
     sinnottMatrixB_apply_eq_convolutionMatrixLogNormEven p K i w]
-
-
-
 
 /-- **Embedding-index uniquely determines the K-place embedding** (cyclotomic K):
 two K-places `w₁ w₂ : InfinitePlace K` have the same embedding-index iff their

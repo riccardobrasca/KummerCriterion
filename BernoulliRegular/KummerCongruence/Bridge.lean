@@ -304,7 +304,6 @@ directly, both `B_{1, ω^{p-2}}` and `bernoulli (p-1)` differ from
 `-1/p` by a `p`-adic integer, so their **difference** is a `p`-adic
 integer. -/
 
-
 /-- Diekmann page 51: the boundary factor in equation (32) is congruent to
 `1` modulo `p`. More precisely,
 
@@ -324,6 +323,5 @@ theorem boundary_teichmuller_factor_eq_one_add_p_mul
   refine ⟨-1 - z₀, ?_⟩
   rw [hz₀]
   push_cast; field_simp [hpQ_ne, htwo_ne]; ring
-
 
 end BernoulliRegular

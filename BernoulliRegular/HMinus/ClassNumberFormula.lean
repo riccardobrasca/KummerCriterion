@@ -2,8 +2,14 @@ module
 
 public import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
 public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
-public import BernoulliRegular.TotallyRealSubfield
-public import BernoulliRegular.ZetaFactorisation
+public import BernoulliRegular.TotallyRealSubfield.Basic
+public import BernoulliRegular.TotallyRealSubfield.ZetaPrime
+public import BernoulliRegular.TotallyRealSubfield.Conjugation
+public import BernoulliRegular.TotallyRealSubfield.FixedAssociate
+public import BernoulliRegular.TotallyRealSubfield.ClassGroup
+public import BernoulliRegular.ZetaFactorisation.Basic
+public import BernoulliRegular.ZetaFactorisation.EulerProduct
+public import BernoulliRegular.ZetaFactorisation.Residue
 
 /-!
 # Analytic class number formula for `K` and `K⁺`
@@ -112,8 +118,6 @@ theorem hPlus_formula :
             (2 ^ InfinitePlace.nrRealPlaces L *
               (2 * Real.pi) ^ InfinitePlace.nrComplexPlaces L * Units.regulator L)) := by
           simp [A, B]
-
-
 
 omit [IsCMField K] in
 lemma nrComplexPlaces_maximalRealSubfield_eq_zero :

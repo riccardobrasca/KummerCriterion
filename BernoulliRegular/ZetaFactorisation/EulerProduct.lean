@@ -501,7 +501,6 @@ lemma localFactors_agree_prime_ne_p {q : Nat.Primes} (hq : (q : ℕ) ≠ p) {s :
   rw [dedekindLocalFactor_eq_pow_localResidueDegree (p := p) (K := K) hq,
     charLocalFactor_eq_pow_localResidueDegree (p := p) hq]
 
-
 lemma LProduct_eq_eulerProduct {s : ℂ} (hs : 1 < s.re) :
     LProduct (p := p) s =
       ∏' q : Nat.Primes, (charLocalFactor (p := p) (q : ℕ) s)⁻¹ := by
@@ -636,7 +635,6 @@ theorem dedekindZeta_eq_riemannZeta_mul_nontrivialLProduct_of_one_lt_re {s : ℂ
     rw [← heq, norm_one] at hpnorm
     exact lt_irrefl 1 hpnorm
   exact mul_left_cancel₀ hne (h1.symm.trans h2)
-
 
 end ZetaFactorisation
 

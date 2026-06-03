@@ -63,8 +63,6 @@ theorem samePrimeFiniteArtinHasseNormalizedCoordLogHomogeneousDegreeSum_eq_sum_I
           (p := p) (K := K) N n d x hx))
 
 omit [NumberField.IsCMField K] in
-
-omit [NumberField.IsCMField K] in
 theorem samePrimeFiniteLogTermCore_normalizedArtinHasseCoord_eq_homogeneous_support_sum
     (N n : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) (hn : n ≠ 0) :
     samePrimeFiniteLogTermCore (p := p) (K := K) N n
@@ -253,7 +251,6 @@ theorem samePrimeFiniteLogTerm_normalizedArtinHasseCoord_eq_homogeneous_cutoff_s
     _ = ∑ d ∈ (P ^ n).support ∪ Finset.range C, f d := hsupport_union
     _ = ∑ d ∈ Finset.range C, f d := hrange_union.symm
 
-
 omit [NumberField.IsCMField K] in
 theorem artinHasseExp_scaledDworkParameter_sub_one_eq_mul_normalized
     (a : ZMod p) :
@@ -266,9 +263,7 @@ theorem artinHasseExp_scaledDworkParameter_sub_one_eq_mul_normalized
     (p := p) (K := K)
     (scaledDworkParameter_evalₐ_one (p := p) (K := K) a)
 
-
 omit [NumberField.IsCMField K] in
-
 /-- The Dwork Artin-Hasse specialization of the normalized quotient
 `X * (E_p(T) - 1) / (E_p(X*T) - 1) - 1`, with
 `T = varpi` and `X = omega(a)`.

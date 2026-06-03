@@ -15,15 +15,6 @@ namespace Sinnott
 
 variable (p : ℕ) [hp : Fact p.Prime]
 
-
-
-
-
-
-
-
-
-
 omit hp in
 /-- **Generalised χ ↔ χ⁻¹ reindex** for products over `evenNontrivialCharacters`:
 since the set is closed under inversion, the involution χ ↔ χ⁻¹ reindexes
@@ -43,7 +34,6 @@ theorem prod_evenNontriv_eq_prod_evenNontriv_inv
     refine ⟨χ⁻¹, inv_mem_evenNontrivialCharacters (p := p) hχ, ?_⟩
     exact inv_inv χ
   · intro χ _; rfl
-
 
 /-- **Matrix-restriction step to the Sinnott matrix (named Prop)**: the
 substantive remaining content for PF-1, expressing that the squared
@@ -286,7 +276,6 @@ theorem KummerDirichletDeterminant_of_MatrixRestrictionToSinnott
     (FrobeniusDetIdentity_of_MatrixRestrictionToSinnott (p := p) K hp_odd
       hp_three hp_two h_matrix)
 
-
 /-- **Cardinality of `InfinitePlace K`**: for K = ℚ(ζ_p) (cyclotomic field of
 prime conductor p > 2), the number of infinite places equals `(p-1)/2`.
 K is totally complex (CM-field, no real places), so by
@@ -338,10 +327,6 @@ noncomputable def KplusInfinitePlaceEquivCyclotomicEvenDelta
       BernoulliRegular.CyclotomicEvenDelta p :=
   (NumberField.IsCMField.equivInfinitePlace K).symm.trans
     (InfinitePlaceEquivCyclotomicEvenDelta (p := p) K hp_two)
-
-
-
-
 
 /-- **Sinnott matrix-entry decomposition wrapper**: gives the matrix `M_Sinnott[i, w]`
 in the form `2 (log w_K(ζ^(idx_i+2) - 1) - log w_K(ζ - 1))`.
@@ -500,7 +485,6 @@ theorem sinnottMatrix_eq_two_A_sub_two_B
   simp only [Matrix.of_apply, Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul,
     sinnottMatrixA, sinnottMatrixB]
   exact sinnottMatrix_entry_decomp p K hp_odd hp_three i w
-
 
 /-- **Sinnott matrix as `2 · (A - B)`**: factored form. The Sinnott
 log-embedding matrix equals `2 · (sinnottMatrixA - sinnottMatrixB)`,

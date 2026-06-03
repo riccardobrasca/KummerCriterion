@@ -1,8 +1,18 @@
 module
 
 public import Mathlib.NumberTheory.Bernoulli
-public import BernoulliRegular.KummerCongruence
-public import BernoulliRegular.HMinus.LValueReduction
+public import BernoulliRegular.KummerCongruence.VonStaudtClausen
+public import BernoulliRegular.KummerCongruence.Voronoi
+public import BernoulliRegular.KummerCongruence.Kummer
+public import BernoulliRegular.KummerCongruence.Bridge
+public import BernoulliRegular.HMinus.LValueReduction.Factors
+public import BernoulliRegular.HMinus.LValueReduction.LValues
+public import BernoulliRegular.HMinus.LValueReduction.Assembly
+public import BernoulliRegular.HMinus.LValueReduction.GaussGoal
+public import BernoulliRegular.HMinus.LValueReduction.GaussPairing
+public import BernoulliRegular.HMinus.LValueReduction.GaussProduct
+public import BernoulliRegular.HMinus.LValueReduction.Final
+public import BernoulliRegular.HMinus.LValueReduction.Teichmuller
 
 /-!
 # `h⁻` mod `p` corollaries (Diekmann page 51)
@@ -18,7 +28,7 @@ the proof of Theorem 42:
 Both are proved on top of `hMinus_formula_teichmuller`
 (`BernoulliRegular.HMinus.LValueReduction`), now fully proved in the
 completed T023 chain. These corollaries are therefore established on a
-sorry-free base.
+completed base.
 -/
 
 @[expose] public section

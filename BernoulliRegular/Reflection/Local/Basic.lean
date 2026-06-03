@@ -63,13 +63,6 @@ variable (p : ℕ) [Fact p.Prime]
 /-- The distinguished prime `lambda = (ζ_p - 1)` above `p` in `𝓞 K`. -/
 abbrev cyclotomicLambda : Ideal (𝓞 K) := zetaPrime p K
 
-
-
-
-
-
-
-
 end CyclotomicSetup
 
 end Local

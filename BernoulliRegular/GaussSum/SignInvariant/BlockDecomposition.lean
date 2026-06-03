@@ -6,7 +6,7 @@ public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
 public import BernoulliRegular.GaussSum.SignInvariant.Operator
 
 /-!
-# Determinant-ready block decomposition scaffolding for quadratic Gauss sums
+# Determinant-ready block decomposition for quadratic Gauss sums
 
 This file packages the ambient `δ₀ +` character basis used to reorganize the
 normalized finite Fourier transform into the trivial block, non-self-dual
@@ -40,7 +40,6 @@ values in `ℂ`. -/
 def dirichletCharacterUnitMonoidHom (χ : DirichletCharacter ℂ p) : (ZMod p)ˣ →* ℂ :=
   (Units.coeHom ℂ).comp χ.toUnitHom
 
-
 theorem dirichletCharacterUnitMonoidHom_injective :
     Function.Injective (dirichletCharacterUnitMonoidHom (p := p)) := by
   intro χ ψ hχψ
@@ -58,7 +57,6 @@ theorem linearIndependent_dirichletCharactersOnUnits :
       (dirichletCharacterUnitMonoidHom (p := p))
       (dirichletCharacterUnitMonoidHom_injective (p := p))
 
-
 /-- Evaluation at `0`. -/
 def evalAtZeroLinear : (ZMod p → ℂ) →ₗ[ℂ] ℂ where
   toFun Φ := Φ 0
@@ -68,21 +66,6 @@ def evalAtZeroLinear : (ZMod p → ℂ) →ₗ[ℂ] ℂ where
 @[simp] theorem dirichletCharacter_apply_zero (χ : DirichletCharacter ℂ p) :
     χ (0 : ZMod p) = 0 := by
   simpa using MulChar.map_nonunit χ (a := (0 : ZMod p)) (by simp)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 theorem normalizedDft_deltaZero :
     normalizedDft p (deltaZeroFunction (p := p)) =
@@ -97,13 +80,6 @@ theorem normalizedDft_constOne :
   ext x
   rw [normalizedDft_apply, congrFun (dft_constOne_eq_prime_smul_deltaZero (p := p)) x]
   simp [deltaZeroFunction, smul_eq_mul, mul_assoc]
-
-
-
-
-
-
-
 
 end SignInvariant
 

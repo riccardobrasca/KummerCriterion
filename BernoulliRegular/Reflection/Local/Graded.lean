@@ -4,7 +4,10 @@ public import Mathlib.RingTheory.Ideal.Cotangent
 public import Mathlib.RingTheory.Ideal.IsPrincipalPowQuotient
 public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
 public import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
-public import BernoulliRegular.Reflection.Local.Endpoint
+public import Mathlib.Algebra.CharP.Lemmas
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
+public import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
+public import BernoulliRegular.Reflection.Local.Basic
 
 /-!
 # First graded piece of the principal-unit filtration
@@ -22,16 +25,6 @@ open scoped NumberField
 
 namespace BernoulliRegular
 
-namespace Ideal
-
-section OneUnitsCotangent
-
-variable {R : Type*} [CommRing R] (I : Ideal R)
-
-end OneUnitsCotangent
-
-end Ideal
-
 namespace Reflection
 namespace Local
 
@@ -39,9 +32,6 @@ section CyclotomicSetup
 
 variable (p : ℕ) [Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
-
-
-
 
 /-- The global cyclotomic prime `lambda` is maximal. -/
 theorem cyclotomicLambda_isMaximal :

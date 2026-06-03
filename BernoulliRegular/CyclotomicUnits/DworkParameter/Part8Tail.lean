@@ -17,8 +17,6 @@ namespace DworkParameter
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-
-
 /-- Principal-unit coordinate of a power, used by finite-log torsion
 statements. -/
 def samePrimeFiniteLogPowCoord (n : ℕ) (x : ValuedIntegerRing p K) :
@@ -136,7 +134,6 @@ theorem samePrimeFiniteLog_lambda_p_nsmul_eq_zero (N : ℕ) :
           (valuedCyclotomicLambdaInteger_mem_lambdaIdeal (p := p) (K := K))).symm
     _ = 0 :=
         samePrimeFiniteLog_powCoord_prime_lambda_eq_zero (p := p) (K := K) N
-
 
 set_option maxHeartbeats 1000000 in
 -- The quotient Artin-Hasse/Dwork-parameter comparison expands nested power-series substitutions.
@@ -403,7 +400,6 @@ theorem dworkParameterFiniteArtinHasseLog_p_nsmul_eq_zero (N : ℕ) :
     (p := p) (K := K) N]
   exact samePrimeFiniteLog_lambda_p_nsmul_eq_zero (p := p) (K := K) N
 
-
 theorem quotientNatCastInv_factorPow {M N m : ℕ} (hMN : M ≤ N)
     (hm : Nat.Coprime m p) :
     Ideal.Quotient.factorPow (lambdaIdeal p K) (Nat.succ_le_succ hMN)
@@ -513,8 +509,6 @@ noncomputable def dworkParameterFiniteArtinHasseLogCoord (N : ℕ) :
   match N with
   | 0 => 0
   | N + 1 => dworkParameterFiniteArtinHasseLog (p := p) (K := K) N
-
-
 
 theorem dworkParameterFiniteArtinHasseLogCoord_factorPow
     {M N : ℕ} (hMN : M ≤ N) :
@@ -627,7 +621,6 @@ theorem dworkParameterFiniteArtinHasseLog_eq_zero (N : ℕ) :
     congrArg (AdicCompletion.evalₐ (lambdaIdeal p K) (N + 1))
       (artinHasseLog_eval_dworkParameter_eq_zero (p := p) (K := K))
   simpa using h
-
 
 end DworkParameter
 end PadicLogSetup

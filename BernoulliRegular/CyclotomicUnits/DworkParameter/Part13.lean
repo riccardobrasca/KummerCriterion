@@ -25,7 +25,6 @@ def dworkParameterPowerIndex (N : ℕ) : Fin (p - 1) :=
   ⟨N % (p - 1),
     Nat.mod_lt N (Nat.sub_pos_of_lt (Fact.out : Nat.Prime p).one_lt)⟩
 
-
 theorem le_dworkParameterPowerBlock_of_mul_pred_le
     {q N : ℕ} (hN : q * (p - 1) ≤ N) :
     q ≤ dworkParameterPowerBlock p N := by
@@ -381,7 +380,6 @@ instance instIsPrecompleteRationalPadicPowerCoefficients :
       (Fin (p - 1) → RationalPadicIntegerRing p) :=
   inferInstance
 
-
 theorem dworkParameterPowerLinearMap_single_primePow_coeff
     (m : ℕ) (i : Fin (p - 1)) (b : RationalPadicIntegerRing p) :
     dworkParameterPowerLinearMap p K
@@ -638,8 +636,6 @@ theorem dworkParameterPowerApproxSeq_spec
       (dworkParameterIdeal p K) ^ N :=
   (dworkParameterPowerApproxSeq p K x N).2
 
-
-
 noncomputable def dworkParameterPowerApproxStepCoeff
     (x : DworkCompleteIntegerRing p K) (N : ℕ) :
     RationalPadicIntegerRing p :=
@@ -872,7 +868,6 @@ theorem dworkParameterPowerLinearMap_surjective_of_precomplete
 theorem dworkParameterPowerLinearMap_surjective :
     Function.Surjective (dworkParameterPowerLinearMap p K) :=
   dworkParameterPowerLinearMap_surjective_of_precomplete (p := p) (K := K)
-
 
 end DworkParameter
 end PadicLogSetup

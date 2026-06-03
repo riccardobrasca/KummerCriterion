@@ -1,6 +1,8 @@
-import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitGroup
+import BernoulliRegular.FLT37.PrimaryUnits.Part1
+import BernoulliRegular.FLT37.PrimaryUnits.Part2
+import BernoulliRegular.FLT37.PrimaryUnits.Part3
+import Mathlib.NumberTheory.NumberField.CMField
 import BernoulliRegular.TotallyRealSubfield.ZetaPrime
-
 
 /-!
 # σ-preservation of `cyclotomicUnitsSubgroup`
@@ -40,7 +42,6 @@ variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
   [IsCMField K]
 
 set_option backward.isDefEq.respectTransparency false in
-
 set_option backward.isDefEq.respectTransparency false in
 /-- **σ-conjugate of `(ζ - 1)`**: `σ(ζ - 1) = ζ^{p-1} - 1`.
 
@@ -148,9 +149,6 @@ theorem cyclotomicUnit_pred_mul_complexConj_cyclotomicUnit_eq
       (((zeta_spec p ℚ K).unit' : 𝓞 K) - 1) * cyclotomicUnit p K (p - k) := by
     rw [← mul_assoc]; exact h_eq
   exact mul_left_cancel₀ hzeta_sub_one_ne_zero h_eq'
-
-
-
 
 end Sinnott
 

@@ -67,7 +67,6 @@ lemma LFunction_trivial_eq_mul_riemannZeta {s : ℂ} (hs : s ≠ 1) :
   rw [DirichletCharacter.LFunctionTrivChar_eq_mul_riemannZeta (N := p) hs]
   rw [hpf, Finset.prod_singleton]
 
-
 /-! ### Step A — local factor definitions -/
 
 /-- The rational prime ideal `(ℓ)` inside `ℤ`. -/
@@ -107,12 +106,10 @@ theorem inv_mem_oddCharacters (p : ℕ) {χ : DirichletCharacter ℂ p}
 noncomputable def charLocalFactor (ℓ : ℕ) (s : ℂ) : ℂ :=
   ∏ χ : DirichletCharacter ℂ p, (1 - χ (ℓ : ZMod p) * (ℓ : ℂ) ^ (-s))
 
-
 /-- The even nontrivial part of the character-side local Euler factor. -/
 noncomputable def evenCharLocalFactor (ℓ : ℕ) (s : ℂ) : ℂ :=
   Finset.prod (evenNontrivialCharacters (p := p)) fun χ =>
     (1 - χ (ℓ : ZMod p) * (ℓ : ℂ) ^ (-s))
-
 
 /-- The Dedekind-side local Euler factor at a rational prime `ℓ`, written as a
 finite product over the primes of `𝓞 K` lying above `(ℓ)`. -/
@@ -173,9 +170,6 @@ lemma localPrimeCount_mul_localResidueDegree {ℓ : ℕ} [Fact ℓ.Prime] (hℓp
     localPrimeCount (p := p) ℓ hℓp * localResidueDegree (p := p) ℓ hℓp =
       Nat.card (DirichletCharacter ℂ p) :=
   Nat.div_mul_cancel (localResidueDegree_dvd_card_characters (p := p) hℓp)
-
-
-
 
 /-- Classical polynomial identity in `ℂ`: the product of `(1 - ζ T)` over all
 `d`-th roots of unity equals `1 - T^d`. -/
@@ -404,7 +398,6 @@ lemma prod_characters_eval_eq_pow (u : (ZMod p)ˣ) (T : ℂ) :
           rw [hχAt_u k]
   rw [h_transfer, prod_pow_primRoot_eq_pow hn_pos a hω T, ← hd_eq, hn_div_d]
 
-
 lemma charLocalFactor_prime_ne_p_via_unit_order {ℓ : ℕ} [Fact ℓ.Prime]
     (hℓp : ℓ ≠ p) {s : ℂ} :
     charLocalFactor (p := p) ℓ s =
@@ -416,7 +409,6 @@ lemma charLocalFactor_prime_ne_p_via_unit_order {ℓ : ℕ} [Fact ℓ.Prime]
   rw [← hval]
   unfold localResidueDegree
   exact prod_characters_eval_eq_pow p (unitOfPrimeNe p ℓ hℓp) ((ℓ : ℂ) ^ (-s))
-
 
 lemma charLocalFactor_eq_pow_localResidueDegree {ℓ : ℕ} [Fact ℓ.Prime]
     (hℓp : ℓ ≠ p) {s : ℂ} :
@@ -443,7 +435,6 @@ lemma charLocalFactor_at_p {s : ℂ} :
 
 /-! ### Step D — Dedekind-side local factor skeleton -/
 
-
 lemma mem_primesOverFinset_iff {ℓ : ℕ} [Fact ℓ.Prime] {P : Ideal (𝓞 K)} :
     P ∈ primesOverFinset K ℓ ↔ P ∈ Ideal.primesOver (rationalPrimeIdeal ℓ) (𝓞 K) := by
   haveI : (rationalPrimeIdeal ℓ).IsMaximal := Int.ideal_span_isMaximal_of_prime ℓ
@@ -451,7 +442,6 @@ lemma mem_primesOverFinset_iff {ℓ : ℕ} [Fact ℓ.Prime] {P : Ideal (𝓞 K)}
     rw [rationalPrimeIdeal, Ne, Ideal.span_singleton_eq_bot]
     exact_mod_cast (Fact.out : ℓ.Prime).ne_zero
   exact IsDedekindDomain.mem_primesOverFinset_iff hne (𝓞 K)
-
 
 lemma zetaInteger_isIntegralGenerator :
     Algebra.adjoin ℤ ({zetaInteger (p := p) (K := K)} : Set (𝓞 K)) = ⊤ := by
@@ -473,7 +463,6 @@ noncomputable def primesOverEquivMonicFactorsMod (ℓ : ℕ) [Fact ℓ.Prime] :
   NumberField.Ideal.primesOverSpanEquivMonicFactorsMod
     (K := K) (θ := zetaInteger (p := p) (K := K))
     (p := ℓ) (prime_not_dvd_zetaInteger_exponent (p := p) (K := K) (ℓ := ℓ))
-
 
 lemma monicFactorsMod_card_eq_localPrimeCount {ℓ : ℕ} [Fact ℓ.Prime] (hℓp : ℓ ≠ p) :
     (RingOfIntegers.monicFactorsMod (θ := zetaInteger (p := p) (K := K)) (p := ℓ)).card =
@@ -542,8 +531,6 @@ lemma primesOver_inertiaDeg_eq_one_at_p (P : Ideal (𝓞 K))
     simpa [rationalPrimeIdeal] using hP.2
   simpa [rationalPrimeIdeal] using IsCyclotomicExtension.Rat.inertiaDeg_eq_of_prime p K P
 
-
-
 lemma primesOver_inertiaDeg_eq_localResidueDegree {ℓ : ℕ} [Fact ℓ.Prime]
     (hℓp : ℓ ≠ p) (P : Ideal (𝓞 K))
     (hP : P ∈ Ideal.primesOver (rationalPrimeIdeal ℓ) (𝓞 K)) :
@@ -575,7 +562,6 @@ lemma ncard_primesOver_eq_localPrimeCount {ℓ : ℕ} [Fact ℓ.Prime] (hℓp : 
   rw [← monicFactorsMod_card_eq_localPrimeCount (p := p) (K := K) hℓp,
     ← Nat.card_coe_set_eq, Nat.card_congr (primesOverEquivMonicFactorsMod (p := p) (K := K) ℓ),
     Nat.card_eq_finsetCard]
-
 
 lemma dedekindLocalFactor_eq_pow_localResidueDegree {ℓ : ℕ} [Fact ℓ.Prime]
     (hℓp : ℓ ≠ p) {s : ℂ} :

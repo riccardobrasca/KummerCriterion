@@ -1,5 +1,5 @@
 import BernoulliRegular.CyclotomicUnits.KummerLogTrace
-import BernoulliRegular.CyclotomicUnits.DworkParameter
+import BernoulliRegular.CyclotomicUnits.DworkParameter.Part18
 import BernoulliRegular.CyclotomicUnits.NormalizedUnits
 
 /-!

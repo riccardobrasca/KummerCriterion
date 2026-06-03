@@ -1,8 +1,15 @@
 import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
-import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.Sinnott.PollaczekMembership
-import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.KummerLift.Bridge
-import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.Cor8_19Forward
-
+import BernoulliRegular.FLT37.PrimaryUnits.Part1
+import BernoulliRegular.FLT37.PrimaryUnits.Part2
+import BernoulliRegular.FLT37.PrimaryUnits.Part3
+import Mathlib.NumberTheory.NumberField.CMField
+import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation
+import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.KummerLift.CharacterIdentification
+import Mathlib.RingTheory.Ideal.Quotient.Basic
+import Mathlib.GroupTheory.SpecificGroups.Cyclic
+import Mathlib.RingTheory.IntegralDomain
+import Mathlib.FieldTheory.Finite.Basic
+import BernoulliRegular.TotallyRealSubfield.ClassGroup
 
 /-!
 # Sinnott index formula: structural decomposition
@@ -111,9 +118,7 @@ theorem sinnottIndexFormula_of_regulatorIdentity
   -- h_div : 2^((p-3)/2) · h⁺ = (index : ℝ)
   exact_mod_cast h_div.symm
 
-
 set_option backward.isDefEq.respectTransparency false in
-
 /-! ## Connection to the analytic CNF for K⁺
 
 The analytic CNF for K⁺ (already shipped as `hPlus_formula`) gives
@@ -128,11 +133,7 @@ analytic) claim that `regOfFamily(family)` equals this same expression.
 This isolates the substantive analytic content as a comparison with
 the analytic CNF. -/
 
-
-
-
 set_option backward.isDefEq.respectTransparency false in
-
 /-! ## Connection to `Cor8_19Bridge`
 
 Once `SinnottIndexFormula` is established, the **structural contrapositive
@@ -177,7 +178,6 @@ generates `C⁺ ⊔ torsion`.
 
 We package this as a separate Prop. -/
 
-
 /-! ## Cor8_19 bridge from Sinnott + Pollaczek-in-family
 
 Under `SinnottIndexFormula` and `PollaczekInFamily`, the "p-saturation"
@@ -192,11 +192,7 @@ argument gives `Cor8_19Bridge`:
 
 This is the structural form of the Cor 8.19 contrapositive engine. -/
 
-
-
-
 set_option backward.isDefEq.respectTransparency false in
-
 /-- **Final synthesis status**: with `PollaczekInFamily` PROVEN and the
 bridge construction `cor8_19Bridge_of_pollaczekForward` PROVEN, the only
 remaining content for `Cor8_19Bridge` is the Pollaczek-forward

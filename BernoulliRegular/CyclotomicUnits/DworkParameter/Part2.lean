@@ -17,7 +17,6 @@ namespace DworkParameter
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-
 /-- Same-prime quotient value of `z / n`, where the `p`-power part of `n` is
 cancelled by lambda-adic order and the prime-to-`p` part is inverted in the
 finite quotient. -/
@@ -340,7 +339,6 @@ theorem samePrimeNatDivEval_mul_denominator_right {N n m s : ℕ} (hn : n ≠ 0)
     _ = q y * quotientNatCastInv (p := p) (K := K) N cn hcn := by
         rw [quotientNatCastInv_spec_right (p := p) (K := K) N cm hcm]
         ring
-
 
 theorem samePrimeNatDivEval_factorial_weighted_mem {d n s : ℕ} (hn : n ≠ 0)
     (hnd : n ≤ d) {z : ValuedIntegerRing p K}
@@ -694,8 +692,6 @@ theorem samePrimeFiniteLogTermCore_eq_samePrimeNatDivEvalAtDegree {N n : ℕ}
           (p := p) hn] using
         Ideal.pow_mem_pow hx n)
 
-
-
 theorem samePrimeFiniteLogTermCore_mem_map_lambdaIdeal_pow {N n : ℕ} (hn : n ≠ 0)
     {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) :
     samePrimeFiniteLogTermCore (p := p) (K := K) N n x hx ∈
@@ -721,7 +717,6 @@ theorem samePrimeFiniteLogTerm_mem_map_lambdaIdeal_pow {N n : ℕ} (hn : n ≠ 0
         ((-1 : ValuedIntegerRing p K ⧸ (lambdaIdeal p K) ^ (N + 1)) ^ (n + 1))
         (samePrimeFiniteLogTermCore_mem_map_lambdaIdeal_pow
           (p := p) (K := K) hn hx)
-
 
 end DworkParameter
 end PadicLogSetup

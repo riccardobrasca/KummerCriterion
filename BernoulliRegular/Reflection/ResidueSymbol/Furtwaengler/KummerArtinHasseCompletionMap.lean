@@ -32,8 +32,6 @@ variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 abbrev lambdaPadicPrime : Nat.Primes :=
   ⟨p, Fact.out⟩
 
-
-
 /-- Integer membership in the cyclotomic `lambda` prime is exactly membership
 in the rational prime `(p)`. -/
 theorem intCast_mem_zetaPrime_iff_mem_lambdaRationalPrimeIdeal (n : ℤ) :
@@ -135,14 +133,12 @@ def rationalToLambdaComapWithValRingHom :
       (WithVal.equiv
         (((lambdaHeightOneSpectrum p K).valuation K).comap (algebraMap ℚ K))).toRingHom)
 
-
 /-- The rational `p`-adic valued map into the lambda-valued cyclotomic field. -/
 def rationalToLambdaWithValRingHom :
     WithVal ((lambdaRationalHeightOneSpectrum p).valuation ℚ) →+*
       WithVal ((lambdaHeightOneSpectrum p K).valuation K) :=
   (rationalToLambdaComapWithValRingHom (p := p) (K := K)).comp
     (lambdaValuation_comap_rat_isEquiv (p := p) (K := K)).orderRingIso.toRingHom
-
 
 /-- Continuity of the rational `p`-adic valued map into the lambda-valued
 cyclotomic field.  This is the theorem consumed by
@@ -230,12 +226,6 @@ theorem rationalToLambdaCompletionRingHom_coe
   UniformSpace.Completion.mapRingHom_coe
     (continuous_rationalToLambdaWithValRingHom (p := p) (K := K)) x
 
-
-
-
-
-
-
 /-- The rational-completion algebra structure on the lambda completion before
 identifying the rational completion with mathlib's `ℚ_[p]`. -/
 @[reducible]
@@ -243,7 +233,6 @@ def rationalCompletionToLambdaAlgebra :
     Algebra ((lambdaRationalHeightOneSpectrum p).adicCompletion ℚ)
       (LambdaValuedCompletion p K) :=
   (rationalToLambdaCompletionRingHom (p := p) (K := K)).toAlgebra
-
 
 theorem continuous_algebraMap_rationalCompletionToLambdaAlgebra :
     letI : Algebra ((lambdaRationalHeightOneSpectrum p).adicCompletion ℚ)
@@ -255,22 +244,6 @@ theorem continuous_algebraMap_rationalCompletionToLambdaAlgebra :
   simpa [rationalToLambdaCompletionRingHom] using
     (UniformSpace.Completion.continuous_map
       (f := rationalToLambdaWithValRingHom (p := p) (K := K)))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 end KummerArtinHasse
 end Furtwaengler

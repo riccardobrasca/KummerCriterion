@@ -1,39 +1,12 @@
 module
 
-public import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.KummerLift.CyclotomicUnitTwist
+public import BernoulliRegular.FLT37.PrimaryUnits.Part1
+public import BernoulliRegular.FLT37.PrimaryUnits.Part2
+public import BernoulliRegular.FLT37.PrimaryUnits.Part3
+public import BernoulliRegular.UnitQuotient.DeltaAction
 
 /-!
-# Aggregate σ_a-twist for `pollaczekUnit` (LV005c1b — partial)
-
-Distribute the standard cyclotomic Galois automorphism `σ_a :=
-cyclotomicSigmaOfUnit p K a` over the Pollaczek product
-`pollaczekUnit p K i = ∏_b ((1-ζ^b)/(1-ζ))^{b^{p-1-i}}` (over the
-half-range `b ∈ {1, …, (p-1)/2}`), using the factor-wise σ-twist from
-LV005c1a (`cyclotomicSigmaOfUnit_smul_cyclotomicUnit_mul_cyclotomicUnit`).
-
-This file ships the **first stage** of LV005c1b's chain:
-
-  `σ_a(pollaczekUnit p K i : 𝓞 K) · cyclotomicUnit p K (a : ZMod p).val ^ S =
-   ∏_{b ∈ Ico 1 ((p-1)/2 + 1)} cyclotomicUnit p K (((a : ZMod p) * b).val)
-                                  ^ (b ^ (p - 1 - i))`,
-
-where `S = ∑_b b^{p-1-i}` is the half-range exponent sum.
-
-The remaining stages (half-range pair-up reducing
-`cyclotomicUnit p K (((a · b).val)` back to half-range; reindex; absorb
-exponent discrepancy mod `p`; Fermat reduction `(a⁻¹.val)^E ≡ a^i (mod p)`)
-build the full eigenvalue identity
-`σ_a(pollaczekUnit i) ≡ pollaczekUnit i ^{a^i} (mod p-th powers)`.
-Those stages are **not yet shipped here**; they require the half-range
-pair-up symmetry analogous to `pollaczekR_split_reindex` /
-`pollaczekR_half_range_factorisation` (LV004e) at the K-side
-`cyclotomicUnit` level. Track in LV005c1b's residual.
-
-## Main result
-
-* `cyclotomicSigmaOfUnit_smul_pollaczekUnit_aggregate` — the aggregate
-  σ-twist in the substitution form (no inversion, no half-range
-  pair-up yet).
+# Cyclotomic-unit pair-up
 
 ## References
 
@@ -54,12 +27,6 @@ namespace FLT37
 
 variable (p : ℕ) [hp : Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
-
-section AggregateTwist
-
-
-
-end AggregateTwist
 
 section PairUp
 
@@ -134,49 +101,6 @@ theorem cyclotomicUnit_eq_neg_zeta_pow_mul_cyclotomicUnit_p_sub
     _ = -ζ ^ d * cyclotomicUnit p K (p - d) := by ring
 
 end PairUp
-
-section HalfRangeReduction
-
-
-
-end HalfRangeReduction
-
-section HalfRangeBijection
-
-end HalfRangeBijection
-
-section PerTermSwap
-
-
-end PerTermSwap
-
-section StageFive
-
-
-end StageFive
-
-section StageSix
-
-
-
-
-
-
-
-
-
-
-
-
-end StageSix
-
-set_option maxRecDepth 4000000
-set_option linter.style.setOption false in
-set_option maxHeartbeats 4000000
-
-
-
-
 
 end FLT37
 

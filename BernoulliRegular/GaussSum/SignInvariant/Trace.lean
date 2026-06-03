@@ -72,17 +72,12 @@ theorem dft_constOne_eq_prime_smul_deltaZero :
     simp [dft_constOne (p := p), Pi.basisFun_apply]
   · simp [dft_constOne (p := p), hk, Pi.basisFun_apply]
 
-
-
-
-
 /-- Conjugating the standard additive character negates its input. -/
 theorem stdAddChar_neg_eq_conj (a : ZMod p) :
     ZMod.stdAddChar (N := p) (-a) = conj (ZMod.stdAddChar (N := p) a) := by
   symm
   rw [ZMod.stdAddChar_apply, ← Circle.coe_inv_eq_conj, ← AddChar.map_neg_eq_inv,
     ← ZMod.stdAddChar_apply]
-
 
 /-- Any nontrivial Dirichlet character is sent by the DFT to a scalar multiple
 of its inverse character. -/
@@ -105,13 +100,6 @@ theorem dft_eq_scalar_smul_inv_character {χ : DirichletCharacter ℂ p}
           χ⁻¹ (-k) = χ⁻¹ ((-1 : ZMod p) * k) := by congr; ring
           _ = χ⁻¹ (-1) * χ⁻¹ k := by rw [map_mul]]
       ring
-
-
-
-
-
-
-
 
 /-- A chosen multiplicative equivalence between complex-valued Dirichlet
 characters mod `p` and the unit group `(ZMod p)ˣ`. -/
@@ -194,10 +182,6 @@ theorem nontrivial_selfInverse_character_eq_quadratic (hp₂ : p ≠ 2)
   rcases selfInverse_character_eq_one_or_quadratic (p := p) hp₂ hχself with hχ1 | hχquad
   · exact (hχ hχ1).elim
   · exact hχquad
-
-
-
-
 
 end SignInvariant
 

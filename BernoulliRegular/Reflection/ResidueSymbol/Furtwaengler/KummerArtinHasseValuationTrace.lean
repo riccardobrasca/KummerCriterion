@@ -57,20 +57,6 @@ def lambdaValuedZetaInteger : LambdaValuedIntegerRing p K :=
 def lambdaValuedZeta : LambdaValuedCompletion p K :=
   (lambdaValuedZetaInteger p K : LambdaValuedCompletion p K)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 end KummerArtinHasse
 end Furtwaengler
 end BernoulliRegular

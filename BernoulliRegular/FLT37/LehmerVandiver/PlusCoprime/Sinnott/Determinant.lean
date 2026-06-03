@@ -1,7 +1,6 @@
 import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.Sinnott.LogEmbedding
 import Mathlib.Analysis.SpecialFunctions.Complex.Circle
 
-
 /-!
 # LV-SIN-B: Vandermonde-style determinant evaluation
 
@@ -84,15 +83,6 @@ theorem norm_one_sub_exp_two_pi_I_mul (q : ℝ) :
   rw [norm_one_sub_exp_I_mul]
   congr 2
   ring_nf
-
-
-
-
-
-
-
-
-
 
 end Sinnott
 

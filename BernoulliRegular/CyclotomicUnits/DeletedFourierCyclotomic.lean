@@ -1,4 +1,7 @@
-import BernoulliRegular.CyclotomicUnits.AnalyticCore
+import BernoulliRegular.LValueAtOne.Even
+import BernoulliRegular.GaussSum.Basic
+import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.Sinnott.DetBridge.Part1
+import Mathlib.NumberTheory.LSeries.Nonvanishing
 import BernoulliRegular.CyclotomicUnits.DeletedFourier
 
 /-!
@@ -34,10 +37,6 @@ noncomputable def cyclotomicEvenNontrivCharEquivNonidentity (hp_two : 2 < p) :
   have hp_odd : Odd p := (Fact.out : p.Prime).odd_of_ne_two (by omega)
   rcases hp_odd with ⟨k, hk⟩
   omega
-
-
-
-
 
 /-- The arbitrary omitted-row `hk` determinant for the descended cyclotomic
 log-norm, with the harmless character factor removed after squaring. -/

@@ -23,7 +23,6 @@ section Assembly
 variable (p : ℕ) [hp : Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K] [IsCMField K]
 
-
 omit [IsCyclotomicExtension {p} ℚ K] in
 /-- To finish `hMinus_formula`, it is enough to know the intermediate odd
 `L`-value formula together with the corresponding product formula for the
@@ -115,7 +114,6 @@ theorem hMinus_LValue_formula_of_residue_and_hPlus
     simp [O]
     ring
   exact mul_left_cancel₀ hhplus_ne hmain
-
 
 theorem hMinus_formula_of_residue_and_hPlus_and_gauss
     (hp_odd' : p ≠ 2)

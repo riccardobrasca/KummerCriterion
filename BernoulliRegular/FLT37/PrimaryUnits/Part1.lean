@@ -7,7 +7,7 @@ public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
 public import FltRegular.NumberTheory.Cyclotomic.MoreLemmas
 
 /-!
-# Primary units of `𝓞 K⁺` (ticket FLT37c, scaffold)
+# Primary units of `𝓞 K⁺`
 
 For Vandiver Lemma 2 (primary unit decomposition), an element
 `γ ∈ 𝓞 K⁺` is **primary** when it is congruent to a rational integer
@@ -42,43 +42,6 @@ variable (p : ℕ) [hp : Fact p.Prime]
 
 local notation3 "K⁺" => NumberField.maximalRealSubfield K
 
-
-namespace IsPrimaryPlus
-
-variable {p K}
-
-
-
-
-
-
-
-
-
-
-
-
-
-end IsPrimaryPlus
-
-
-
-namespace IsPrimaryUnit
-
-variable {p K}
-
-
-
-
-
-
-
-end IsPrimaryUnit
-
-
-
-
-
 /-! ## Cyclotomic units `(1 - ζ^k)/(1 - ζ)` in `𝓞 K`
 
 For `k` coprime to `p` (so `1 ≤ k ≤ p-1`), the element
@@ -95,18 +58,12 @@ variable (p : ℕ) [hp : Fact p.Prime]
 noncomputable def cyclotomicUnit (k : ℕ) : 𝓞 K :=
   ∑ j ∈ Finset.range k, (zeta_spec p ℚ K).unit' ^ j
 
-
-
 /-- Recursive identity: `cyclotomicUnit (k+1) = cyclotomicUnit k + ζ^k`. -/
 theorem cyclotomicUnit_succ (k : ℕ) :
     cyclotomicUnit p K (k + 1) =
       cyclotomicUnit p K k + ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ k := by
   unfold cyclotomicUnit
   rw [Finset.sum_range_succ]
-
-
-
-
 
 /-- The cyclotomic-unit telescoping identity:
 `(1 - ζ) · cyclotomicUnit k = 1 - ζ^k` in `𝓞 K`. -/
@@ -128,9 +85,6 @@ theorem zeta_sub_one_mul_cyclotomicUnit (k : ℕ) :
   have h := one_sub_zeta_mul_cyclotomicUnit p K k
   linear_combination -h
 
-
-
-
 /-- **Conjugation unit value: `u = -ζ^{p-1}` in `𝓞 K`.** -/
 private theorem zetaSubOneConjUnit_val_eq [IsCMField K] :
     ((zetaSubOneConjUnit p K : (𝓞 K)ˣ) : 𝓞 K) =
@@ -138,8 +92,6 @@ private theorem zetaSubOneConjUnit_val_eq [IsCMField K] :
   unfold zetaSubOneConjUnit
   push_cast
   ring
-
-
 
 /-- `cyclotomicUnit k ≡ k (mod ζ - 1)` in `𝓞 K`: the difference
 `cyclotomicUnit k - k` is divisible by `ζ - 1`. -/
@@ -166,7 +118,6 @@ theorem zetaSubOne_dvd_cyclotomicUnit_sub_natCast (k : ℕ) :
       have h := one_sub_zeta_mul_cyclotomicUnit p K n
       linear_combination -h
     exact ⟨cyclotomicUnit p K n, htel.symm⟩
-
 
 /-- The complex conjugate of `cyclotomicUnit k` is also congruent to `k`
 modulo `ζ - 1`. -/
@@ -213,20 +164,11 @@ theorem cyclotomicUnitUnit_val (k : ℕ) (hk : k.Coprime p) (hp_two : 2 ≤ p) :
     (cyclotomicUnitUnit p K k hk hp_two : 𝓞 K) = cyclotomicUnit p K k :=
   IsUnit.unit_spec _
 
-
-
-
 /-- `(ζ - 1) ∣ (ζ^k - 1)` in `𝓞 K` for any natural `k`. -/
 theorem zetaSubOne_dvd_zeta_pow_sub_one (k : ℕ) :
     (((zeta_spec p ℚ K).unit' : 𝓞 K) - 1) ∣
       (((zeta_spec p ℚ K).unit' : 𝓞 K) ^ k - 1) :=
   ⟨cyclotomicUnit p K k, (zeta_sub_one_mul_cyclotomicUnit p K k).symm⟩
-
-
-
-
-
-
 
 end CyclotomicUnits
 end PrimaryPlus

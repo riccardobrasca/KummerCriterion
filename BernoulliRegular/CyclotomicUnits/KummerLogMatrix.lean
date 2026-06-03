@@ -1,8 +1,8 @@
 module
 
-public import BernoulliRegular.CyclotomicUnits.DworkParameter
+public import BernoulliRegular.CyclotomicUnits.DworkParameter.Part18
 public import BernoulliRegular.CyclotomicUnits.Vandermonde
-public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.PrincipalUnitFactor.Part2
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.PrincipalUnitFactor.Part2.Part3
 
 /-!
 # The Kummer logarithm coefficient matrix
@@ -32,9 +32,9 @@ open PadicLogSetup PadicLogSetup.DworkParameter
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-/-- A placeholder for the future analytic logarithm columns.  A value of this
-type assigns to each Kummer column a conjugation-fixed element of the completed
-Dwork integer ring. -/
+/-- Input type for the analytic logarithm columns.  A value of this type assigns
+to each Kummer column a conjugation-fixed element of the completed Dwork integer
+ring. -/
 abbrev KummerLogVector : Type _ :=
   Fin (kummerLogRank p) → dworkFixedSubalgebra p K
 
@@ -88,11 +88,6 @@ def kummerLogMatrix
     Matrix (Fin (kummerLogRank p)) (Fin (kummerLogRank p)) (ZMod p) :=
   fun j a => kummerLogCoeff (p := p) (K := K) hp_five logVec j a
 
-
-
-
-
-
 section RealCyclotomicColumns
 
 variable [NumberField.IsCMField K]
@@ -106,8 +101,6 @@ noncomputable def kummerLogRealCyclotomicUnit
     (kummerLogColumnIndex (p := p) hp_three a)
     (kummerLogColumnIndex_two_le (p := p) hp_three a)
     (kummerLogColumnIndex_le_half (p := p) hp_three a)
-
-
 
 theorem algebraMap_kummerLogRealCyclotomicUnit
     (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) :
@@ -144,11 +137,6 @@ theorem kummerLogValuedCyclotomicUnit_coe
       (FLT37.realCyclotomicUnit p K
         (kummerLogColumnIndex (p := p) hp_three a))
   rw [algebraMap_kummerLogRealCyclotomicUnit]
-
-
-
-
-
 
 /-- If two elements are congruent modulo an ideal, then so are their powers. -/
 theorem pow_sub_pow_mem_of_sub_mem_ideal
@@ -244,9 +232,6 @@ theorem kummerLogValuedCyclotomicUnit_pow_pred_sub_one_mem_lambdaIdeal
   convert hsum using 1
   ring
 
-
-
-
 /-- The additive argument of the ordinary finite logarithm for the powered
 Kummer column: `eps_a^(p - 1) = 1 + x`. -/
 noncomputable def kummerLogColumnFiniteLogArg
@@ -287,8 +272,6 @@ noncomputable def kummerLogColumnCoord
   match N with
   | 0 => 0
   | N + 1 => kummerLogColumnFiniteLog (p := p) (K := K) hp_three a N
-
-
 
 theorem kummerLogColumnCoord_factorPow
     (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) {M N : ℕ}
@@ -567,9 +550,6 @@ theorem samePrimeFiniteLog_quotientMap_complexConj {N : ℕ}
 
 end PadicLogSetup.DworkParameter.Conjugation
 
-
-
-
 set_option synthInstance.maxHeartbeats 80000 in
 -- The proof repeatedly forms quotient rings of the completed Dwork ring; the
 -- local aliases keep the statement readable but make quotient-ring instance
@@ -672,10 +652,6 @@ noncomputable def kummerLogFixedColumn
     dworkFixedSubalgebra p K :=
   ⟨kummerLogCompletedColumn (p := p) (K := K) hp_three a,
     kummerLogCompletedColumn_mem_fixedSubalgebra (p := p) (K := K) hp_three a⟩
-
-
-
-
 
 end RealCyclotomicColumns
 

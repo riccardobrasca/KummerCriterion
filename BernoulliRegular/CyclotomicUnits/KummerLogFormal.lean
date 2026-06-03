@@ -26,17 +26,6 @@ open scoped BigOperators PowerSeries
 namespace BernoulliRegular
 namespace CyclotomicUnits
 
-
-
-
-
-
-
-
-
-
-
-
 /-- The ordinary formal exponential numerator `(exp(T)-1)/T`.  This is used
 as the low-degree model for the Artin-Hasse normalized numerator. -/
 def formalExpNormalizedMinusOne : PowerSeries ℚ :=
@@ -197,7 +186,6 @@ theorem coeff_logOf_formalExpNormalizedMinusOne_eq_bernoulli
           field_simp [show (n : ℚ) ≠ 0 by exact_mod_cast hn_ne_zero,
             show (Nat.factorial n : ℚ) ≠ 0 by exact_mod_cast Nat.factorial_ne_zero n]
 
-
 theorem coeff_pow_eq_of_coeff_eq_le
     {A : Type*} [CommSemiring A] {F G : PowerSeries A} :
     ∀ (m d : ℕ), (∀ k, k ≤ d → PowerSeries.coeff k F = PowerSeries.coeff k G) →
@@ -236,14 +224,6 @@ theorem coeff_logOf_eq_of_coeff_eq_le
   exact coeff_pow_eq_of_coeff_eq_le (m := m) (d := d) fun k hk => by
     simp [hcoeff k hk]
 
-
-
-
-
-
-
-
-
 /-- Reduction of a rational number modulo `p`, written using numerator and
 denominator.  The later coefficient theorems use separate hypotheses proving
 that the denominators in question are units modulo `p`. -/
@@ -269,13 +249,11 @@ theorem factorial_two_mul_index_zmod_ne_zero {p j : ℕ} [Fact p.Prime]
   have hlt : 2 * j < p := by omega
   exact Nat.not_lt.mpr ((Nat.Prime.dvd_factorial (Fact.out : Nat.Prime p)).mp hp_dvd) hlt
 
-
 theorem kummerLogUnitFactor_ne_zero {p j : ℕ} [Fact p.Prime]
     (hj : 1 ≤ j) (hjp : 2 * j ≤ p - 3) :
     kummerLogUnitFactor p j ≠ 0 := by
   simpa [kummerLogUnitFactor] using
     (neg_ne_zero.mpr (inv_ne_zero (factorial_two_mul_index_zmod_ne_zero hj hjp)))
-
 
 /-- Under the CU-11d range hypotheses, the integer `2*j` is nonzero modulo
 `p`. -/
@@ -288,7 +266,6 @@ theorem two_mul_index_zmod_ne_zero {p j : ℕ} [Fact p.Prime]
   have hpos : 0 < 2 * j := by omega
   have hp_le : p ≤ 2 * j := Nat.le_of_dvd hpos hp_dvd
   omega
-
 
 /-- Under the CU-11d range hypotheses, `p` does not divide the denominator of
 `B_(2*j)`. -/
@@ -310,8 +287,6 @@ theorem bernoulli_den_zmod_ne_zero {p j : ℕ} [Fact p.Prime]
   prime_not_dvd_bernoulli_den_two_mul hj hjp
     ((ZMod.natCast_eq_zero_iff ((_root_.bernoulli (2 * j)).den) p).mp hzero)
 
-
-
 /-- The coefficient ring for the final mod-`p` formal Kummer coefficient. -/
 abbrev KummerLogModCoeffRing (p : ℕ) : Type :=
   Polynomial (ZMod p)
@@ -327,11 +302,6 @@ def formalKummerLogCoeffModP (p j : ℕ) [Fact p.Prime] :
     KummerLogModCoeffRing p :=
   Polynomial.C (reducedKummerLogCoeffFactor p j) *
     (Polynomial.X ^ (2 * j) - 1)
-
-
-
-
-
 
 /-- The unit factor in the final unspecialized CU-11d theorem is nonzero. -/
 theorem formalKummerLogCoeffModP_unit_ne_zero

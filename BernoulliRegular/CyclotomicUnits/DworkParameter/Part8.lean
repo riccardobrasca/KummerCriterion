@@ -17,7 +17,6 @@ namespace DworkParameter
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-
 /-- The Cauchy sequence of inverse-series truncations defining
 `G_p(lambda)` in the `lambda`-adic completion. -/
 def dworkParameterCauchySeq :
@@ -198,7 +197,6 @@ theorem valuedCyclotomicConjugateLambdaInteger_mul_one_add_lambda :
 def dworkCompleteConjugateLambda : DworkCompleteIntegerRing p K :=
   AdicCompletion.of (lambdaIdeal p K) (ValuedIntegerRing p K)
     (valuedCyclotomicConjugateLambdaInteger p K)
-
 
 /-- The same-prime conjugate lambda coordinate is still lambda-adically small. -/
 theorem valuedCyclotomicConjugateLambdaInteger_mem_lambdaIdeal :

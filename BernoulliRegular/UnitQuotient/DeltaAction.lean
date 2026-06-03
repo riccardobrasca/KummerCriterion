@@ -123,15 +123,6 @@ theorem cyclotomicRingOfIntegersEquiv_mul_apply
     (cyclotomicSigmaOfUnit (p := p) K a)
     (cyclotomicSigmaOfUnit (p := p) K b) x
 
-
-
-
-
-
-
-
-
-
 end BernoulliRegular
 
 end

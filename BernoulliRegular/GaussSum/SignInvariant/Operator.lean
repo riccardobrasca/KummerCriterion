@@ -26,7 +26,6 @@ noncomputable def normalizedDft : (ZMod p → ℂ) →ₗ[ℂ] (ZMod p → ℂ) 
   ((Real.sqrt p : ℂ)⁻¹) •
     ((ZMod.dft : (ZMod p → ℂ) ≃ₗ[ℂ] (ZMod p → ℂ)).toLinearMap)
 
-
 theorem normalizedDft_apply (Φ : ZMod p → ℂ) (x : ZMod p) :
     normalizedDft p Φ x = (Real.sqrt p : ℂ)⁻¹ * ZMod.dft Φ x := by
   simp [normalizedDft, smul_eq_mul]
@@ -51,17 +50,6 @@ theorem normalizedDft_sq_apply (Φ : ZMod p → ℂ) (x : ZMod p) :
             simp [normalizedDft, ZMod.dft_dft, mul_assoc, mul_left_comm, mul_comm]
     _ = Φ (-x) := by simp [hscalar]
 
-
-
-
-
-
-
-
-
-
-
-
 /-- The raw Fourier kernel matrix for `ZMod.dft` in the standard basis. -/
 noncomputable def fourierMatrix : Matrix (ZMod p) (ZMod p) ℂ :=
   Matrix.of fun x k => ZMod.stdAddChar (N := p) (-(x * k))
@@ -74,7 +62,6 @@ theorem normalizedFourierMatrix_eq_smul_fourierMatrix :
     normalizedFourierMatrix p = ((Real.sqrt p : ℂ)⁻¹) • fourierMatrix p := by
   ext x k
   simp [normalizedFourierMatrix, fourierMatrix, smul_eq_mul]
-
 
 /-- Matrix form of the normalized DFT in the standard basis. -/
 theorem toMatrix_normalizedDft_eq_normalizedFourierMatrix :

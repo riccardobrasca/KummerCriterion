@@ -1,7 +1,10 @@
 module
 
 public import BernoulliRegular.CyclotomicUnits.PadicLogSetup
-public import BernoulliRegular.Reflection.Local.PowerMap
+public import Mathlib.Algebra.CharP.Lemmas
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
+public import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
+public import BernoulliRegular.Reflection.Local.Basic
 public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DworkFactorization.FiniteArtinHasseFormal
 public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DworkFactorization.FiniteLogBounds
 public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DworkFactorization.FiniteLogFormal
@@ -121,7 +124,6 @@ def rIntegralRatToValuedInteger :
     ext
     exact map_mul (rIntegralRatToValuedCompletion p K) q₁ q₂
 
-
 /-- The Artin-Hasse exponential as a power series over the chosen completed
 integer ring. -/
 def integralExpSeries : PowerSeries (ValuedIntegerRing p K) :=
@@ -166,7 +168,6 @@ theorem integralExpMinusOneSeries_eq :
     _ = integralExpSeries p K - 1 := by
         simp [integralExpSeries, φ]
 
-
 theorem formal_inverseSeries_subst_expMinusOneSeries :
     PowerSeries.subst (FormalDwork.expMinusOneSeries p)
         (FormalDwork.inverseSeries p) =
@@ -206,7 +207,6 @@ theorem integralInverseSeries_subst_integralExpMinusOneSeries :
               φ _ _ (formal_inverseSeries_subst_expMinusOneSeries (p := p))
     _ = (PowerSeries.X : PowerSeries (ValuedIntegerRing p K)) := by
             simp [φ]
-
 
 /-- The inverse series over the completed local integer ring starts with `T`.
 This is the finite-polynomial form needed for the eventual congruence
@@ -253,8 +253,6 @@ theorem dworkParameterApprox_two :
   unfold dworkParameterApprox
   rw [integralInverseSeries_trunc_two]
   simp
-
-
 
 /-- The principal `lambda`-adic ideal in the valuation integer ring.  This is
 the ideal used for the honest inverse-limit construction below; it avoids
@@ -355,7 +353,6 @@ abbrev dworkCompleteLambdaIdeal : Ideal (DworkCompleteIntegerRing p K) :=
   (lambdaIdeal p K).map
     (algebraMap (ValuedIntegerRing p K) (DworkCompleteIntegerRing p K))
 
-
 /-- The constructed Dwork integer ring is complete for its completed
 lambda-adic ideal. -/
 theorem dworkComplete_isAdicComplete :
@@ -423,8 +420,6 @@ theorem isUnit_one_add_of_mem_dworkCompleteLambdaIdeal
     hH.jac hx
   simpa [mul_comm, add_comm] using (Ideal.mem_jacobson_bot.mp hxjac 1)
 
-
-
 theorem valuedCyclotomicLambdaInteger_mem_lambdaIdeal :
     valuedCyclotomicLambdaInteger p K ∈ lambdaIdeal p K :=
   Ideal.subset_span (by simp)
@@ -446,8 +441,6 @@ theorem valuedCyclotomicLambdaInteger_ne_zero :
       valuedCyclotomicLambda_valuation (p := p) (K := K)
   rw [hv_lam] at hv_zero
   norm_num at hv_zero
-
-
 
 /-- The valuation-completion lambda ideal is the image of the global
 cyclotomic lambda ideal. -/
@@ -492,7 +485,6 @@ theorem natCast_prime_mem_lambdaIdeal :
     exact Ideal.mem_span_singleton_self (p : ValuedIntegerRing p K)
   exact Ideal.pow_le_self
     (Nat.sub_ne_zero_of_lt (Fact.out : Nat.Prime p).one_lt) hp_pow
-
 
 /-- Cancelling `p^m` against lambda-adic order leaves the predicted residual
 lambda-adic order. -/
@@ -648,7 +640,6 @@ theorem quotientNatCastInv_eq_of_mul_right_eq_one {N m : ℕ}
         rw [mul_comm u (Ideal.Quotient.mk ((lambdaIdeal p K) ^ (N + 1))
           (m : ValuedIntegerRing p K)), hu])
 
-
 /-- Number of terms in the ordinary finite logarithm, with a dummy zero-th
 term for range sums. -/
 def samePrimeFiniteLogCutoff (N : ℕ) : ℕ :=
@@ -769,7 +760,6 @@ theorem samePrimeNatDivNumerator_mul_spec {n s : ℕ}
     (p : ValuedIntegerRing p K) ^ n.factorization p *
         samePrimeNatDivNumerator (p := p) (K := K) n s z hz = z :=
   (samePrimeNatDivNumerator_spec (p := p) (K := K) hz).2
-
 
 end DworkParameter
 end PadicLogSetup

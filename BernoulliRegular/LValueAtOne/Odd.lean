@@ -117,7 +117,7 @@ theorem odd_LFunction_zero_eq_neg_BernoulliGen_one_of_sinZeta_one_formula
 
 /-- **T021b / T021b1**: Odd special value `L(0, χ) = -BernoulliGen χ 1` for
 odd nontrivial Dirichlet characters modulo `p`, packaged independently of the
-endpoint scaffolding by feeding the endpoint identity
+endpoint layer by feeding the endpoint identity
 `sinZeta_toAddCircle_one_eq_boundary` into the generic reduction lemma. -/
 theorem odd_LFunction_zero_eq_neg_BernoulliGen_one
     {χ : DirichletCharacter ℂ p} (hχ_odd : χ.Odd) (hχ_ne_one : χ ≠ 1) :

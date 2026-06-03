@@ -40,7 +40,6 @@ macro "regular_prime_by_values" p:num upper:num : tactic => `(tactic|
      have hk_upper : k ≤ $upper := by omega
      interval_cases k <;> norm_num)))
 
-
 theorem isRegularPrime_three_lt100 :
     letI : Fact (Nat.Prime 3) := ⟨by norm_num⟩
     IsRegularPrime 3 :=
@@ -91,7 +90,6 @@ theorem isRegularPrime_thirtyone_lt100 :
     IsRegularPrime 31 := by
   regular_prime_by_values 31 14
 
-
 theorem isRegularPrime_fortyone_lt100 :
     letI : Fact (Nat.Prime 41) := ⟨by norm_num⟩
     IsRegularPrime 41 := by
@@ -112,12 +110,10 @@ theorem isRegularPrime_fiftythree_lt100 :
     IsRegularPrime 53 := by
   regular_prime_by_values 53 25
 
-
 theorem isRegularPrime_sixtyone_lt100 :
     letI : Fact (Nat.Prime 61) := ⟨by norm_num⟩
     IsRegularPrime 61 := by
   regular_prime_by_values 61 29
-
 
 theorem isRegularPrime_seventyone_lt100 :
     letI : Fact (Nat.Prime 71) := ⟨by norm_num⟩
@@ -148,6 +144,5 @@ theorem isRegularPrime_ninetyseven_lt100 :
     letI : Fact (Nat.Prime 97) := ⟨by norm_num⟩
     IsRegularPrime 97 := by
   regular_prime_by_values 97 47
-
 
 end BernoulliRegular

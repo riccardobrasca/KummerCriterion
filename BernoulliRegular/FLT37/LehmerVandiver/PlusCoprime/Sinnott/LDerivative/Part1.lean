@@ -8,7 +8,6 @@ import BernoulliRegular.UnitQuotient.FreeLatticeComparison.ConjugationTrace
 import Mathlib.NumberTheory.LSeries.DirichletContinuation
 import Mathlib.RingTheory.RootsOfUnity.Lemmas
 
-
 /-!
 # LV-SIN-C: `L'(0, χ)` formula via cyclotomic-unit logs
 
@@ -53,13 +52,11 @@ namespace Sinnott
 
 variable (p : ℕ) [hp : Fact p.Prime]
 
-
 /-- **Dirichlet sum form**: an alternative formulation that directly
 relates the L-derivative to a sum over cyclotomic units. -/
 def DirichletLogSum (χ : DirichletCharacter ℂ p) : ℂ :=
   -∑ a ∈ Finset.Ico 1 p,
     χ a * Real.log (2 * |Real.sin (Real.pi * a / p)|)
-
 
 /-- **The norm of `1 - stdAddChar(↑(-a))` equals `1 - stdAddChar(↑a)`**:
 direct from `stdAddChar(-x) = conj(stdAddChar(x))` (shipped in
@@ -149,7 +146,6 @@ noncomputable def characterMatrixOnEven :
            (BernoulliRegular.CyclotomicEvenDelta p) ℂ :=
   Matrix.of fun ξ a => ξ a
 
-
 /-- **Pontryagin cardinality on the quotient**:
 `#{MulChar (CyclotomicEvenDelta p) ℂ} = #(CyclotomicEvenDelta p)`.
 Direct from `MulChar.card_eq_card_units_of_hasEnoughRootsOfUnity` (using that
@@ -178,7 +174,6 @@ noncomputable def quotCharEquivQuot :
   refine Fintype.equivOfCardEq ?_
   rw [Fintype.card_eq_nat_card, Fintype.card_eq_nat_card]
   exact nat_card_mulChar_cyclotomicEvenDelta_eq p
-
 
 /-- **Matrix-level eigenvalue formula on the quotient**: for the multiplicative
 convolution matrix `convolutionMatrixOnEven f`:
@@ -211,7 +206,6 @@ theorem characterMatrixOnEven_mul_convolutionMatrixOnEven_apply
     ring
   rw [Finset.sum_congr rfl (fun a _ => h_factor a)]
   rw [← Finset.mul_sum]
-
 
 /-- **Square character matrix on `CyclotomicEvenDelta p`**: the
 `((p-1)/2) × ((p-1)/2)` matrix indexed by `CyclotomicEvenDelta p × CyclotomicEvenDelta p`
@@ -454,11 +448,6 @@ theorem det_convolutionMatrixOnEven_sq_eq_prod_lambda_sq_unconditional
   det_convolutionMatrixOnEven_sq_eq_prod_lambda_sq (p := p) f
     (det_characterMatrixSquareOnEven_ne_zero (p := p) hp_two)
 
-
-
-
-
-
 /-- **Quotient eigenvalue at character `ξ`**: for
 `ξ : MulChar (CyclotomicEvenDelta p) ℂ`,
 the eigenvalue of `convolutionMatrixLogNormEven` at the descended character is
@@ -509,7 +498,6 @@ theorem prod_quot_eq_prod_mulChar
     (fun ξ => f ξ)
     (fun k => f ((quotCharEquivQuot p).symm k))
     (fun ξ => by simp only [Equiv.symm_apply_apply])).symm
-
 
 /-- **Half-sum identity**: for any even function `f : (ZMod p)ˣ → ℂ`
 (with `f(-a) = f(a)`), summing over the full group gives twice the sum
@@ -665,11 +653,6 @@ theorem two_mul_quotientEigenvalue_trivial_eq_sum_logNorm (hp_two : 2 < p) :
   change (1 : MulChar _ _) (BernoulliRegular.cyclotomicEvenDeltaQuotient p a) *
       _ = _
   rw [MulChar.one_apply h_unit, one_mul]
-
-
-
-
-
 
 end Sinnott
 

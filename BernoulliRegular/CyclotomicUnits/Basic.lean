@@ -1,6 +1,8 @@
 module
 
-public import BernoulliRegular.FLT37.PrimaryUnits
+public import BernoulliRegular.FLT37.PrimaryUnits.Part1
+public import BernoulliRegular.FLT37.PrimaryUnits.Part2
+public import BernoulliRegular.FLT37.PrimaryUnits.Part3
 
 /-!
 # Real cyclotomic units
@@ -56,7 +58,6 @@ theorem realCyclotomicUnit_val (a : ℕ)
   unfold realCyclotomicUnit
   rw [FLT37.realCyclotomicUnitPlusUnit_val]
 
-
 /-- The image of the real cyclotomic unit in `𝓞 K` is the σ-fixed product
 `cyclotomicUnit a * σ(cyclotomicUnit a)`. -/
 theorem algebraMap_realCyclotomicUnit (a : ℕ)
@@ -65,8 +66,6 @@ theorem algebraMap_realCyclotomicUnit (a : ℕ)
         (realCyclotomicUnit (p := p) (K := K) a ha_two ha_le : 𝓞 K⁺) =
       FLT37.realCyclotomicUnit p K a := by
   rw [realCyclotomicUnit_val, FLT37.algebraMap_realCyclotomicUnitPlus]
-
-
 
 end BernoulliRegular
 

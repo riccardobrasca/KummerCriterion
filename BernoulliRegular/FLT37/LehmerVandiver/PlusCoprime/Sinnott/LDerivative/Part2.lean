@@ -16,8 +16,6 @@ namespace Sinnott
 variable (p : ℕ) [hp : Fact p.Prime]
 
 set_option backward.isDefEq.respectTransparency false in
-
-
 /-- **ZMod-sum bridge for vanishing-at-zero functions**: `∑ a : ZMod p, f a =
 ∑ a ∈ Finset.Ico 1 p, f ((a : ℕ) : ZMod p)` whenever `f 0 = 0`.
 
@@ -266,8 +264,6 @@ theorem evenLValueRhs_eq_gaussSum_inv_mul_DirichletLogSum
   unfold BernoulliRegular.evenLValueRhs
   rw [evenLValueLogSum_eq_neg_DirichletLogSum_inv]
   ring
-
-
 
 /-- **Gauss sum identity for even Dirichlet characters mod `p`**: for an
 even nontrivial Dirichlet character `χ` mod a prime `p`,

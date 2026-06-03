@@ -1,7 +1,7 @@
 module
 
 public import BernoulliRegular.CyclotomicUnits.Saturation
-public import BernoulliRegular.CyclotomicUnits.DworkParameter
+public import BernoulliRegular.CyclotomicUnits.DworkParameter.Part18
 public import BernoulliRegular.CyclotomicUnits.KummerLogLinearAlgebra
 public import BernoulliRegular.CyclotomicUnits.KummerLogMatrix
 public import BernoulliRegular.CyclotomicUnits.KummerLogTrace
@@ -39,7 +39,6 @@ noncomputable def EPlus_valuedLocalImage (u : (𝓞 K⁺)ˣ) :
     (ValuedIntegerRing p K)ˣ :=
   Units.map (algebraMap (𝓞 K) (ValuedIntegerRing p K)).toMonoidHom
     (Units.map (algebraMap (𝓞 K⁺) (𝓞 K)).toMonoidHom u)
-
 
 omit [NumberField.IsCMField K] in
 /-- Any global integral unit is congruent to a `(p - 1)`-st root of unity modulo
@@ -103,7 +102,6 @@ theorem EPlus_valuedLocalImage_pow_pred_sub_one_mem_lambdaIdeal
     Ideal.mem_map_of_mem (algebraMap (𝓞 K) (ValuedIntegerRing p K)) hglobal
   rw [lambdaIdeal_eq_map_cyclotomicLambda (p := p) (K := K)] at hmap
   simpa [EPlus_valuedLocalImage, uK, map_sub, map_pow] using hmap
-
 
 omit [NumberField.IsCMField K] in
 /-- The valued principal-unit domain used by the completed same-prime

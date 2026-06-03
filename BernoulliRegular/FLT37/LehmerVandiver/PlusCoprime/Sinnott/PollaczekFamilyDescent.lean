@@ -1,7 +1,6 @@
 import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.Sinnott.IndexFormula
 import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.Sinnott.CyclotomicUnitFamily
 
-
 /-!
 # `PollaczekInFamily` — Pollaczek descent to the family subgroup
 
@@ -33,9 +32,6 @@ variable (p : ℕ) [hp : Fact p.Prime]
 variable (K : Type) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
   [IsCMField K]
 
-
-
-
 /-! ## Algebra: `algebraMap pollaczekUnitPlusKplus = pollaczekUnitPlus`
 
 The K⁺-side preimage `pollaczekUnitPlusKplus` maps under `algebraMap` to
@@ -46,8 +42,6 @@ the K-side `pollaczekUnitPlus p K i`. This requires:
 * `pollaczekUnitPlus = pollaczekUnit · σ(pollaczekUnit) =
    ∏_b cyclotomicRealUnit(b)^{exp_b}` (σ-distribution over product).
 -/
-
-
 
 /-! ## Proof of `AlgebraMapPollaczekUnitPlusKplus_eq`
 
@@ -81,11 +75,6 @@ theorem algebraMap_cyclotomicUnitFamilyKplus
   unfold cyclotomicUnitFamilyKplusFinRank cyclotomicUnitFamilyKplus
   rw [realCyclotomicUnitPlusUnit_val]
   exact FLT37.algebraMap_realCyclotomicUnitPlus p K _
-
-
-
-
-
 
 end Sinnott
 

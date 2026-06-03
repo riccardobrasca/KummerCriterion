@@ -1,6 +1,54 @@
 module
 
-public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DworkFactorization.FiniteArtinHasseExp
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DworkFactorization.Basic.Part1
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.ArtinHasse.Part1
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.ArtinHasse.Part2
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.Stickelberger.Part1
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.NumberTheory.MulChar.Basic
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.NumberTheory.GaussSum
+public import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
+public import Mathlib.NumberTheory.JacobiSum.Basic
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
+public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
+public import Mathlib.RingTheory.Ideal.Quotient.Nilpotent
+public import Mathlib.RingTheory.Localization.Basic
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork.Part1
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DieudonneDwork.Part2
+public import Mathlib.RingTheory.PowerSeries.Substitution
+public import Mathlib.RingTheory.PowerSeries.Basic
+public import Mathlib.RingTheory.PowerSeries.Trunc
+public import Mathlib.RingTheory.PowerSeries.Exp
+public import Mathlib.Data.Nat.Log
+public import Mathlib.NumberTheory.Padics.PadicVal.Basic
+public import Mathlib.Data.Nat.Digits.Defs
+public import Mathlib.Data.Nat.Digits.Lemmas
+public import Mathlib.FieldTheory.Finite.Trace
+public import Mathlib.Algebra.GroupWithZero.Units.Equiv
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Data.Nat.Choose.Multinomial
+public import Mathlib.Data.Nat.Prime.Factorial
+public import Mathlib.Algebra.BigOperators.Associated
+public import Mathlib.Data.Fintype.Units
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.Algebra.Ring.Associated
+public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
+public import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
+public import Mathlib.NumberTheory.NumberField.Ideal.Basic
+public import Mathlib.Data.Nat.ModEq
+public import Mathlib.FieldTheory.Perfect
+public import Mathlib.RingTheory.WittVector.Frobenius
+public import Mathlib.RingTheory.WittVector.TeichmullerSeries
+public import Mathlib.Algebra.CharP.Lemmas
+public import Mathlib.Data.Fintype.Fin
+public import Mathlib.RingTheory.Nilpotent.Basic
+public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DworkFactorization.FiniteLogBounds
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
 public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.DworkFactorization.FiniteLogFormal
 
 /-!
@@ -103,7 +151,6 @@ theorem logOf_artinHasseExpSeries (ell : ℕ) [Fact (Nat.Prime ell)] :
       _ = d⁄dX ℚ L := by
             rw [hgeom, one_mul]
   · rw [PowerSeries.constantCoeff_logOf hE0, hL0]
-
 
 theorem coeff_logOf_artinHasseExpSeries_eq_sum_Icc
     (ell d : ℕ) [Fact (Nat.Prime ell)] :

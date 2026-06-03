@@ -17,7 +17,6 @@ namespace DworkParameter
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-
 /-- Same-prime finite Artin--Hasse logarithm
 `sum_r x^(p^r) / p^r` in `R / lambda^(N+1)`. -/
 noncomputable def samePrimeFiniteArtinHasseLog (N : ℕ)
@@ -42,7 +41,6 @@ theorem samePrimeFiniteArtinHasseLog_eq_sum_range_of_le {N M : ℕ} (hNM : N ≤
     (p := p) (K := K) hx hNr
 
 set_option linter.style.longLine false in
-
 theorem samePrimeFiniteArtinHasseExpCoordLogHomogeneousTerm_eq_zero_of_not_mem_support
     (N n d : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K)
     (hd : d ∉ ((samePrimeFiniteArtinHasseExpCoordPoly (p := p) (K := K) N x) ^ n).support) :
@@ -375,7 +373,6 @@ theorem samePrimeFiniteLog_finiteArtinHasseExpCoord_eq_finiteArtinHasseLog
     (p := p) (K := K) N hx]
   exact (samePrimeFiniteArtinHasseLog_eq_homogeneous_degree_sum_range
     (p := p) (K := K) N hx).symm
-
 
 theorem dworkParameterApprox_eq_sum_range (N : ℕ) :
     dworkParameterApprox p K N =
@@ -806,7 +803,6 @@ theorem dworkParameterApprox_smodEq
       dworkParameterApprox_sub_mem_lambdaIdeal_pow (p := p) (K := K) hMN
     simpa [sub_eq_add_neg, add_comm] using ((lambdaIdeal p K) ^ M).neg_mem h
   exact (mem_ideal_smul_top_iff_self ((lambdaIdeal p K) ^ M)).mpr hmem
-
 
 end DworkParameter
 end PadicLogSetup

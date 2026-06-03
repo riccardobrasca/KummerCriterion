@@ -1,7 +1,11 @@
 module
 
-public import BernoulliRegular.UnitQuotient.Torsion
-public import BernoulliRegular.Idempotents
+public import Mathlib.NumberTheory.NumberField.Units.DirichletTheorem
+public import Mathlib.LinearAlgebra.Basis.Defs
+public import Mathlib.Algebra.MonoidAlgebra.Basic
+public import Mathlib.NumberTheory.MulChar.Basic
+public import Mathlib.NumberTheory.MulChar.Duality
+public import Mathlib.RingTheory.Idempotents
 public import Mathlib.Data.ZMod.Basic
 
 /-!
@@ -32,13 +36,5 @@ variable (K : Type*) [Field K] [NumberField K]
 components. -/
 abbrev CyclotomicUnitDelta : Type :=
   (ZMod p)ˣ
-
-
-
-
-
-
-
-
 
 end BernoulliRegular

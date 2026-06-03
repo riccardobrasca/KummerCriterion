@@ -167,6 +167,4 @@ theorem succ_le_sub_factorization_mul_pred_of_mul_succ_le_of_le {ell N n d : ℕ
     omega
   exact Nat.le_sub_of_add_le htotal'
 
-
-
 end Nat

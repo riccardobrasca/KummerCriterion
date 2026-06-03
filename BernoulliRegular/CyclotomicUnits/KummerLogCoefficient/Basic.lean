@@ -1,5 +1,5 @@
 import BernoulliRegular.CyclotomicUnits.KummerLogFormal
-import BernoulliRegular.CyclotomicUnits.KummerLogNormalization
+import BernoulliRegular.CyclotomicUnits.KummerLogNormalization.Part4
 import BernoulliRegular.CyclotomicUnits.KummerLogTrace
 
 /-!
@@ -33,8 +33,6 @@ def kummerLogRowIndex (j : Fin (kummerLogRank p)) : ℕ :=
   (j : ℕ) + 1
 
 omit [Fact p.Prime] in
-
-omit [Fact p.Prime] in
 theorem kummerLogRowIndex_one_le (j : Fin (kummerLogRank p)) :
     1 ≤ kummerLogRowIndex (p := p) j := by
   simp [kummerLogRowIndex]
@@ -51,9 +49,6 @@ theorem two_mul_kummerLogRowIndex_le_sub_three
   have hle : 2 * ((j : ℕ) + 1) ≤ 2 * kummerLogRank p :=
     Nat.mul_le_mul_left 2 hjle
   simpa [kummerLogRowIndex] using hle.trans hmulrank
-
-
-
 
 /-- The unit factor for the selected matrix row is nonzero modulo `p`. -/
 theorem formalKummerLogCoeffModP_column_unit_ne_zero
@@ -99,7 +94,6 @@ theorem formalKummerLogCoeff_congr
     (p := p) (hp_three := hp_three) (_hp_five := hp_five)]
   rfl
 
-
 /-- The unit factor appearing in the row of the formal Kummer congruence is
 nonzero. -/
 theorem kummerLogCoeffCongrRhs_unit_ne_zero
@@ -122,7 +116,6 @@ theorem two_zmod_ne_zero_of_five_le (hp_five : 5 ≤ p) :
   have hp_le_two : p ≤ 2 := Nat.le_of_dvd (by norm_num) hp_dvd
   omega
 
-
 /-- The squared-family unit factor is nonzero in the Kummer row range. -/
 theorem squaredKummerLogUnitFactor_ne_zero
     (hp_five : 5 ≤ p) (j : Fin (kummerLogRank p)) :
@@ -131,12 +124,8 @@ theorem squaredKummerLogUnitFactor_ne_zero
     (two_zmod_ne_zero_of_five_le (p := p) hp_five)
     (kummerLogCoeffCongrRhs_unit_ne_zero (p := p) hp_five j)
 
-
-
-
 omit [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
     [NumberField.IsCMField K] in
-
 /-- The right-hand side for the currently implemented squared-family
 logarithm columns. -/
 def squaredKummerLogCoeffCongrRhs
@@ -153,7 +142,6 @@ theorem squaredKummerLogCoeffCongrRhs_eq_two_mul
   simp [squaredKummerLogCoeffCongrRhs, squaredKummerLogUnitFactor,
     kummerLogCoeffCongrRhs]
   ring
-
 
 end CyclotomicUnits
 end BernoulliRegular

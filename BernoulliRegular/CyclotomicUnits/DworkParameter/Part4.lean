@@ -17,7 +17,6 @@ namespace DworkParameter
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-
 theorem samePrimeFiniteLogProductHomogeneousGrid_degree_sub_eq_zero (N d : ℕ)
     (hd : d ∈ Finset.range (samePrimeFiniteLogCutoff (p := p) N))
     {x y : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K)
@@ -455,7 +454,6 @@ def samePrimeFiniteArtinHasseExpCoord (N : ℕ)
     (x : ValuedIntegerRing p K) : ValuedIntegerRing p K :=
   samePrimeFiniteArtinHasseExp (p := p) (K := K) N x - 1
 
-
 theorem samePrimeFiniteArtinHasseExpCoord_eq_positive_sum
     (N : ℕ) (x : ValuedIntegerRing p K) :
     samePrimeFiniteArtinHasseExpCoord (p := p) (K := K) N x =
@@ -759,7 +757,6 @@ theorem samePrimeFiniteArtinHasse_den_exponent_le {n d : ℕ}
   have h := Nat.factorization_mul_pred_le_pred
     (ell := p) (n := n) (Fact.out : Nat.Prime p) hn
   omega
-
 
 end DworkParameter
 end PadicLogSetup

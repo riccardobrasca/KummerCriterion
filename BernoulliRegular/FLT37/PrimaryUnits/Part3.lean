@@ -8,7 +8,7 @@ public import FltRegular.NumberTheory.Cyclotomic.MoreLemmas
 public import BernoulliRegular.FLT37.PrimaryUnits.Part2
 
 /-!
-# Primary units of `𝓞 K⁺` (ticket FLT37c, scaffold)
+# Primary units of `𝓞 K⁺`
 
 For Vandiver Lemma 2 (primary unit decomposition), an element
 `γ ∈ 𝓞 K⁺` is **primary** when it is congruent to a rational integer
@@ -72,37 +72,6 @@ theorem algebraMap_realCyclotomicUnitPlus [IsCMField K] (k : ℕ) :
       realCyclotomicUnit p K k :=
   (exists_realCyclotomicUnit_descent p K k).choose_spec
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /-- The K⁺-side real cyclotomic unit is itself a unit when `k` is coprime
 to `p`. Uses the norm characterization of units in `𝓞 K⁺`. -/
 theorem isUnit_realCyclotomicUnitPlus [IsCMField K] (k : ℕ)
@@ -136,11 +105,6 @@ theorem realCyclotomicUnitPlusUnit_val [IsCMField K] (k : ℕ)
     (realCyclotomicUnitPlusUnit p K k hk hp_two : 𝓞 (NumberField.maximalRealSubfield K)) =
       realCyclotomicUnitPlus p K k :=
   IsUnit.unit_spec _
-
-
-
-
-
 
 end RealCyclotomicUnits
 

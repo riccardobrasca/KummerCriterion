@@ -1,8 +1,11 @@
 module
 
-public import BernoulliRegular.Reflection.Local.Filtration
-public import BernoulliRegular.Reflection.Local.Completion
-public import BernoulliRegular.Reflection.Local.UnitQuotient
+public import BernoulliRegular.Reflection.Local.Basic
+public import Mathlib.RingTheory.AdicCompletion.Algebra
+public import Mathlib.RingTheory.AdicCompletion.Completeness
+public import Mathlib.RingTheory.Henselian
+public import BernoulliRegular.Reflection.Local.Graded
+public import Mathlib.Algebra.Module.ZMod
 public import BernoulliRegular.UnitQuotient.DeltaAction
 
 /-!
@@ -141,8 +144,6 @@ theorem quotientMap_ringEquiv_apply_quotientMap_ringEquiv_symm
     change Ideal.Quotient.mk (I ^ n) (e (e.symm r)) =
       Ideal.Quotient.mk (I ^ n) r
     rw [RingEquiv.apply_symm_apply]
-
-
 
 /-- A ring automorphism preserving `I` lifts to an automorphism of the
 `I`-adic completion. -/

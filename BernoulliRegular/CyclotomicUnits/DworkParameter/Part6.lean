@@ -17,7 +17,6 @@ namespace DworkParameter
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-
 noncomputable def samePrimeFiniteArtinHasseExpCoordLogHomogeneousDegreeSum
     (N d : ℕ) (x : ValuedIntegerRing p K) (hx : x ∈ lambdaIdeal p K) :
     ValuedIntegerRing p K ⧸ (lambdaIdeal p K) ^ (N + 1) :=
@@ -399,7 +398,6 @@ theorem samePrimeFiniteArtinHasseLogTerm_natCast_prime_pow_mul_eq_mk
   rw [samePrimeFiniteArtinHasseLogTerm, ← map_mul,
     (samePrimeArtinHasseLogTermNumerator_spec (p := p) (K := K) r hx).2]
 
-
 theorem samePrimeFiniteArtinHasseLogTerm_eq_zero_of_succ_le
     {N r : ℕ} {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K)
     (horder : N + 1 ≤ samePrimeArtinHasseLogTermOrder (p := p) r) :
@@ -683,7 +681,6 @@ theorem samePrimeFiniteArtinHasseExpCoordLogHomogeneousDegreeSum_eq_logTerm
       simpa [samePrimeFiniteArtinHasseExpCoordLogHomogeneousNumerator] using
         samePrimeFiniteArtinHasseLogHomogeneousNumerator_factorial_weighted_sub_pow_mem_lambdaIdeal_pow
           (p := p) (K := K) N r hx)
-
 
 end DworkParameter
 end PadicLogSetup

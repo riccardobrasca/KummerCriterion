@@ -1,6 +1,7 @@
 module
 
-public import BernoulliRegular.UnitQuotient.LogEmbeddingAction
+public import BernoulliRegular.UnitQuotient.DeltaAction
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
 public import Mathlib.Algebra.MonoidAlgebra.Module
 public import Mathlib.GroupTheory.QuotientGroup.Finite
 public import Mathlib.LinearAlgebra.Finsupp.Pi
@@ -111,8 +112,6 @@ theorem evenFunctionDescend_apply_mk {R : Type*} (f : CyclotomicUnitDelta p → 
         ((QuotientGroup.mk a) : CyclotomicEvenDelta p) = f a := by
   rfl
 
-
-
 /-- Pull a character of `Delta / {±1}` back to an even character of `Delta`. -/
 def evenDeltaCharacterPullback {R : Type*} [CommMonoidWithZero R]
     (χ : MulChar (CyclotomicEvenDelta p) R) :
@@ -121,18 +120,6 @@ def evenDeltaCharacterPullback {R : Type*} [CommMonoidWithZero R]
   map_one' := by simp [cyclotomicEvenDeltaQuotient]
   map_mul' a b := by simp [cyclotomicEvenDeltaQuotient, map_mul]
   map_nonunit' a ha := (ha (Group.isUnit a)).elim
-
-
-
-section DeltaIdempotents
-
-variable {R : Type*} [CommRing R] [IsDomain R]
-variable [Invertible ((Fintype.card (CyclotomicUnitDelta p) : R))]
-variable [HasEnoughRootsOfUnity R (Monoid.exponent (CyclotomicUnitDelta p))]
-variable [Invertible (2 : R)]
-
-
-end DeltaIdempotents
 
 end BernoulliRegular
 

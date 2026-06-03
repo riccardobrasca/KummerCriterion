@@ -350,6 +350,4 @@ theorem bernoulli_div_sModEq_of_modEq
     mul_ne_zero (mul_ne_zero (mul_ne_zero h_Am_sub_one_ne h_An_sub_one_ne) hmQ_ne) hnQ_ne
   exact mul_left_cancel₀ h_cancel_ne h_key
 
-
-
 end BernoulliRegular

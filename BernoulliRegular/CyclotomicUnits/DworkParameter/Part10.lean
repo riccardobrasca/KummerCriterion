@@ -17,7 +17,6 @@ namespace DworkParameter
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-
 theorem dworkParameter_mul_pow_pred_add_p_mul_tailUnit_eq_zero
     (hp_two : 2 < p) :
     dworkParameter p K *
@@ -55,14 +54,6 @@ theorem dworkParameter_pow_pred_eq_neg_p_mul_tailUnit
       (dworkParameter_mul_pow_pred_add_p_mul_tailUnit_eq_zero
         (p := p) (K := K) hp_two)
   simpa [neg_mul] using eq_neg_of_add_eq_zero_left hinside
-
-
-
-
-
-
-
-
 
 end DworkParameter
 end PadicLogSetup

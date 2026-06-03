@@ -83,20 +83,7 @@ theorem associated_complexConj_zetaSubOne [IsCMField K] :
     Associated (zetaSubOne p K) (ringOfIntegersComplexConj K (zetaSubOne p K)) :=
   ⟨zetaSubOneConjUnit p K, by rw [complexConj_zetaSubOne_eq]; ring⟩
 
-
-
-
 end ConjSetup
-
-
-
-
-
-
-
-
-
-
 
 end FLT37
 

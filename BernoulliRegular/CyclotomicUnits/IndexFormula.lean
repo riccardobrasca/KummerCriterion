@@ -83,7 +83,6 @@ theorem cyclotomicUnitIndex_primeConductor_pPrimary_of_kummerDirichletDeterminan
   exact cyclotomicUnitIndex_primeConductor_pPrimary_of_sinnottIndexFormula
     (p := p) (K := K) hp_odd hp_three hSinnott
 
-
 end BernoulliRegular
 
 end

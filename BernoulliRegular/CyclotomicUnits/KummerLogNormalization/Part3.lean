@@ -213,10 +213,6 @@ theorem samePrimeFiniteArtinHasseNormalizedCoordLogHomogeneousNumerator_mem_lamb
       (p := p) (K := K) N hx n d)
 
 omit [NumberField.IsCMField K] in
-
-omit [NumberField.IsCMField K] in
-
-omit [NumberField.IsCMField K] in
 theorem samePrimeFiniteArtinHasseNormalizedCoordPoly_pow_coeff_eq_zero_of_lt
     (N : ℕ) (x : ValuedIntegerRing p K) {n d : ℕ} (hdn : d < n) :
     ((samePrimeFiniteArtinHasseNormalizedCoordPoly
@@ -359,7 +355,6 @@ theorem samePrimeFiniteArtinHasseNormalizedCoordLogHomogeneousDegreeSum_eq_eval_
     (by simp [samePrimeFiniteArtinHasseNormalizedCoordLogHomogeneousNumerator])
     hnum0 _
 
-
 set_option linter.style.longLine false in
 set_option maxHeartbeats 800000 in
 -- The proof expands quotient sums and same-prime denominator transport termwise.
@@ -496,20 +491,10 @@ theorem natCast_factorial_mul_samePrimeFiniteArtinHasseNormalizedCoordLogHomogen
     (p := p) (K := K) N d hx
 
 set_option linter.style.longLine false in
-omit [NumberField.IsCMField K] in
-
-set_option linter.style.longLine false in
-omit [NumberField.IsCMField K] in
-
-set_option linter.style.longLine false in
 set_option maxHeartbeats 800000 in
 -- This repeats the Part5 factorial-cleared comparison with the normalized
 -- formal source.  The formal hypothesis is a concrete coefficient equality,
 -- not a bundled finite-log assumption.
-
-set_option linter.style.longLine false in
-omit [NumberField.IsCMField K] in
-
 omit [NumberField.IsCMField K] in
 theorem samePrimeFiniteArtinHasseNormalizedCoordLogHomogeneousTerm_eq_zero_of_not_mem_support
     (N n d : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K)

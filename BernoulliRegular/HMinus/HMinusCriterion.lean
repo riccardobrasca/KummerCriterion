@@ -2,7 +2,19 @@ module
 
 public import Mathlib.NumberTheory.Bernoulli
 public import BernoulliRegular.BernoulliGeneralized
-public import BernoulliRegular.HMinus
+public import BernoulliRegular.HMinus.KplusLocalCharacters
+public import BernoulliRegular.HMinus.KplusPrimeArithmetic
+public import BernoulliRegular.HMinus.KplusEulerProduct
+public import BernoulliRegular.HMinus.ClassNumberFormula
+public import BernoulliRegular.HMinus.LValueReduction.Factors
+public import BernoulliRegular.HMinus.LValueReduction.LValues
+public import BernoulliRegular.HMinus.LValueReduction.Assembly
+public import BernoulliRegular.HMinus.LValueReduction.GaussGoal
+public import BernoulliRegular.HMinus.LValueReduction.GaussPairing
+public import BernoulliRegular.HMinus.LValueReduction.GaussProduct
+public import BernoulliRegular.HMinus.LValueReduction.Final
+public import BernoulliRegular.HMinus.LValueReduction.Teichmuller
+public import BernoulliRegular.HMinus.PadicCorollaries
 
 /-!
 # Bernoulli criterion from the relative class number formula

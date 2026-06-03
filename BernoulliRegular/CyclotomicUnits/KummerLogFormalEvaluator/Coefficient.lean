@@ -155,8 +155,7 @@ theorem normalizedFiniteLogApprox_evenCoeff_eq_lowHomogeneousDegreeSums
         (p := p) (K := K) (p - 2) n d x hx
   rw [normalizedFiniteLogApprox_evenCoeff_eq_ordinaryTerms
     (p := p) (K := K) hp_five j]
-  simp only [dworkParameterNormalizedCoordApprox, dworkParameterNormalizedApprox,
-    samePrimeFiniteArtinHasseNormalizedCoord]
+  simp only [dworkParameterNormalizedCoordApprox, dworkParameterNormalizedApprox]
   change
     valuedLambdaQuotientDworkCoeffModP (p := p) (K := K) i
         (Ideal.Quotient.factorPow (lambdaIdeal p K) hle
@@ -495,7 +494,6 @@ theorem concreteKummerLogMatrix_eq_squaredKummerLogCoeffCongrRhs
       (p := p) (K := K) hp_three hp_five j a,
     squaredKummerLogCoeffCongrRhs_eq_two_mul]
 
-
 /-- Final concrete squared-family entry API, with the squared unit factor
 displayed explicitly. -/
 theorem concreteSquaredKummerLogMatrixEntry_congr
@@ -525,7 +523,6 @@ theorem kummerLogCoeff_congr
             (2 * kummerLogRowIndex (p := p) j) - 1) :=
   concreteSquaredKummerLogMatrixEntry_congr
     (p := p) (K := K) hp_three hp_five j a
-
 
 end CyclotomicUnits
 end BernoulliRegular

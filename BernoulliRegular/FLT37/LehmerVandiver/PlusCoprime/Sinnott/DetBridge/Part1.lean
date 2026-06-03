@@ -1,4 +1,4 @@
-import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.Sinnott.LDerivative
+import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part7
 
 /-!
 # Bridge from substantive matrix content to RegOf-squared form
@@ -20,7 +20,6 @@ namespace BernoulliRegular
 namespace FLT37
 
 namespace Sinnott
-
 
 variable (p : ℕ) [hp : Fact p.Prime]
 
@@ -125,8 +124,6 @@ shifted-convolution submatrix `U = sinnottShiftedConvolutionMatrix`.
 Apply mathlib's `Matrix.det_add_replicateCol_mul_replicateRow` under
 `SinnottConvolutionMatrixDetUnit` (i.e., `IsUnit (U.det)`). -/
 
-
-
 /-! ## Scalar-correction reduction (named hypothesis)
 
 After applying the matrix determinant lemma, `det(A - B) = det(U) · ε`
@@ -137,11 +134,8 @@ The remaining substantive content (`DetASubBSqEqProdNontrivialQeSq`)
 reduces to: `(det(U) · ε)² = (∏_{χ ≠ 1} qe(χ))²`. This is the cleanest
 isolation of Sinnott's matrix-level identity. -/
 
-
-
 set_option backward.isDefEq.respectTransparency false in
 open Classical in
-
 /-! ## Reduction of squared content to linear form
 
 `DetASubBSqEqProdNontrivialQeSq` (squared form) follows directly from
@@ -151,8 +145,6 @@ the linear form `det(A − B) = ε · ∏_{χ ≠ 1} qe(χ)` for any
 This is the cleanest formulation since Sinnott's identity is naturally
 stated as `det(A − B) = ±∏ qe`, and the choice of sign depends on
 enumeration conventions in the proof. -/
-
-
 
 /-! ## Full PF-1 discharge from two parametric hypotheses
 
@@ -172,7 +164,6 @@ set_option maxHeartbeats 6400000 in
 -- The determinant bridge expands several matrix identities and exceeds the default heartbeat budget.
 set_option backward.isDefEq.respectTransparency false in
 open Classical in
-
 /-! ## Character matrix action on (A − B): matrix-equation form
 
 Wrap the shipped per-row eigenvalue identity
@@ -182,8 +173,6 @@ Wrap the shipped per-row eigenvalue identity
 
 This is the entry-wise statement; by `Matrix.ext`, equivalent to a
 matrix-level identity. Useful for downstream determinant computations. -/
-
-
 
 /-! ## "Diagonal" eigenvalue matrix `D` for the rank-1 decomposition
 
@@ -201,12 +190,8 @@ This is a clean rank-1 perturbation structure, suitable for matrix det
 open Classical in
 lemma application restricted to ξ ≠ 1. -/
 
-
-
-
 set_option backward.isDefEq.respectTransparency false in
 open Classical in
-
 /-! ## Restriction to ξ ≠ 1: the substantive square case
 
 Restricting the row index to ξ ≠ 1 makes `charMatrix · (A − B)^T` square
@@ -214,11 +199,8 @@ of size (|G|-1) × (|G|-1), and the diagonal matrix `D` (which has row
 ξ = 1 vanishing) becomes invertible (assuming Dirichlet non-vanishing
 of `qe(ξ)` for ξ ≠ 1). -/
 
-
-
 set_option backward.isDefEq.respectTransparency false in
 open Classical in
-
 /-! ## Cardinality match for character-matrix det reindexing
 
 To take `det(charMatrix_K_plus_nontriv)`, we need a square matrix; the
@@ -259,15 +241,10 @@ theorem card_nontriv_mulChar_eq
   rcases h_p_odd with ⟨k, hk⟩
   omega
 
-
-
 /-! ## Reindexed (square) versions of charMatrix_nontriv and D_nontriv
 
 Applying `equivNontrivCharKplusNeW₀.symm` on rows gives a square matrix
 indexed by `{w ≠ w₀}` on both sides, enabling `Matrix.det`. -/
-
-
-
 
 end Sinnott
 

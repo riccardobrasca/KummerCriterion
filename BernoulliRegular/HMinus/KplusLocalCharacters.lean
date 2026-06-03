@@ -4,8 +4,14 @@ import Mathlib.NumberTheory.RamificationInertia.Galois
 import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
 import Mathlib.RingTheory.Ideal.GoingUp
 
-public import BernoulliRegular.TotallyRealSubfield
-public import BernoulliRegular.ZetaFactorisation
+public import BernoulliRegular.TotallyRealSubfield.Basic
+public import BernoulliRegular.TotallyRealSubfield.ZetaPrime
+public import BernoulliRegular.TotallyRealSubfield.Conjugation
+public import BernoulliRegular.TotallyRealSubfield.FixedAssociate
+public import BernoulliRegular.TotallyRealSubfield.ClassGroup
+public import BernoulliRegular.ZetaFactorisation.Basic
+public import BernoulliRegular.ZetaFactorisation.EulerProduct
+public import BernoulliRegular.ZetaFactorisation.Residue
 
 /-!
 # `K⁺` local even-character data (T023b2a1)
@@ -213,9 +219,6 @@ lemma unitOfPrimeNe_pow_localResidueDegreePlus_eq_one_or_neg_one
       change (((u ^ orderOf u : (ZMod p)ˣ) : ZMod p)) = 1
       exact congrArg (fun x : (ZMod p)ˣ => ((x : ZMod p))) (pow_orderOf_eq_one u)
     simpa [localResidueDegreePlus, d, hd_even] using hpow
-
-
-
 
 lemma orderOf_unitOfPrimeNe_sq_eq_localResidueDegreePlus
     {ℓ : ℕ} [Fact ℓ.Prime] (hℓp : ℓ ≠ p) :

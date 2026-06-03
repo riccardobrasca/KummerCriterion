@@ -8,7 +8,7 @@ public import FltRegular.NumberTheory.Cyclotomic.MoreLemmas
 public import BernoulliRegular.FLT37.PrimaryUnits.Part1
 
 /-!
-# Primary units of `𝓞 K⁺` (ticket FLT37c, scaffold)
+# Primary units of `𝓞 K⁺`
 
 For Vandiver Lemma 2 (primary unit decomposition), an element
 `γ ∈ 𝓞 K⁺` is **primary** when it is congruent to a rational integer
@@ -48,38 +48,11 @@ section CyclotomicUnits
 variable (p : ℕ) [hp : Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 /-- `cyclotomicUnit p K p = 0`, since `∑_{j=0}^{p-1} ζ^j = 0`
 (cyclotomic identity). -/
 theorem cyclotomicUnit_p_eq_zero : cyclotomicUnit p K p = 0 :=
   (zeta_spec p ℚ K).unit'_coe.geom_sum_eq_zero
     (Nat.lt_of_lt_of_le one_lt_two hp.1.two_le)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /-- `cyclotomicUnit p K (p - 1) = -ζ^{p-1}`. From the cyclotomic
 identity `∑_{j=0}^{p-1} ζ^j = 0`, we have
@@ -94,7 +67,6 @@ theorem cyclotomicUnit_p_sub_one :
     rw [hp_eq] at hrec
     rw [← hrec, cyclotomicUnit_p_eq_zero]
   linear_combination key
-
 
 end CyclotomicUnits
 
@@ -117,18 +89,6 @@ unit `(1 - ζ^k)(1 - ζ^{-k})/((1 - ζ)(1 - ζ^{-1}))`. -/
 noncomputable def realCyclotomicUnit [IsCMField K] (k : ℕ) : 𝓞 K :=
   cyclotomicUnit p K k * ringOfIntegersComplexConj K (cyclotomicUnit p K k)
 
-
-
-
-
-
-
-
-
-
-
-
-
 /-- The real cyclotomic combination is fixed by complex conjugation. -/
 theorem realCyclotomicUnit_complexConj [IsCMField K] (k : ℕ) :
     ringOfIntegersComplexConj K (realCyclotomicUnit p K k) =
@@ -141,8 +101,6 @@ theorem realCyclotomicUnit_complexConj [IsCMField K] (k : ℕ) :
     apply RingOfIntegers.ext
     simp]
   ring
-
-
 
 /-- `realCyclotomicUnit k ≡ k² (mod ζ - 1)` in `𝓞 K`. -/
 theorem zetaSubOne_dvd_realCyclotomicUnit_sub_sq [IsCMField K] (k : ℕ) :
@@ -161,10 +119,6 @@ theorem zetaSubOne_dvd_realCyclotomicUnit_sub_sq [IsCMField K] (k : ℕ) :
     ((zetaSubOne_dvd_complexConj_cyclotomicUnit_sub_natCast p K k).mul_left _)
     ((zetaSubOne_dvd_cyclotomicUnit_sub_natCast p K k).mul_left _)
 
-
-
-
-
 /-- The real cyclotomic combination is a unit when `k` is coprime to `p`. -/
 theorem isUnit_realCyclotomicUnit [IsCMField K] (k : ℕ)
     (hk : k.Coprime p) (hp_two : 2 ≤ p) :
@@ -173,8 +127,6 @@ theorem isUnit_realCyclotomicUnit [IsCMField K] (k : ℕ)
   exact (isUnit_cyclotomicUnit p K k hk hp_two).mul
     ((isUnit_cyclotomicUnit p K k hk hp_two).map
       (ringOfIntegersComplexConj K).toRingEquiv.toRingHom)
-
-
 
 end RealCyclotomicUnits
 end PrimaryPlus

@@ -45,13 +45,10 @@ def pPowerSubgroup {G : Type*} [CommGroup G] (H : Subgroup G) (p : ℕ) : Subgro
     refine ⟨a⁻¹, H.inv_mem haH, ?_⟩
     simp [inv_pow]
 
-
-
 /-- `H` is `p`-saturated in `E` if an element of `H` that is a `p`th power in
 `E` is already a `p`th power in `H`. -/
 def pSaturated {G : Type*} [CommGroup G] (H E : Subgroup G) (p : ℕ) : Prop :=
   H ≤ E ∧ H ⊓ pPowerSubgroup E p ≤ pPowerSubgroup H p
-
 
 theorem pSaturated.mem_pPowerSubgroup_of_mem {G : Type*} [CommGroup G]
     {H E : Subgroup G} {p : ℕ} (h : pSaturated H E p) {x : G}
@@ -173,7 +170,6 @@ theorem neg_one_zpow_pow_eq_self (hp_odd : p ≠ 2) (s : ℤ) :
     ext
     simp
   exact zpow_pow_eq_self_of_sq_eq_one_of_odd hneg_sq hp_mod s
-
 
 theorem CPlusExponentProduct_pow_of_exponents_eq_mul (hp_odd : p ≠ 2)
     (hp_three : 3 ≤ p) (s : ℤ) (e k : Fin ((p - 3) / 2) → ℤ)

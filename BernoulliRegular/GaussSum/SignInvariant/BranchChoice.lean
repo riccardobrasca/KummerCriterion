@@ -117,7 +117,6 @@ theorem inv_eval_neg_one_eq (χ : DirichletCharacter ℂ p) :
 theorem even_inv_iff {χ : DirichletCharacter ℂ p} : χ⁻¹.Even ↔ χ.Even := by
   simp [DirichletCharacter.Even, inv_eval_neg_one_eq (p := p) χ]
 
-
 theorem quadraticCharComplex_odd_of_mod_four_eq_three
     (hp₂ : p ≠ 2) (hp₄ : p % 4 = 3) :
     (quadraticCharComplex p).Odd := by
@@ -185,7 +184,6 @@ theorem disjoint_evenNonselfdualCharacterReps_image_inv :
     simpa [hψ] using hχrep'
   exact (inv_not_mem_nonselfdualCharacterReps (p := p) hψrep') hψinv
 
-
 theorem card_evenNonselfdualCharacterFinset_of_mod_four_eq_three
     (hp₂ : p ≠ 2) (hp₄ : p % 4 = 3) :
     (evenNonselfdualCharacterFinset (p := p)).card = (p - 3) / 2 := by
@@ -219,7 +217,6 @@ theorem card_evenNonselfdualCharacterFinset_of_mod_four_eq_three
   · rw [card_even_characters (p := p) hp₂]
     omega
   · simpa [E] using htriv_even
-
 
 theorem card_evenNonselfdualCharacterReps_of_mod_four_eq_three
     (hp₂ : p ≠ 2) (hp₄ : p % 4 = 3) :
@@ -278,14 +275,12 @@ theorem prod_pairBlockDeterminants_eq_negOnePow_card_evenReps :
     _ = (-1 : ℂ) ^ (evenNonselfdualCharacterReps (p := p)).card := by
           simp [evenNonselfdualCharacterReps, reps]
 
-
 theorem prod_pairBlockDeterminants_of_mod_four_eq_three
     (hp₂ : p ≠ 2) (hp₄ : p % 4 = 3) :
     Finset.prod (nonselfdualCharacterReps (p := p)) (fun χ => -(χ (-1))) =
       (-1 : ℂ) ^ ((p - 3) / 4) := by
   rw [prod_pairBlockDeterminants_eq_negOnePow_card_evenReps (p := p),
     card_evenNonselfdualCharacterReps_of_mod_four_eq_three (p := p) hp₂ hp₄]
-
 
 /-- On the quadratic line, the block scalar is the negative normalized
 quadratic Gauss sum in the `p ≡ 3 [ZMOD 4]` branch. -/
@@ -298,7 +293,6 @@ theorem normalizedDft_quadraticScalar_eq_neg_scaledGaussSum_of_mod_four_eq_three
     quadraticCharComplex_ne_one (p := p) hp₂
   simp [normalizedDftConstOneBasisScalar, hq_ne, quadraticCharComplex_inv (p := p),
     quadraticCharComplex_eval_neg_one_of_mod_four_eq_three (p := p) hp₂ hp₄]
-
 
 /-- Comparing the two determinant formulas forces the quadratic block scalar to
 be `-I` in the imaginary branch. -/
@@ -335,7 +329,6 @@ theorem normalizedDft_quadraticScalar_eq_neg_I_of_mod_four_eq_three
     _ = (qScalar * (-1 : ℂ)) * (-1 : ℂ) := by ring
     _ = Complex.I * (-1 : ℂ) := by rw [hneg]
     _ = -Complex.I := by ring
-
 
 /-- The determinant comparison fixes the positive imaginary branch of the
 quadratic Gauss sum. -/

@@ -370,5 +370,4 @@ theorem voronoi_congruence_mod_p
     mul_left_cancel₀ hpQ_ne (by linear_combination hW_Q)
   rw [hS2_cast]; push_cast; linear_combination hX
 
-
 end BernoulliRegular

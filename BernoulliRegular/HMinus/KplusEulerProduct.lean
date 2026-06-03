@@ -638,7 +638,6 @@ theorem tendsto_sub_one_mul_dedekindZetaPlus_via_evenLProducts (hp_odd : p ≠ 2
   rw [dedekindZeta_eq_riemannZeta_mul_evenLProduct_of_one_lt_re
     (p := p) (K := K) hp_odd (by exact_mod_cast hs)]
 
-
 theorem complex_maximalRealSubfield_residue_eq_evenLProduct_one (hp_odd : p ≠ 2) :
     ((NumberField.dedekindZeta_residue K⁺ : ℝ) : ℂ) = evenLProduct p (1 : ℂ) :=
   tendsto_nhds_unique (NumberField.tendsto_sub_one_mul_dedekindZeta_nhdsGT K⁺)

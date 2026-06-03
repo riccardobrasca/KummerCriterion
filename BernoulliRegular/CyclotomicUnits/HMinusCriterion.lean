@@ -1,6 +1,6 @@
 module
 
-public import BernoulliRegular.HMinusCriterion
+public import BernoulliRegular.HMinus.HMinusCriterion
 
 /-!
 # Minus class-number criterion for the cyclotomic-unit route

@@ -1,1 +1,0 @@
-import BernoulliRegular.CyclotomicUnits.KummerLogNormalization.Part4

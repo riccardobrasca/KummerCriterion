@@ -39,7 +39,6 @@ def lambdaHeightOneSpectrum :
   isPrime := zetaPrime_isPrime p K
   ne_bot := zetaPrime_ne_bot p K
 
-
 /-- The valuation completion of `K` at `lambda`. -/
 abbrev LambdaValuedCompletion : Type _ :=
   (lambdaHeightOneSpectrum p K).adicCompletion K
@@ -51,10 +50,6 @@ abbrev LambdaValuedIntegerRing : Type _ :=
 instance lambdaValuedCompletion_field :
     Field (LambdaValuedCompletion p K) :=
   inferInstance
-
-
-
-
 
 end KummerArtinHasse
 end Furtwaengler

@@ -126,9 +126,6 @@ def dworkFixedSubalgebra :
     change Conjugation.dworkCompleteComplexConj (p := p) K (_ * _) = _ * _
     rw [map_mul, hx, hy]
 
-
-
-
 def dworkSignedCoefficients
     (a : Fin (p - 1) → RationalPadicIntegerRing p) :
     Fin (p - 1) → RationalPadicIntegerRing p :=
@@ -205,9 +202,6 @@ theorem dworkParameterPowerLinearMap_odd_coeff_eq_zero_of_fixed
   exact (mul_eq_zero.mp htwo).resolve_left
     (rationalPadicInteger_two_ne_zero (p := p))
 
-
-
-
 set_option synthInstance.maxHeartbeats 80000 in
 -- Register the fixed subalgebra instances once so later linear maps do not
 -- repeatedly unfold the conjugation predicate during typeclass search.
@@ -231,7 +225,6 @@ def dworkEvenCoeffExtend :
     ext i
     by_cases hi : Even (i : ℕ) <;> simp [hi]
 
-
 @[simp]
 theorem dworkSignedCoefficients_evenCoeffExtend
     (a : dworkEvenPowerIndex p → RationalPadicIntegerRing p) :
@@ -239,7 +232,7 @@ theorem dworkSignedCoefficients_evenCoeffExtend
       dworkEvenCoeffExtend p a := by
   ext i
   by_cases hi : Even (i : ℕ)
-  · simp [dworkSignedCoefficients, hi, hi.neg_one_pow]
+  · simp [dworkSignedCoefficients, hi.neg_one_pow]
   · simp [dworkSignedCoefficients, dworkEvenCoeffExtend, hi]
 
 set_option synthInstance.maxHeartbeats 80000 in
@@ -269,8 +262,6 @@ def dworkEvenPowerLinearMap (hp_two : 2 < p) :
         (dworkEvenCoeffExtend p (c • a)) =
       c • dworkParameterPowerLinearMap p K (dworkEvenCoeffExtend p a)
     rw [map_smul, map_smul]
-
-
 
 theorem dworkEvenPowerLinearMap_injective (hp_two : 2 < p) :
     Function.Injective (dworkEvenPowerLinearMap (p := p) (K := K) hp_two) := by
@@ -321,7 +312,6 @@ noncomputable def dworkFixedEvenPowerBasis (hp_two : 2 < p) :
   (Pi.basisFun (RationalPadicIntegerRing p) (dworkEvenPowerIndex p)).map
     (LinearEquiv.ofBijective (dworkEvenPowerLinearMap (p := p) (K := K) hp_two)
       (dworkEvenPowerLinearMap_bijective (p := p) (K := K) hp_two))
-
 
 end DworkParameter
 end PadicLogSetup

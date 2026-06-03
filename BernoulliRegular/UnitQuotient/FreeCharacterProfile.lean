@@ -1,6 +1,9 @@
 module
 
-public import BernoulliRegular.UnitQuotient.ModPReduction
+public import BernoulliRegular.UnitQuotient.PermutationCharacters
+public import BernoulliRegular.UnitQuotient.DeltaAction
+public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
+public import Mathlib.LinearAlgebra.FreeModule.ModN
 public import Mathlib.GroupTheory.Coset.Card
 public import Mathlib.RingTheory.ZMod.UnitsCyclic
 public import Mathlib.RingTheory.ZMod.Torsion
@@ -34,21 +37,6 @@ attribute [local instance] Fintype.ofFinite
 
 variable (p : ℕ) [Fact p.Prime]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /-- For `p > 2`, the subgroup `{±1}` of `Delta = (ZMod p)^*` has order two. -/
 theorem cyclotomicEvenDeltaSubgroup_card (hp_gt_two : 2 < p) :
     Fintype.card (CyclotomicEvenDeltaSubgroup p) = 2 := by
@@ -70,17 +58,6 @@ theorem cyclotomicEvenDelta_card (hp_gt_two : 2 < p) :
     rw [mul_comm]
     exact hcard.symm
   exact Nat.eq_div_of_mul_eq_right (by decide) hmul
-
-
-
-
-
-
-
-
-
-
-
 
 end BernoulliRegular
 

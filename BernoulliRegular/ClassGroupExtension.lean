@@ -147,7 +147,6 @@ lemma extensionMap_mk0 (I : (Ideal A)⁰) :
   rw [FractionalIdeal.coe_mk0, FractionalIdeal.coe_mk0]
   exact FractionalIdeal.extendedHom_coeIdeal_eq_map (L := FractionRing B) (B := B) I.1
 
-
 end ClassGroup
 
 end

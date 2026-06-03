@@ -25,9 +25,6 @@ variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 variable [NumberField.IsCMField K]
 
-
-
-
 set_option maxHeartbeats 1200000 in
 -- The proof unfolds a quotient coordinate through the Dwork power basis and
 -- a ramification congruence; elaborating the completion coercions is slow.

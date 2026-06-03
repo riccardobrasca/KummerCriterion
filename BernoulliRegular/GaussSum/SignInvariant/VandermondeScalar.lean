@@ -3,7 +3,13 @@ module
 public import Mathlib.Algebra.Group.Nat.Even
 public import Mathlib.RingTheory.RootsOfUnity.Lemmas
 public import BernoulliRegular.GaussSum.SignInvariant.Vandermonde
-public import BernoulliRegular.LValueAtOne
+public import BernoulliRegular.LValueAtOne.Defs
+public import BernoulliRegular.LValueAtOne.ComplexBounds
+public import BernoulliRegular.LValueAtOne.DirichletBounds
+public import BernoulliRegular.LValueAtOne.Cosine
+public import BernoulliRegular.LValueAtOne.Sine
+public import BernoulliRegular.LValueAtOne.Odd
+public import BernoulliRegular.LValueAtOne.Even
 
 /-!
 # Scalar preliminaries for the Vandermonde determinant route
@@ -75,7 +81,6 @@ theorem doubleSin_complement {k : ℕ} (hk : k ≤ p) :
       rw [Nat.cast_sub hk]
       field_simp [hp0]]
   rw [Real.sin_pi_sub]
-
 
 theorem doubleSin_pos {k : ℕ} (hk0 : 0 < k) (hkp : k < p) :
     0 < 2 * Real.sin (Real.pi * (k : ℝ) / p) := by

@@ -125,7 +125,6 @@ theorem bernoulliList_getD_lt (n k : ℕ) (hk : k ≤ n) :
       [- binomSum (bernoulliList n) (n + 2) / ((n : ℚ) + 2)] 0 k
       (by simpa [bernoulliList_length] using Nat.lt_succ_of_le hk))
 
-
 /-! ### Main correctness theorem -/
 
 theorem bernoulliList_getD_eq : ∀ n k : ℕ, k ≤ n → (bernoulliList n).getD k 0 = bernoulli k := by
@@ -177,15 +176,11 @@ theorem bernoulliList_getD_eq : ∀ n k : ℕ, k ≤ n → (bernoulliList n).get
             linarith
           exact ((eq_div_iff hden).2 hmul).symm
 
-
 /-- `bernoulliCompute n = bernoulli n`. -/
 theorem bernoulliCompute_eq (n : ℕ) : bernoulliCompute n = bernoulli n := by
   unfold bernoulliCompute
   rw [List.getLast!_eq_getElem!, List.getElem!_eq_getElem?_getD,
     ← List.getD_eq_getElem?_getD]
   simpa [bernoulliList_length] using bernoulliList_getD_eq n n le_rfl
-
-
-
 
 end BernoulliRegular.BernoulliFast

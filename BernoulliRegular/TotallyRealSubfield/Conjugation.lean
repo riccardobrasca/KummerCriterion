@@ -136,7 +136,6 @@ theorem conj_zeta_pow [IsCMField K]
         (((hζ.unit' ^ m)⁻¹ : (𝓞 K)ˣ) : 𝓞 K) := Units.ext_iff.1 hunits
   exact RingOfIntegers.ext_iff.mp hro
 
-
 include hp_odd in
 /-- The ramification index of `zetaPrime` over `zetaPrimePlus` is `2`. -/
 theorem ramificationIdx_zetaPrimePlus_eq_two [IsCMField K] :

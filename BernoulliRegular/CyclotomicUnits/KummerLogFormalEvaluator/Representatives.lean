@@ -1,4 +1,4 @@
-import BernoulliRegular.CyclotomicUnits.KummerLogCoefficient
+import BernoulliRegular.CyclotomicUnits.KummerLogCoefficient.Evaluator
 
 /-!
 # Formal-to-finite evaluator bridge for Kummer logarithm coefficients
@@ -27,15 +27,6 @@ open PadicLogSetup PadicLogSetup.DworkParameter
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 variable [NumberField.IsCMField K]
-
-omit [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
-    [NumberField.IsCMField K] in
-
-omit [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
-    [NumberField.IsCMField K] in
-
-omit [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
-    [NumberField.IsCMField K] in
 
 omit [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
     [NumberField.IsCMField K] in

@@ -1,1 +1,0 @@
-import BernoulliRegular.FLT37.LehmerVandiver.PlusCoprime.Sinnott.DetBridge.Part2

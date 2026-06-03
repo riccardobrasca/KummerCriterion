@@ -353,7 +353,6 @@ noncomputable def KplusInfinitePlaceEquivCyclotomicEvenDelta_shifted
   Equiv.ofBijective (kplusEmbeddingIndexQuotientShifted (p := p) K)
     (kplusEmbeddingIndexQuotientShifted_bijective (p := p) K hp_two)
 
-
 /-- **Shifted Apply at `w₀`**: the shifted bijection at the distinguished
 place `w₀` gives `1` (the identity element of `CyclotomicEvenDelta p`). -/
 @[simp]
@@ -363,19 +362,6 @@ theorem KplusInfinitePlaceEquivCyclotomicEvenDelta_shifted_apply_w₀
     KplusInfinitePlaceEquivCyclotomicEvenDelta_shifted (p := p) K hp_two
         NumberField.Units.dirichletUnitTheorem.w₀ = 1 :=
   kplusEmbeddingIndexQuotientShifted_w₀ (p := p) K
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 end Sinnott
 

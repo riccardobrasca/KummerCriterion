@@ -1,6 +1,13 @@
 module
 
-public import BernoulliRegular.Reflection.ResidueSymbol.Furtwaengler.GaussSum
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+public import Mathlib.NumberTheory.MulChar.Basic
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.NumberTheory.GaussSum
+public import Mathlib.NumberTheory.LegendreSymbol.AddCharacter
 public import Mathlib.NumberTheory.JacobiSum.Basic
 public import Mathlib.RingTheory.Polynomial.Cyclotomic.Eval
 public import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
@@ -51,15 +58,6 @@ namespace Furtwaengler
 variable {R : Type*} [CommRing R] [Fintype R]
 variable {R' : Type*} [CommRing R']
 
-
-
-
-
-
-
-
-
-
 /-!
 ### Subring descent: `J(χ_q, χ_q^i)` lies in `Subring.closure {ζ_R}`
 
@@ -83,8 +81,7 @@ non-trivial character sums.
 We package this as a clean abstract lemma: if any ideal `I ⊆ R'` contains
 `ψ(x) - 1` for all `x : R`, then it contains `gaussSum χ ψ` (for `χ ≠ 1`).
 The concrete instantiation `I = P, ψ_q(x) - 1 = (ζ_q^{Tr(x)} - 1) ∈ P`
-is the content of a later subticket since it requires concrete cyclotomic
-extension scaffolding.
+requires concrete cyclotomic extension input.
 -/
 
 /-- **Algebraic helper for the concrete instantiation of REF-18c2c2.**
@@ -100,8 +97,6 @@ theorem pow_sub_one_mem_of_sub_one_mem
   obtain ⟨c, hc⟩ := sub_one_dvd_pow_sub_one x n
   rw [hc]
   exact Ideal.mul_mem_right _ _ h
-
-
 
 /-!
 ### Galois orbit of `g(χ_q)` (REF-18c2c3 — abstract form)
@@ -122,11 +117,6 @@ trace formula `ψ_q(x) = ζ_q^{Tr(x)}` and is deferred to REF-18c2c4
 together with the prime-ideal factorisation work.
 -/
 
-
-
-
-
-
 /-- Generic lemma: if `y` is integral over `ℤ` and `x ∈ Subring.closure {y}`,
 then `x` is integral over `ℤ`. The integral closure is itself a subring,
 containing `y`, hence contains `Subring.closure {y}`. -/
@@ -145,8 +135,6 @@ private theorem isIntegral_of_mem_closure_singleton
   · exact fun _ _ ha => ha.neg
   · exact fun _ _ _ _ ha hb => ha.mul hb
 
-
-
 /-!
 ### Stickelberger weight
 
@@ -157,11 +145,6 @@ of the residue Gauss sum. The full Stickelberger formula combines these
 weights over all conjugates.
 -/
 
-
-
-
-
-
 /-!
 ### `p`-th-power Gauss-sum norm, ideal form
 
@@ -170,8 +153,6 @@ to the `p`-th power, combined with `χ_q(-1)^p = 1`, gives an "ideal-form"
 norm: `g(χ_q)^p · g(χ_q^{p-1})^p = (#k)^p`. This is the integer-level
 divisibility precursor to the prime-ideal-level Stickelberger formula.
 -/
-
-
 
 /-!
 ### Abstract consequences for prime ideal factorisation (REF-18c2c4 — Phase A)
@@ -185,9 +166,6 @@ algebraic consequences that follow purely from the existing abstract API.
 These lemmas are useful in the eventual concrete formula and help isolate the
 genuinely "cyclotomic-arithmetic" content from the underlying ring theory.
 -/
-
-
-
 
 /-!
 ### Cyclotomic ramification (REF-18c2c4 — Phase B)
@@ -215,7 +193,6 @@ private theorem _root_.Associated.mem_ideal_of_mem
     b ∈ I := by
   obtain ⟨u, rfl⟩ := h
   exact Ideal.mul_mem_right (u : R) I ha
-
 
 end Furtwaengler
 

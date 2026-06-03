@@ -37,7 +37,6 @@ def lambdaRationalHeightOneSpectrum :
     rw [lambdaRationalPrimeIdeal, ne_eq, Ideal.span_singleton_eq_bot]
     exact_mod_cast (Fact.out : Nat.Prime p).ne_zero
 
-
 /-- The cyclotomic `lambda` prime lies over the rational prime `(p)`. -/
 theorem zetaPrime_liesOver_lambdaRationalPrimeIdeal :
     (zetaPrime p K).LiesOver (lambdaRationalPrimeIdeal p) := by
@@ -53,7 +52,6 @@ theorem zetaPrime_liesOver_lambdaRationalPrimeIdeal :
     IsCyclotomicExtension.Rat.liesOver_span_zeta_sub_one
       (p := p) (k := 0) (K := K) (hζ := hζpow)
   simpa [zetaPrime, lambdaRationalPrimeIdeal] using h
-
 
 end KummerArtinHasse
 end Furtwaengler

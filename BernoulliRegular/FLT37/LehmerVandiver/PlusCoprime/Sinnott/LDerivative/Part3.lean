@@ -15,7 +15,6 @@ namespace Sinnott
 
 variable (p : ℕ) [hp : Fact p.Prime]
 
-
 /-- **Frobenius determinant identity (named Prop)**: the squared
 regulator of the cyclotomic-unit family equals
 `(∏_{χ even nontriv} DirichletLogSum p χ⁻¹)²` in ℂ.
@@ -156,9 +155,6 @@ private theorem mulChar_sum_units_eq_sum_all (ψ : DirichletCharacter ℂ p) :
     rw [ZMod.coe_unitOfCoprime]
     exact ZMod.natCast_zmod_val b
   · intro a _; rfl
-
-
-
 
 /-- **Sin-norm bridge at units**: for a unit `a : (ZMod p)ˣ` in prime `p`,
 `Real.log ‖1 - stdAddChar a‖ = Real.log (2 · |sin(π · a.val / p)|)`.
@@ -344,7 +340,6 @@ theorem prod_mulChar_DLS_eq_trivial_mul_nontrivial :
   rw [dirichletOfQuotientChar_one]
   ring
 
-
 /-- **Quotient eigenvalue at trivial character is `(log p)/2`**:
 combining `two_mul_quotientEigenvalue_trivial_eq_sum_logNorm` (full-group
 sum form) with `sum_units_logNorm_eq_log_p` (the value `log p`) gives the
@@ -355,7 +350,6 @@ theorem quotientEigenvalue_trivial_eq_half_log_p (hp_two : 2 < p) :
   have h := two_mul_quotientEigenvalue_trivial_eq_sum_logNorm p hp_two
   rw [sum_units_logNorm_eq_log_p p] at h
   linear_combination h / 2
-
 
 /-- **Frobenius eigenvalue identification**: for `χ` a Dirichlet character
 mod `p`, the eigenvalue of the cyclotomic-unit convolution matrix at `χ`

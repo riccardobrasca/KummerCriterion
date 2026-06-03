@@ -4,7 +4,10 @@ public import Mathlib.RingTheory.DedekindDomain.Factorization
 public import Mathlib.RingTheory.DedekindDomain.SelmerGroup
 public import Mathlib.RingTheory.DedekindDomain.SInteger
 public import BernoulliRegular.Reflection.Local.Basic
-public import BernoulliRegular.Reflection.SingularKummer.SingularZMod
+public import Mathlib.Algebra.Module.ZMod
+public import Mathlib.Algebra.Module.Equiv.Basic
+public import Mathlib.Algebra.Exact
+public import Mathlib.RingTheory.ClassGroup
 
 /-!
 # Singular Kummer: localization at a height-one prime

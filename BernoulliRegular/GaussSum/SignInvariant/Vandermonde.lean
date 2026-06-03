@@ -23,7 +23,7 @@ section SignInvariant
 variable (p : ℕ) [hp : Fact p.Prime]
 
 /-!
-## Determinant / Vandermonde scaffold for `T023d1g2b`
+## Determinant / Vandermonde reduction for `T023d1g2b`
 
 This section isolates the matrix-level reductions for the determinant route:
 
@@ -62,7 +62,6 @@ noncomputable def fourierCyclotomicDifferenceProduct : ℂ :=
 noncomputable def fourierCyclotomicSingleDifferenceProduct : ℂ :=
   ∏ d ∈ Finset.range (p - 1),
     ((fourierBaseRoot (p := p)) ^ (d + 1) - 1) ^ (p - 1 - d)
-
 
 theorem fourierMatrixFin_apply (i j : Fin p) :
     fourierMatrixFin p i j =
@@ -321,7 +320,6 @@ theorem fourierCyclotomicDifferenceProduct_eq_singleDifferenceProduct :
     exact hp_pred ▸ hP
   simpa [fourierCyclotomicDifferenceProduct, fourierCyclotomicSingleDifferenceProduct] using hcast
 
-
 /-- Mathlib's Vandermonde determinant formula, specialized to the Fourier
 nodes. This is the explicit product that remains to be simplified. -/
 theorem det_fourierVandermonde_eq_fourierVandermondeProduct :
@@ -346,7 +344,6 @@ theorem det_normalizedDft_eq_scale_mul_fourierVandermondeProduct :
   rw [det_normalizedDft_eq_det_normalizedFourierMatrix (p := p),
     det_normalizedFourierMatrix_eq_det_normalizedFourierMatrixFin (p := p)]
   exact det_normalizedFourierMatrixFin_eq_scale_mul_fourierVandermondeProduct (p := p)
-
 
 /-- Packaged determinant form after collapsing the weighted Fourier-root
 contribution to a single exponent. -/

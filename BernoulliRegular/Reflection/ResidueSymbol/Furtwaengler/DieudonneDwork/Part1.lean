@@ -63,8 +63,6 @@ theorem IsRIntegralRat.one (r : ℕ) : IsRIntegralRat r 1 := by
   unfold IsRIntegralRat
   simp
 
-
-
 theorem IsRIntegralRat.add {r : ℕ} {q₁ q₂ : ℚ}
     (h₁ : IsRIntegralRat r q₁) (h₂ : IsRIntegralRat r q₂) :
     IsRIntegralRat r (q₁ + q₂) := by
@@ -91,7 +89,6 @@ theorem IsRIntegralRat.mul {r : ℕ} {q₁ q₂ : ℚ}
   refine Nat.Coprime.coprime_dvd_left (Rat.mul_den_dvd q₁ q₂) ?_
   exact h₁.mul_left h₂
 
-
 namespace IsRIntegralRat
 
 /-! ### Residues of `r`-integral rationals -/
@@ -110,8 +107,6 @@ theorem toZMod_zero (r : ℕ) : toZMod (r := r) 0 (IsRIntegralRat.zero r) = 0 :=
 @[simp]
 theorem toZMod_one (r : ℕ) : toZMod (r := r) 1 (IsRIntegralRat.one r) = 1 := by
   simp [toZMod]
-
-
 
 theorem isUnit_den_zmod {r : ℕ} (q : ℚ) (h : IsRIntegralRat r q) :
     IsUnit (q.den : ZMod r) :=
@@ -315,7 +310,6 @@ A power series `F ∈ ℚ[[T]]` is `r`-integral if every coefficient `[T^n] F` i
 def IsRIntegralPS (r : ℕ) (F : PowerSeries ℚ) : Prop :=
   ∀ n : ℕ, IsRIntegralRat r ((PowerSeries.coeff (R := ℚ) n) F)
 
-
 theorem IsRIntegralPS.one (r : ℕ) : IsRIntegralPS r 1 := fun n => by
   rw [PowerSeries.coeff_one]
   by_cases h : n = 0
@@ -460,9 +454,7 @@ theorem IsRIntegralPS.substInv_of_constantCoeff_zero_coeff_one
         simpa [PowerSeries.substInv, PowerSeries.substInvFun, hP1, B] using
           (hPB (m + 2)).neg
 
-
 namespace IsRMultipleIntegralPS
-
 
 theorem coeff_mul_left_multiple_pos_right_integral_lt {r n : ℕ} {F G : PowerSeries ℚ}
     (hF0 : (PowerSeries.coeff (R := ℚ) 0) F = 0)
@@ -648,7 +640,6 @@ theorem mapTo_eq_of_eq {r : ℕ} {A : Type*} [CommSemiring A]
     hF.mapTo φ = hG.mapTo φ := by
   subst h
   exact mapTo_congr_proof φ hF hG
-
 
 @[simp]
 theorem mapTo_one {r : ℕ} {A : Type*} [CommSemiring A]

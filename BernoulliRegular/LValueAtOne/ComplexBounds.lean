@@ -21,7 +21,6 @@ section LValueAtOne
 
 variable (p : ℕ) [hp : Fact p.Prime]
 
-
 /-- For a nonzero residue `a : ZMod p`, the standard real representative lies
 strictly between `0` and `1` after dividing by `p`. -/
 lemma zmod_val_div_prime_mem_Ioo {a : ZMod p} (ha : a ≠ 0) :
@@ -34,8 +33,6 @@ lemma zmod_val_div_prime_mem_Ioo {a : ZMod p} (ha : a ≠ 0) :
   refine Set.mem_Ioo.mpr ⟨?_, ?_⟩
   · exact div_pos (Nat.cast_pos.mpr hval_pos) (Nat.cast_pos.mpr hp_pos)
   · exact (div_lt_one (Nat.cast_pos.mpr hp_pos)).2 <| Nat.cast_lt.mpr (ZMod.val_lt a)
-
-
 
 /-- Rewrite `sinZeta` at `ZMod.toAddCircle a` using the standard real
 representative `a.val / p`. -/

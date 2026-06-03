@@ -5,7 +5,6 @@ public import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
 import Mathlib.RingTheory.Ideal.GoingUp
 public import BernoulliRegular.HMinus.KplusLocalCharacters
 
-
 /-!
 # `K⁺` prime arithmetic above `ℓ ≠ p` (T023b2a2)
 
@@ -71,7 +70,6 @@ lemma mem_primesOverFinsetPlus_iff {ℓ : ℕ} [Fact ℓ.Prime] {P : Ideal (𝓞
     exact_mod_cast (Fact.out : ℓ.Prime).ne_zero
   exact IsDedekindDomain.mem_primesOverFinset_iff hne (𝓞 (K⁺))
 
-
 lemma under_mem_primesOverFinsetPlus {ℓ : ℕ} [Fact ℓ.Prime] {P : Ideal (𝓞 K)}
     (hP : P ∈ primesOverFinset K ℓ) :
     P.under (𝓞 (K⁺)) ∈ primesOverFinsetPlus (K := K) ℓ := by
@@ -82,9 +80,6 @@ lemma under_mem_primesOverFinsetPlus {ℓ : ℕ} [Fact ℓ.Prime] {P : Ideal (�
   refine ⟨Ideal.IsPrime.under (𝓞 (K⁺)) P, ?_⟩
   rw [Ideal.liesOver_iff, Ideal.under_under]
   exact (Ideal.liesOver_iff _ _).1 hP_over.2
-
-
-
 
 variable [IsCMField K]
 
@@ -234,7 +229,6 @@ lemma primesOverFinsetContractionToPlus_fiber_eq_singleton_or_pair {ℓ : ℕ} [
         exact hP_fiber
       · rw [hQconj]
         exact hPconj_fiber
-
 
 noncomputable def complexConjRat (hp_odd : p ≠ 2) : Gal(K/ℚ) := by
   letI : IsCMField K := isCMField_of_cyclotomic (p := p) (K := K) hp_odd
@@ -671,7 +665,6 @@ lemma ncard_primesOverPlus_eq_localPrimeCountPlus (hp_odd : p ≠ 2)
     omega
   exact Nat.eq_of_mul_eq_mul_right hfd_pos (by simpa [Nat.mul_comm] using hmul)
 
-
 lemma dedekindLocalFactor_eq_pow_localResidueDegreePlus (hp_odd : p ≠ 2)
     {ℓ : ℕ} [Fact ℓ.Prime] (hℓp : ℓ ≠ p) {s : ℂ} :
     dedekindLocalFactor K⁺ ℓ s =
@@ -804,9 +797,6 @@ lemma primesOverPlus_inertiaDeg_eq_one_at_p (PPlus : Ideal (𝓞 (K⁺)))
     rw [primesOverPlus_at_p_eq_singleton_zetaPrimePlus (p := p) (K := K)] at hPPlus
     simpa using hPPlus
   simpa [hPPlus_eq] using zetaPrimePlus_inertiaDeg_eq_one_at_p (p := p) (K := K)
-
-
-
 
 lemma dedekindLocalFactorPlus_at_p {s : ℂ} :
     dedekindLocalFactor K⁺ p s = 1 - (p : ℂ) ^ (-s) := by

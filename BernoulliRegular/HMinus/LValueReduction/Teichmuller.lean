@@ -34,8 +34,6 @@ lemma prime_sub_one_ne_zero : p - 1 ≠ 0 :=
 complex and `ℚ_[p]` odd-character families. -/
 abbrev OddCharacterIndex := {j : Fin (p - 1) // Odd (j : ℕ)}
 
-
-
 omit hp in
 theorem oddCharacterIndex_ne_two (j : OddCharacterIndex p) : p ≠ 2 := by
   intro hp_two
@@ -657,7 +655,6 @@ theorem qpadicOddBernoulliProduct_eq_eval_oddBernoulliProductPoly :
           (oddBernoulliProductPoly (p := p)) := by
   rw [(oddBernoulliProduct_eq_commonKernelEvaluations (p := p)).2,
     eval_oddBernoulliProductPoly (p := p) (R := ℚ_[p]) (x := qpadicGeneratorRoot p)]
-
 
 end Teichmuller
 
