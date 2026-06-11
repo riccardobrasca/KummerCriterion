@@ -1,5 +1,6 @@
 module
 
+public import KummerCriterion.PrimitiveRootUnits
 public import KummerCriterion.CyclotomicUnits.KummerLogTrace
 public import KummerCriterion.CyclotomicUnits.NormalizedUnits
 import KummerCriterion.CyclotomicUnits.DworkParameter.Part17

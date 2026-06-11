@@ -1,5 +1,6 @@
 module
 
+public import KummerCriterion.PrimitiveRootUnits
 public import KummerCriterion.TotallyRealSubfield.ClassGroup
 public import KummerCriterion.TotallyRealSubfield.ZetaPrime
 public import Mathlib.NumberTheory.NumberField.DedekindZeta
@@ -47,10 +48,9 @@ theorem h_formula :
     refine mul_pos ?_ ?_
     · exact_mod_cast Units.torsionOrder_pos K
     · exact Real.sqrt_pos_of_pos (abs_pos.mpr (Int.cast_ne_zero.mpr (discr_ne_zero K)))
-  have hB : B ≠ 0 := hB_pos.ne'
   calc
     (h K : ℝ) = ((A * (h K : ℝ)) / B) * (B / A) := by
-      field_simp [hA, hB]
+      field_simp [hA, hB_pos.ne']
     _ = NumberField.dedekindZeta_residue K * (B / A) := by
           dsimp [A, B]
           rw [NumberField.dedekindZeta_residue_def, KummerCriterion.h, NumberField.classNumber]
@@ -85,10 +85,9 @@ theorem hPlus_formula :
     refine mul_pos ?_ ?_
     · exact_mod_cast Units.torsionOrder_pos L
     · exact Real.sqrt_pos_of_pos (abs_pos.mpr (Int.cast_ne_zero.mpr (discr_ne_zero L)))
-  have hB : B ≠ 0 := hB_pos.ne'
   calc
     (hPlus K : ℝ) = ((A * (hPlus K : ℝ)) / B) * (B / A) := by
-      field_simp [hA, hB]
+      field_simp [hA, hB_pos.ne']
     _ = NumberField.dedekindZeta_residue L * (B / A) := by
           dsimp [A, B, L]
           rw [NumberField.dedekindZeta_residue_def, KummerCriterion.hPlus, NumberField.classNumber]

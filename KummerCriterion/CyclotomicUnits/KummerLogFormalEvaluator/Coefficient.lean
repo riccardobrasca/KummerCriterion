@@ -334,11 +334,8 @@ theorem valuedLambdaQuotientDworkCoeffModP_unscaledNormalizedFiniteLog_even_eq_f
     rw [
       valuedLambdaQuotientDworkCoeffModP_factorPow_normalizedHomogeneousDegreeSum_dworkParameterApprox_of_lt
         (p := p) (K := K) i hdlt]
-    have hne_fin : (⟨d, hdlt⟩ : Fin (p - 1)) ≠ i := by
-      intro h
-      apply hde
-      dsimp [e]
-      exact congrArg Fin.val h
+    have hne_fin : (⟨d, hdlt⟩ : Fin (p - 1)) ≠ i :=
+      fun h => hde (congrArg Fin.val h)
     rw [Pi.single_eq_of_ne hne_fin.symm]
     simp
   · intro hnot

@@ -174,8 +174,7 @@ theorem odd_weightedGaussProduct_eq_scalar_pow_mul (hp_odd' : p ≠ 2) :
         Finset.prod (oddCharacters (p := p))
           (fun χ => gaussSum χ (ZMod.stdAddChar (N := p))) := by
   let C : ℂ := ((((Real.pi : ℝ) : ℂ) * Complex.I) / (p : ℂ))
-  have hp_ne : (p : ℂ) ≠ 0 := by
-    exact_mod_cast hp.out.ne_zero
+  have hp_ne : (p : ℂ) ≠ 0 := Nat.cast_ne_zero.mpr hp.out.ne_zero
   calc
     Finset.prod (oddCharacters (p := p)) (fun χ =>
         ((((Real.pi : ℝ) : ℂ) * Complex.I) *

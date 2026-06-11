@@ -1,5 +1,6 @@
 module
 
+public import KummerCriterion.PrimitiveRootUnits
 public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
 import KummerCriterion.TotallyRealSubfield.Conjugation
 
@@ -56,10 +57,9 @@ theorem generator_unit_eq_zeta_pow [IsCMField K]
     have hb_not_mem : b ∉ P := by
       simpa [P, π, zetaPrime, Ideal.mem_span_singleton] using hnotdvd
     have hu_odd : u = (-1 : (𝓞 K)ˣ) * hζ.unit' ^ n := by
-      have hneg_odd : (-1 : (𝓞 K)ˣ) ^ k = -1 := Odd.neg_one_pow hk_odd
       calc
         u = (-1 : (𝓞 K)ˣ) ^ k * hζ.unit' ^ n := huk
-        _ = (-1 : (𝓞 K)ˣ) * hζ.unit' ^ n := by rw [hneg_odd]
+        _ = (-1 : (𝓞 K)ˣ) * hζ.unit' ^ n := by rw [Odd.neg_one_pow hk_odd]
     let γ : (𝓞 K)ˣ := (-1 : (𝓞 K)ˣ) * hζ.unit' ^ (p - 1)
     have hc_pi : ringOfIntegersComplexConj K π = (γ : (𝓞 K)ˣ) * π := by
       have hc_pi' : ringOfIntegersComplexConj K π = -hζ.toInteger ^ (p - 1) * π := by

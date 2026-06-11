@@ -1,5 +1,6 @@
 module
 
+public import KummerCriterion.PrimitiveRootUnits
 public import KummerCriterion.CyclotomicUnits.Vandermonde
 public import KummerCriterion.CyclotomicUnits.DworkParameter.Part15
 public import KummerCriterion.CyclotomicUnits.DworkParameter.Part16
@@ -52,7 +53,8 @@ variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 field. -/
 noncomputable def cyclotomicComplexConjGal
     (hp_gt_two : 2 < p) : Gal(K / ℚ) := by
-  haveI : NumberField.IsCMField K := IsCyclotomicExtension.IsCMField K hp_gt_two
+  haveI : NumberField.IsCMField K :=
+    IsCyclotomicExtension.Rat.isCMField (S := {p}) K ⟨p, rfl, hp_gt_two⟩
   exact
     { (NumberField.IsCMField.complexConj K).toRingEquiv with
       commutes' := fun q =>
@@ -65,7 +67,7 @@ theorem cyclotomicGalEquivZMod_complexConjGal_eq_neg_one
     cyclotomicGalEquivZMod (p := p) K
         (cyclotomicComplexConjGal (p := p) K hp_gt_two) = -1 := by
   haveI : NumberField.IsCMField K :=
-    IsCyclotomicExtension.IsCMField K hp_gt_two
+    IsCyclotomicExtension.Rat.isCMField (S := {p}) K ⟨p, rfl, hp_gt_two⟩
   let c : Gal(K / ℚ) := cyclotomicComplexConjGal (p := p) K hp_gt_two
   have hζ := IsCyclotomicExtension.zeta_spec p ℚ K
   have hzeta_torsion : hζ.unit' ∈ NumberField.Units.torsion K :=

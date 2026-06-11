@@ -194,13 +194,8 @@ theorem toZMod_finset_sum {r : ℕ} {ι : Type*} (s : Finset ι)
     have hfa : IsRIntegralRat r (f a) := hf a (by simp [ha])
     have hfs : ∀ i ∈ s, IsRIntegralRat r (f i) := fun i hi =>
       hf i (Finset.mem_insert_of_mem hi)
-    have hsum_s : IsRIntegralRat r (Finset.sum s f) := by
-      apply Finset.sum_induction
-      · intro _ _ ha hb
-        exact ha.add hb
-      · exact IsRIntegralRat.zero r
-      · intro i hi
-        exact hfs i hi
+    have hsum_s : IsRIntegralRat r (Finset.sum s f) :=
+      Finset.sum_induction _ _ (fun _ _ ha hb => ha.add hb) (IsRIntegralRat.zero r) hfs
     calc
       toZMod (Finset.sum (insert a s) f) hsum
           = toZMod (f a + Finset.sum s f) (hfa.add hsum_s) := by
@@ -316,11 +311,8 @@ theorem IsRIntegralPS.mul {r : ℕ} {F G : PowerSeries ℚ}
     (hF : IsRIntegralPS r F) (hG : IsRIntegralPS r G) :
     IsRIntegralPS r (F * G) := fun n => by
   rw [PowerSeries.coeff_mul]
-  apply Finset.sum_induction
-  · intro a b ha hb; exact ha.add hb
-  · exact IsRIntegralRat.zero r
-  · intro ⟨i, j⟩ _
-    exact (hF i).mul (hG j)
+  exact Finset.sum_induction _ _ (fun _ _ ha hb => ha.add hb) (IsRIntegralRat.zero r)
+    fun ⟨i, j⟩ _ => (hF i).mul (hG j)
 
 theorem IsRIntegralPS.pow {r : ℕ} {F : PowerSeries ℚ} (hF : IsRIntegralPS r F)
     (k : ℕ) : IsRIntegralPS r (F ^ k) := by
@@ -359,12 +351,8 @@ theorem IsRIntegralPS.finset_sum {r : ℕ} {ι : Type*} (s : Finset ι)
     IsRIntegralPS r (∑ i ∈ s, F i) := fun n => by
   classical
   rw [map_sum]
-  apply Finset.sum_induction
-  · intro a b ha hb
-    exact ha.add hb
-  · exact IsRIntegralRat.zero r
-  · intro i hi
-    exact hF i hi n
+  exact Finset.sum_induction _ _ (fun _ _ ha hb => ha.add hb) (IsRIntegralRat.zero r)
+    fun i hi => hF i hi n
 
 theorem IsRIntegralPS.subst {r : ℕ} {F G : PowerSeries ℚ}
     (hF : IsRIntegralPS r F) (hG : IsRIntegralPS r G)
@@ -382,12 +370,8 @@ theorem IsRIntegralPS.subst {r : ℕ} {F G : PowerSeries ℚ}
     simpa [term, smul_eq_mul] using (hF d).mul ((hG.pow d) n)
   have hfinite := PowerSeries.coeff_subst_finite' hsubst F n
   rw [finsum_eq_sum _ hfinite]
-  apply Finset.sum_induction
-  · intro a b ha hb
-    exact ha.add hb
-  · exact IsRIntegralRat.zero r
-  · intro d _
-    exact hterm d
+  exact Finset.sum_induction _ _ (fun _ _ ha hb => ha.add hb) (IsRIntegralRat.zero r)
+    fun d _ => hterm d
 
 theorem IsRIntegralPS.substInv_of_constantCoeff_zero_coeff_one
     {r : ℕ} {P : PowerSeries ℚ}

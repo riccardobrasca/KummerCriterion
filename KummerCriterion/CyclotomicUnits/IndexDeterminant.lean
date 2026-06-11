@@ -129,15 +129,7 @@ noncomputable def kplusPlaceStarEquivNonidentityShifted
   have h_w₀ : e NumberField.Units.dirichletUnitTheorem.w₀ = 1 :=
     LehmerVandiver.Sinnott.KplusInfinitePlaceEquivCyclotomicEvenDelta_shifted_apply_w₀
       (p := p) K hp_two
-  exact e.subtypeEquiv (fun v => by
-    constructor
-    · intro hv h_eq
-      apply hv
-      rw [← h_w₀] at h_eq
-      exact e.injective h_eq
-    · intro hv h_eq
-      apply hv
-      rw [h_eq, h_w₀])
+  exact e.subtypeEquiv fun v => not_congr (by rw [← h_w₀]; exact e.apply_eq_iff_eq.symm)
 
 @[simp]
 theorem kplusPlaceStarEquivNonidentityShifted_apply

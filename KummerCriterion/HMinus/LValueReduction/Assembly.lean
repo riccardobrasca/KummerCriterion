@@ -139,12 +139,12 @@ theorem hMinus_formula_of_residue_and_hPlus_and_gauss
     ((hMinus K : ℕ) : ℂ) =
       (2 * p : ℂ) *
         Finset.prod (oddCharacters (p := p)) (fun χ =>
-          (-(1 / 2 : ℂ)) * BernoulliGen χ⁻¹ 1) := by
-  apply hMinus_formula_of_LValue_formula_and_gauss_product (p := p) (K := K)
+          (-(1 / 2 : ℂ)) * BernoulliGen χ⁻¹ 1) :=
+  hMinus_formula_of_LValue_formula_and_gauss_product (p := p) (K := K)
     (coefficient := coefficient)
-  · exact hMinus_LValue_formula_of_residue_and_hPlus
-      (p := p) (K := K) hp_odd' (coefficient := coefficient) hh_formula hres hplus
-  · exact hgauss
+    (hMinus_LValue_formula_of_residue_and_hPlus
+      (p := p) (K := K) hp_odd' (coefficient := coefficient) hh_formula hres hplus)
+    hgauss
 
 end Assembly
 

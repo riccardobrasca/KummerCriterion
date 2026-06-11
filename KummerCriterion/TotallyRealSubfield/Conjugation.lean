@@ -77,8 +77,8 @@ include hp_odd in
 theorem antisymmetric_unit_is_root_of_unity [IsCMField K]
     {hζ : IsPrimitiveRoot (IsCyclotomicExtension.zeta p ℚ K) p}
     (u : (𝓞 K)ˣ) (_hu : unitsComplexConj K u * u = 1) :
-    ∃ m : ℕ, u * (unitsComplexConj K u)⁻¹ = (hζ.unit' ^ m) ^ 2 := by
-  exact unit_inv_conj_is_root_of_unity (hζ := hζ) u
+    ∃ m : ℕ, u * (unitsComplexConj K u)⁻¹ = (hζ.unit' ^ m) ^ 2 :=
+  unit_inv_conj_is_root_of_unity (hζ := hζ) u
     (lt_of_le_of_ne hp.1.two_le (Ne.symm hp_odd))
 
 include hp_odd in
@@ -114,7 +114,11 @@ theorem antisymmetric_unit_eq_neg_one_pow_mul_zeta_pow [IsCMField K]
   refine ⟨n, k, ?_⟩
   apply Units.ext
   apply RingOfIntegers.ext
-  simpa using hk
+  have hunit_coe : ((((hζ.unit' : (𝓞 K)ˣ) : 𝓞 K) : K)) =
+      IsCyclotomicExtension.zeta p ℚ K := by
+    change (hζ.toInteger : K) = IsCyclotomicExtension.zeta p ℚ K
+    exact hζ.coe_toInteger
+  simpa [hunit_coe] using hk
 
 /-- Complex conjugation sends `ζ^m` to `ζ^{-m}`. -/
 theorem conj_zeta_pow [IsCMField K]

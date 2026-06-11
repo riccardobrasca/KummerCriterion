@@ -174,10 +174,9 @@ theorem CPlus_le_cyclotomicUnitIndexSubgroup
     exact Subgroup.mem_sup_right <| neg_one_mem_torsion
   · rcases hx with ⟨i, rfl⟩
     rw [CPlusGenerator_eq_cyclotomicUnitFamilyKplus (p := p) (K := K) hp_three i]
-    apply Subgroup.mem_sup_left
-    apply Subgroup.subset_closure
-    rw [range_cyclotomicUnitFamilyKplusFinRank_eq (p := p) (K := K) hp_odd hp_three]
-    exact Set.mem_range_self i
+    exact Subgroup.mem_sup_left <| Subgroup.subset_closure <|
+      range_cyclotomicUnitFamilyKplusFinRank_eq (p := p) (K := K) hp_odd hp_three ▸
+        Set.mem_range_self i
 
 theorem cyclotomicUnitIndexSubgroup_le_CPlus
     (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) :

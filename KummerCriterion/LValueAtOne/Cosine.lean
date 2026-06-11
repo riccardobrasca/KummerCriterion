@@ -169,8 +169,8 @@ lemma norm_sum_range_shifted_cos_term_le {x s : ℝ} (hx₀ : 0 < x) (hx₁ : x 
               have hnorm : ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ ≤ 2 := by
                 calc
                   ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖
-                      ≤ ‖(1 : ℂ)‖ + ‖Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
-                        exact norm_sub_le _ _
+                      ≤ ‖(1 : ℂ)‖ + ‖Complex.exp ((2 * Real.pi * x) * Complex.I)‖ :=
+                        norm_sub_le _ _
                   _ = 1 + 1 := by
                         rw [norm_one]
                         simpa [mul_assoc] using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * x)
@@ -296,8 +296,8 @@ lemma exists_tendsto_sum_range_cos_div_nat {x : ℝ} (hx₀ : 0 < x) (hx₁ : x 
               have hnorm : ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ ≤ 2 := by
                 calc
                   ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖
-                      ≤ ‖(1 : ℂ)‖ + ‖Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
-                        exact norm_sub_le _ _
+                      ≤ ‖(1 : ℂ)‖ + ‖Complex.exp ((2 * Real.pi * x) * Complex.I)‖ :=
+                        norm_sub_le _ _
                   _ = 1 + 1 := by
                         rw [norm_one]
                         simpa [mul_assoc] using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * x)

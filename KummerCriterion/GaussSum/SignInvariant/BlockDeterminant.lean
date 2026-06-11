@@ -42,11 +42,9 @@ def dirichletCharacterUnitMonoidHom (χ : DirichletCharacter ℂ p) : (ZMod p)ˣ
   (Units.coeHom ℂ).comp χ.toUnitHom
 
 theorem dirichletCharacterUnitMonoidHom_injective :
-    Function.Injective (dirichletCharacterUnitMonoidHom (p := p)) := by
-  intro χ ψ hχψ
-  apply (DirichletCharacter.toUnitHom_inj (χ := χ) (ψ := ψ)).mp
-  ext u
-  exact DFunLike.congr_fun hχψ u
+    Function.Injective (dirichletCharacterUnitMonoidHom (p := p)) := fun χ ψ hχψ =>
+  (DirichletCharacter.toUnitHom_inj χ ψ).mp
+    (MonoidHom.ext fun u => Units.ext (DFunLike.congr_fun hχψ u))
 
 /-- Dirichlet characters are linearly independent on the unit group. -/
 theorem linearIndependent_dirichletCharactersOnUnits :

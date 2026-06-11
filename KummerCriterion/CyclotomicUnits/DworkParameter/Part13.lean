@@ -104,7 +104,7 @@ theorem rationalPadicPrimeIdeal_pow_isOpen (n : ℕ) :
   let F : Type := (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ
   let R₀ : Type := RationalPadicIntegerRing p
   let r : MonoidWithZeroHom.ValueGroup₀
-      (Valued.v : Valuation F (WithZero (Multiplicative ℤ))) :=
+      (MonoidWithZeroHom.ofClass (Valued.v : Valuation F (WithZero (Multiplicative ℤ)))) :=
     Valued.v.restrict (((p : R₀) ^ n : R₀) : F)
   have hr : r ≠ 0 := by
     dsimp [r, F, R₀]
@@ -297,7 +297,8 @@ theorem rationalPadicPrimeIdeal_pow_nhds_zero
   have hp_lt :
       Valued.v.restrict (((p : R₀) : F)) <
         (1 : MonoidWithZeroHom.ValueGroup₀
-          (Valued.v : Valuation F (WithZero (Multiplicative ℤ)))) :=
+          (MonoidWithZeroHom.ofClass
+            (Valued.v : Valuation F (WithZero (Multiplicative ℤ))))) :=
     (Valuation.restrict_lt_one_iff
       (v := (Valued.v : Valuation F (WithZero (Multiplicative ℤ))))).mpr
       (rationalPadicInteger_natCast_prime_valuation_lt_one (p := p))
@@ -325,7 +326,8 @@ theorem rationalPadicPrimeIdeal_pow_nhds_zero
       Valued.v.restrict (((p : R₀) : F)) ^ n
     exact map_pow (Valued.v.restrict : Valuation F
       (MonoidWithZeroHom.ValueGroup₀
-        (Valued.v : Valuation F (WithZero (Multiplicative ℤ)))))
+        (MonoidWithZeroHom.ofClass
+          (Valued.v : Valuation F (WithZero (Multiplicative ℤ))))))
       (((p : R₀) : F)) n
   rw [hpown] at hxvr
   exact lt_of_le_of_lt hxvr hn

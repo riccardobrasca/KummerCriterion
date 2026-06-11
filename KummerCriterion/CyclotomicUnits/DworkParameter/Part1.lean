@@ -343,13 +343,9 @@ theorem dworkComplete_eq_zero_of_evalₐ_natCast_p_nsmul_eq_zero
     {x : DworkCompleteIntegerRing p K}
     (hx : ∀ N : ℕ,
       p • AdicCompletion.evalₐ (lambdaIdeal p K) N x = 0) :
-    x = 0 := by
-  apply dworkComplete_natCast_p_nsmul_eq_zero (p := p) (K := K)
-  apply AdicCompletion.ext_evalₐ
-  intro N
-  change AdicCompletion.evalₐ (lambdaIdeal p K) N (p • x) = 0
-  rw [map_nsmul]
-  exact hx N
+    x = 0 :=
+  dworkComplete_natCast_p_nsmul_eq_zero (p := p) (K := K) <|
+    AdicCompletion.ext_evalₐ fun N => by simpa [map_nsmul] using hx N
 
 /-- The completed lambda ideal on the constructed Dwork integer ring. -/
 abbrev dworkCompleteLambdaIdeal : Ideal (DworkCompleteIntegerRing p K) :=

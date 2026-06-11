@@ -151,9 +151,8 @@ theorem complexCharacterMulEquivUnits_quadraticCharComplex (hp₂ : p ≠ 2) :
     complexCharacterMulEquivUnits (p := p) (quadraticCharComplex p) = (-1 : (ZMod p)ˣ) := by
   rcases selfInverse_character_image_units_eq_one_or_neg_one (p := p)
       (χ := quadraticCharComplex p) (quadraticCharComplex_inv (p := p)).symm with hχ | hχ
-  · exfalso
-    apply quadraticCharComplex_ne_one (p := p) hp₂
-    exact (complexCharacterMulEquivUnits (p := p)).injective (by simpa using hχ)
+  · exact absurd ((complexCharacterMulEquivUnits (p := p)).injective (by simpa using hχ))
+      (quadraticCharComplex_ne_one (p := p) hp₂)
   · exact hχ
 
 /-- A self-inverse complex Dirichlet character is either trivial or quadratic. -/

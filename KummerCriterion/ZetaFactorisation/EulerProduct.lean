@@ -355,10 +355,9 @@ lemma idealNormMultiplicity_prime_pow_mul_localResidueDegree_eq_card_sym
     apply Subtype.ext
     apply Multiset.map_injective Subtype.val_injective
     simpa [hofSym_nfactors s] using htoSym_map_val (ofSym s)
-  let e : β ≃ Sym α n :=
-    ⟨toSym, ofSym, hleft, hright⟩
   unfold idealNormMultiplicity
-  simpa [β, α, hd, Nat.card_eq_fintype_card] using Nat.card_congr e
+  simpa [β, α, hd, Nat.card_eq_fintype_card] using
+    Nat.card_congr (⟨toSym, ofSym, hleft, hright⟩ : β ≃ Sym α n)
 
 lemma dedekind_prime_power_series_eq_localFactor_at_p {s : ℂ} (hs : 1 < s.re) :
     (∑' k : ℕ, (idealNormMultiplicity K (p ^ k) : ℂ) *

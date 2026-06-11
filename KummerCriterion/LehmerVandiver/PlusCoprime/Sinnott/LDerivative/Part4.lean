@@ -1,5 +1,6 @@
 module
 
+public import KummerCriterion.PrimitiveRootUnits
 public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part3
 import KummerCriterion.HMinus.KplusLocalCharacters
 import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part2

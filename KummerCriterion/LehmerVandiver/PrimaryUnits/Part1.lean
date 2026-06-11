@@ -1,5 +1,6 @@
 module
 
+public import KummerCriterion.PrimitiveRootUnits
 public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits

@@ -148,12 +148,11 @@ theorem rationalToLambdaCompletionRingHom_mem_integers
     (x : RationalPadicIntegerRing p) :
     rationalToLambdaCompletionRingHom (p := p) (K := K)
         (x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) ∈
-      (lambdaHeightOneSpectrum p K).adicCompletionIntegers K := by
-  rw [IsDedekindDomain.HeightOneSpectrum.mem_adicCompletionIntegers]
-  apply (rationalToLambdaCompletionRingHom_le_one_iff (p := p) (K := K)
-    (x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ)).mpr
-  rw [← IsDedekindDomain.HeightOneSpectrum.mem_adicCompletionIntegers]
-  exact x.property
+      (lambdaHeightOneSpectrum p K).adicCompletionIntegers K :=
+  (IsDedekindDomain.HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).mpr <|
+    (rationalToLambdaCompletionRingHom_le_one_iff (p := p) (K := K)
+      (x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ)).mpr <|
+    (IsDedekindDomain.HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).mp x.property
 
 /-- Integral rational-completion coefficients as elements of the lambda-valued
 integer ring. -/

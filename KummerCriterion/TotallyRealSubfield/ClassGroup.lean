@@ -1,5 +1,6 @@
 module
 
+public import KummerCriterion.PrimitiveRootUnits
 public import Mathlib.RingTheory.ClassGroup.ExtendedHom
 public import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
 import KummerCriterion.TotallyRealSubfield.Conjugation

@@ -1,5 +1,6 @@
 module
 
+public import KummerCriterion.PrimitiveRootUnits
 public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part1
 import KummerCriterion.TotallyRealSubfield.ZetaPrime
 import Mathlib.Analysis.SpecialFunctions.Bernstein

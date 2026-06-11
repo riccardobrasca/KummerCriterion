@@ -214,11 +214,11 @@ theorem bernoulli_div_sModEq_of_modEq
   have hz_m_Q : (Am_Q - 1) * Bm_Q - mQ * Am1_Q * Sm_Q = (p : ℚ_[p]) * (z_m : ℚ_[p]) := by
     have := hz_m
     rw [hAm_Q_def, hAm1_Q_def, hAm_def, hAm1_def, hBm_Q_def, hmQ_def]
-    rw [h_Sm_cast] at this; convert this using 2
+    rw [h_Sm_cast] at this; convert! this using 2
   have hz_n_Q : (An_Q - 1) * Bn_Q - nQ * An1_Q * Sn_Q = (p : ℚ_[p]) * (z_n : ℚ_[p]) := by
     have := hz_n
     rw [hAn_Q_def, hAn1_Q_def, hAn_def, hAn1_def, hBn_Q_def, hnQ_def]
-    rw [h_Sn_cast] at this; convert this using 2
+    rw [h_Sn_cast] at this; convert! this using 2
   have hE_eq_Q : (An_Q - 1) * Am1_Q * Sm_Q - (Am_Q - 1) * An1_Q * Sn_Q =
       (p : ℚ_[p]) * ((E : ℤ_[p]) : ℚ_[p]) := by
     have := congrArg (fun x : ℤ_[p] => (x : ℚ_[p])) hE_eq

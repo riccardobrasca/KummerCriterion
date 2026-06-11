@@ -1,5 +1,6 @@
 module
 
+public import KummerCriterion.PrimitiveRootUnits
 public import FltRegular.NumberTheory.Cyclotomic.CyclRat
 public import Mathlib.NumberTheory.NumberField.CMField
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
@@ -30,10 +31,8 @@ variable (p : ℕ) [hp : Fact p.Prime] (hp_odd : p ≠ 2)
 local notation3 "K⁺" => NumberField.maximalRealSubfield K
 
 theorem zeta_toInteger_pow_eq_one :
-    ((zeta_spec p ℚ K).toInteger : 𝓞 K) ^ p = 1 := by
-  apply RingOfIntegers.ext
-  push_cast
-  exact (zeta_spec p ℚ K).pow_eq_one
+    ((zeta_spec p ℚ K).toInteger : 𝓞 K) ^ p = 1 :=
+  (zeta_spec p ℚ K).toInteger_isPrimitiveRoot.pow_eq_one
 
 /-- `ζ^{p-1} · ζ = 1`, i.e. `ζ⁻¹ = ζ^{p-1}`. -/
 theorem zeta_toInteger_pow_pred_mul :
@@ -298,10 +297,8 @@ theorem zetaPrimePlus_map_eq [IsCMField K] :
       FiniteMultiplicity.of_prime_left (zeta_spec p ℚ K).zeta_sub_one_prime'
         ((map_ne_zero_iff _ (FaithfulSMul.algebraMap_injective _ _)).mpr hy0)
     have hge : 1 ≤ multiplicity ((zeta_spec p ℚ K).toInteger - 1 : 𝓞 K)
-        (algebraMap (𝓞 (K⁺)) (𝓞 K) y) := by
-      apply hfin.pow_dvd_iff_le_multiplicity.mp
-      rw [pow_one]
-      exact hy
+        (algebraMap (𝓞 (K⁺)) (𝓞 K) y) :=
+      hfin.pow_dvd_iff_le_multiplicity.mp (by rwa [pow_one])
     have h2le : 2 ≤ multiplicity ((zeta_spec p ℚ K).toInteger - 1 : 𝓞 K)
         (algebraMap (𝓞 (K⁺)) (𝓞 K) y) := by
       rcases heven with ⟨k, hk⟩

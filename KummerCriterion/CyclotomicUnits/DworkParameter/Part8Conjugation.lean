@@ -55,10 +55,10 @@ theorem uniformContinuous_withValCongr_comap
   let w : Valuation K ℤᵐ⁰ := v.comap σ.toRingHom
   obtain ⟨k, hk⟩ :=
     restrict₀_surjective
-      (Valued.v : Valuation (WithVal v) ℤᵐ⁰) γ.1
+      (MonoidWithZeroHom.ofClass (Valued.v : Valuation (WithVal v) ℤᵐ⁰)) γ.1
   let δx : WithVal w := WithVal.toVal w (σ.symm k.ofVal)
   let δ₀ : MonoidWithZeroHom.ValueGroup₀
-      (Valued.v : Valuation (WithVal w) ℤᵐ⁰) :=
+      (MonoidWithZeroHom.ofClass (Valued.v : Valuation (WithVal w) ℤᵐ⁰)) :=
     Valued.v.restrict δx
   have hδ₀_emb :
       MonoidWithZeroHom.ValueGroup₀.embedding δ₀ =
@@ -77,13 +77,14 @@ theorem uniformContinuous_withValCongr_comap
         simp [Valuation.comap_apply]
       _ = MonoidWithZeroHom.ValueGroup₀.embedding
             ((MonoidWithZeroHom.ValueGroup₀.restrict₀
-              (Valued.v : Valuation (WithVal v) ℤᵐ⁰)) k) := by
+              (MonoidWithZeroHom.ofClass (Valued.v : Valuation (WithVal v) ℤᵐ⁰))) k) := by
         rw [MonoidWithZeroHom.ValueGroup₀.embedding_restrict₀]
         exact WithVal.apply_ofVal (v := v) k
       _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := by rw [hk]
   have hδ₀_ne : δ₀ ≠ 0 := by
     rw [← map_ne_zero (MonoidWithZeroHom.ValueGroup₀.embedding
-      (f := (Valued.v : Valuation (WithVal w) ℤᵐ⁰))), hδ₀_emb]
+      (f := MonoidWithZeroHom.ofClass (Valued.v : Valuation (WithVal w) ℤᵐ⁰))),
+      hδ₀_emb]
     exact MonoidWithZeroHom.ValueGroup₀.embedding_unit_ne_zero γ
   refine ⟨Units.mk0 δ₀ hδ₀_ne, ?_⟩
   intro x hx
@@ -115,10 +116,10 @@ theorem uniformContinuous_withValCongr_comap_symm
   let w : Valuation K ℤᵐ⁰ := v.comap σ.toRingHom
   obtain ⟨k, hk⟩ :=
     restrict₀_surjective
-      (Valued.v : Valuation (WithVal w) ℤᵐ⁰) γ.1
+      (MonoidWithZeroHom.ofClass (Valued.v : Valuation (WithVal w) ℤᵐ⁰)) γ.1
   let δx : WithVal v := WithVal.toVal v (σ k.ofVal)
   let δ₀ : MonoidWithZeroHom.ValueGroup₀
-      (Valued.v : Valuation (WithVal v) ℤᵐ⁰) :=
+      (MonoidWithZeroHom.ofClass (Valued.v : Valuation (WithVal v) ℤᵐ⁰)) :=
     Valued.v.restrict δx
   have hδ₀_emb :
       MonoidWithZeroHom.ValueGroup₀.embedding δ₀ =
@@ -133,13 +134,13 @@ theorem uniformContinuous_withValCongr_comap_symm
       _ = (v.comap σ.toRingHom) k.ofVal := rfl
       _ = MonoidWithZeroHom.ValueGroup₀.embedding
             ((MonoidWithZeroHom.ValueGroup₀.restrict₀
-              (Valued.v : Valuation (WithVal w) ℤᵐ⁰)) k) := by
+              (MonoidWithZeroHom.ofClass (Valued.v : Valuation (WithVal w) ℤᵐ⁰))) k) := by
         rw [MonoidWithZeroHom.ValueGroup₀.embedding_restrict₀]
         exact WithVal.apply_ofVal (v := w) k
       _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := by rw [hk]
   have hδ₀_ne : δ₀ ≠ 0 := by
     rw [← map_ne_zero (MonoidWithZeroHom.ValueGroup₀.embedding
-      (f := (Valued.v : Valuation (WithVal v) ℤᵐ⁰))), hδ₀_emb]
+      (f := MonoidWithZeroHom.ofClass (Valued.v : Valuation (WithVal v) ℤᵐ⁰))), hδ₀_emb]
     exact MonoidWithZeroHom.ValueGroup₀.embedding_unit_ne_zero γ
   refine ⟨Units.mk0 δ₀ hδ₀_ne, ?_⟩
   intro x hx
