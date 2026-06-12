@@ -70,6 +70,7 @@ import KummerCriterion.HMinus.LValueReduction.GaussGoal
 import KummerCriterion.HMinus.LValueReduction.GaussProduct
 import KummerCriterion.HMinus.LValueReduction.LValues
 import KummerCriterion.HMinus.PadicCorollaries
+import KummerCriterion.IrregularPrimes
 import KummerCriterion.KummerCongruence.BernoulliGeneralized
 import KummerCriterion.KummerCongruence.Bridge
 import KummerCriterion.KummerCongruence.Characters

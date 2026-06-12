@@ -65,3 +65,23 @@ theorem fermatLastTheoremFor_le100_of_ne_irregular
 
 The composite exponent `74 = 2 · 37` is excluded because reducing it by divisor
 monotonicity would route through the irregular exponent `37`.
+
+## Infinitely many irregular primes
+
+Irregular primes are not a finite accident: following Carlitz's classical
+argument, the project also proves that there are infinitely many of them.
+The Bernoulli-number side of Kummer's criterion is combined with the
+unrestricted Kummer congruence for divided Bernoulli numbers
+`B_m / m ≡ B_n / n (mod p)`, proved here by the elementary Voronoi route.
+
+The endpoint lives in
+[`KummerCriterion/IrregularPrimes/Infinitude.lean`](KummerCriterion/IrregularPrimes/Infinitude.lean):
+
+```lean
+/-- Infinitely many primes are not regular, by the Carlitz route. -/
+theorem infinite_not_isRegularPrime :
+    Set.Infinite
+      {p : ℕ | ∃ hp : p.Prime,
+        letI : Fact p.Prime := ⟨hp⟩
+        ¬ IsRegularPrime p}
+```
