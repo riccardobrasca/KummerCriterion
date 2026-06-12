@@ -5,22 +5,21 @@ content of the project, with links to the corresponding checked entries.
 
 ## Structure
 
-- `src/content.tex` — top-level table of contents.
+- `src/content.tex` — abstract, table of contents, and bibliography.
 - `src/subsections/*.tex` — one chapter per part of the proof:
+  - `introduction.tex` — history, main results, notation and conventions,
+    and an outline of the proof.
   - `cm-splitting.tex` — CM field structure and the factorisation
     `h = h⁺ * h⁻`.
-  - `characters.tex` — Dirichlet characters of `Gal(Q(ζ_p)/Q)`.
-  - `bernoulli.tex` — generalised Bernoulli numbers `B_{n,χ}` and integrality.
-  - `lvalue-negative.tex` — special values of the odd Dirichlet `L`-functions.
-  - `hminus-formula.tex` — the analytic formula for the relative class number.
-  - `cyclotomic-units.tex` — real cyclotomic units, saturation, and the plus
-    class-number index theorem.
+  - `hminus-formula.tex` — Dirichlet characters, generalised Bernoulli
+    numbers, the analytic formula for the relative class number, and its
+    reduction to Bernoulli numerators.
+  - `cyclotomic-units.tex` — real cyclotomic units, the Kummer logarithm
+    matrix, saturation, and the plus class-number index theorem.
   - `final.tex` — assembly of Kummer's criterion from the minus criterion and
     cyclotomic-unit index argument.
   - `irregular-primes-carlitz.tex` — Carlitz's finite-set escape proof that
     there are infinitely many irregular primes.
-  - `abandoned-route.tex` — historical note on the reflection route that was
-    not used in the public proof.
 - `src/macros/` — LaTeX macro definitions for the online and PDF renderings.
 - `src/web.tex` and `src/print.tex` — entry points for the online and PDF
   renderings of the same blueprint source.

@@ -1,6 +1,17 @@
 % Carlitz's finite-set escape proof that there are infinitely many
 % irregular primes.
 
+This chapter proves Carlitz's theorem \cite{carlitz1954} that there are
+infinitely many irregular primes (\cref{def:regular-prime}); the
+infinitude was first established by Jensen \cite{jensen1915}.  The
+strategy is a finite-set escape: given any finite set $S$ of primes, one
+manufactures an even index $M$, divisible by $q-1$ for every prime
+$q \in S$, such that $|B_M/M| > 1$.  Any prime $p$ dividing the numerator
+of $B_M/M$ then satisfies $(p-1) \nmid M$ by von Staudt--Clausen, which
+simultaneously rules $p$ out of $S$ and --- through the unrestricted
+Kummer congruence, which moves the divisibility into Kummer's range ---
+proves that $p$ is irregular.
+
 \section{From Bernoulli numerators to irregular primes}
 
 Kummer's criterion turns irregularity of an odd prime into a finite
@@ -196,7 +207,8 @@ index with $(p-1)\nmid k$ and $p\nmid k+1$.  Then
 \]
 \end{theorem}
 \begin{proof}\leanok
-This is Voronoi's congruence.  Writing $ja = p\lfloor ja/p \rfloor + r_j$
+This is Voronoi's congruence (see e.g.\ \cite[Chapter~15]{ireland-rosen}).
+Writing $ja = p\lfloor ja/p \rfloor + r_j$
 with $r_j$ the residue of $ja$, summing $r_j^k$ over $j$ and expanding by the
 binomial theorem identifies the two sides modulo $p$, using Faulhaber's
 formula for power sums and the von Staudt--Clausen integrality

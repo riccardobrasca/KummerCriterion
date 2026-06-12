@@ -1,0 +1,150 @@
+% Introduction: history, main results, notation, and outline.
+
+\section{Overview}
+
+Let $p$ be an odd prime, let $\zeta_p$ be a primitive $p$th root of unity,
+and let $K=\Qzetap$ be the $p$th cyclotomic field.  Kummer
+\cite{kummer1850} proved that Fermat's Last Theorem holds for the exponent
+$p$ whenever $p$ is \emph{regular}, that is, whenever $p$ does not divide
+the class number $h(K)$.  Regularity is a condition on an invariant that is
+notoriously difficult to compute; Kummer's second fundamental insight is
+that it can be detected by a finite, purely arithmetic test on Bernoulli
+numbers.
+
+This document is the blueprint of a formalisation, in Lean~4 and building
+on mathlib, of \emph{Kummer's criterion}: an odd prime $p$ is regular if
+and only if
+\[
+  p \nmid \operatorname{num}(B_{2k})
+  \qquad\text{for all } k \text{ with } 1 \le k,\ 2k \le p-3,
+\]
+where $B_n$ denotes the $n$th Bernoulli number and $\operatorname{num}$ the
+numerator of a rational number in lowest terms.  The final statement is
+\cref{thm:kummer-criterion}; the formal counterpart is the Lean declaration
+\texttt{KummerCriterion}.
+
+The criterion makes regularity decidable in practice.  Running the
+Bernoulli test on the primes below $100$ shows that the irregular primes in
+that range are exactly $37$, $59$ and $67$; combined with the
+\texttt{flt-regular} formalisation of Kummer's theorem on Fermat's Last
+Theorem for regular prime exponents, this yields Fermat's Last Theorem for
+every exponent $2 < n \le 100$ outside $\{37, 59, 67, 74\}$.
+
+Irregular primes are not a finite accident.  Jensen \cite{jensen1915}
+proved that there are infinitely many irregular primes (indeed, infinitely
+many congruent to $3$ modulo $4$), and Carlitz \cite{carlitz1954} gave the
+short argument formalised here, which combines the criterion with the
+unrestricted Kummer congruence for divided Bernoulli numbers and the
+archimedean growth of $|B_{2k}/2k|$.  The final statement is
+\cref{thm:infinitely-many-irregular}; the formal counterpart is
+\texttt{KummerCriterion.infinite\_not\_isRegularPrime}.
+
+Standard references for all of this material are Washington
+\cite{washington} and Ireland--Rosen \cite{ireland-rosen}.
+
+\begin{definition}\label{def:regular-prime}
+  \lean{IsRegularPrime}\leanok
+An odd prime $p$ is \emph{regular} when $p$ does not divide the class
+number of the $p$th cyclotomic field:
+\[
+  p \nmid h\bigl(\Qzetap\bigr).
+\]
+Otherwise $p$ is \emph{irregular}.  (In the formalisation the condition is
+phrased as coprimality of $p$ with the cardinality of the class group of
+$\Qzetap$, which is equivalent because $p$ is prime.)
+\end{definition}
+
+\section{Notation and conventions}
+
+Throughout the blueprint:
+
+\begin{itemize}
+\item $p$ is an odd prime, $\zeta_p$ a primitive $p$th root of unity,
+  $K = \Qzetap$, and $K^+$ the maximal real subfield of $K$
+  (\cref{def:cm-real-subfield}).  We write $\mathcal O_K$, $\mathcal
+  O_{K^+}$ for the rings of integers and $\Cl{\mathcal O_K}$,
+  $\Cl{\mathcal O_{K^+}}$ for the ideal class groups.
+\item $h = h(K)$, $h^+ = h(K^+)$ and $h^- = h/h^+$ are the class number,
+  the plus class number, and the relative class number
+  (\cref{def:class-number-h}, \cref{def:class-number-hplus},
+  \cref{def:class-number-hminus}).
+\item $B_n$ is the $n$th Bernoulli number, with the convention
+  $B_1 = -\tfrac12$ (the convention of mathlib's \texttt{bernoulli}).
+  Thus $B_n = 0$ for odd $n \ge 3$, and $B_n(X)$ denotes the $n$th
+  Bernoulli polynomial.  For a rational number $q$ written in lowest terms
+  we write $\operatorname{num}(q) \in \Z$ and $\operatorname{den}(q) \in
+  \N$ for its numerator and denominator.
+\item Dirichlet characters modulo $p$ (\cref{def:dirichlet-character}) are
+  written $\chi$; the trivial character is $1$, and $\chi$ is \emph{even}
+  or \emph{odd} according to $\chi(-1) = 1$ or $\chi(-1) = -1$.  The
+  generalised Bernoulli numbers $B_{n,\chi}$ are defined in
+  \cref{def:generalized-bernoulli}, the Teichm\"uller character $\omega$ in
+  \cref{def:teichmuller}.  Gauss sums are taken with respect to the
+  standard additive character $a \mapsto e^{2\pi i a/p}$ and written
+  $\tau(\chi)$.
+\item $\Q_p$ is the field of $p$-adic numbers and $\Z_p$ its ring of
+  integers.  For rational numbers $x, y$ (or, more generally, elements of
+  $\Q_p$) we write
+  \[
+    x \equiv y \pmod{p}
+  \]
+  to mean $x - y \in p\Z_p$.  In the formalisation this is rendered as the
+  existence of $z \in \Z_p$ with $x - y = pz$ in $\Q_p$.
+\item For a finite abelian group quotient we write $[E : H]$ for the index
+  of a subgroup $H \le E$.
+\end{itemize}
+
+\section{Outline}
+
+The proof of the criterion has four parts, one per chapter.
+
+Chapter~\ref{ch:cm} proves that extension of ideals induces an
+\emph{injective} map $\Cl{\mathcal O_{K^+}} \to \Cl{\mathcal O_K}$
+(\cref{thm:class-group-map-injective}).  Consequently $h^+ \mid h$, and the
+relative class number $h^- = h/h^+$ is a genuine natural number with
+$h = h^+ h^-$.
+
+Chapter~\ref{ch:hminus-formula} establishes the analytic formula
+\[
+  h^- = 2p \prod_{\chi \text{ odd}} \Bigl(-\tfrac12 B_{1,\chi^{-1}}\Bigr)
+\]
+(\cref{thm:hminus-formula}), then reduces it modulo $p$: indexing the odd
+characters by powers of the Teichm\"uller character and applying the
+congruence $B_{1,\omega^j} \equiv B_{j+1}/(j+1) \pmod p$ converts the
+product into a product of classical divided Bernoulli numbers, giving
+\[
+  p \mid h^- \iff
+  \exists k,\ 1 \le k,\ 2k \le p-3,\ p \mid \operatorname{num}(B_{2k})
+\]
+(\cref{thm:hminus-bernoulli-final}).
+
+Chapter~\ref{ch:cyclotomic-units} treats the plus side.  The real
+cyclotomic units form a subgroup $C^+$ of $(\mathcal O_{K^+})^\times$, and
+the determinant of the \emph{Kummer logarithm matrix} --- a matrix of
+$p$-adic logarithms of the cyclotomic-unit generators --- factors as a
+product of Bernoulli numbers times a nonzero Vandermonde determinant
+(\cref{thm:kummer-log-det-bernoulli}).  If no Bernoulli numerator in
+Kummer's range is divisible by $p$, the determinant is nonzero and $C^+$ is
+$p$-saturated in the full unit group, whence
+$p \nmid [(\mathcal O_{K^+})^\times : C^+]$
+(\cref{thm:kummer-log-det-saturation} and
+\cref{thm:not-dvd-index-of-pSaturated}).
+Sinnott's prime-conductor index theorem \cite{sinnott1978} identifies the
+$p$-divisibility of this index with that of $h^+$
+(\cref{thm:sinnott-index-pprimary}).
+
+Chapter~\ref{ch:kummer-final} assembles the criterion.  The plus-side
+results yield the implication $p \mid h^+ \Rightarrow p \mid h^-$
+(\cref{thm:hplus-to-hminus-units}); together with $h = h^+h^-$ this reduces
+$p \mid h$ to $p \mid h^-$, and the minus criterion finishes the proof
+(\cref{thm:kummer-criterion}).
+
+Chapter~\ref{ch:irregular-primes} contains the application to the
+infinitude of irregular primes, following Carlitz \cite{carlitz1954}: a
+finite set $S$ of primes is escaped by manufacturing an even index $M$,
+divisible by $q - 1$ for every prime $q \in S$, with $|B_M/M| > 1$; any
+prime in the numerator of $B_M/M$ is then irregular and lies outside $S$.
+The key arithmetic input is the unrestricted Kummer congruence
+$B_m/m \equiv B_n/n \pmod p$ for even $m \equiv n \not\equiv 0
+\pmod{p-1}$, proved by the elementary Voronoi route
+(\cref{thm:kummer-congruence-full}).
