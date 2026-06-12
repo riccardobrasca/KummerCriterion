@@ -1,0 +1,327 @@
+% Carlitz's finite-set escape proof that there are infinitely many
+% irregular primes.
+
+\section{From Bernoulli numerators to irregular primes}
+
+Kummer's criterion turns irregularity of an odd prime into a finite
+Bernoulli-numerator check.  We record both directions in the form used by the
+infinitude argument, together with the finite-escape principle that drives
+the final contradiction.
+
+\begin{theorem}\label{thm:irregular-of-bernoulli-witness}
+  \lean{KummerCriterion.not_isRegularPrime_of_bernoulli_num_dvd}\leanok
+  \uses{thm:kummer-criterion}
+Let $p$ be an odd prime.  If there is a $k$ with $1\le k$, $2k\le p-3$ and
+$p\mid\operatorname{num}(B_{2k})$, then $p$ is not regular.
+\end{theorem}
+\begin{proof}\leanok
+Immediate from \cref{thm:kummer-criterion}.
+\end{proof}
+
+\begin{theorem}\label{thm:bernoulli-witness-of-irregular}
+  \lean{KummerCriterion.exists_bernoulli_num_dvd_of_not_isRegularPrime}\leanok
+  \uses{thm:kummer-criterion}
+Conversely, if an odd prime $p$ is not regular, then there is a $k$ with
+$1\le k$, $2k\le p-3$ and $p\mid\operatorname{num}(B_{2k})$.
+\end{theorem}
+\begin{proof}\leanok
+Immediate from \cref{thm:kummer-criterion}.
+\end{proof}
+
+\begin{lemma}\label{lem:infinite-of-escape}
+  \lean{KummerCriterion.infinite_of_forall_finite_set_not_cover}\leanok
+Let $P$ be a predicate on the natural numbers.  If no finite set contains
+every $n$ with $P(n)$, then $\{n \mid P(n)\}$ is infinite.
+\end{lemma}
+\begin{proof}\leanok
+If the set were finite, it would itself be a finite covering set.
+\end{proof}
+
+\section{Numerators, $p$-adic congruences, and von Staudt--Clausen}
+
+Throughout, congruences between rational numbers are read $p$-adically: we
+write $x \equiv y \pmod{p}$ for rationals $x,y$ when $x - y \in p\Z_p$.
+
+\begin{lemma}\label{lem:num-prime-of-large}
+  \lean{KummerCriterion.exists_prime_dvd_num_of_one_lt_abs}\leanok
+If a rational number $q$ has $|q| > 1$, then some prime divides
+$\operatorname{num}(q)$.
+\end{lemma}
+\begin{proof}\leanok
+Since $|q| > 1$, the numerator of $|q|$ strictly exceeds its denominator;
+in particular $|\operatorname{num}(q)| \ge 2$, so the numerator has a prime
+factor.
+\end{proof}
+
+\begin{lemma}\label{lem:num-transport}
+  \lean{KummerCriterion.prime_dvd_num_of_padic_sub_eq_p_mul}\leanok
+Let $q, r$ be rationals with $q \equiv r \pmod{p}$.  If
+$p\mid\operatorname{num}(q)$, then $p\mid\operatorname{num}(r)$.
+\end{lemma}
+\begin{proof}\leanok
+Divisibility of the numerator by $p$ is equivalent to $q \in p\Z_p$, which is
+invariant under perturbation by elements of $p\Z_p$.
+\end{proof}
+
+\begin{lemma}\label{lem:num-of-divided}
+  \lean{KummerCriterion.dvd_num_of_dvd_div_nat_num}\leanok
+Let $q$ be a rational and $n$ a positive natural number.  If
+$p\mid\operatorname{num}(q/n)$, then $p\mid\operatorname{num}(q)$.
+\end{lemma}
+\begin{proof}\leanok
+Dividing by $n$ can only cancel factors of the numerator.
+\end{proof}
+
+\begin{theorem}\label{thm:vonstaudt-not-dvd-divided}
+  \lean{KummerCriterion.not_dvd_num_bernoulli_div_self_of_sub_one_dvd}\leanok
+  \uses{lem:num-of-divided}
+Let $p$ be a prime and $n$ a positive even index with $(p-1)\mid n$.  Then
+$p\nmid\operatorname{num}(B_n/n)$.
+\end{theorem}
+\begin{proof}\leanok
+By the von Staudt--Clausen theorem,
+\[
+  B_n + \sum_{(q-1)\mid n} \frac{1}{q} \in \Z,
+\]
+the sum running over primes $q$ with $(q-1)\mid n$.  Since $(p-1)\mid n$, the
+prime $p$ occurs in the correction sum, so $B_n + 1/p$ has denominator prime
+to $p$.  If $p$ divided $\operatorname{num}(B_n)$, then adding $1/p$ would
+produce a denominator divisible by $p$, a contradiction; by
+\cref{lem:num-of-divided} the same holds for the divided numerator.
+\end{proof}
+
+\begin{lemma}\label{lem:vonstaudt-p-integral}
+  \lean{KummerCriterion.bernoulli_mem_padicInt_vonStaudt_of_not_sub_one_dvd}\leanok
+Let $p$ be a prime and $n$ an even index with $(p-1)\nmid n$.  Then
+$B_n \in \Z_p$.  Without any hypothesis on $n$, one still has
+$pB_n \in \Z_p$.
+\end{lemma}
+\begin{proof}\leanok
+Again by von Staudt--Clausen, $B_n$ differs from an integer by the correction
+sum $\sum_{(q-1)\mid n} 1/q$.  When $(p-1)\nmid n$ the term $1/p$ does not
+occur and every summand is a $p$-adic integer; in general multiplying by $p$
+clears the single possible $p$ in the denominator.
+\end{proof}
+
+\section{Growth of divided Bernoulli numbers}
+
+\begin{theorem}\label{thm:bernoulli-growth-bound}
+  \lean{KummerCriterion.bernoulli_div_self_abs_lower_bound}\leanok
+For every $k \ge 1$,
+\[
+  \left|\frac{B_{2k}}{2k}\right|
+    \ \ge\ \frac{(2k-1)!}{2^{2k-1}\,\pi^{2k}}.
+\]
+\end{theorem}
+\begin{proof}\leanok
+Euler's formula gives
+\[
+  \zeta(2k) \;=\; (-1)^{k+1}\,\frac{B_{2k}\,(2\pi)^{2k}}{2\,(2k)!},
+\]
+and $\zeta(2k) \ge 1$, so $|B_{2k}| \ge 2\,(2k)!/(2\pi)^{2k}$.  Dividing by
+$2k$ yields the claim.
+\end{proof}
+
+\begin{theorem}\label{thm:bernoulli-growth-tendsto}
+  \lean{KummerCriterion.tendsto_abs_bernoulli_div_self_even}\leanok
+  \uses{thm:bernoulli-growth-bound}
+$\left|B_{2k}/2k\right| \to \infty$ as $k \to \infty$.
+\end{theorem}
+\begin{proof}\leanok
+The lower bound of \cref{thm:bernoulli-growth-bound} tends to infinity:
+factorial growth beats the geometric factor $(2\pi^2)^{k}$ in the
+denominator.
+\end{proof}
+
+\begin{corollary}\label{cor:bernoulli-large-multiple}
+  \lean{KummerCriterion.exists_large_even_multiple_abs_bernoulli_div_self_gt_one}\leanok
+  \uses{thm:bernoulli-growth-tendsto}
+For every positive even $C$ there is a $t$ with
+$\left|B_{m}/m\right| > 1$ for $m = C\cdot 2^t$.
+\end{corollary}
+\begin{proof}\leanok
+The indices $C \cdot 2^t$ are even and tend to infinity, so
+\cref{thm:bernoulli-growth-tendsto} applies along this subsequence.
+\end{proof}
+
+\section{The divisor-closed multiplier}
+
+\begin{definition}\label{def:irregular-base}
+  \lean{KummerCriterion.irregularBase}\leanok
+For a finite set $S$ of natural numbers put $M(S) = \max(3, \max S)$ and
+\[
+  C(S) \;=\; 2 \cdot M(S)! \,.
+\]
+\end{definition}
+
+\begin{lemma}\label{lem:irregular-base-mem}
+  \lean{KummerCriterion.sub_one_dvd_irregularBase_of_mem}\leanok
+  \uses{def:irregular-base}
+$C(S)$ is even and positive, and for every prime $q \in S$ one has
+$(q-1)\mid C(S)$.
+\end{lemma}
+\begin{proof}\leanok
+$q \le M(S)$, so $q - 1$ is a positive integer at most $M(S)$ and therefore
+divides $M(S)!$.
+\end{proof}
+
+\begin{lemma}\label{lem:irregular-base-closed}
+  \lean{KummerCriterion.sub_one_dvd_m_of_prime_dvd_m}\leanok
+  \uses{def:irregular-base}
+Let $m = C(S)\cdot 2^t$.  Every prime $q$ dividing $m$ satisfies
+$(q-1)\mid m$.
+\end{lemma}
+\begin{proof}\leanok
+If $q = 2$ this is trivial.  Otherwise $q$ divides $M(S)!$, hence
+$q \le M(S)$, and as before $(q-1) \mid M(S)! \mid m$.
+\end{proof}
+
+\section{The unrestricted Kummer congruence}
+
+The infinitude argument needs the Kummer congruence
+$B_m/m \equiv B_n/n \pmod p$ for \emph{all} positive even indices
+$m \equiv n \pmod{p-1}$ away from the boundary $(p-1)\mid n$ --- with no
+upper bound on the indices and no coprimality restrictions.  It is proved
+here by the elementary Voronoi route.
+
+\begin{theorem}\label{thm:voronoi-congruence}
+  \lean{KummerCriterion.voronoi_congruence_mod_p_vonStaudt}\leanok
+  \uses{lem:vonstaudt-p-integral}
+Let $p$ be an odd prime, $a$ an integer prime to $p$, and $k \ge 2$ an even
+index with $(p-1)\nmid k$ and $p\nmid k+1$.  Then
+\[
+  (a^{k}-1)\,B_k \;\equiv\;
+  k\,a^{k-1} \sum_{j=0}^{p-1} j^{\,k-1}\left\lfloor \frac{ja}{p}\right\rfloor
+  \pmod{p}.
+\]
+\end{theorem}
+\begin{proof}\leanok
+This is Voronoi's congruence.  Writing $ja = p\lfloor ja/p \rfloor + r_j$
+with $r_j$ the residue of $ja$, summing $r_j^k$ over $j$ and expanding by the
+binomial theorem identifies the two sides modulo $p$, using Faulhaber's
+formula for power sums and the von Staudt--Clausen integrality
+(\cref{lem:vonstaudt-p-integral}) to control the Bernoulli denominators of
+the lower-order terms.
+\end{proof}
+
+\begin{theorem}\label{thm:kummer-congruence-coprime}
+  \lean{KummerCriterion.bernoulli_div_sModEq_of_modEq_voronoiNoBound}\leanok
+  \uses{thm:voronoi-congruence}
+Let $p$ be an odd prime and $m, n$ positive even indices with
+$m \equiv n \pmod{p-1}$ and $(p-1)\nmid n$.  Assume moreover that
+$p\nmid mn$ and $p\nmid (m+1)(n+1)$.  Then
+\[
+  \frac{B_m}{m} \;\equiv\; \frac{B_n}{n} \pmod{p}.
+\]
+\end{theorem}
+\begin{proof}\leanok
+Choose a primitive root $a$ modulo $p$ and apply
+\cref{thm:voronoi-congruence} to both indices.  Since $m \equiv n
+\pmod{p-1}$, Fermat's little theorem gives $a^m \equiv a^n$ and
+$j^{m-1}\equiv j^{n-1} \pmod p$ for all $j$ prime to $p$, so the two Voronoi
+sums agree modulo $p$.  Subtracting the two congruences (divided by $m$ and
+$n$, which are units modulo $p$) yields
+$(a^{n}-1)\bigl(B_m/m - B_n/n\bigr) \equiv 0 \pmod p$.  Because $a$ is a
+primitive root and $(p-1)\nmid n$, the factor $a^{n}-1$ is a $p$-adic unit,
+and the congruence follows.
+\end{proof}
+
+\begin{theorem}\label{thm:kummer-congruence-full}
+  \lean{KummerCriterion.bernoulli_div_sModEq_of_modEq_full}\leanok
+  \uses{thm:kummer-congruence-coprime, lem:vonstaudt-p-integral}
+Let $p$ be an odd prime and $m, n$ positive even indices with
+$m \equiv n \pmod{p-1}$ and $(p-1)\nmid n$.  Then
+\[
+  \frac{B_m}{m} \;\equiv\; \frac{B_n}{n} \pmod{p}.
+\]
+\end{theorem}
+\begin{proof}\leanok
+It remains to remove the side conditions of
+\cref{thm:kummer-congruence-coprime}.  Both $B_m/m$ and $B_n/n$ are compared
+with a common representative of the residue class: inside the arithmetic
+progression $\{n + r(p-1)\}$ one can choose indices avoiding the finitely
+many excluded residues modulo $p$, and chaining
+\cref{thm:kummer-congruence-coprime} through such representatives (in the
+formalisation, through the generalised Bernoulli value attached to the
+corresponding power of the Teichm\"uller character) gives the congruence in
+general.
+\end{proof}
+
+\section{The Carlitz escape argument}
+
+\begin{lemma}\label{lem:positive-residue}
+  \lean{KummerCriterion.positiveResidue_properties}\leanok
+Let $p$ be an odd prime and $m$ an even index with $(p-1)\nmid m$.  Then
+$m' := m \bmod (p-1)$ satisfies $0 < m' < p-1$, $m'$ is even, and
+$m \equiv m' \pmod{p-1}$.  In particular $2 \le m' \le p-3$.
+\end{lemma}
+\begin{proof}\leanok
+The residue is nonzero precisely because $(p-1)\nmid m$, and it inherits
+parity from $m$ since $p-1$ is even.
+\end{proof}
+
+\begin{theorem}\label{thm:carlitz-criterion}
+  \lean{KummerCriterion.not_isRegularPrime_iff_exists_dvd_bernoulli_div_self_num}\leanok
+  \uses{thm:irregular-of-bernoulli-witness, thm:bernoulli-witness-of-irregular,
+  thm:kummer-congruence-full, thm:vonstaudt-not-dvd-divided,
+  lem:num-transport, lem:num-of-divided, lem:positive-residue}
+An odd prime $p$ is irregular if and only if
+$p \mid \operatorname{num}(B_m/m)$ for some positive even index $m$.
+\end{theorem}
+\begin{proof}\leanok
+If $p$ is irregular, \cref{thm:bernoulli-witness-of-irregular} produces a
+witness $B_{2k}$ in Kummer's range; since $2k \le p-3 < p$, the index is a
+unit modulo $p$ and the divisibility passes to the divided numerator.
+
+Conversely, suppose $p\mid\operatorname{num}(B_m/m)$ with $m$ positive and
+even.  By \cref{thm:vonstaudt-not-dvd-divided}, necessarily $(p-1)\nmid m$.
+Let $m'$ be the positive residue of \cref{lem:positive-residue}.  The full
+Kummer congruence (\cref{thm:kummer-congruence-full}) gives
+$B_m/m \equiv B_{m'}/m' \pmod p$, so $p\mid\operatorname{num}(B_{m'}/m')$ by
+\cref{lem:num-transport}, hence $p \mid \operatorname{num}(B_{m'})$ by
+\cref{lem:num-of-divided}.  Since $2 \le m' \le p-3$ and $m'$ is even, this
+is a Bernoulli witness in Kummer's range, and $p$ is irregular by
+\cref{thm:irregular-of-bernoulli-witness}.
+\end{proof}
+
+\begin{theorem}\label{thm:carlitz-numerator-prime}
+  \lean{KummerCriterion.exists_numerator_prime_for_carlitz_base}\leanok
+  \uses{def:irregular-base, lem:irregular-base-mem, lem:irregular-base-closed,
+  cor:bernoulli-large-multiple, lem:num-prime-of-large,
+  thm:vonstaudt-not-dvd-divided}
+For every finite set $S$ of natural numbers there are $M$ and a prime $p$
+such that $M$ is even and positive, $(q-1)\mid M$ for every prime
+$q \in S$, the prime $p$ is odd, $p\mid\operatorname{num}(B_M/M)$, and
+$p \notin S$.
+\end{theorem}
+\begin{proof}\leanok
+Put $M = C(S)\cdot 2^t$ with $t$ chosen by
+\cref{cor:bernoulli-large-multiple} so that $|B_M/M| > 1$.  By
+\cref{lem:num-prime-of-large} some prime $p$ divides
+$\operatorname{num}(B_M/M)$.  By \cref{thm:vonstaudt-not-dvd-divided},
+$(p-1)\nmid M$; in particular $p \ne 2$.  If $p$ were in $S$, then
+$(p-1)\mid C(S)\mid M$ by \cref{lem:irregular-base-mem}, a contradiction; so
+$p \notin S$.  The divisibility $(q-1)\mid M$ for $q \in S$ is again
+\cref{lem:irregular-base-mem}.
+\end{proof}
+
+\begin{theorem}\label{thm:carlitz-escape}
+  \lean{KummerCriterion.exists_not_isRegularPrime_not_mem_carlitz}\leanok
+  \uses{thm:carlitz-numerator-prime, thm:carlitz-criterion}
+For every finite set $S$ of natural numbers there is an irregular prime
+$p \notin S$.
+\end{theorem}
+\begin{proof}\leanok
+Take the prime $p$ and the index $M$ of \cref{thm:carlitz-numerator-prime}.
+Then $p$ is irregular by \cref{thm:carlitz-criterion} and $p \notin S$.
+\end{proof}
+
+\begin{theorem}\label{thm:infinitely-many-irregular}
+  \lean{KummerCriterion.infinite_not_isRegularPrime}\leanok
+  \uses{thm:carlitz-escape, lem:infinite-of-escape}
+There are infinitely many irregular primes.
+\end{theorem}
+\begin{proof}\leanok
+By \cref{thm:carlitz-escape} no finite set contains all irregular primes, so
+the set is infinite by \cref{lem:infinite-of-escape}.
+\end{proof}
