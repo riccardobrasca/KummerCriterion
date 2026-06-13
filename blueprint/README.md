@@ -1,4 +1,4 @@
-# Blueprint for `flt-regular-bernoulli`
+# Blueprint for `KummerCriterion`
 
 This directory contains a blueprint-style write-up of the mathematical
 content of the project, with links to the corresponding checked entries.
