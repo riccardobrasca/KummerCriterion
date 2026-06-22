@@ -58,7 +58,8 @@ lemma idealNormMultiplicity_p_pow_eq_one (k : ℕ) :
   have habsNormP : Ideal.absNorm P = p := by
     calc
       Ideal.absNorm P = p ^ (1 : ℕ) := by
-        rw [← primesOver_inertiaDeg_eq_one_at_p (p := p) (K := K) P hPmem]
+        rw [← primesOver_inertiaDeg_eq_one_at_p (p := p) (K := K) P hPmem,
+          ← Ideal.inertiaDeg_eq_inertiaDeg' (Ideal.span {(p : ℤ)}) P]
         exact Ideal.absNorm_eq_pow_inertiaDeg' P hp.out
       _ = p := by simp
   unfold idealNormMultiplicity
@@ -180,7 +181,9 @@ lemma absNorm_eq_q_pow_localResidueDegree_of_mem_primesOverFinset
   haveI : P.IsPrime := hP_over.1
   haveI : P.LiesOver (Ideal.span {((q : ℕ) : ℤ)}) := by
     simpa [rationalPrimeIdeal] using hP_over.2
-  rw [← primesOver_inertiaDeg_eq_localResidueDegree p K hq P hP_over]
+  haveI : P.IsMaximal := Ideal.IsMaximal.of_liesOver_isMaximal P (Ideal.span {((q : ℕ) : ℤ)})
+  rw [← primesOver_inertiaDeg_eq_localResidueDegree p K hq P hP_over,
+    ← Ideal.inertiaDeg_eq_inertiaDeg' (Ideal.span {((q : ℕ) : ℤ)}) P]
   exact Ideal.absNorm_eq_pow_inertiaDeg' P q.2
 
 lemma normalizedFactors_card_mul_localResidueDegree_of_absNorm_prime_pow

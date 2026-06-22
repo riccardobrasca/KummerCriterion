@@ -7,6 +7,10 @@ module
 
 public import KummerCriterion.BernoulliFast.Correctness
 public meta import Lean.Meta.Sym.LitValues
+public meta import Lean.Meta.Sym.SymM
+public meta import Lean.Meta.Sym.InferType
+public meta import Lean.Meta.Tactic.Cbv.Util
+public meta import Lean.Elab.Tactic.CbvSimproc
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.NormNum.BigOperators
 import Mathlib.Tactic.NormNum.Irrational
