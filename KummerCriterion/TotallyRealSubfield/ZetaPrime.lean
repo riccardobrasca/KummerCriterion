@@ -4,7 +4,7 @@ public import KummerCriterion.PrimitiveRootUnits
 public import FltRegular.NumberTheory.Cyclotomic.CyclRat
 public import Mathlib.NumberTheory.NumberField.CMField
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
-import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
+import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
 
 /-!
 # `ζ_p - 1` prime arithmetic
@@ -275,7 +275,7 @@ theorem multiplicity_zetaPrime_algebraMap_even [IsCMField K]
       rw [Odd.neg_one_pow he]; ring
     have h_prime := zetaPrime_isPrime p K
     rcases h_prime.mem_or_mem h_two_u with h | h
-    · exact (zeta_spec p ℚ K).two_not_mem_one_sub_zeta hp2 h
+    · exact IsCyclotomicExtension.Rat.two_not_mem_span_zeta_sub_one' p (zeta_spec p ℚ K) hp2 h
     · rw [zetaPrime, Ideal.mem_span_singleton] at h
       exact hπ_nd_u h
 

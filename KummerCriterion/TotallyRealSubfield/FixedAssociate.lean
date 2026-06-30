@@ -2,6 +2,7 @@ module
 
 public import KummerCriterion.PrimitiveRootUnits
 public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
+import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
 import KummerCriterion.TotallyRealSubfield.Conjugation
 
 /-!
@@ -148,7 +149,7 @@ theorem generator_unit_eq_zeta_pow [IsCMField K]
         have hsub := Ideal.sub_mem _ hu'_plus_mem hminus
         convert hsub using 1
         ring
-      exact (zeta_spec p ℚ K).two_not_mem_one_sub_zeta hp2 htwo
+      exact IsCyclotomicExtension.Rat.two_not_mem_span_zeta_sub_one' p (zeta_spec p ℚ K) hp2 htwo
     have hprod_mem : ((((u' : (𝓞 K)ˣ) : 𝓞 K) - 1) * b : 𝓞 K) ∈ P := by
       have hres : (ringOfIntegersComplexConj K b : 𝓞 K) - b ∈ P :=
         complexConj_sub_mem_zetaPrime p K b
@@ -170,7 +171,7 @@ theorem exists_conj_fixed_associate_of_zeta_pow [IsCMField K]
     ∃ b : 𝓞 K, ringOfIntegersComplexConj K b = b ∧ Ideal.span {b} = Ideal.span {a} := by
   have hpo : Odd p := hp.1.odd_of_ne_two hp_odd
   obtain ⟨n, rfl⟩ := hclass
-  obtain ⟨m, hm⟩ := zeta_runity_pow_even hζ hpo n
+  obtain ⟨m, hm⟩ := exists_pow_eq_pow_two_mul hζ.unit'_pow hpo n
   let μ : (𝓞 K)ˣ := hζ.unit' ^ m
   have hμsq : (hζ.unit' ^ n : (𝓞 K)ˣ) = μ ^ 2 := by
     dsimp [μ]
