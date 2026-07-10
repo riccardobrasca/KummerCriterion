@@ -105,16 +105,7 @@ theorem card_even_characters (hp₂ : p ≠ 2) :
 
 theorem inv_eval_neg_one_eq (χ : DirichletCharacter ℂ p) :
     χ⁻¹ (-1 : ZMod p) = χ (-1) := by
-  have h_neg_unit : IsUnit (-1 : ZMod p) := isUnit_one.neg
-  have h_sq : χ (-1 : ZMod p) * χ (-1 : ZMod p) = 1 := by
-    rw [← map_mul, show (-1 : ZMod p) * -1 = 1 by ring, MulChar.map_one]
-  have h_ne : χ (-1 : ZMod p) ≠ 0 := by
-    intro hzero
-    rw [hzero, mul_zero] at h_sq
-    exact zero_ne_one h_sq
-  have h_inv_mul : χ⁻¹ (-1 : ZMod p) * χ (-1 : ZMod p) = 1 := by
-    rw [← MulChar.mul_apply, MulChar.inv_mul, MulChar.one_apply h_neg_unit]
-  exact mul_right_cancel₀ h_ne (h_inv_mul.trans h_sq.symm)
+  rw [MulChar.inv_apply', inv_neg_one]
 
 theorem even_inv_iff {χ : DirichletCharacter ℂ p} : χ⁻¹.Even ↔ χ.Even := by
   simp [DirichletCharacter.Even, inv_eval_neg_one_eq (p := p) χ]

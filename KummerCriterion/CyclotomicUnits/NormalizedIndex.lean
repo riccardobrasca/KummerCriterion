@@ -36,10 +36,8 @@ def cyclotomicUnitIndexSubgroup (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) :
       (Set.range (LehmerVandiver.Sinnott.cyclotomicUnitFamilyKplusFinRank p K hp_odd hp_three)) ⊔
     NumberField.Units.torsion K⁺
 
-theorem prime_not_dvd_two_pow (hp_odd : p ≠ 2) (r : ℕ) : ¬ p ∣ 2 ^ r := by
-  intro hp_dvd
-  have hp_dvd_two : p ∣ 2 := (Fact.out : Nat.Prime p).dvd_of_dvd_pow hp_dvd
-  exact prime_not_dvd_sign_factor (p := p) hp_odd hp_dvd_two
+theorem prime_not_dvd_two_pow (hp_odd : p ≠ 2) (r : ℕ) : ¬ p ∣ 2 ^ r :=
+  prime_not_dvd_of_dvd_two_pow (Fact.out : Nat.Prime p) hp_odd dvd_rfl
 
 /-- The harmless `2^r` factor in the squared-family normalization has no
 effect on p-primary divisibility for odd `p`. -/

@@ -300,10 +300,8 @@ theorem samePrimeFiniteLog_finiteArtinHasseExpCoord_eq_homogeneous_degree_sum_ra
         intro d hd
         exact hdegree d hd
 
-private theorem le_p_pow_self (r : ℕ) : r ≤ p ^ r := by
-  have htwo : 2 ≤ p := (Fact.out : Nat.Prime p).two_le
-  have hpow : 2 ^ r ≤ p ^ r := Nat.pow_le_pow_left htwo r
-  exact (Nat.le_of_lt r.lt_two_pow_self).trans hpow
+private theorem le_p_pow_self (r : ℕ) : r ≤ p ^ r :=
+  (Nat.lt_pow_self (Fact.out : Nat.Prime p).one_lt).le
 
 theorem samePrimeFiniteArtinHasseLog_eq_homogeneous_degree_sum_range
     (N : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) :
@@ -459,16 +457,7 @@ theorem dworkParameterFiniteArtinHasseLogTerm_natCast_prime_pow_mul_eq_mk
 theorem mem_ideal_smul_top_iff_self
     {R : Type*} [CommRing R] (I : Ideal R) {x : R} :
     x ∈ I • (⊤ : Submodule R R) ↔ x ∈ I := by
-  constructor
-  · intro hx
-    refine Submodule.smul_induction_on hx (fun r hr y _ => ?_) ?_
-    · simpa [smul_eq_mul] using I.mul_mem_right y hr
-    · intro x y hx hy
-      exact I.add_mem hx hy
-  · intro hx
-    have h : x • (1 : R) ∈ I • (⊤ : Submodule R R) :=
-      Submodule.smul_mem_smul hx Submodule.mem_top
-    simpa [smul_eq_mul] using h
+  rw [Ideal.smul_eq_mul, Ideal.mul_top]
 
 set_option maxHeartbeats 400000 in
 -- Required for the `simpa` call.

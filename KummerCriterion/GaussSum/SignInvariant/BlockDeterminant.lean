@@ -61,8 +61,8 @@ def evalAtZeroLinear : (ZMod p → ℂ) →ₗ[ℂ] ℂ where
   map_smul' _ _ := rfl
 
 @[simp] theorem dirichletCharacter_apply_zero (χ : DirichletCharacter ℂ p) :
-    χ (0 : ZMod p) = 0 := by
-  simpa using MulChar.map_nonunit χ (a := (0 : ZMod p)) (by simp)
+    χ (0 : ZMod p) = 0 :=
+  MulChar.map_zero χ
 
 theorem normalizedDft_deltaZero :
     normalizedDft p (deltaZeroFunction (p := p)) =

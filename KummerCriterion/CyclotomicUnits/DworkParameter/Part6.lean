@@ -288,16 +288,8 @@ def samePrimeArtinHasseLogTermOrder (r : ℕ) : ℕ :=
   p ^ r - r * (p - 1)
 
 private theorem nat_mul_le_pow_self_of_two_le {a r : ℕ} (ha : 2 ≤ a) :
-    r * a ≤ a ^ r := by
-  cases r with
-  | zero =>
-      simp
-  | succ r =>
-      have hs : r + 1 ≤ a ^ r := by
-        have htwo : r + 1 ≤ 2 ^ r := Nat.succ_le_of_lt r.lt_two_pow_self
-        exact htwo.trans (Nat.pow_le_pow_left ha r)
-      have hmul := Nat.mul_le_mul_right a hs
-      simpa [pow_succ, Nat.mul_comm, Nat.mul_left_comm, Nat.mul_assoc] using hmul
+    r * a ≤ a ^ r :=
+  Nat.mul_comm a r ▸ Nat.mul_le_pow (by omega) r
 
 theorem samePrimeArtinHasseLog_den_le (r : ℕ) :
     r * (p - 1) ≤ p ^ r := by

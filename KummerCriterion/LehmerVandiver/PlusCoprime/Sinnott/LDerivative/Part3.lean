@@ -108,34 +108,9 @@ of `ZMod p`. -/
 private theorem mulChar_sum_units_eq_sum_all (ψ : DirichletCharacter ℂ p) :
     ∑ a : (ZMod p)ˣ, ψ ((a : ZMod p)) = ∑ a : ZMod p, ψ a := by
   classical
-  rw [← Finset.sum_erase_add _ _ (Finset.mem_univ (0 : ZMod p))]
-  rw [ψ.map_zero, add_zero]
-  refine Finset.sum_bij (fun (a : (ZMod p)ˣ) _ => (a : ZMod p)) ?_ ?_ ?_ ?_
-  · -- mem: a unit, (a: ZMod p) ≠ 0
-    intro a _
-    rw [Finset.mem_erase]
-    refine ⟨a.isUnit.ne_zero, Finset.mem_univ _⟩
-  · -- inj
-    intro a₁ _ a₂ _ h
-    exact Units.ext h
-  · -- surj
-    intro b hb
-    rw [Finset.mem_erase] at hb
-    obtain ⟨hb_ne, _⟩ := hb
-    have h_b_val_ne : b.val ≠ 0 := fun h_val =>
-      hb_ne <| (ZMod.val_eq_zero b).mp h_val
-    have h_b_val_lt : b.val < p := ZMod.val_lt b
-    have hp_prime : Nat.Prime p := hp.out
-    have h_coprime : Nat.Coprime b.val p := by
-      rw [Nat.coprime_comm]
-      rw [hp_prime.coprime_iff_not_dvd]
-      intro h_dvd
-      exact absurd (Nat.le_of_dvd (Nat.pos_of_ne_zero h_b_val_ne) h_dvd) (by omega)
-    refine ⟨ZMod.unitOfCoprime b.val h_coprime, Finset.mem_univ _, ?_⟩
-    change ((ZMod.unitOfCoprime b.val h_coprime : (ZMod p)ˣ) : ZMod p) = b
-    rw [ZMod.coe_unitOfCoprime]
-    exact ZMod.natCast_zmod_val b
-  · intro a _; rfl
+  rw [← Finset.sum_erase_add _ _ (Finset.mem_univ (0 : ZMod p)), ψ.map_zero, add_zero,
+    Finset.sum_subtype (p := fun x : ZMod p => x ≠ 0) _ (fun x => by simp) ψ]
+  exact Fintype.sum_equiv unitsEquivNeZero _ _ fun u => rfl
 
 /-- **Sin-norm bridge at units**: for a unit `a: (ZMod p)ˣ` in prime `p`,
 `Real.log ‖1 - stdAddChar a‖ = Real.log (2 · |sin(π · a.val / p)|)`.

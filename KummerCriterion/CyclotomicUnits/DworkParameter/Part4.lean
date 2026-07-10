@@ -768,10 +768,8 @@ theorem samePrimeFiniteArtinHasseExpCoordPoly_pow_le_of_mem_support
 
 theorem samePrimeFiniteArtinHasse_den_exponent_le {n d : ℕ}
     (hn : n ≠ 0) (hnd : n ≤ d) :
-    n.factorization p * (p - 1) ≤ d := by
-  have h := Nat.factorization_mul_pred_le_pred
-    (ell := p) (n := n) (Fact.out : Nat.Prime p) hn
-  omega
+    n.factorization p * (p - 1) ≤ d :=
+  samePrimeFiniteLogAdditivity_den_exponent_le (p := p) hn hnd
 
 end DworkParameter
 end PadicLogSetup

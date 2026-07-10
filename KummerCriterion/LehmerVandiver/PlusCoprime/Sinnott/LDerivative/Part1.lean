@@ -110,15 +110,16 @@ def DirichletLogSum (χ : DirichletCharacter ℂ p) : ℂ :=
     χ a * Real.log (2 * |Real.sin (Real.pi * a / p)|)
 
 /-- **The norm of `1 - stdAddChar(↑(-a))` equals `1 - stdAddChar(↑a)`**:
-direct from `stdAddChar(-x) = conj(stdAddChar(x))` (shipped in
-`KummerCriterion.stdAddChar_neg_eq_conj`) plus `‖conj z‖ = ‖z‖` and
+direct from `stdAddChar(-x) = conj(stdAddChar(x))` (mathlib's
+`AddChar.map_neg_eq_conj`) plus `‖conj z‖ = ‖z‖` and
 `conj(1 - z) = 1 - conj(z)`. This is the even-under-negation property of
 the cyclotomic log-norm, foundational for descending to the
 `(ZMod p)ˣ ⧸ ⟨-1⟩` quotient convolution matrix. -/
 theorem norm_one_sub_stdAddChar_neg (a : ZMod p) :
     ‖(1 : ℂ) - ZMod.stdAddChar (N := p) (-a)‖ =
       ‖(1 : ℂ) - ZMod.stdAddChar (N := p) a‖ := by
-  rw [KummerCriterion.stdAddChar_neg_eq_conj]
+  haveI : NeZero p := ⟨hp.out.ne_zero⟩
+  rw [AddChar.map_neg_eq_conj]
   rw [show (1 : ℂ) - (starRingEnd ℂ) (ZMod.stdAddChar (N := p) a) =
         (starRingEnd ℂ) (1 - ZMod.stdAddChar (N := p) a) from by
     rw [map_sub]; simp]

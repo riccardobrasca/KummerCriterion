@@ -369,24 +369,14 @@ lemma one_add_zetaInteger_isUnit (hp_odd' : p ≠ 2) :
 
 set_option linter.unusedSectionVars false in
 lemma zetaInteger_pow_eq_one :
-    (((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) ^ p : 𝓞 K) = 1 := by
-  simpa using!
-    congrArg (fun u : (𝓞 K)ˣ => (u : 𝓞 K))
-      (IsCyclotomicExtension.zeta_spec p ℚ K).unit'_pow
+    (((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) ^ p : 𝓞 K) = 1 :=
+  zeta_toInteger_pow_eq_one p K
 
 set_option linter.unusedSectionVars false in
 lemma zetaInteger_pow_pred_mul_eq_one :
     (((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) ^ (p - 1) *
-        (IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) = 1 := by
-  calc
-    (((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) ^ (p - 1) *
-        (IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K)
-    = (((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) ^ ((p - 1) + 1) :
-        𝓞 K) := by
-      rw [pow_succ]
-  _ = (((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) ^ p : 𝓞 K) := by
-      rw [Nat.sub_add_cancel hp.out.one_le]
-    _ = 1 := zetaInteger_pow_eq_one (p := p) (K := K)
+        (IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) = 1 :=
+  zeta_toInteger_pow_pred_mul p K
 
 set_option linter.unusedSectionVars false in
 lemma zetaInteger_mul_pow_pred_eq_one :

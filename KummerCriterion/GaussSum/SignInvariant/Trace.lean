@@ -72,13 +72,6 @@ theorem dft_constOne_eq_prime_smul_deltaZero :
     simp [dft_constOne (p := p), Pi.basisFun_apply]
   · simp [dft_constOne (p := p), hk, Pi.basisFun_apply]
 
-/-- Conjugating the standard additive character negates its input. -/
-theorem stdAddChar_neg_eq_conj (a : ZMod p) :
-    ZMod.stdAddChar (N := p) (-a) = conj (ZMod.stdAddChar (N := p) a) := by
-  symm
-  rw [ZMod.stdAddChar_apply, ← Circle.coe_inv_eq_conj, ← AddChar.map_neg_eq_inv,
-    ← ZMod.stdAddChar_apply]
-
 /-- Any nontrivial Dirichlet character is sent by the DFT to a scalar multiple
 of its inverse character. -/
 theorem dft_eq_scalar_smul_inv_character {χ : DirichletCharacter ℂ p}

@@ -50,20 +50,8 @@ abbrev NontrivChar (G : Type*) [CommMonoid G] :=
 theorem sum_subtype_ne_eq_sum_erase {α : Type*} [Fintype α] [DecidableEq α]
     (a₀ : α) (f : α → ℂ) [Fintype {x : α // x ≠ a₀}] :
     ∑ x : {x : α // x ≠ a₀}, f x.val =
-      ∑ x ∈ (Finset.univ : Finset α).erase a₀, f x := by
-  classical
-  refine Finset.sum_bij (fun (x : {x : α // x ≠ a₀}) _ => x.val) ?_ ?_ ?_ ?_
-  · intro x _
-    rw [Finset.mem_erase]
-    exact ⟨x.property, Finset.mem_univ _⟩
-  · intro x₁ _ x₂ _ h
-    exact Subtype.ext h
-  · intro x hx
-    rw [Finset.mem_erase] at hx
-    obtain ⟨h_ne, _⟩ := hx
-    exact ⟨⟨x, h_ne⟩, Finset.mem_univ _, rfl⟩
-  · intro x _
-    rfl
+      ∑ x ∈ (Finset.univ : Finset α).erase a₀, f x :=
+  (Finset.sum_subtype _ (fun x => by simp) f).symm
 
 section FiniteGroup
 

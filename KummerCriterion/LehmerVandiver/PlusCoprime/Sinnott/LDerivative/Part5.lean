@@ -510,20 +510,6 @@ theorem embeddingIndex_injective
   rw [← NumberField.InfinitePlace.mk_embedding w₁,
       ← NumberField.InfinitePlace.mk_embedding w₂, h_emb]
 
-/-- **Negation of `stdAddChar`-argument equals `Complex.conj`**: for any `a: ZMod p`
-(`p ≠ 0`), `stdAddChar(-a) = conj(stdAddChar(a))`.
-
-`stdAddChar(a)` lies on the unit circle, so `stdAddChar(a)⁻¹ = conj(stdAddChar(a))`.
-And `stdAddChar(-a) = (stdAddChar(a))⁻¹` (it's an AddChar). -/
-theorem stdAddChar_neg_eq_conj [NeZero p] (a : ZMod p) :
-    ZMod.stdAddChar (N := p) (-a) =
-      (starRingEnd ℂ) (ZMod.stdAddChar (N := p) a) := by
-  rw [AddChar.map_neg_eq_inv]
-  have h_norm : ‖ZMod.stdAddChar (N := p) a‖ = 1 := by
-    rw [ZMod.stdAddChar_apply]
-    exact Circle.norm_coe _
-  exact (Complex.inv_eq_conj h_norm).symm ▸ rfl
-
 /-- **Embedding-indices that are negatives give the same place**: if
 `embIdx w₁ = -embIdx w₂`, then `w₁ = w₂` as K-places.
 
@@ -554,7 +540,7 @@ theorem embeddingIndex_neg_implies_place_eq
       rw [h]
       rw [Units.val_neg]
     rw [h_cast]
-    exact stdAddChar_neg_eq_conj p _
+    exact AddChar.map_neg_eq_conj _ _
   have h_pb : IsPrimitiveRoot
       (((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K)) p := by
     have h_OK := KummerCriterion.cyclotomicZetaInteger_isPrimitiveRoot (p := p) K

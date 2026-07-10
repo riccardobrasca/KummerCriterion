@@ -3,6 +3,7 @@ module
 
 public import KummerCriterion.ZetaFactorisation.Basic
 public import FltRegular.NumberTheory.Cyclotomic.CyclRat
+import KummerCriterion.GaussSum.SignInvariant.BranchChoice
 
 /-!
 # `K⁺` local even-character data
@@ -18,99 +19,6 @@ open NumberField
 open scoped BigOperators Pointwise
 
 namespace KummerCriterion
-
-lemma prod_pow_primRoot_eq_pow_kplus {n : ℕ} (hn : 0 < n) (a : ℕ)
-    {ω : ℂ} (hω : IsPrimitiveRoot ω n) (T : ℂ) :
-    ∏ k ∈ Finset.range n, (1 - ω ^ (k * a) * T) =
-      (1 - T ^ (n / n.gcd a)) ^ n.gcd a := by
-  classical
-  set d := n / n.gcd a with hd_def
-  set c := n.gcd a with hc_def
-  have hc_dvd_n : c ∣ n := Nat.gcd_dvd_left n a
-  have hc_dvd_a : c ∣ a := Nat.gcd_dvd_right n a
-  have hc_mul_d : c * d = n := Nat.mul_div_cancel' hc_dvd_n
-  have hc_pos : 0 < c := Nat.gcd_pos_of_pos_left _ hn
-  have hd_pos : 0 < d := Nat.div_pos (Nat.le_of_dvd hn hc_dvd_n) hc_pos
-  have hd_dvd_n : d ∣ n := ⟨c, by rw [mul_comm]; exact hc_mul_d.symm⟩
-  have hω_a_prim : IsPrimitiveRoot (ω ^ a) d :=
-    IsPrimitiveRoot.pow_isPrimitiveRoot_div_gcd hn a hω
-  have h_period : ∀ k : ℕ, ω ^ (k * a) = ω ^ ((k % d) * a) := by
-    intro k
-    have hkd : k = d * (k / d) + k % d := (Nat.div_add_mod k d).symm
-    have h_da : ω ^ ((k / d) * (d * a)) = 1 := by
-      obtain ⟨a', ha'⟩ := hc_dvd_a
-      rw [ha', show (k / d) * (d * (c * a')) = (k / d) * a' * (c * d) from by ring, hc_mul_d]
-      exact (hω.pow_eq_one_iff_dvd _).mpr ⟨(k / d) * a', mul_comm _ _⟩
-    conv_lhs => rw [hkd]
-    rw [show (d * (k / d) + k % d) * a = (k % d) * a + (k / d) * (d * a) from by ring, pow_add,
-      h_da, mul_one]
-  rw [show (∏ k ∈ Finset.range n, (1 - ω ^ (k * a) * T)) =
-      ∏ k ∈ Finset.range n, (1 - ω ^ ((k % d) * a) * T) from
-    Finset.prod_congr rfl (fun k _ => by rw [← h_period k])]
-  rw [← Finset.prod_fiberwise_of_maps_to
-    (g := fun k : ℕ => k % d) (t := Finset.range d)
-    (fun k _ => Finset.mem_range.mpr (Nat.mod_lt _ hd_pos))]
-  have h_inner : ∀ j ∈ Finset.range d,
-      (∏ k ∈ (Finset.range n).filter (fun k => k % d = j), (1 - ω ^ ((k % d) * a) * T)) =
-      (1 - ω ^ (j * a) * T) ^ c := by
-    intro j hj
-    have h_rewrite : ∀ k ∈ (Finset.range n).filter (fun k => k % d = j),
-        (1 - ω ^ ((k % d) * a) * T) = (1 - ω ^ (j * a) * T) := fun k hk => by
-      rw [Finset.mem_filter] at hk
-      rw [hk.2]
-    rw [Finset.prod_congr rfl h_rewrite, Finset.prod_const]
-    congr 1
-    rw [Finset.mem_range] at hj
-    obtain ⟨c', hcd'⟩ := hd_dvd_n
-    have hc_eq : c = c' := by
-      have hd_mul : d * c = n := by rw [mul_comm, hc_mul_d]
-      exact Nat.eq_of_mul_eq_mul_left hd_pos (by rw [hd_mul, hcd'])
-    rw [hc_eq]
-    have hset : (Finset.range n).filter (fun k => k % d = j) =
-        (Finset.range c').image (fun m => j + m * d) := by
-      ext k
-      simp only [Finset.mem_filter, Finset.mem_range, Finset.mem_image]
-      refine ⟨fun ⟨hk_lt, hk_mod⟩ => ?_, ?_⟩
-      · have hk_dec : k = j + (k / d) * d := by
-          have h1 : k = d * (k / d) + k % d := (Nat.div_add_mod k d).symm
-          rw [hk_mod, mul_comm d (k / d)] at h1
-          omega
-        refine ⟨k / d, ?_, hk_dec.symm⟩
-        have h_lt_cd : (k / d) * d < c' * d := by
-          have h_le : (k / d) * d ≤ k := Nat.div_mul_le_self k d
-          rw [mul_comm c' d, ← hcd']
-          omega
-        exact Nat.lt_of_mul_lt_mul_right h_lt_cd
-      · rintro ⟨m, hm_lt, rfl⟩
-        refine ⟨?_, ?_⟩
-        · rw [hcd', mul_comm]
-          nlinarith
-        · rw [Nat.add_mul_mod_self_right, Nat.mod_eq_of_lt hj]
-    rw [hset, Finset.card_image_of_injective _ (fun x y hxy => by simp at hxy; omega),
-      Finset.card_range]
-  rw [Finset.prod_congr rfl h_inner, Finset.prod_pow]
-  congr 1
-  have h_inj : Set.InjOn (fun j : ℕ => (ω ^ a) ^ j) ↑(Finset.range d) := by
-    intro x hx y hy hxy
-    simp only [Finset.coe_range, Set.mem_Iio] at hx hy
-    exact hω_a_prim.pow_inj hx hy hxy
-  have h_image : Finset.image (fun j : ℕ => (ω ^ a) ^ j) (Finset.range d) =
-      Polynomial.nthRootsFinset d (1 : ℂ) := by
-    apply Finset.eq_of_subset_of_card_le
-    · intro ζ hζ
-      simp only [Finset.mem_image, Finset.mem_range] at hζ
-      obtain ⟨j, _, rfl⟩ := hζ
-      rw [Polynomial.mem_nthRootsFinset hd_pos, ← pow_mul, mul_comm j d, pow_mul,
-        hω_a_prim.pow_eq_one, one_pow]
-    · rw [hω_a_prim.card_nthRootsFinset, Finset.card_image_of_injOn h_inj, Finset.card_range]
-  calc ∏ j ∈ Finset.range d, (1 - ω ^ (j * a) * T)
-      = ∏ j ∈ Finset.range d, (1 - (ω ^ a) ^ j * T) := by
-        refine Finset.prod_congr rfl (fun j _ => ?_)
-        rw [← pow_mul, mul_comm a j]
-    _ = ∏ ζ ∈ Finset.image (fun j : ℕ => (ω ^ a) ^ j) (Finset.range d), (1 - ζ * T) := by
-        rw [Finset.prod_image h_inj]
-    _ = ∏ ζ ∈ Polynomial.nthRootsFinset d (1 : ℂ), (1 - ζ * T) := by rw [h_image]
-    _ = 1 - T ^ d := prod_nthRootsFinset_one_sub_mul d hd_pos T
 
 variable (p : ℕ) [hp : Fact p.Prime]
 
@@ -222,74 +130,8 @@ lemma orderOf_unitOfPrimeNe_sq_eq_localResidueDegreePlus
 attribute [local instance] Classical.decEq Classical.propDecidable
 
 lemma card_even_characters_kplus (hp_odd' : p ≠ 2) :
-    (Finset.univ.filter fun χ : DirichletCharacter ℂ p => χ.Even).card = (p - 1) / 2 := by
-  classical
-  let E : Finset (DirichletCharacter ℂ p) := Finset.univ.filter fun χ => χ.Even
-  let O : Finset (DirichletCharacter ℂ p) := Finset.univ.filter fun χ => χ.Odd
-  have hdisj : Disjoint E O := by
-    refine Finset.disjoint_left.mpr ?_
-    intro χ hχE hχO
-    have hχ_even : χ.Even := by simpa [E] using hχE
-    have hχ_odd : χ.Odd := by simpa [O] using hχO
-    exact DirichletCharacter.Odd.not_even χ hχ_odd hχ_even
-  have hunion : E ∪ O = (Finset.univ : Finset (DirichletCharacter ℂ p)) := by
-    ext χ
-    simp only [E, O, Finset.mem_union, Finset.mem_filter, Finset.mem_univ, true_and, iff_true]
-    exact DirichletCharacter.even_or_odd χ
-  have hneg_ne_one : (-1 : ZMod p) ≠ 1 := by
-    haveI : Fact (2 < p) := ⟨lt_of_le_of_ne hp.out.two_le (Ne.symm hp_odd')⟩
-    exact ZMod.neg_one_ne_one
-  have hsum_zero :
-      ∑ χ : DirichletCharacter ℂ p, χ (-1 : ZMod p) = 0 :=
-    DirichletCharacter.sum_characters_eq_zero (R := ℂ) (n := p) hneg_ne_one
-  have hsum_split :
-      (∑ χ : DirichletCharacter ℂ p, χ (-1 : ZMod p)) = (E.card : ℂ) - O.card := by
-    have hsum_union :
-        (∑ χ : DirichletCharacter ℂ p, χ (-1 : ZMod p)) =
-          (E ∪ O).sum (fun χ => χ (-1 : ZMod p)) := by
-      rw [hunion]
-    have hsum_E : E.sum (fun χ => χ (-1 : ZMod p)) = E.card := by
-      calc
-        E.sum (fun χ => χ (-1 : ZMod p)) = E.sum (fun _ => (1 : ℂ)) := by
-          refine Finset.sum_congr rfl ?_
-          intro χ hχ
-          have hχ_even : χ.Even := by simpa [E] using hχ
-          simpa [DirichletCharacter.Even] using hχ_even
-        _ = E.card := by simp
-    have hsum_O : O.sum (fun χ => χ (-1 : ZMod p)) = -(O.card : ℂ) := by
-      calc
-        O.sum (fun χ => χ (-1 : ZMod p)) = O.sum (fun _ => (-1 : ℂ)) := by
-          refine Finset.sum_congr rfl ?_
-          intro χ hχ
-          have hχ_odd : χ.Odd := by simpa [O] using hχ
-          simpa [DirichletCharacter.Odd] using hχ_odd
-        _ = -(O.card : ℂ) := by simp
-    calc
-      (∑ χ : DirichletCharacter ℂ p, χ (-1 : ZMod p))
-          = E.sum (fun χ => χ (-1 : ZMod p)) + O.sum (fun χ => χ (-1 : ZMod p)) := by
-            rw [hsum_union, Finset.sum_union hdisj]
-      _ = (E.card : ℂ) - O.card := by
-            rw [hsum_E, hsum_O]
-            simp [sub_eq_add_neg]
-  have hbalance : (E.card : ℂ) - O.card = 0 := by
-    rw [← hsum_split]
-    exact hsum_zero
-  have hsame : E.card = O.card := by
-    have hsame_real : (E.card : ℝ) = O.card := by
-      have hdiff_real : (E.card : ℝ) - O.card = 0 := by
-        simpa using congrArg Complex.re hbalance
-      nlinarith
-    exact_mod_cast hsame_real
-  have hcard_total : E.card + O.card = p - 1 := by
-    calc
-      E.card + O.card = (E ∪ O).card := by
-        rw [← Finset.card_union_of_disjoint hdisj]
-      _ = Nat.card (DirichletCharacter ℂ p) := by
-        rw [hunion, Finset.card_univ, Nat.card_eq_fintype_card]
-      _ = p - 1 := card_dirichletCharacter_complex (p := p)
-  have hcardE : E.card = (p - 1) / 2 := by
-    omega
-  simpa [E] using hcardE
+    (Finset.univ.filter fun χ : DirichletCharacter ℂ p => χ.Even).card = (p - 1) / 2 :=
+  card_even_characters p hp_odd'
 
 lemma card_evenNontrivialCharacters (hp_odd' : p ≠ 2) :
     (evenNontrivialCharacters (p := p)).card = (p - 3) / 2 := by
@@ -541,7 +383,7 @@ lemma prod_even_characters_eval_eq_pow_localResidueDegreePlus
                 simp [Nat.mul_assoc, Nat.mul_comm]
               rw [hexp, pow_mul]
       _ = (1 - T ^ (n2 / n2.gcd a)) ^ n2.gcd a :=
-            prod_pow_primRoot_eq_pow_kplus hn2_pos a hω_sq_prim T
+            prod_pow_primRoot_eq_pow hn2_pos a hω_sq_prim T
   have hfin_g2 : IsOfFinOrder (g ^ 2) := isOfFinOrder_iff_pow_eq_one.mpr
     ⟨n2, hn2_pos, by
       rw [← pow_mul]
