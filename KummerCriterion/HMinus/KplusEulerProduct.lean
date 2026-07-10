@@ -66,10 +66,13 @@ lemma idealNormMultiplicityNF_p_pow_eq_one_plus (hp_odd : p ≠ 2) (k : ℕ) :
   haveI : PPlus.IsMaximal := Ring.DimensionLEOne.maximalOfPrime hPPlus_ne hPPlusmem.1
   haveI : PPlus.LiesOver (Ideal.span {(p : ℤ)}) := by
     simpa [rationalPrimeIdeal] using hPPlusmem.2
+  haveI : (Ideal.span {(p : ℤ)} : Ideal ℤ).IsMaximal := by
+    simpa [rationalPrimeIdeal] using Int.ideal_span_isMaximal_of_prime p
   have habsNormPPlus : Ideal.absNorm PPlus = p := by
     calc
       Ideal.absNorm PPlus = p ^ (1 : ℕ) := by
         rw [← primesOverPlus_inertiaDeg_eq_one_at_p (p := p) (K := K) PPlus hPPlusmem]
+        rw [← Ideal.inertiaDeg'_eq_inertiaDeg (p := Ideal.span {(p : ℤ)}) (q := PPlus)]
         exact Ideal.absNorm_eq_pow_inertiaDeg' PPlus hp.out
       _ = p := by simp
   unfold idealNormMultiplicityNF idealNormMultiplicity
@@ -192,8 +195,15 @@ lemma absNorm_eq_q_pow_localResidueDegreePlus_of_mem_primesOverFinsetPlus
   haveI : PPlus.IsPrime := hPPlus_over.1
   haveI : PPlus.LiesOver (Ideal.span {((q : ℕ) : ℤ)}) := by
     simpa [rationalPrimeIdeal] using hPPlus_over.2
+  haveI : (rationalPrimeIdeal (q : ℕ)).IsMaximal := by
+    simpa [rationalPrimeIdeal] using Int.ideal_span_isMaximal_of_prime (q : ℕ)
+  haveI : (Ideal.span {((q : ℕ) : ℤ)} : Ideal ℤ).IsMaximal := by
+    simpa [rationalPrimeIdeal] using Int.ideal_span_isMaximal_of_prime (q : ℕ)
+  haveI : PPlus.IsMaximal := Ideal.isMaximal_of_mem_primesOver hPPlus_over
   rw [← primesOver_inertiaDeg_eq_localResidueDegreePlus
     (p := p) (K := K) hp_odd hq PPlus hPPlus_over]
+  rw [← Ideal.inertiaDeg'_eq_inertiaDeg
+    (p := Ideal.span {((q : ℕ) : ℤ)}) (q := PPlus)]
   exact Ideal.absNorm_eq_pow_inertiaDeg' PPlus q.2
 
 lemma normalizedFactors_card_mul_localResidueDegreePlus_of_absNorm_prime_pow

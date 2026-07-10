@@ -161,6 +161,8 @@ lemma maximalRealSubfield_torsionOrder_eq_two :
     Units.torsionOrder (NumberField.maximalRealSubfield K) = 2 := by
   let L := NumberField.maximalRealSubfield K
   classical
+  let := Fintype.ofFinite (Units.torsion L)
+  rw [Units.torsionOrder, Nat.card_eq_fintype_card]
   refine Finset.card_eq_two.2
     ⟨1, ⟨-1, neg_one_mem_torsion⟩, by simp [← Subtype.coe_ne_coe],
       Finset.ext fun x ↦ ⟨fun _ ↦ ?_, fun _ ↦ Finset.mem_univ _⟩⟩

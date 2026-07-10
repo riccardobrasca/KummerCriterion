@@ -146,16 +146,13 @@ theorem conj_zeta_pow [IsCMField K]
 include hp_odd in
 /-- The ramification index of `zetaPrime` over `zetaPrimePlus` is `2`. -/
 theorem ramificationIdx_zetaPrimePlus_eq_two [IsCMField K] :
-    (zetaPrimePlus p K).ramificationIdx (zetaPrime p K) = 2 := by
+    (zetaPrime p K).ramificationIdx (𝓞 (NumberField.maximalRealSubfield K)) = 2 := by
   have hmap0 : Ideal.map (algebraMap (𝓞 (NumberField.maximalRealSubfield K)) (𝓞 K))
       (zetaPrimePlus p K) ≠ ⊥ := by
     rw [zetaPrimePlus_map_eq p hp_odd K]
     exact pow_ne_zero 2 (zetaPrime_ne_bot p K)
-  rw [Ideal.IsDedekindDomain.ramificationIdx_eq_multiplicity
-      (R := 𝓞 (NumberField.maximalRealSubfield K)) (S := 𝓞 K)
-      (p := zetaPrimePlus p K) (P := zetaPrime p K) hmap0 (zetaPrime_isPrime p K),
-    zetaPrimePlus_map_eq p hp_odd K,
-    multiplicity_pow_self_of_prime
+  rw [Ideal.IsDedekindDomain.ramificationIdx_eq_multiplicity (zetaPrimePlus p K) (zetaPrime p K)
+    hmap0, zetaPrimePlus_map_eq p hp_odd K, multiplicity_pow_self_of_prime
       (Ideal.prime_of_isPrime (zetaPrime_ne_bot p K) (zetaPrime_isPrime p K))]
 
 include hp_odd in
@@ -193,9 +190,9 @@ theorem multiplicity_zetaPrime_even_of_map_eq_span [IsCMField K]
   have hPIrr : Irreducible P := (Ideal.prime_of_isPrime hP0 hPprime).irreducible
   have hPPlusIrr : Irreducible PPlus :=
     (Ideal.prime_of_isPrime hPPlus0 inferInstance).irreducible
-  have hemul : emultiplicity P (I.map f) = PPlus.ramificationIdx P * emultiplicity PPlus I := by
+  have hemul : emultiplicity P (I.map f) = PPlus.ramificationIdx' P * emultiplicity PPlus I := by
     simpa [P, PPlus, f] using
-      Ideal.IsDedekindDomain.emultiplicity_map_eq_ramificationIdx_mul
+      Ideal.IsDedekindDomain.emultiplicity_map_eq_ramificationIdx'_mul
         (R := 𝓞 (NumberField.maximalRealSubfield K)) (S := 𝓞 K)
         (v := PPlus) (w := P) (I := I) hI0 hPPlusIrr hPIrr hP0
   have hcount_even :
@@ -203,7 +200,8 @@ theorem multiplicity_zetaPrime_even_of_map_eq_span [IsCMField K]
     rw [Even]
     refine ⟨Multiset.count PPlus (UniqueFactorizationMonoid.normalizedFactors I), ?_⟩
     have hemul' := hemul
-    rw [ramificationIdx_zetaPrimePlus_eq_two (p := p) (hp_odd := hp_odd) (K := K),
+    rw [Ideal.ramificationIdx'_eq_ramificationIdx (p := PPlus) (q := P) hPPlus0,
+      ramificationIdx_zetaPrimePlus_eq_two (p := p) (hp_odd := hp_odd) (K := K),
       UniqueFactorizationMonoid.emultiplicity_eq_count_normalizedFactors hPIrr hmap0,
       UniqueFactorizationMonoid.emultiplicity_eq_count_normalizedFactors hPPlusIrr hI0,
       normalize_eq P, normalize_eq PPlus] at hemul'
