@@ -83,7 +83,8 @@ theorem dworkParameter_evalₐ (N : ℕ) :
     AdicCompletion.evalₐ (lambdaIdeal p K) N (dworkParameter p K) =
       Ideal.Quotient.mk ((lambdaIdeal p K) ^ N)
         (dworkParameterApprox p K N) := by
-  simp [dworkParameter, dworkParameterCauchySeq]
+  exact AdicCompletion.evalₐ_mkₐ (lambdaIdeal p K) N
+    (dworkParameterCauchySeq p K)
 
 theorem dworkParameter_evalₐ_one :
     AdicCompletion.evalₐ (lambdaIdeal p K) 1 (dworkParameter p K) = 0 := by
@@ -196,9 +197,8 @@ theorem valuedCyclotomicZetaInteger_eq_one_add_lambda :
 @[simp]
 theorem valuedCyclotomicZetaInteger_pow_eq_one :
     valuedCyclotomicZetaInteger p K ^ p = 1 := by
-  ext
-  change valuedCyclotomicZeta p K ^ p = 1
-  rw [valuedCyclotomicZeta_pow_eq_one]
+  apply Subtype.ext
+  exact valuedCyclotomicZeta_pow_eq_one p K
 
 /-- The valuation-side integer corresponding to the conjugate
 `zeta_p⁻¹ - 1 = zeta_p^(p-1) - 1`. -/

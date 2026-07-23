@@ -48,19 +48,18 @@ theorem continuous_valuedCompletionCyclotomicEquiv
   let w : Valuation K ℤᵐ⁰ := v.comap σ.toRingHom
   let h : v.IsEquiv w :=
     lambdaValuation_isEquiv_comap_cyclotomicSigma (p := p) (K := K) a
-  change Continuous fun x =>
-    (((UniformSpace.Completion.mapRingEquiv
-      (WithVal.congr v w (RingEquiv.refl K))
-      h.uniformContinuous_congr.continuous
-      h.symm.uniformContinuous_congr.continuous).trans
-    (UniformSpace.Completion.mapRingEquiv
-      (WithVal.congr w v σ)
-      (uniformContinuous_withValCongr_comap (K := K) v σ).continuous
-      (uniformContinuous_withValCongr_comap_symm (K := K) v σ).continuous)) x)
-  change Continuous fun x =>
-    UniformSpace.Completion.map (WithVal.congr w v σ)
-      (UniformSpace.Completion.map (WithVal.congr v w (RingEquiv.refl K)) x)
-  exact UniformSpace.Completion.continuous_map.comp UniformSpace.Completion.continuous_map
+  change Continuous fun x : ValuedCompletion p K =>
+    IsDedekindDomain.HeightOneSpectrum.adicCompletion.ofCompletion
+      (UniformSpace.Completion.map (WithVal.congr w v σ)
+        (UniformSpace.Completion.map (WithVal.congr v w (RingEquiv.refl K))
+          x.toCompletion))
+  exact
+    (IsDedekindDomain.HeightOneSpectrum.adicCompletion.uniformEquiv K
+      (lambdaHeightOneSpectrum p K)).symm.continuous.comp <|
+      UniformSpace.Completion.continuous_map.comp <|
+        UniformSpace.Completion.continuous_map.comp <|
+          (IsDedekindDomain.HeightOneSpectrum.adicCompletion.uniformEquiv K
+            (lambdaHeightOneSpectrum p K)).continuous
 
 set_option maxHeartbeats 800000 in
 -- Needed for completion induction over the rational embedding.
@@ -73,23 +72,28 @@ theorem valuedCompletionCyclotomicEquiv_rationalToLambdaCompletionRingHom
   have hecont : Continuous (valuedCompletionCyclotomicEquiv (p := p) K a) :=
     continuous_valuedCompletionCyclotomicEquiv (p := p) (K := K) a
   have hfcont : Continuous (rationalToLambdaCompletionRingHom (p := p) (K := K)) := by
-    simpa [rationalToLambdaCompletionRingHom] using!
-      (UniformSpace.Completion.continuous_map
-        (f := rationalToLambdaWithValRingHom (p := p) (K := K)))
-  induction x using UniformSpace.Completion.induction_on with
-  | hp =>
-      exact isClosed_eq (hecont.comp hfcont) hfcont
-  | ih y =>
-      rw [rationalToLambdaCompletionRingHom_coe]
-      change valuedCompletionCyclotomicEquiv (p := p) K a
-          (algebraMap K (ValuedCompletion p K)
-            (algebraMap ℚ K
-              ((WithVal.equiv ((lambdaRationalHeightOneSpectrum p).valuation ℚ)) y))) =
-        algebraMap K (ValuedCompletion p K)
-          (algebraMap ℚ K
-            ((WithVal.equiv ((lambdaRationalHeightOneSpectrum p).valuation ℚ)) y))
-      rw [valuedCompletionCyclotomicEquiv_algebraMap]
-      simp
+    exact
+      (IsDedekindDomain.HeightOneSpectrum.adicCompletion.uniformEquiv K
+        (lambdaHeightOneSpectrum p K)).symm.continuous.comp <|
+        UniformSpace.Completion.continuous_map.comp <|
+          (IsDedekindDomain.HeightOneSpectrum.adicCompletion.uniformEquiv ℚ
+            (lambdaRationalHeightOneSpectrum p)).continuous
+  refine DenseRange.induction_on
+    (IsDedekindDomain.HeightOneSpectrum.denseRange_algebraMap ℚ
+      (lambdaRationalHeightOneSpectrum p)) x
+    (isClosed_eq (hecont.comp hfcont) hfcont) ?_
+  intro y
+  let vQ := (lambdaRationalHeightOneSpectrum p).valuation ℚ
+  rw [show algebraMap ℚ
+        ((lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) y =
+      ((WithVal.toVal vQ y : WithVal vQ) :
+        (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) from rfl]
+  rw [rationalToLambdaCompletionRingHom_coe]
+  change valuedCompletionCyclotomicEquiv (p := p) K a
+      (algebraMap K (ValuedCompletion p K) (algebraMap ℚ K y)) =
+    algebraMap K (ValuedCompletion p K) (algebraMap ℚ K y)
+  rw [valuedCompletionCyclotomicEquiv_algebraMap]
+  simp
 
 @[simp]
 theorem valuedIntegerComplexConj_rationalPadicIntegerToValuedInteger
@@ -97,7 +101,7 @@ theorem valuedIntegerComplexConj_rationalPadicIntegerToValuedInteger
     valuedIntegerComplexConj (p := p) K
         (rationalPadicIntegerToValuedInteger (p := p) (K := K) x) =
       rationalPadicIntegerToValuedInteger (p := p) (K := K) x := by
-  ext
+  apply Subtype.ext
   change valuedCompletionCyclotomicEquiv (p := p) K (-1)
       (rationalToLambdaCompletionRingHom (p := p) (K := K)
         (x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ)) =
@@ -288,7 +292,8 @@ theorem dworkEvenPowerLinearMap_injective (hp_two : 2 < p) :
     congrArg Subtype.val hab
   have hext :=
     dworkParameterPowerLinearMap_injective (p := p) (K := K) hfull
-  ext i
+  apply funext
+  intro i
   have hi := congrFun hext i.1
   simpa [dworkEvenCoeffExtend, i.2] using hi
 

@@ -201,17 +201,17 @@ theorem integralArtinHasseNormalizedExpMinusOneSeries_map_valuedIntegerCyclotomi
           ValuedIntegerRing p K →+* ValuedIntegerRing p K)
         (integralArtinHasseNormalizedExpMinusOneSeries p K) =
       integralArtinHasseNormalizedExpMinusOneSeries p K := by
-  ext n
+  apply PowerSeries.ext
+  intro n
   rw [PowerSeries.coeff_map]
   rw [integralArtinHasseNormalizedExpMinusOneSeries_coeff]
   rw [integralExpMinusOneSeries]
   rw [Furtwaengler.DieudonneDwork.IsRIntegralPS.coeff_mapTo]
-  exact congrArg Subtype.val
-    (Conjugation.valuedIntegerCyclotomicEquiv_rIntegralRatToValuedInteger
+  exact Conjugation.valuedIntegerCyclotomicEquiv_rIntegralRatToValuedInteger
     (p := p) (K := K) a
     ⟨(PowerSeries.coeff (R := ℚ) (n + 1))
       (PadicLogSetup.FormalDwork.expMinusOneSeries p),
-      PadicLogSetup.FormalDwork.expMinusOneSeries_isPIntegral p (n + 1)⟩)
+      PadicLogSetup.FormalDwork.expMinusOneSeries_isPIntegral p (n + 1)⟩
 
 omit [NumberField.IsCMField K] in
 /-- Formal normalized-factor identity for the integral Artin-Hasse series. -/

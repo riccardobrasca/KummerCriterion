@@ -329,7 +329,7 @@ theorem coeff_pow_coe_eq_zero_of_lt_of_constantCoeff_eq_zero
     simpa [Polynomial.constantCoeff_coe] using hP0
   have hle : (n : ℕ∞) ≤ ((P : PowerSeries A) ^ n).order :=
     PowerSeries.le_order_pow_of_constantCoeff_eq_zero n hconst
-  exact PowerSeries.coeff_of_lt_order d ((ENat.coe_lt_coe.mpr hdn).trans_le hle)
+  exact PowerSeries.coeff_of_lt_order d ((ENat.natCast_lt_natCast.mpr hdn).trans_le hle)
 
 theorem coeff_subst_log_coe_eq_sum_Icc
     {A : Type*} [CommRing A] [Algebra ℚ A]

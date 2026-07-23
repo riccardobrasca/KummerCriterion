@@ -365,7 +365,13 @@ lemma one_add_zetaInteger_isUnit (hp_odd' : p ≠ 2) :
     rw [Ideal.absNorm_span_singleton, hnorm, Int.natAbs_one]
   have hunit : IsUnit ((hη.toInteger : 𝓞 K) - 1) :=
     (Ideal.span_singleton_eq_top).mp hspan
-  simpa [η, sub_eq_add_neg, add_assoc, add_comm, add_left_comm] using hunit.neg
+  have hη_toInteger :
+      (hη.toInteger : 𝓞 K) = -(hζ.toInteger : 𝓞 K) := by
+    apply RingOfIntegers.ext
+    change η = -ζ
+    rfl
+  rw [hη_toInteger] at hunit
+  simpa [sub_eq_add_neg, add_assoc, add_comm, add_left_comm] using hunit.neg
 
 set_option linter.unusedSectionVars false in
 lemma zetaInteger_pow_eq_one :

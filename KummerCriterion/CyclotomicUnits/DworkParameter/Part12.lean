@@ -98,45 +98,53 @@ theorem rationalToLambdaCompletionRingHom_le_one_iff
   let f : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ →
       LambdaValuedCompletion p K :=
     rationalToLambdaCompletionRingHom (p := p) (K := K)
-  induction x using UniformSpace.Completion.induction_on with
-  | hp =>
-      let A : Set ((lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) :=
-        {x | Valued.v x ≤ 1}
-      let B : Set ((lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) :=
-        {x | Valued.v (f x) ≤ 1}
-      have hA' :
-          IsClopen {x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ |
-            Valued.v.restrict x ≤ 1} :=
-        Valued.isClopen_closedBall
-          (R := (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ)
-          (r := 1) one_ne_zero
-      have hA : IsClopen A := by
-        convert hA' using 1
-        ext x
-        simp [A, Valuation.restrict_le_one_iff]
-      have hB' :
-          IsClopen {x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ |
-            Valued.v.restrict (f x) ≤ 1} :=
-        (Valued.isClopen_closedBall
-          (R := LambdaValuedCompletion p K) (r := 1)
-          one_ne_zero).preimage
-          (continuous_algebraMap_rationalCompletionToLambdaAlgebra (p := p) (K := K))
-      have hB : IsClopen B := by
-        convert hB' using 1
-        ext x
-        simp [B, Valuation.restrict_le_one_iff]
-      have hset :
-          {x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ |
-              Valued.v (f x) ≤ 1 ↔ Valued.v x ≤ 1} =
-            (B ∩ A) ∪ (Bᶜ ∩ Aᶜ) := by
-        ext x
-        simp [A, B, iff_iff_and_or_not_and_not, and_comm]
-      rw [hset]
-      exact (hB.inter hA).1.union ((hB.compl.inter hA.compl).1)
-  | ih x =>
-      rw [rationalToLambdaCompletionRingHom_coe]
-      simpa [Valued.valuedCompletion_apply] using
-        rationalToLambdaWithValRingHom_le_one_iff (p := p) (K := K) x
+  refine DenseRange.induction_on
+    (IsDedekindDomain.HeightOneSpectrum.denseRange_algebraMap ℚ
+      (lambdaRationalHeightOneSpectrum p)) x ?_ ?_
+  · let A : Set ((lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) :=
+      {x | Valued.v x ≤ 1}
+    let B : Set ((lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) :=
+      {x | Valued.v (f x) ≤ 1}
+    have hA' :
+        IsClopen {x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ |
+          Valued.v.restrict x ≤ 1} :=
+      Valued.isClopen_closedBall
+        (R := (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ)
+        (r := 1) one_ne_zero
+    have hA : IsClopen A := by
+      convert hA' using 1
+      ext x
+      simp [A, Valuation.restrict_le_one_iff]
+    have hB' :
+        IsClopen {x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ |
+          Valued.v.restrict (f x) ≤ 1} :=
+      (Valued.isClopen_closedBall
+        (R := LambdaValuedCompletion p K) (r := 1)
+        one_ne_zero).preimage
+        (continuous_algebraMap_rationalCompletionToLambdaAlgebra (p := p) (K := K))
+    have hB : IsClopen B := by
+      convert hB' using 1
+      ext x
+      simp [B, Valuation.restrict_le_one_iff]
+    have hset :
+        {x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ |
+            Valued.v (f x) ≤ 1 ↔ Valued.v x ≤ 1} =
+          (B ∩ A) ∪ (Bᶜ ∩ Aᶜ) := by
+      ext x
+      simp [A, B, iff_iff_and_or_not_and_not, and_comm]
+    rw [hset]
+    exact (hB.inter hA).1.union ((hB.compl.inter hA.compl).1)
+  · intro y
+    let vQ := (lambdaRationalHeightOneSpectrum p).valuation ℚ
+    rw [show algebraMap ℚ
+          ((lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) y =
+        ((WithVal.toVal vQ y : WithVal vQ) :
+          (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) from rfl]
+    rw [rationalToLambdaCompletionRingHom_coe]
+    simpa [vQ,
+      IsDedekindDomain.HeightOneSpectrum.adicCompletion.valued_coe] using
+      rationalToLambdaWithValRingHom_le_one_iff
+        (p := p) (K := K) (WithVal.toVal vQ y)
 
 /-- The rational `p`-adic integer ring, expressed as the integer subring of the
 rational adic completion. This is canonically equivalent to `ℤ_[p]`, but it
@@ -162,20 +170,16 @@ def rationalPadicIntegerToValuedInteger :
     ⟨rationalToLambdaCompletionRingHom (p := p) (K := K)
         (x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ),
       rationalToLambdaCompletionRingHom_mem_integers (p := p) (K := K) x⟩
-  map_zero' := by
-    ext
-    exact map_zero (rationalToLambdaCompletionRingHom (p := p) (K := K))
-  map_one' := by
-    ext
-    exact map_one (rationalToLambdaCompletionRingHom (p := p) (K := K))
-  map_add' x y := by
-    ext
-    exact map_add (rationalToLambdaCompletionRingHom (p := p) (K := K))
-      (x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) y
-  map_mul' x y := by
-    ext
-    exact map_mul (rationalToLambdaCompletionRingHom (p := p) (K := K))
-      (x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) y
+  map_zero' :=
+    Subtype.ext (map_zero (rationalToLambdaCompletionRingHom (p := p) (K := K)))
+  map_one' :=
+    Subtype.ext (map_one (rationalToLambdaCompletionRingHom (p := p) (K := K)))
+  map_add' x y :=
+    Subtype.ext (map_add (rationalToLambdaCompletionRingHom (p := p) (K := K))
+      (x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) y)
+  map_mul' x y :=
+    Subtype.ext (map_mul (rationalToLambdaCompletionRingHom (p := p) (K := K))
+      (x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) y)
 
 instance instAlgebraRationalPadicIntegerValuedInteger :
     Algebra (RationalPadicIntegerRing p) (ValuedIntegerRing p K) :=
@@ -334,7 +338,7 @@ theorem mem_lambdaIdeal_iff_valuation_le_lambda
     IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.integers
       (K := K) (v := Furtwaengler.KummerArtinHasse.lambdaHeightOneSpectrum p K)
   have hset :=
-    Valuation.Integers.coe_span_singleton_eq_setOf_le_v_algebraMap
+    Valuation.Integers.coe_span_singleton_eq_setOfPred_le_v_algebraMap
       (F := ValuedCompletion p K) hv (valuedCyclotomicLambdaInteger p K)
   change x ∈ ((Ideal.span ({valuedCyclotomicLambdaInteger p K} :
       Set (ValuedIntegerRing p K)) : Ideal (ValuedIntegerRing p K)) :
@@ -557,41 +561,34 @@ theorem exists_completion_fin_valuation_sub_le_exp_neg_one_of_valuation_le_one
   have hcover_all :
       ∀ x : ValuedCompletion p K, x ∈ Aᶜ ∪ B := by
     intro x
-    induction x using UniformSpace.Completion.induction_on with
-    | hp =>
-        exact (hA.compl.union hB).1
-    | ih y =>
-        by_cases hy : Valued.v (y : ValuedCompletion p K) ≤ 1
-        · right
-          have hyK : v.valuation K (WithVal.ofVal y) ≤ 1 := by
-            simpa [v, Valued.valuedCompletion_apply, WithVal.apply_ofVal] using hy
-          rcases exists_global_fin_valuation_sub_le_exp_neg_one_of_valuation_le_one
-              (p := p) (K := K) (WithVal.ofVal y) hyK with
-            ⟨i, hi⟩
-          refine Set.mem_iUnion.mpr ⟨i, ?_⟩
-          have hconst :
-              ((i : ℕ) : ValuedCompletion p K) =
-                (((i : ℕ) : WithVal (v.valuation K)) :
-                  ValuedCompletion p K) :=
-            (map_natCast
-                (UniformSpace.Completion.coeRingHom :
-                  WithVal (v.valuation K) →+*
-                      ValuedCompletion p K) (i : ℕ)).symm
-          have htarget :
-              Valued.v
-                  (((y -
-                    ((i : ℕ) : WithVal (v.valuation K))) :
-                  WithVal (v.valuation K)) :
-                    ValuedCompletion p K) ≤ WithZero.exp (-1 : ℤ) := by
-            simpa [v, Valued.valuedCompletion_apply, WithVal.apply_ofVal] using! hi
-          change
-            Valued.v
-                ((y : ValuedCompletion p K) - ((i : ℕ) : ValuedCompletion p K)) ≤
-              WithZero.exp (-1 : ℤ)
-          rw [hconst]
-          simpa [UniformSpace.Completion.coe_sub] using htarget
-        · left
-          exact hy
+    refine DenseRange.induction_on
+      (IsDedekindDomain.HeightOneSpectrum.denseRange_algebraMap K v) x
+      (hA.compl.union hB).1 ?_
+    intro y
+    by_cases hy :
+        Valued.v (algebraMap K (ValuedCompletion p K) y) ≤ 1
+    · right
+      have hyK : v.valuation K y ≤ 1 := by
+        rw [show algebraMap K (ValuedCompletion p K) y =
+          (y : ValuedCompletion p K) from rfl] at hy
+        rw [IsDedekindDomain.HeightOneSpectrum.adicCompletion.valued_coe K
+          (lambdaHeightOneSpectrum p K) y] at hy
+        exact hy
+      rcases exists_global_fin_valuation_sub_le_exp_neg_one_of_valuation_le_one
+          (p := p) (K := K) y hyK with
+        ⟨i, hi⟩
+      refine Set.mem_iUnion.mpr ⟨i, ?_⟩
+      change Valued.v
+        (algebraMap K (ValuedCompletion p K) y - (i : ℤ)) ≤
+          WithZero.exp (-1 : ℤ)
+      rw [← map_intCast (algebraMap K (ValuedCompletion p K)) (i : ℤ), ← map_sub]
+      rw [show algebraMap K (ValuedCompletion p K) (y - (i : ℤ)) =
+        ((y - (i : ℤ) : K) : ValuedCompletion p K) from rfl]
+      rw [IsDedekindDomain.HeightOneSpectrum.adicCompletion.valued_coe K
+        (lambdaHeightOneSpectrum p K)]
+      simpa [v] using hi
+    · left
+      exact hy
   have hcover : x ∈ Aᶜ ∪ B := hcover_all x
   have hxA : x ∈ A := hx
   have hxB : x ∈ B := by

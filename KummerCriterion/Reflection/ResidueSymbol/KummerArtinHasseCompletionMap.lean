@@ -158,11 +158,12 @@ theorem lambdaRationalHeightOneSpectrum_eq_primesEquiv_symm :
     lambdaRationalHeightOneSpectrum p =
       (Rat.HeightOneSpectrum.primesEquiv (R := ℤ)).symm (lambdaPadicPrime p) := by
   apply IsDedekindDomain.HeightOneSpectrum.ext
-  apply Ideal.ext
-  intro z
-  simp [Rat.HeightOneSpectrum.primesEquiv, lambdaRationalHeightOneSpectrum,
-    lambdaRationalPrimeIdeal, lambdaPadicPrime, Rat.IsIntegralClosure.intEquiv,
-    Ideal.mem_comap, Ideal.mem_span_singleton]
+  change lambdaRationalPrimeIdeal p =
+    (Ideal.span ({(p : ℤ)} : Set ℤ)).map
+      (Rat.IsIntegralClosure.intEquiv ℤ).symm
+  ext z
+  simp [lambdaRationalPrimeIdeal, Rat.IsIntegralClosure.intEquiv,
+    Ideal.mem_span_singleton]
 
 theorem primesEquiv_lambdaRationalHeightOneSpectrum :
     Rat.HeightOneSpectrum.primesEquiv
@@ -290,7 +291,7 @@ theorem continuous_rationalToLambdaWithValRingHom :
           (Valued.v : Valuation (WithVal vQ) ℤᵐ⁰)).mpr hsourceP_nz
   refine ⟨Units.mk0 (Valued.v.restrict sourceP) hsourceP_ne, ?_⟩
   intro x hx
-  simp only [Set.mem_setOf_eq, Units.val_mk0] at hx ⊢
+  simp only [Set.mem_ofPred_eq, Units.val_mk0] at hx ⊢
   rw [Valuation.restrict_lt_iff_lt_embedding]
   have hx_val : Valued.v x < Valued.v sourceP := by
     rwa [Valuation.restrict_lt_iff] at hx
@@ -315,9 +316,13 @@ lambda-adic completion of `K`. -/
 def rationalToLambdaCompletionRingHom :
     (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ →+*
       LambdaValuedCompletion p K :=
-  UniformSpace.Completion.mapRingHom
-    (rationalToLambdaWithValRingHom (p := p) (K := K))
-    (continuous_rationalToLambdaWithValRingHom (p := p) (K := K))
+  (IsDedekindDomain.HeightOneSpectrum.adicCompletion.equiv K
+      (lambdaHeightOneSpectrum p K)).symm.toRingHom.comp <|
+    (UniformSpace.Completion.mapRingHom
+      (rationalToLambdaWithValRingHom (p := p) (K := K))
+      (continuous_rationalToLambdaWithValRingHom (p := p) (K := K))).comp <|
+        (IsDedekindDomain.HeightOneSpectrum.adicCompletion.equiv ℚ
+          (lambdaRationalHeightOneSpectrum p)).toRingHom
 
 @[simp]
 theorem rationalToLambdaCompletionRingHom_coe
@@ -325,8 +330,24 @@ theorem rationalToLambdaCompletionRingHom_coe
     rationalToLambdaCompletionRingHom (p := p) (K := K) x =
       (rationalToLambdaWithValRingHom (p := p) (K := K) x :
         LambdaValuedCompletion p K) :=
-  UniformSpace.Completion.mapRingHom_coe
-    (continuous_rationalToLambdaWithValRingHom (p := p) (K := K)) x
+  by
+    apply IsDedekindDomain.HeightOneSpectrum.adicCompletion.ext
+    change
+      (IsDedekindDomain.HeightOneSpectrum.adicCompletion.equiv K
+        (lambdaHeightOneSpectrum p K))
+          ((IsDedekindDomain.HeightOneSpectrum.adicCompletion.equiv K
+            (lambdaHeightOneSpectrum p K)).symm
+              ((UniformSpace.Completion.mapRingHom
+                (rationalToLambdaWithValRingHom (p := p) (K := K))
+                (continuous_rationalToLambdaWithValRingHom (p := p) (K := K)))
+                  (x : UniformSpace.Completion
+                    (WithVal ((lambdaRationalHeightOneSpectrum p).valuation ℚ))))) =
+        (rationalToLambdaWithValRingHom (p := p) (K := K) x :
+          UniformSpace.Completion
+            (WithVal ((lambdaHeightOneSpectrum p K).valuation K)))
+    rw [RingEquiv.apply_symm_apply]
+    exact UniformSpace.Completion.mapRingHom_coe
+      (continuous_rationalToLambdaWithValRingHom (p := p) (K := K)) x
 
 /-- The rational-completion algebra structure on the lambda completion before
 identifying the rational completion with mathlib's `ℚ_[p]`. -/
@@ -343,9 +364,13 @@ theorem continuous_algebraMap_rationalCompletionToLambdaAlgebra :
     Continuous (algebraMap ((lambdaRationalHeightOneSpectrum p).adicCompletion ℚ)
       (LambdaValuedCompletion p K)) := by
   change Continuous (rationalToLambdaCompletionRingHom (p := p) (K := K))
-  simpa [rationalToLambdaCompletionRingHom] using!
-    (UniformSpace.Completion.continuous_map
-      (f := rationalToLambdaWithValRingHom (p := p) (K := K)))
+  exact
+    (IsDedekindDomain.HeightOneSpectrum.adicCompletion.uniformEquiv K
+      (lambdaHeightOneSpectrum p K)).symm.continuous.comp <|
+      (UniformSpace.Completion.continuous_map
+        (f := rationalToLambdaWithValRingHom (p := p) (K := K))).comp <|
+        (IsDedekindDomain.HeightOneSpectrum.adicCompletion.uniformEquiv ℚ
+          (lambdaRationalHeightOneSpectrum p)).continuous
 
 end KummerArtinHasse
 end Furtwaengler

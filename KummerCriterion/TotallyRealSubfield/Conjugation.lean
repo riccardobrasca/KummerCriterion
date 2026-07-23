@@ -118,7 +118,11 @@ theorem antisymmetric_unit_eq_neg_one_pow_mul_zeta_pow [IsCMField K]
       IsCyclotomicExtension.zeta p ℚ K := by
     change (hζ.toInteger : K) = IsCyclotomicExtension.zeta p ℚ K
     exact hζ.coe_toInteger
-  simpa [hunit_coe] using hk
+  change (u : K) =
+    (-1 : K) ^ k * IsCyclotomicExtension.zeta p ℚ K ^ n
+  change (u : K) = (-1 : K) ^ k * hζ.toInteger.1 ^ n at hk
+  rw [hζ.coe_toInteger] at hk
+  exact hk
 
 /-- Complex conjugation sends `ζ^m` to `ζ^{-m}`. -/
 theorem conj_zeta_pow [IsCMField K]

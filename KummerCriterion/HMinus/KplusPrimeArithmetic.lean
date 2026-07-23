@@ -253,7 +253,10 @@ lemma galEquivZMod_complexConj_eq_neg_one (hp_odd : p ≠ 2) :
       c (IsCyclotomicExtension.zeta p ℚ K) =
         (IsCyclotomicExtension.zeta p ℚ K) ^ (p - 1) := by
     have hc' := congrArg (fun x : 𝓞 K => (x : K)) (complexConj_apply_zeta (p := p) (K := K))
-    simpa [c, complexConjRat_apply, coe_ringOfIntegersComplexConj] using hc'
+    rw [coe_ringOfIntegersComplexConj] at hc'
+    change (complexConj K) hζ.toInteger.1 =
+      hζ.toInteger.1 ^ (p - 1) at hc'
+    simpa [c, complexConjRat_apply, hζ.coe_toInteger] using hc'
   have hpow :
       (IsCyclotomicExtension.zeta p ℚ K) ^
           (IsCyclotomicExtension.Rat.galEquivZMod p K c).val.val =

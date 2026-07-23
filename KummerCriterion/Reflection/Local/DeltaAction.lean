@@ -99,8 +99,12 @@ variable {R : Type*} [CommRing R] (I : Ideal R)
 theorem evalₐ_factor_pow_le {m n : ℕ} (hmn : m ≤ n) (x : AdicCompletion I R) :
     Ideal.Quotient.factor (Ideal.pow_le_pow_right hmn) (AdicCompletion.evalₐ I n x) =
       AdicCompletion.evalₐ I m x := by
-  simp only [AdicCompletion.evalₐ, AlgHom.coe_comp, Function.comp_apply,
-    AlgHom.ofLinearMap_apply]
+  change
+    Ideal.Quotient.factor (Ideal.pow_le_pow_right hmn)
+        ((Ideal.quotientEquivAlgOfEq R (by ext y; simp))
+          (AdicCompletion.eval I R n x)) =
+      (Ideal.quotientEquivAlgOfEq R (by ext y; simp))
+        (AdicCompletion.eval I R m x)
   have htrans :
       AdicCompletion.transitionMap I R hmn ((AdicCompletion.eval I R n) x) =
         ((AdicCompletion.eval I R m) x) :=

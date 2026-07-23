@@ -720,7 +720,7 @@ theorem valuedCyclotomicLambda_valuation :
   rw [show algebraMap K (ValuedCompletion p K)
       (globalCyclotomicLambdaFieldUnit p K : K) =
         ((globalCyclotomicLambdaFieldUnit p K : K) : ValuedCompletion p K) from rfl]
-  rw [Valued.valuedCompletion_apply]
+  rw [IsDedekindDomain.HeightOneSpectrum.adicCompletion.valued_coe]
   exact globalCyclotomicLambdaFieldUnit_valuation (p := p) (K := K)
 
 end PadicLogSetup

@@ -56,7 +56,7 @@ theorem valuedIntegerCyclotomicEquiv_algebraMap_ringOfIntegers
         (algebraMap (𝓞 K) (ValuedIntegerRing p K) x) =
       algebraMap (𝓞 K) (ValuedIntegerRing p K)
         (cyclotomicRingOfIntegersEquiv (p := p) K a x) := by
-  ext
+  apply Subtype.ext
   change valuedCompletionCyclotomicEquiv (p := p) K a
       (algebraMap (𝓞 K) (ValuedCompletion p K) x) =
     algebraMap (𝓞 K) (ValuedCompletion p K)
@@ -490,7 +490,7 @@ theorem valuedIntegerCyclotomicEquiv_rIntegralRatToValuedInteger
     valuedIntegerCyclotomicEquiv (p := p) K a
         (rIntegralRatToValuedInteger p K q) =
       rIntegralRatToValuedInteger p K q := by
-  ext
+  apply Subtype.ext
   change valuedCompletionCyclotomicEquiv (p := p) K a
       (algebraMap K (ValuedCompletion p K) (algebraMap ℚ K (q : ℚ))) =
     algebraMap K (ValuedCompletion p K) (algebraMap ℚ K (q : ℚ))
@@ -839,7 +839,7 @@ theorem valuedIntegerCyclotomicEquiv_rationalPadicIntegerToValuedInteger
     valuedIntegerCyclotomicEquiv (p := p) K a
         (rationalPadicIntegerToValuedInteger (p := p) (K := K) x) =
       rationalPadicIntegerToValuedInteger (p := p) (K := K) x := by
-  ext
+  apply Subtype.ext
   change valuedCompletionCyclotomicEquiv (p := p) K a
       (rationalToLambdaCompletionRingHom (p := p) (K := K)
         (x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ)) =

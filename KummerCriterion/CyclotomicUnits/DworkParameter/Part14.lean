@@ -175,9 +175,8 @@ theorem exists_natCast_prime_smul_eq_of_mem_primeIdeal_smul_top
     refine ⟨b, ?_⟩
     simpa [mul_comm] using hb
   choose b hb using hdiv
-  refine ⟨b, ?_⟩
-  ext i
-  simpa [Pi.smul_apply, smul_eq_mul] using congrArg Subtype.val (hb i)
+  refine ⟨b, funext fun i => ?_⟩
+  simpa [Pi.smul_apply, smul_eq_mul] using hb i
 
 theorem dworkParameterPowerLinearMap_eq_zero_of_natCast_prime_smul_eq
     {a b : Fin (p - 1) → RationalPadicIntegerRing p}

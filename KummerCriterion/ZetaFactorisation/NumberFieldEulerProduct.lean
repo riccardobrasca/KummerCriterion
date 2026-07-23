@@ -330,7 +330,7 @@ lemma summable_idealNormMultiplicity_mul_cpow_neg {s : ℂ} (hs : 1 < s.re) :
   classical
   have h_finite : ∀ (b : ℕ), {I : NonzeroIdeal L | Ideal.absNorm I.1 = b}.Finite := fun b => by
     refine Set.Finite.preimage (f := fun I : NonzeroIdeal L => I.1) ?_
-      (Ideal.finite_setOf_absNorm_eq (S := 𝓞 L) b)
+      (Ideal.finite_setOfPred_absNorm_eq b)
     intro _ _ _ _; exact Subtype.ext
   have h_sum_card : ∀ n : ℕ, ∑ k ∈ Finset.Icc 1 n, idealNormMultiplicity L k =
       Nat.card {I : NonzeroIdeal L // Ideal.absNorm I.1 ≤ n} := fun n => by
@@ -339,7 +339,7 @@ lemma summable_idealNormMultiplicity_mul_cpow_neg {s : ℂ} (hs : 1 < s.re) :
     rw [show ((fun I : NonzeroIdeal L => Ideal.absNorm I.1) ⁻¹' ↑(Finset.Icc 1 n)) =
         {I : NonzeroIdeal L | Ideal.absNorm I.1 ≤ n} from by
       ext ⟨I, hI⟩
-      simp only [Set.mem_preimage, Finset.coe_Icc, Set.mem_Icc, Set.mem_setOf_eq]
+      simp only [Set.mem_preimage, Finset.coe_Icc, Set.mem_Icc, Set.mem_ofPred_eq]
       exact ⟨fun h => h.2, fun h =>
         ⟨Nat.one_le_iff_ne_zero.mpr (mt Ideal.absNorm_eq_zero_iff.mp hI), h⟩⟩] at key
     exact key.symm

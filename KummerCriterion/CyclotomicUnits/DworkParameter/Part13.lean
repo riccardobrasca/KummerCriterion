@@ -95,7 +95,7 @@ theorem rationalPadicPrimeIdeal_pow_eq_valuation_closedBall (n : ℕ) :
   simpa using
     (IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.integers
       (K := ℚ)
-      (v := lambdaRationalHeightOneSpectrum p)).coe_span_singleton_eq_setOf_le_v_algebraMap
+      (v := lambdaRationalHeightOneSpectrum p)).coe_span_singleton_eq_setOfPred_le_v_algebraMap
       ((p : RationalPadicIntegerRing p) ^ n)
 
 theorem rationalPadicPrimeIdeal_pow_isOpen (n : ℕ) :
@@ -125,7 +125,7 @@ theorem rationalPadicPrimeIdeal_pow_isOpen (n : ℕ) :
       ((fun x : R₀ => (x : F)) ⁻¹' {x : F | Valued.v.restrict x ≤ r}) =
         (((rationalPadicPrimeIdeal p) ^ n : Ideal R₀) : Set R₀) := by
     ext x
-    rw [Set.mem_preimage, Set.mem_setOf_eq]
+    rw [Set.mem_preimage, Set.mem_ofPred_eq]
     dsimp [r, R₀, F]
     rw [rationalPadicPrimeIdeal_pow_eq_valuation_closedBall (p := p) n]
     dsimp [r]
@@ -307,7 +307,7 @@ theorem rationalPadicPrimeIdeal_pow_nhds_zero
   intro x hx
   apply hus
   apply hγu
-  rw [Set.mem_setOf_eq]
+  rw [Set.mem_ofPred_eq]
   have hxv :
       Valued.v ((x : R₀) : F) ≤
         Valued.v (((p : R₀) ^ n : R₀) : F) := by
