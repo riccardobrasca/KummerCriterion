@@ -507,12 +507,12 @@ private theorem binomSumFrac_loop_toRat (m : Nat) (bs : List Frac) (k : Nat) (c 
       KummerCriterion.BernoulliFast.binomSum.loop m (bs.map toRat) k (toRat c) (toRat acc) := by
   induction bs generalizing k c acc with
   | nil =>
-      simp [binomSumFrac.loop, KummerCriterion.BernoulliFast.binomSum.loop]
+      simp [binomSumFrac.loop, KummerCriterion.BernoulliFast.binomSum_loop_nil]
   | cons b rest ih =>
       have hbs' : valid b ∧ rest.Forall valid := by
         simpa [List.Forall] using hbs
-      simp only [binomSumFrac.loop, List.map_cons,
-        KummerCriterion.BernoulliFast.binomSum.loop]
+      simp only [binomSumFrac.loop, List.map_cons]
+      rw [KummerCriterion.BernoulliFast.binomSum_loop_cons]
       rw [ih (k + 1)
         (divN (mulZ c ((m : Int) - (k : Int))) (k + 1))
         (addF acc (mulF c b)) hbs'.2
@@ -550,7 +550,7 @@ private theorem bernoulliComputeFracList_toRat (n : Nat) :
       KummerCriterion.BernoulliFast.bernoulliList n := by
   induction n with
   | zero =>
-      simp [bernoulliComputeFracList, KummerCriterion.BernoulliFast.bernoulliList,
+      simp [bernoulliComputeFracList, KummerCriterion.BernoulliFast.bernoulliList_zero,
         toRat, Rat.mkRat_eq_div]
   | succ n ih =>
       have hvalid := bernoulliComputeFracList_valid n
@@ -561,7 +561,7 @@ private theorem bernoulliComputeFracList_toRat (n : Nat) :
         binomSumFrac_toRat _ _ hvalid
       have hsValid : valid (binomSumFrac (bernoulliComputeFracList n) (n + 2)) :=
         binomSumFrac_valid _ _ hvalid
-      simp only [bernoulliComputeFracList, KummerCriterion.BernoulliFast.bernoulliList,
+      simp only [bernoulliComputeFracList, KummerCriterion.BernoulliFast.bernoulliList_succ,
         List.map_append, List.map_cons, List.map_nil, ih]
       rw [toRat_negF, toRat_divN hsValid (Nat.succ_ne_zero (n + 1)), hs, ih]
       norm_num [Nat.cast_add, add_comm, add_left_comm, add_assoc]

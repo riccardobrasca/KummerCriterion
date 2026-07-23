@@ -150,14 +150,6 @@ theorem not_dvd_num_bernoulli_of_sub_one_dvd
   not_dvd_num_of_add_inv_den_not_dvd hp
     (not_dvd_den_bernoulli_add_inv_of_sub_one_dvd hp hn_pos hn_even hdiv)
 
-/-- Even-index Bernoulli numerators are odd. -/
-theorem odd_bernoulli_num_of_even
-    {n : ℕ} (hn_two : 2 ≤ n) (hn_even : Even n) :
-    Odd (bernoulli n).num := by
-  rw [← Int.not_even_iff_odd, even_iff_two_dvd]
-  exact not_dvd_num_bernoulli_of_sub_one_dvd
-    (p := 2) Nat.prime_two (by omega) hn_even (by simp)
-
 /-- If `p - 1 ∣ n`, then `p` cannot divide the reduced numerator of `B_n / n`. -/
 theorem not_dvd_num_bernoulli_div_self_of_sub_one_dvd
     {p n : ℕ} (hp : p.Prime) (hn_pos : 0 < n) (hn_even : Even n)
@@ -172,14 +164,6 @@ theorem sub_one_not_dvd_of_dvd_num_bernoulli_div_self
     (hnum : (p : ℤ) ∣ (((bernoulli n : ℚ) / n : ℚ).num)) :
     ¬ (p - 1) ∣ n := fun hdiv =>
   not_dvd_num_bernoulli_div_self_of_sub_one_dvd hp hn_pos hn_even hdiv hnum
-
-/-- Even-index divided Bernoulli numerators are odd. -/
-theorem odd_bernoulli_div_self_num_of_even
-    {n : ℕ} (hn_pos : 0 < n) (hn_even : Even n) :
-    Odd (((bernoulli n : ℚ) / (n : ℕ) : ℚ).num) := by
-  rw [← Int.not_even_iff_odd, even_iff_two_dvd]
-  exact not_dvd_num_bernoulli_div_self_of_sub_one_dvd
-    (p := 2) Nat.prime_two hn_pos hn_even (by simp)
 
 /-- For a prime correction term `1/q`, multiplying by `p` gives a
 `p`-adic integer. -/
@@ -252,43 +236,6 @@ theorem p_mul_bernoulli_mem_padicInt_vonStaudt
     push_cast
     ring
   rw [hmain, hC]
-  push_cast
-  ring
-
-/-- If the `p`-term is absent from the von Staudt correction sum, then that
-correction sum has denominator prime to `p`. -/
-theorem vonStaudtCorrection_den_not_dvd_of_not_sub_one_dvd
-    {p n : ℕ} (hp : p.Prime) (hnot : ¬ p - 1 ∣ n) :
-    ¬ p ∣ (∑ q ∈ vonStaudtPrimesFor n, (1 : ℚ) / q).den := by
-  have hfilter :
-      (vonStaudtPrimesFor n).filter (fun q => q ≠ p) = vonStaudtPrimesFor n := by
-    apply Finset.filter_true_of_mem
-    intro q hq
-    rw [vonStaudtPrimesFor, Finset.mem_filter] at hq
-    intro hqp
-    subst q
-    exact hnot hq.2.2
-  simpa [hfilter] using
-    vonStaudtCorrection_rest_den_not_dvd (p := p) (n := n) hp
-
-/-- Direct von Staudt-Clausen generic case: if `(p - 1) ∤ n`, then `B_n`
-is a `p`-adic integer. -/
-theorem bernoulli_mem_padicInt_vonStaudt_of_not_sub_one_dvd
-    {p n : ℕ} [Fact p.Prime] (hn_even : Even n) (hnot : ¬ p - 1 ∣ n) :
-    ∃ z : ℤ_[p], ((bernoulli n : ℚ) : ℚ_[p]) = (z : ℚ_[p]) := by
-  let C : ℚ := ∑ q ∈ vonStaudtPrimesFor n, (1 : ℚ) / q
-  have hCden : ¬ p ∣ C.den := by
-    dsimp [C]
-    exact vonStaudtCorrection_den_not_dvd_of_not_sub_one_dvd
-      (p := p) (n := n) (Fact.out : Nat.Prime p) hnot
-  let Cint : ℤ_[p] := ⟨(C : ℚ_[p]), Padic.norm_rat_le_one hCden⟩
-  obtain ⟨T, hT⟩ := bernoulli_add_vonStaudtCorrection_mem_int hn_even
-  refine ⟨T - Cint, ?_⟩
-  have hTQ : ((bernoulli n + C : ℚ) : ℚ_[p]) = (T : ℚ_[p]) := by
-    exact_mod_cast hT.symm
-  dsimp [Cint]
-  change ((bernoulli n : ℚ) : ℚ_[p]) = (T : ℚ_[p]) - (C : ℚ_[p])
-  rw [← hTQ]
   push_cast
   ring
 

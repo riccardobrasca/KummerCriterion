@@ -28,12 +28,23 @@ open Finset
  `acc + ∑_{j=0}^{|bs|−1} C(m, k+j) · bs[j]`
 where `c = ↑C(m, k)` is the running binomial coefficient maintained
 incrementally in `ℚ`. -/
-def binomSum.loop (m : ℕ) : List ℚ → ℕ → ℚ → ℚ → ℚ
-  | [], _, _, acc => acc
-  | b :: rest, k, c, acc =>
-    binomSum.loop m rest (k + 1)
-      (c * ((m : ℚ) - k) / ((k : ℚ) + 1))
-      (acc + c * b)
+def binomSum.loop (m : ℕ) (bs : List ℚ) : ℕ → ℚ → ℚ → ℚ :=
+  List.rec
+    (fun _ _ acc => acc)
+    (fun b _ loop k c acc =>
+      loop (k + 1)
+        (c * ((m : ℚ) - k) / ((k : ℚ) + 1))
+        (acc + c * b))
+    bs
+
+theorem binomSum_loop_nil (m k : ℕ) (c acc : ℚ) :
+    binomSum.loop m [] k c acc = acc := rfl
+
+theorem binomSum_loop_cons (m k : ℕ) (b : ℚ) (rest : List ℚ) (c acc : ℚ) :
+    binomSum.loop m (b :: rest) k c acc =
+      binomSum.loop m rest (k + 1)
+        (c * ((m : ℚ) - k) / ((k : ℚ) + 1))
+        (acc + c * b) := rfl
 
 /-- `binomSum bs m = ∑_{k<|bs|} C(m,k) · bs[k]`.
 
@@ -49,12 +60,19 @@ Uses the recurrence derived from `sum_bernoulli`:
  `(n+2) · B_{n+1} + ∑_{k≤n} C(n+2, k) · Bₖ = 0`
 so that
  `B_{n+1} = − (∑_{k≤n} C(n+2,k) · Bₖ) / (n+2)`. -/
-def bernoulliList : ℕ → List ℚ
-  | 0 => [(1 : ℚ)]
-  | n + 1 =>
-    let prev := bernoulliList n
-    let s := binomSum prev (n + 2)
-    prev ++ [- s / ((n : ℚ) + 2)]
+def bernoulliList (n : ℕ) : List ℚ :=
+  Nat.rec [(1 : ℚ)]
+    (fun n prev =>
+      let s := binomSum prev (n + 2)
+      prev ++ [-s / ((n : ℚ) + 2)])
+    n
+
+theorem bernoulliList_zero : bernoulliList 0 = [(1 : ℚ)] := rfl
+
+theorem bernoulliList_succ (n : ℕ) :
+    bernoulliList (n + 1) =
+      bernoulliList n ++
+        [-binomSum (bernoulliList n) (n + 2) / ((n : ℚ) + 2)] := rfl
 
 /-- Fast computable Bernoulli number `Bₙ`.
 
@@ -108,9 +126,10 @@ theorem binomSum_loop_eq (m : ℕ) (bs : List ℚ) (k : ℕ) (c acc : ℚ)
       acc + ∑ j ∈ range bs.length, ↑(m.choose (k + j)) * bs.getD j 0 := by
   induction bs generalizing k c acc with
   | nil =>
-      simp [binomSum.loop]
+      simp [binomSum_loop_nil]
   | cons b rest ih =>
-      simp only [binomSum.loop, List.length_cons]
+      rw [binomSum_loop_cons]
+      simp only [List.length_cons]
       have hc' :
           c * ((m : ℚ) - k) / ((k : ℚ) + 1) = ↑(m.choose (k + 1)) := by
         rw [hc]
@@ -144,13 +163,14 @@ theorem binomSum_eq (bs : List ℚ) (m : ℕ) :
 theorem bernoulliList_length (n : ℕ) : (bernoulliList n).length = n + 1 := by
   induction n with
   | zero =>
-      simp [bernoulliList]
+      simp [bernoulliList_zero]
   | succ n ih =>
-      simp [bernoulliList, ih]
+      rw [bernoulliList_succ]
+      simp [ih]
 
 theorem bernoulliList_getD_lt (n k : ℕ) (hk : k ≤ n) :
     (bernoulliList (n + 1)).getD k 0 = (bernoulliList n).getD k 0 := by
-  simpa [bernoulliList] using
+  simpa [bernoulliList_succ] using
     (List.getD_append (bernoulliList n)
       [- binomSum (bernoulliList n) (n + 2) / ((n : ℚ) + 2)] 0 k
       (by simpa [bernoulliList_length] using Nat.lt_succ_of_le hk))
@@ -163,7 +183,7 @@ theorem bernoulliList_getD_eq :
       intro k hk
       have hk0 : k = 0 := Nat.eq_zero_of_le_zero hk
       subst hk0
-      simp [bernoulliList]
+      simp [bernoulliList_zero]
   | succ n ih =>
       intro k hk
       cases Nat.eq_or_lt_of_le hk with
@@ -175,7 +195,7 @@ theorem bernoulliList_getD_eq :
           have hlast :
               (bernoulliList (n + 1)).getD (n + 1) 0 =
                 - binomSum (bernoulliList n) (n + 2) / ((n : ℚ) + 2) := by
-            rw [bernoulliList]
+            rw [bernoulliList_succ]
             rw [List.getD_append_right _ _ _ _]
             · rw [bernoulliList_length]
               simp

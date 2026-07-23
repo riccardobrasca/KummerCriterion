@@ -42,18 +42,6 @@ theorem exists_prime_dvd_num_of_one_lt_abs
     Nat.exists_prime_and_dvd (show q.num.natAbs ≠ 1 by omega)
   exact ⟨p, hp, (Int.natCast_dvd (m := p) (n := q.num)).mpr hpdvd⟩
 
-/-- If a rational number has odd reduced numerator and real absolute value
-greater than `1`, then its reduced numerator has an odd prime divisor. -/
-theorem exists_odd_prime_dvd_num_of_one_lt_abs
-    {q : ℚ} (hq : (1 : ℝ) < |(q : ℝ)|)
-    (hodd : Odd q.num) :
-    ∃ p : ℕ, p.Prime ∧ p ≠ 2 ∧ (p : ℤ) ∣ q.num := by
-  obtain ⟨p, hp, hpdvd⟩ := exists_prime_dvd_num_of_one_lt_abs hq
-  refine ⟨p, hp, ?_, hpdvd⟩
-  intro hp2
-  subst p
-  exact (Int.not_even_iff_odd.2 hodd) (even_iff_two_dvd.mpr hpdvd)
-
 /-- If a prime divides the reduced numerator of a rational number, then the
 rational is congruent to zero modulo `p` in the `p`-adic integers. -/
 theorem padic_eq_p_mul_of_prime_dvd_num
@@ -148,16 +136,5 @@ theorem dvd_num_of_dvd_div_nat_num
     rw [hq]
     simpa using Rat.num_dvd q.num hden_ne
   exact hdiv.trans hnum_dvd
-
-/-- Specialized Bernoulli form of `dvd_num_of_dvd_div_nat_num`.  The extra
-coprimality hypotheses are retained because they are convenient at later call
-sites, although this particular descent only needs `0 < n`. -/
-theorem dvd_bernoulli_num_of_dvd_bernoulli_div_num
-    {p n : ℕ} (_hp : p.Prime) (hn_pos : 0 < n)
-    (_hpn : ¬ p ∣ n)
-    (_hden : ¬ p ∣ (bernoulli n).den)
-    (hdiv : (p : ℤ) ∣ (((bernoulli n : ℚ) / n : ℚ).num)) :
-    (p : ℤ) ∣ (bernoulli n).num :=
-  dvd_num_of_dvd_div_nat_num (q := bernoulli n) hn_pos hdiv
 
 end KummerCriterion

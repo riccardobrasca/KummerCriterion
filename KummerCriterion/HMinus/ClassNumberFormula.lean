@@ -374,11 +374,6 @@ lemma one_add_zetaInteger_isUnit (hp_odd' : p ≠ 2) :
   simpa [sub_eq_add_neg, add_assoc, add_comm, add_left_comm] using hunit.neg
 
 set_option linter.unusedSectionVars false in
-lemma zetaInteger_pow_eq_one :
-    (((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) ^ p : 𝓞 K) = 1 :=
-  zeta_toInteger_pow_eq_one p K
-
-set_option linter.unusedSectionVars false in
 lemma zetaInteger_pow_pred_mul_eq_one :
     (((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) ^ (p - 1) *
         (IsCyclotomicExtension.zeta_spec p ℚ K).toInteger : 𝓞 K) = 1 :=
