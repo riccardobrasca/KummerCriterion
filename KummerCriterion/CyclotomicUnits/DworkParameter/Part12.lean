@@ -165,21 +165,10 @@ theorem rationalToLambdaCompletionRingHom_mem_integers
 /-- Integral rational-completion coefficients as elements of the lambda-valued
 integer ring. -/
 def rationalPadicIntegerToValuedInteger :
-    RationalPadicIntegerRing p →+* ValuedIntegerRing p K where
-  toFun x :=
-    ⟨rationalToLambdaCompletionRingHom (p := p) (K := K)
-        (x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ),
-      rationalToLambdaCompletionRingHom_mem_integers (p := p) (K := K) x⟩
-  map_zero' :=
-    Subtype.ext (map_zero (rationalToLambdaCompletionRingHom (p := p) (K := K)))
-  map_one' :=
-    Subtype.ext (map_one (rationalToLambdaCompletionRingHom (p := p) (K := K)))
-  map_add' x y :=
-    Subtype.ext (map_add (rationalToLambdaCompletionRingHom (p := p) (K := K))
-      (x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) y)
-  map_mul' x y :=
-    Subtype.ext (map_mul (rationalToLambdaCompletionRingHom (p := p) (K := K))
-      (x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) y)
+    RationalPadicIntegerRing p →+* ValuedIntegerRing p K :=
+  ((rationalToLambdaCompletionRingHom (p := p) (K := K)).comp
+      ((lambdaRationalHeightOneSpectrum p).adicCompletionIntegers ℚ).subtype).codRestrict _
+    (rationalToLambdaCompletionRingHom_mem_integers (p := p) (K := K))
 
 instance instAlgebraRationalPadicIntegerValuedInteger :
     Algebra (RationalPadicIntegerRing p) (ValuedIntegerRing p K) :=

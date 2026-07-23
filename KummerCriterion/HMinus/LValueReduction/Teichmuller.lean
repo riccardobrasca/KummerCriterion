@@ -565,18 +565,10 @@ noncomputable def qpadicGeneratorRoot : ℚ_[p] :=
   (((teichmuller p (((unitGroupGenerator p : (ZMod p)ˣ) : ZMod p)) : ℤ_[p])) : ℚ_[p])
 
 theorem qpadicGeneratorRoot_isPrimitiveRoot :
-    IsPrimitiveRoot (qpadicGeneratorRoot p) (p - 1) := by
-  unfold qpadicGeneratorRoot
-  let t : ℤ_[p] :=
-    teichmuller p ((unitGroupGenerator p : (ZMod p)ˣ) : ZMod p)
-  have h :=
-    (teichmuller_isPrimitiveRoot_of_generator (p := p) (g := unitGroupGenerator p)
-      (unitGroupGenerator_zpowers (p := p))).map_of_injective
-      (f := PadicInt.Coe.ringHom) (hf := fun _ _ h => Subtype.coe_injective h)
-  change IsPrimitiveRoot (PadicInt.Coe.ringHom t) (p - 1) at h
-  have hcoe : PadicInt.Coe.ringHom t = (t : ℚ_[p]) :=
-    PadicInt.Coe.ringHom_apply t
-  exact hcoe ▸ h
+    IsPrimitiveRoot (qpadicGeneratorRoot p) (p - 1) :=
+  (teichmuller_isPrimitiveRoot_of_generator (p := p) (g := unitGroupGenerator p)
+    (unitGroupGenerator_zpowers (p := p))).map_of_injective
+    (f := PadicInt.Coe.ringHom) (hf := fun _ _ h => Subtype.coe_injective h)
 
 theorem teichmullerCharQp_apply_unitGroupGeneratorPow (m : ℕ) :
     teichmullerCharQp p (((unitGroupGenerator p) ^ m : (ZMod p)ˣ) : ZMod p) =

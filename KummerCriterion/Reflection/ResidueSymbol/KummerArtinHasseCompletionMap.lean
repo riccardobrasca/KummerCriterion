@@ -330,24 +330,10 @@ theorem rationalToLambdaCompletionRingHom_coe
     rationalToLambdaCompletionRingHom (p := p) (K := K) x =
       (rationalToLambdaWithValRingHom (p := p) (K := K) x :
         LambdaValuedCompletion p K) :=
-  by
-    apply IsDedekindDomain.HeightOneSpectrum.adicCompletion.ext
-    change
-      (IsDedekindDomain.HeightOneSpectrum.adicCompletion.equiv K
-        (lambdaHeightOneSpectrum p K))
-          ((IsDedekindDomain.HeightOneSpectrum.adicCompletion.equiv K
-            (lambdaHeightOneSpectrum p K)).symm
-              ((UniformSpace.Completion.mapRingHom
-                (rationalToLambdaWithValRingHom (p := p) (K := K))
-                (continuous_rationalToLambdaWithValRingHom (p := p) (K := K)))
-                  (x : UniformSpace.Completion
-                    (WithVal ((lambdaRationalHeightOneSpectrum p).valuation ℚ))))) =
-        (rationalToLambdaWithValRingHom (p := p) (K := K) x :
-          UniformSpace.Completion
-            (WithVal ((lambdaHeightOneSpectrum p K).valuation K)))
-    rw [RingEquiv.apply_symm_apply]
-    exact UniformSpace.Completion.mapRingHom_coe
-      (continuous_rationalToLambdaWithValRingHom (p := p) (K := K)) x
+  IsDedekindDomain.HeightOneSpectrum.adicCompletion.ext K
+    (lambdaHeightOneSpectrum p K)
+    (UniformSpace.Completion.mapRingHom_coe
+      (continuous_rationalToLambdaWithValRingHom (p := p) (K := K)) x)
 
 /-- The rational-completion algebra structure on the lambda completion before
 identifying the rational completion with mathlib's `ℚ_[p]`. -/

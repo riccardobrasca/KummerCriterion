@@ -116,18 +116,9 @@ theorem rIntegralRatToValuedCompletion_mem_integers
 the valuation-completion integer ring. -/
 def rIntegralRatToValuedInteger :
     Furtwaengler.DieudonneDwork.rIntegralRatSubring p →+*
-      ValuedIntegerRing p K where
-  toFun q :=
-    ⟨rIntegralRatToValuedCompletion p K q,
-      rIntegralRatToValuedCompletion_mem_integers (p := p) (K := K) q⟩
-  map_zero' :=
-    Subtype.ext (map_zero (rIntegralRatToValuedCompletion p K))
-  map_one' :=
-    Subtype.ext (map_one (rIntegralRatToValuedCompletion p K))
-  map_add' q₁ q₂ :=
-    Subtype.ext (map_add (rIntegralRatToValuedCompletion p K) q₁ q₂)
-  map_mul' q₁ q₂ :=
-    Subtype.ext (map_mul (rIntegralRatToValuedCompletion p K) q₁ q₂)
+      ValuedIntegerRing p K :=
+  (rIntegralRatToValuedCompletion p K).codRestrict _
+    (rIntegralRatToValuedCompletion_mem_integers p K)
 
 /-- The Artin-Hasse exponential as a power series over the chosen completed
 integer ring. -/

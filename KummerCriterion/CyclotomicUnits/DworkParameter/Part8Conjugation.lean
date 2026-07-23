@@ -336,14 +336,7 @@ theorem valuedCompletionCyclotomicEquiv_le_one_iff
       (WithVal.congr w v σ)
       (uniformContinuous_withValCongr_comap (K := K) v σ).continuous
       (uniformContinuous_withValCongr_comap_symm (K := K) v σ).continuous)
-  change Valued.v (e₀.symm (E (e₀ x))) ≤ 1 ↔ Valued.v x ≤ 1
-  have hv_symm (y : v.Completion) : Valued.v (e₀.symm y) = Valued.v y := by
-    exact IsDedekindDomain.HeightOneSpectrum.adicCompletion.valued_ofCompletion K
-      (lambdaHeightOneSpectrum p K) y
-  have hv_apply : Valued.v (e₀ x) = Valued.v x :=
-    IsDedekindDomain.HeightOneSpectrum.adicCompletion.valued_toCompletion K
-      (lambdaHeightOneSpectrum p K) x
-  rw [hv_symm, ← hv_apply]
+  change Valued.v (E (e₀ x)) ≤ 1 ↔ Valued.v (e₀ x) ≤ 1
   dsimp only [E]
   rw [RingEquiv.trans_apply]
   rw [valuedCompletion_withValCongrComap_le_one_iff (K := K) v σ]
@@ -380,34 +373,7 @@ theorem valuedCompletionCyclotomicEquiv_algebraMap
   let w : Valuation K ℤᵐ⁰ := v.comap σ.toRingHom
   let h : v.IsEquiv w :=
     lambdaValuation_isEquiv_comap_cyclotomicSigma (p := p) (K := K) a
-  let e₀ : ValuedCompletion p K ≃+* v.Completion :=
-    IsDedekindDomain.HeightOneSpectrum.adicCompletion.equiv K
-      (lambdaHeightOneSpectrum p K)
-  let E : v.Completion ≃+* v.Completion :=
-    (UniformSpace.Completion.mapRingEquiv
-      (WithVal.congr v w (RingEquiv.refl K))
-      h.uniformContinuous_congr.continuous
-      h.symm.uniformContinuous_congr.continuous).trans
-    (UniformSpace.Completion.mapRingEquiv
-      (WithVal.congr w v σ)
-      (uniformContinuous_withValCongr_comap (K := K) v σ).continuous
-      (uniformContinuous_withValCongr_comap_symm (K := K) v σ).continuous)
   apply IsDedekindDomain.HeightOneSpectrum.adicCompletion.ext
-  change
-    e₀ (e₀.symm (E (e₀ (algebraMap K (ValuedCompletion p K) x)))) =
-      e₀ (algebraMap K (ValuedCompletion p K) (σ x))
-  rw [e₀.apply_symm_apply]
-  have he_alg (y : K) :
-      e₀ (algebraMap K (ValuedCompletion p K) y) =
-        algebraMap K v.Completion y := by
-    exact
-      IsDedekindDomain.HeightOneSpectrum.algebraMap_adicCompletion_toCompletion
-        (𝓞 K) K (lambdaHeightOneSpectrum p K) y
-  rw [he_alg, he_alg]
-  change E (WithVal.toVal v x : v.Completion) =
-    (WithVal.toVal v (σ x) : v.Completion)
-  dsimp only [E]
-  rw [RingEquiv.trans_apply]
   change UniformSpace.Completion.map (WithVal.congr w v σ)
       (UniformSpace.Completion.map (WithVal.congr v w (RingEquiv.refl K))
         (WithVal.toVal v x : v.Completion)) =

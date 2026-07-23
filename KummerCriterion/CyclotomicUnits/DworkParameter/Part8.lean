@@ -196,9 +196,8 @@ theorem valuedCyclotomicZetaInteger_eq_one_add_lambda :
 
 @[simp]
 theorem valuedCyclotomicZetaInteger_pow_eq_one :
-    valuedCyclotomicZetaInteger p K ^ p = 1 := by
-  apply Subtype.ext
-  exact valuedCyclotomicZeta_pow_eq_one p K
+    valuedCyclotomicZetaInteger p K ^ p = 1 :=
+  Subtype.ext (valuedCyclotomicZeta_pow_eq_one p K)
 
 /-- The valuation-side integer corresponding to the conjugate
 `zeta_p⁻¹ - 1 = zeta_p^(p-1) - 1`. -/

@@ -38,8 +38,6 @@ variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
 namespace Conjugation
 
-set_option maxHeartbeats 800000 in
--- Needed for nested completion-map continuity reductions.
 theorem continuous_valuedCompletionCyclotomicEquiv
     (a : CyclotomicUnitDelta p) :
     Continuous (valuedCompletionCyclotomicEquiv (p := p) K a) := by
@@ -61,8 +59,6 @@ theorem continuous_valuedCompletionCyclotomicEquiv
           (IsDedekindDomain.HeightOneSpectrum.adicCompletion.uniformEquiv K
             (lambdaHeightOneSpectrum p K)).continuous
 
-set_option maxHeartbeats 800000 in
--- Needed for completion induction over the rational embedding.
 theorem valuedCompletionCyclotomicEquiv_rationalToLambdaCompletionRingHom
     (a : CyclotomicUnitDelta p)
     (x : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) :
