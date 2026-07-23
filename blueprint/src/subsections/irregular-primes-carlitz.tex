@@ -102,16 +102,14 @@ produce a denominator divisible by $p$, a contradiction; by
 \end{proof}
 
 \begin{lemma}\label{lem:vonstaudt-p-integral}
-  \lean{KummerCriterion.bernoulli_mem_padicInt_vonStaudt_of_not_sub_one_dvd}\leanok
-Let $p$ be a prime and $n$ an even index with $(p-1)\nmid n$.  Then
-$B_n \in \Z_p$.  Without any hypothesis on $n$, one still has
-$pB_n \in \Z_p$.
+  \lean{KummerCriterion.p_mul_bernoulli_mem_padicInt_vonStaudt}\leanok
+Let $p$ be a prime and $n$ an even index.  Then $pB_n \in \Z_p$.
 \end{lemma}
 \begin{proof}\leanok
-Again by von Staudt--Clausen, $B_n$ differs from an integer by the correction
-sum $\sum_{(q-1)\mid n} 1/q$.  When $(p-1)\nmid n$ the term $1/p$ does not
-occur and every summand is a $p$-adic integer; in general multiplying by $p$
-clears the single possible $p$ in the denominator.
+By von Staudt--Clausen, $B_n$ differs from an integer by the correction
+sum $\sum_{(q-1)\mid n} 1/q$.  Each summand has prime denominator, so
+multiplying by $p$ clears the single possible factor of $p$ in the
+denominator and leaves a $p$-adic integer.
 \end{proof}
 
 \section{Growth of divided Bernoulli numbers}
@@ -196,10 +194,10 @@ upper bound on the indices and no coprimality restrictions.  It is proved
 here by the elementary Voronoi route.
 
 \begin{theorem}\label{thm:voronoi-congruence}
-  \lean{KummerCriterion.voronoi_congruence_mod_p_vonStaudt}\leanok
+  \lean{KummerCriterion.voronoi_congruence_mod_p_strong}\leanok
   \uses{lem:vonstaudt-p-integral}
-Let $p$ be an odd prime, $a$ an integer prime to $p$, and $k \ge 2$ an even
-index with $(p-1)\nmid k$ and $p\nmid k+1$.  Then
+Let $p \ge 5$ be a prime, $a$ an integer prime to $p$, and $k$ a positive even
+index with $(p-1)\nmid k$.  Then
 \[
   (a^{k}-1)\,B_k \;\equiv\;
   k\,a^{k-1} \sum_{j=0}^{p-1} j^{\,k-1}\left\lfloor \frac{ja}{p}\right\rfloor
@@ -216,31 +214,28 @@ formula for power sums and the von Staudt--Clausen integrality
 the lower-order terms.
 \end{proof}
 
-\begin{theorem}\label{thm:kummer-congruence-coprime}
-  \lean{KummerCriterion.bernoulli_div_sModEq_of_modEq_voronoiNoBound}\leanok
+\begin{theorem}\label{thm:kummer-congruence-gefive}
+  \lean{KummerCriterion.bernoulli_div_sModEq_of_modEq_full_geFive}\leanok
   \uses{thm:voronoi-congruence}
-Let $p$ be an odd prime and $m, n$ positive even indices with
-$m \equiv n \pmod{p-1}$ and $(p-1)\nmid n$.  Assume moreover that
-$p\nmid mn$ and $p\nmid (m+1)(n+1)$.  Then
+Let $p \ge 5$ be a prime and $m, n$ positive even indices with
+$m \equiv n \pmod{p-1}$ and $(p-1)\nmid n$.  Then
 \[
   \frac{B_m}{m} \;\equiv\; \frac{B_n}{n} \pmod{p}.
 \]
 \end{theorem}
 \begin{proof}\leanok
-Choose a primitive root $a$ modulo $p$ and apply
-\cref{thm:voronoi-congruence} to both indices.  Since $m \equiv n
-\pmod{p-1}$, Fermat's little theorem gives $a^m \equiv a^n$ and
-$j^{m-1}\equiv j^{n-1} \pmod p$ for all $j$ prime to $p$, so the two Voronoi
-sums agree modulo $p$.  Subtracting the two congruences (divided by $m$ and
-$n$, which are units modulo $p$) yields
-$(a^{n}-1)\bigl(B_m/m - B_n/n\bigr) \equiv 0 \pmod p$.  Because $a$ is a
-primitive root and $(p-1)\nmid n$, the factor $a^{n}-1$ is a $p$-adic unit,
-and the congruence follows.
+Choose a primitive root $a$ modulo $p$ and apply \cref{thm:voronoi-congruence}
+to both indices.  Since $m \equiv n \pmod{p-1}$, Fermat's little theorem gives
+$a^m \equiv a^n$ and $j^{m-1}\equiv j^{n-1} \pmod p$ for all $j$, so the two
+Voronoi sums agree modulo $p$.  Subtracting the two instances yields
+$(a^{n}-1)\bigl(B_m/m - B_n/n\bigr) \equiv 0 \pmod p$, and because $a$ is a
+primitive root with $(p-1)\nmid n$ the factor $a^{n}-1$ is a $p$-adic unit,
+giving the congruence.
 \end{proof}
 
 \begin{theorem}\label{thm:kummer-congruence-full}
   \lean{KummerCriterion.bernoulli_div_sModEq_of_modEq_full}\leanok
-  \uses{thm:kummer-congruence-coprime, lem:vonstaudt-p-integral}
+  \uses{thm:kummer-congruence-gefive}
 Let $p$ be an odd prime and $m, n$ positive even indices with
 $m \equiv n \pmod{p-1}$ and $(p-1)\nmid n$.  Then
 \[
@@ -248,15 +243,10 @@ $m \equiv n \pmod{p-1}$ and $(p-1)\nmid n$.  Then
 \]
 \end{theorem}
 \begin{proof}\leanok
-It remains to remove the side conditions of
-\cref{thm:kummer-congruence-coprime}.  Both $B_m/m$ and $B_n/n$ are compared
-with a common representative of the residue class: inside the arithmetic
-progression $\{n + r(p-1)\}$ one can choose indices avoiding the finitely
-many excluded residues modulo $p$, and chaining
-\cref{thm:kummer-congruence-coprime} through such representatives (in the
-formalisation, through the generalised Bernoulli value attached to the
-corresponding power of the Teichm\"uller character) gives the congruence in
-general.
+It remains to lift the restriction $p \ge 5$ of
+\cref{thm:kummer-congruence-gefive} to all odd primes.  The only other odd
+prime is $p = 3$, where $p - 1 = 2$ divides every even index; the hypothesis
+$(p-1)\nmid n$ is then unsatisfiable, so there is nothing left to prove.
 \end{proof}
 
 \section{The Carlitz escape argument}
