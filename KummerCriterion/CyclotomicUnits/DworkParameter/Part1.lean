@@ -171,9 +171,8 @@ theorem formal_inverseSeries_subst_expMinusOneSeries :
   let P : PowerSeries ℚ := FormalDwork.expMinusOneSeries p
   have hcoeff : (PowerSeries.coeff (R := ℚ) 1) P = 1 := by
     simp [P, FormalDwork.expMinusOneSeries]
-  letI : Invertible ((PowerSeries.coeff (R := ℚ) 1) P) := by
-    rw [hcoeff]
-    exact invertibleOfNonzero (by norm_num : (1 : ℚ) ≠ 0)
+  let : Invertible ((PowerSeries.coeff (R := ℚ) 1) P) := by
+    simpa [hcoeff] using invertibleOfNonzero (by norm_num : (1 : ℚ) ≠ 0)
   simpa [P, FormalDwork.inverseSeries, FormalDwork.expMinusOneSeries,
     Furtwaengler.artinHasseExpInverseSeries] using
     PowerSeries.subst_substInv_left P (by simp [P, FormalDwork.expMinusOneSeries])
@@ -442,7 +441,7 @@ theorem span_natCast_prime_eq_lambdaIdeal_pow_pred :
     Ideal.span ({(p : ValuedIntegerRing p K)} : Set (ValuedIntegerRing p K)) =
       (lambdaIdeal p K) ^ (p - 1) := by
   let R : Type _ := ValuedIntegerRing p K
-  haveI : IsCyclotomicExtension {p ^ (0 + 1)} ℚ K := by
+  have : IsCyclotomicExtension {p ^ (0 + 1)} ℚ K := by
     simpa using (inferInstance : IsCyclotomicExtension {p} ℚ K)
   have hζ : IsPrimitiveRoot (IsCyclotomicExtension.zeta p ℚ K) (p ^ (0 + 1)) := by
     simp

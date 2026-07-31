@@ -172,7 +172,6 @@ lemma maximalRealSubfield_torsionOrder_eq_two :
 set_option linter.unusedSectionVars false in
 lemma cyclotomic_torsionOrder_eq_two_mul_prime (hp_odd' : p ≠ 2) :
     Units.torsionOrder K = 2 * p := by
-  letI := neZero_p (p := p)
   have hneven : ¬ Even p := fun h =>
     hp_odd' ((hp.out.even_iff).mp h)
   simpa [hneven, two_mul] using
@@ -309,7 +308,7 @@ lemma one_add_zetaInteger_isUnit (hp_odd' : p ≠ 2) :
     · simp [hζ.eq_orderOf]
     · simp [← hζ.eq_orderOf, hp.out.odd_of_ne_two hp_odd']
   let S : Set K := {x | ∃ n ∈ ({2 * p} : Set ℕ), n ≠ 0 ∧ x ^ n = 1}
-  letI : IsCyclotomicExtension {2 * p} ℚ K :=
+  have : IsCyclotomicExtension {2 * p} ℚ K :=
     (IsCyclotomicExtension.iff_adjoin_eq_top {2 * p} ℚ K).2
       ⟨fun n hn hn0 => by
           rw [Set.mem_singleton_iff] at hn
@@ -522,7 +521,7 @@ lemma differentIdeal_maximalRealSubfield_eq_zetaPrime (hp_odd' : p ≠ 2) :
     rw [hbot, Ideal.map_bot] at hmap
     exact (pow_ne_zero 2 (zetaPrime_ne_bot p K)) hmap.symm
   have hle : differentIdeal A B ≤ P := by
-    letI : PPlus.IsMaximal := Ideal.IsPrime.isMaximal inferInstance hPPlus0
+    have : PPlus.IsMaximal := Ideal.IsPrime.isMaximal inferInstance hPPlus0
     have hdiv : P ∣ differentIdeal A B := by
       have hpow : P ^ 2 ∣ Ideal.map (algebraMap A B) PPlus := by
         rw [zetaPrimePlus_map_eq (p := p) (hp_odd := hp_odd') (K := K)]

@@ -53,7 +53,7 @@ theorem det_cyclotomicEven_logNorm_deletedMulAtReindexed_sq_eq_prod_quotientEige
       (∏ ξ ∈ (Finset.univ : Finset (MulChar (CyclotomicEvenDelta p) ℂ)).erase 1,
         LehmerVandiver.Sinnott.quotientEigenvalue p ξ) ^ 2 := by
   classical
-  letI : Fintype (MulChar (CyclotomicEvenDelta p) ℂ) := Fintype.ofFinite _
+  let : Fintype (MulChar (CyclotomicEvenDelta p) ℂ) := Fintype.ofFinite _
   rw [det_deletedConvolutionMulMatrixAtReindexed_sq_eq_prod_deletedFourierCoeffMul_sq
     (G := CyclotomicEvenDelta p)
     (cyclotomicEvenNontrivCharEquivNonidentity (p := p) hp_two) h₀
@@ -160,15 +160,6 @@ theorem detASubB_sq_eq_deletedFourier_sq
           NumberField.Units.dirichletUnitTheorem.w₀)
         (LehmerVandiver.Sinnott.convolutionLogNormDescended p)).det ^ 2 := by
   classical
-  letI : DecidableEq (InfinitePlace K⁺) := Classical.decEq _
-  letI : DecidablePred (fun w : InfinitePlace K⁺ =>
-      w ≠ NumberField.Units.dirichletUnitTheorem.w₀) := fun _ => instDecidableNot
-  letI : Fintype {w : InfinitePlace K⁺ //
-      w ≠ NumberField.Units.dirichletUnitTheorem.w₀} :=
-    Subtype.fintype (fun w : InfinitePlace K⁺ =>
-      w ≠ NumberField.Units.dirichletUnitTheorem.w₀)
-  letI : DecidableEq {w : InfinitePlace K⁺ //
-      w ≠ NumberField.Units.dirichletUnitTheorem.w₀} := fun a b => a.instDecidableEq b
   let rowEquiv :=
     kplusPlaceStarEquivNonidentityShifted (p := p) (K := K) hp_two
   let colEquiv :=
@@ -246,15 +237,6 @@ theorem detASubBSqEqProdNontrivialQeSq_of_deletedFourier
         w ≠ NumberField.Units.dirichletUnitTheorem.w₀} := fun a b => a.instDecidableEq b
     LehmerVandiver.Sinnott.DetASubBSqEqProdNontrivialQeSq (p := p) K := by
   classical
-  letI : DecidableEq (InfinitePlace K⁺) := Classical.decEq _
-  letI : DecidablePred (fun w : InfinitePlace K⁺ =>
-      w ≠ NumberField.Units.dirichletUnitTheorem.w₀) := fun _ => instDecidableNot
-  letI : Fintype {w : InfinitePlace K⁺ //
-      w ≠ NumberField.Units.dirichletUnitTheorem.w₀} :=
-    Subtype.fintype (fun w : InfinitePlace K⁺ =>
-      w ≠ NumberField.Units.dirichletUnitTheorem.w₀)
-  letI : DecidableEq {w : InfinitePlace K⁺ //
-      w ≠ NumberField.Units.dirichletUnitTheorem.w₀} := fun a b => a.instDecidableEq b
   unfold LehmerVandiver.Sinnott.DetASubBSqEqProdNontrivialQeSq
   rw [detASubB_sq_eq_deletedFourier_sq
     (p := p) (K := K) hp_odd hp_three hp_two hp_ge_five]

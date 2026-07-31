@@ -41,9 +41,9 @@ theorem _root_.KummerCriterion
     {p : ℕ} [hp : Fact p.Prime] (hp_odd : p ≠ 2) :
     IsRegularPrime p ↔
       ∀ k, 1 ≤ k → 2 * k ≤ p - 3 → ¬ (p : ℤ) ∣ (bernoulli (2 * k)).num := by
-  letI : IsCyclotomicExtension {p} ℚ (CyclotomicField p ℚ) :=
+  have : IsCyclotomicExtension {p} ℚ (CyclotomicField p ℚ) :=
     CyclotomicField.isCyclotomicExtension p ℚ
-  letI : IsCMField (CyclotomicField p ℚ) :=
+  have : IsCMField (CyclotomicField p ℚ) :=
     isCMField_of_cyclotomic (p := p) (hp_odd := hp_odd) (K := CyclotomicField p ℚ)
   have hiff : (p : ℕ) ∣ h (CyclotomicField p ℚ) ↔
       ∃ k, 1 ≤ k ∧ 2 * k ≤ p - 3 ∧ (p : ℤ) ∣ (bernoulli (2 * k)).num :=
@@ -92,7 +92,7 @@ theorem isRegularPrime_three_lt100 :
 theorem isRegularPrime_five_lt100 :
     letI : Fact (Nat.Prime 5) := ⟨by norm_num⟩
     IsRegularPrime 5 := by
-  haveI : Fact (Nat.Prime 5) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 5) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 5) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 1 := by omega
@@ -101,7 +101,7 @@ theorem isRegularPrime_five_lt100 :
 theorem isRegularPrime_seven_lt100 :
     letI : Fact (Nat.Prime 7) := ⟨by norm_num⟩
     IsRegularPrime 7 := by
-  haveI : Fact (Nat.Prime 7) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 7) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 7) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 2 := by omega
@@ -110,7 +110,7 @@ theorem isRegularPrime_seven_lt100 :
 theorem isRegularPrime_eleven_lt100 :
     letI : Fact (Nat.Prime 11) := ⟨by norm_num⟩
     IsRegularPrime 11 := by
-  haveI : Fact (Nat.Prime 11) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 11) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 11) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 4 := by omega
@@ -119,7 +119,7 @@ theorem isRegularPrime_eleven_lt100 :
 theorem isRegularPrime_thirteen_lt100 :
     letI : Fact (Nat.Prime 13) := ⟨by norm_num⟩
     IsRegularPrime 13 := by
-  haveI : Fact (Nat.Prime 13) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 13) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 13) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 5 := by omega
@@ -128,7 +128,7 @@ theorem isRegularPrime_thirteen_lt100 :
 theorem isRegularPrime_seventeen_lt100 :
     letI : Fact (Nat.Prime 17) := ⟨by norm_num⟩
     IsRegularPrime 17 := by
-  haveI : Fact (Nat.Prime 17) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 17) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 17) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 7 := by omega
@@ -137,7 +137,7 @@ theorem isRegularPrime_seventeen_lt100 :
 theorem isRegularPrime_nineteen_lt100 :
     letI : Fact (Nat.Prime 19) := ⟨by norm_num⟩
     IsRegularPrime 19 := by
-  haveI : Fact (Nat.Prime 19) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 19) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 19) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 8 := by omega
@@ -146,7 +146,7 @@ theorem isRegularPrime_nineteen_lt100 :
 theorem isRegularPrime_twentythree_lt100 :
     letI : Fact (Nat.Prime 23) := ⟨by norm_num⟩
     IsRegularPrime 23 := by
-  haveI : Fact (Nat.Prime 23) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 23) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 23) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 10 := by omega
@@ -155,7 +155,7 @@ theorem isRegularPrime_twentythree_lt100 :
 theorem isRegularPrime_twentynine_lt100 :
     letI : Fact (Nat.Prime 29) := ⟨by norm_num⟩
     IsRegularPrime 29 := by
-  haveI : Fact (Nat.Prime 29) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 29) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 29) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 13 := by omega
@@ -164,7 +164,7 @@ theorem isRegularPrime_twentynine_lt100 :
 theorem isRegularPrime_thirtyone_lt100 :
     letI : Fact (Nat.Prime 31) := ⟨by norm_num⟩
     IsRegularPrime 31 := by
-  haveI : Fact (Nat.Prime 31) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 31) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 31) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 14 := by omega
@@ -173,7 +173,7 @@ theorem isRegularPrime_thirtyone_lt100 :
 theorem isRegularPrime_fortyone_lt100 :
     letI : Fact (Nat.Prime 41) := ⟨by norm_num⟩
     IsRegularPrime 41 := by
-  haveI : Fact (Nat.Prime 41) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 41) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 41) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 19 := by omega
@@ -182,7 +182,7 @@ theorem isRegularPrime_fortyone_lt100 :
 theorem isRegularPrime_fortythree_lt100 :
     letI : Fact (Nat.Prime 43) := ⟨by norm_num⟩
     IsRegularPrime 43 := by
-  haveI : Fact (Nat.Prime 43) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 43) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 43) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 20 := by omega
@@ -191,7 +191,7 @@ theorem isRegularPrime_fortythree_lt100 :
 theorem isRegularPrime_fortyseven_lt100 :
     letI : Fact (Nat.Prime 47) := ⟨by norm_num⟩
     IsRegularPrime 47 := by
-  haveI : Fact (Nat.Prime 47) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 47) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 47) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 22 := by omega
@@ -200,7 +200,7 @@ theorem isRegularPrime_fortyseven_lt100 :
 theorem isRegularPrime_fiftythree_lt100 :
     letI : Fact (Nat.Prime 53) := ⟨by norm_num⟩
     IsRegularPrime 53 := by
-  haveI : Fact (Nat.Prime 53) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 53) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 53) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 25 := by omega
@@ -209,7 +209,7 @@ theorem isRegularPrime_fiftythree_lt100 :
 theorem isRegularPrime_sixtyone_lt100 :
     letI : Fact (Nat.Prime 61) := ⟨by norm_num⟩
     IsRegularPrime 61 := by
-  haveI : Fact (Nat.Prime 61) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 61) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 61) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 29 := by omega
@@ -218,7 +218,7 @@ theorem isRegularPrime_sixtyone_lt100 :
 theorem isRegularPrime_seventyone_lt100 :
     letI : Fact (Nat.Prime 71) := ⟨by norm_num⟩
     IsRegularPrime 71 := by
-  haveI : Fact (Nat.Prime 71) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 71) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 71) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 34 := by omega
@@ -227,7 +227,7 @@ theorem isRegularPrime_seventyone_lt100 :
 theorem isRegularPrime_seventythree_lt100 :
     letI : Fact (Nat.Prime 73) := ⟨by norm_num⟩
     IsRegularPrime 73 := by
-  haveI : Fact (Nat.Prime 73) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 73) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 73) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 35 := by omega
@@ -236,7 +236,7 @@ theorem isRegularPrime_seventythree_lt100 :
 theorem isRegularPrime_seventynine_lt100 :
     letI : Fact (Nat.Prime 79) := ⟨by norm_num⟩
     IsRegularPrime 79 := by
-  haveI : Fact (Nat.Prime 79) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 79) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 79) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 38 := by omega
@@ -245,16 +245,16 @@ theorem isRegularPrime_seventynine_lt100 :
 theorem isRegularPrime_eightythree_lt100 :
     letI : Fact (Nat.Prime 83) := ⟨by norm_num⟩
     IsRegularPrime 83 := by
-  haveI : Fact (Nat.Prime 83) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 83) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 83) (by norm_num) (by
     intro k hk hk_range
-    have hk_upper : k ≤ 40 := by omega
+    have hk_upper : k ≤ 40 := by   omega
     interval_cases k <;> norm_num)
 
 theorem isRegularPrime_eightynine_lt100 :
-    letI : Fact (Nat.Prime 89) := ⟨by norm_num⟩
+    let : Fact (Nat.Prime 89) := ⟨by norm_num⟩
     IsRegularPrime 89 := by
-  haveI : Fact (Nat.Prime 89) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 89) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 89) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 43 := by omega
@@ -263,7 +263,7 @@ theorem isRegularPrime_eightynine_lt100 :
 theorem isRegularPrime_ninetyseven_lt100 :
     letI : Fact (Nat.Prime 97) := ⟨by norm_num⟩
     IsRegularPrime 97 := by
-  haveI : Fact (Nat.Prime 97) := ⟨by norm_num⟩
+  have : Fact (Nat.Prime 97) := ⟨by norm_num⟩
   exact regular_of_bernoulli_values (p := 97) (by norm_num) (by
     intro k hk hk_range
     have hk_upper : k ≤ 47 := by omega

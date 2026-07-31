@@ -343,7 +343,7 @@ theorem pi_mem_ideal_smul_top_of_forall_mem
     (J : Ideal R) {f : ι → R} (hf : ∀ i, f i ∈ J) :
     f ∈ (J • (⊤ : Submodule R (ι → R))) := by
   classical
-  letI := Fintype.ofFinite ι
+  let := Fintype.ofFinite ι
   rw [← Finset.univ_sum_single f]
   refine Submodule.sum_mem _ ?_
   intro i _hi

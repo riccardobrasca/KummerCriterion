@@ -120,7 +120,7 @@ theorem dvd_bernoulli_div_self_num_of_dvd_bernoulli_num
     (hpm : ¬ p ∣ m)
     (hdiv : (p : ℤ) ∣ (bernoulli m).num) :
     (p : ℤ) ∣ (((bernoulli m : ℚ) / (m : ℕ) : ℚ).num) := by
-  letI : Fact p.Prime := ⟨hp⟩
+  have : Fact p.Prime := ⟨hp⟩
   obtain ⟨b, hb⟩ := padic_eq_p_mul_of_prime_dvd_num (p := p)
     (q := bernoulli m) hdiv
   have hm_unit : IsUnit ((m : ℕ) : ℤ_[p]) := by
@@ -151,7 +151,7 @@ theorem not_isRegularPrime_iff_exists_dvd_bernoulli_div_self_num
     (letI : Fact q.Prime := ⟨hq⟩; ¬ IsRegularPrime q) ↔
       ∃ m : ℕ, 0 < m ∧ Even m ∧
         (q : ℤ) ∣ (((bernoulli m : ℚ) / (m : ℕ) : ℚ).num) := by
-  letI : Fact q.Prime := ⟨hq⟩
+  have : Fact q.Prime := ⟨hq⟩
   constructor
   · intro hirr
     obtain ⟨k, hk_pos, hk_range, hdiv⟩ :=
@@ -260,7 +260,7 @@ theorem exists_not_isRegularPrime_not_mem_carlitz
       (letI : Fact p.Prime := ⟨hp⟩; ¬ IsRegularPrime p) ∧ p ∉ S := by
   obtain ⟨M, p, hp, hp_odd, hM_even, hM_pos, _hSdiv, hnum, hp_not_mem⟩ :=
     exists_numerator_prime_for_carlitz_base S
-  letI : Fact p.Prime := ⟨hp⟩
+  have : Fact p.Prime := ⟨hp⟩
   have hcrit :=
     (not_isRegularPrime_iff_exists_dvd_bernoulli_div_self_num hp hp_odd).mpr
       ⟨M, hM_pos, hM_even, hnum⟩

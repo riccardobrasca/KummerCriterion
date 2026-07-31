@@ -56,9 +56,8 @@ theorem artinHasseExpInverseSeries_isRIntegral
   let P : PowerSeries ℚ := artinHasseExpMinusOneSeries r
   have hcoeff : (PowerSeries.coeff (R := ℚ) 1) P = 1 := by
     simp [P]
-  letI : Invertible ((PowerSeries.coeff (R := ℚ) 1) P) := by
-    rw [hcoeff]
-    exact invertibleOfNonzero (by norm_num : (1 : ℚ) ≠ 0)
+  let : Invertible ((PowerSeries.coeff (R := ℚ) 1) P) := by
+    simpa [hcoeff] using invertibleOfNonzero (by norm_num : (1 : ℚ) ≠ 0)
   have hP : DieudonneDwork.IsRIntegralPS r P := by
     simpa [P] using artinHasseExpMinusOneSeries_isRIntegral r
   have hP0 : PowerSeries.constantCoeff P = 0 := by

@@ -396,12 +396,6 @@ theorem evalIntegralPowerSeriesMod_expMinusOne_neg_dworkParameter_eq_conjugateLa
   | succ M =>
       let I : Ideal (ValuedIntegerRing p K) := lambdaIdeal p K
       let A : Type _ := ValuedIntegerRing p K ⧸ I ^ (M + 1)
-      letI : CommRing A := by
-        dsimp [A]
-        infer_instance
-      letI : SeminormedCommRing A := by
-        dsimp [A]
-        infer_instance
       let q : ValuedIntegerRing p K →+* A := Ideal.Quotient.mk (I ^ (M + 1))
       let φ : Furtwaengler.DieudonneDwork.rIntegralRatSubring p →+* A :=
         q.comp (rIntegralRatToValuedInteger p K)
@@ -612,12 +606,6 @@ theorem dworkConjugateParameter_eq_neg_dworkParameter (hp_two : 2 < p) :
   | succ M =>
       let I : Ideal (ValuedIntegerRing p K) := lambdaIdeal p K
       let A : Type _ := ValuedIntegerRing p K ⧸ I ^ (M + 1)
-      letI : CommRing A := by
-        dsimp [A]
-        infer_instance
-      letI : SeminormedCommRing A := by
-        dsimp [A]
-        infer_instance
       let q : ValuedIntegerRing p K →+* A := Ideal.Quotient.mk (I ^ (M + 1))
       let φ : Furtwaengler.DieudonneDwork.rIntegralRatSubring p →+* A :=
         q.comp (rIntegralRatToValuedInteger p K)

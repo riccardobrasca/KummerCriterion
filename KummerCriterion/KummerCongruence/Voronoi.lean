@@ -62,8 +62,6 @@ lemma voronoi_permutation
     {R : Type*} [AddCommMonoid R] (f : ℕ → R) :
     ∑ j ∈ Finset.range p, f ((j * a) % p) = ∑ j ∈ Finset.range p, f j := by
   have hp : Nat.Prime p := hp.out
-  haveI : NeZero p := ⟨hp.ne_zero⟩
-  haveI : Fact (1 < p) := ⟨hp.one_lt⟩
   have ha_coprime_p : Nat.Coprime a p :=
     Nat.Coprime.symm ((hp.coprime_iff_not_dvd).mpr ha_coprime)
   set b : ℕ := ((a : ZMod p)⁻¹).val with hb_def

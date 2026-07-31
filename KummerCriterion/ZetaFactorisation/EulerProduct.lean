@@ -31,7 +31,7 @@ lemma idealNormMultiplicity_p_pow_eq_one (k : ℕ) :
   have hne : (rationalPrimeIdeal p) ≠ ⊥ := by
     rw [rationalPrimeIdeal, Ne, Ideal.span_singleton_eq_bot]
     exact_mod_cast hp.out.ne_zero
-  haveI : (rationalPrimeIdeal p).IsMaximal := Int.ideal_span_isMaximal_of_prime p
+  have : (rationalPrimeIdeal p).IsMaximal := Int.ideal_span_isMaximal_of_prime p
   have hcoe := IsDedekindDomain.coe_primesOverFinset (p := rationalPrimeIdeal p) hne (𝓞 K)
   have hcard : (primesOverFinset K p).card = 1 := by
     have hncard : (Ideal.primesOver (rationalPrimeIdeal p) (𝓞 K)).ncard = 1 :=
@@ -51,9 +51,8 @@ lemma idealNormMultiplicity_p_pow_eq_one (k : ℕ) :
       Ideal.comap_bot_of_injective (algebraMap ℤ (𝓞 K))
       (FaithfulSMul.algebraMap_injective ℤ (𝓞 K))] at hunder
     exact hne hunder
-  haveI : P.IsPrime := hPmem.1
-  haveI : P.IsMaximal := Ring.DimensionLEOne.maximalOfPrime hP_ne hPmem.1
-  haveI : P.LiesOver (Ideal.span {(p : ℤ)}) := by
+  have : P.IsMaximal := Ring.DimensionLEOne.maximalOfPrime hP_ne hPmem.1
+  have : P.LiesOver (Ideal.span {(p : ℤ)}) := by
     simpa [rationalPrimeIdeal] using hPmem.2
   have habsNormP : Ideal.absNorm P = p := by
     calc
@@ -62,8 +61,7 @@ lemma idealNormMultiplicity_p_pow_eq_one (k : ℕ) :
           ← Ideal.inertiaDeg'_eq_inertiaDeg (Ideal.span {(p : ℤ)}) P]
         exact Ideal.absNorm_eq_pow_inertiaDeg' P hp.out
       _ = p := by simp
-  unfold idealNormMultiplicity
-  haveI : Unique {I : NonzeroIdeal K // Ideal.absNorm I.1 = p ^ k} :=
+  have : Unique {I : NonzeroIdeal K // Ideal.absNorm I.1 = p ^ k} :=
     { default := ⟨⟨P ^ k, pow_ne_zero k hP_ne⟩, by
           rw [map_pow, habsNormP]⟩
       uniq := by
@@ -85,10 +83,9 @@ lemma idealNormMultiplicity_p_pow_eq_one (k : ℕ) :
           have hRfac := (Ideal.mem_normalizedFactors_iff hQ_ne).1 hRmem
           have hRprime : R.IsPrime := hRfac.1
           have hQ_le_R : Q ≤ R := hRfac.2
-          haveI : R.IsPrime := hRprime
           have hR_ne : R ≠ ⊥ := fun hR_bot =>
             hQ_ne (le_bot_iff.mp (hQ_le_R.trans_eq hR_bot))
-          haveI : NeZero R := ⟨hR_ne⟩
+          have : NeZero R := ⟨hR_ne⟩
           have hI_le_Q : I ≤ Q := by
             rw [hIeq]
             exact Ideal.mul_le_left
@@ -140,17 +137,16 @@ lemma normalizedFactors_subset_primesOverFinset_of_absNorm_prime_pow
     {k : ℕ} (hI_norm : Ideal.absNorm I = (q : ℕ) ^ k) :
     (UniqueFactorizationMonoid.normalizedFactors I).toFinset ⊆ primesOverFinset K (q : ℕ) := by
   classical
-  haveI : Fact (q : ℕ).Prime := ⟨q.2⟩
+  have : Fact (q : ℕ).Prime := ⟨q.2⟩
   intro P hP
   have hP_mem : P ∈ UniqueFactorizationMonoid.normalizedFactors I :=
     Multiset.mem_toFinset.1 hP
   have hP_fac := (Ideal.mem_normalizedFactors_iff hI_ne).1 hP_mem
   have hP_prime : P.IsPrime := hP_fac.1
   have hI_le_P : I ≤ P := hP_fac.2
-  haveI : P.IsPrime := hP_prime
   have hP_ne : P ≠ ⊥ := fun hP_bot =>
     hI_ne (le_bot_iff.mp (hP_bot ▸ hI_le_P))
-  haveI : NeZero P := ⟨hP_ne⟩
+  have : NeZero P := ⟨hP_ne⟩
   have hP_dvd : Ideal.absNorm P ∣ (q : ℕ) ^ k := by
     rw [← hI_norm]
     exact Ideal.absNorm_dvd_absNorm_of_le hI_le_P
@@ -178,10 +174,10 @@ lemma absNorm_eq_q_pow_localResidueDegree_of_mem_primesOverFinset
   classical
   have hP_over : P ∈ Ideal.primesOver (rationalPrimeIdeal (q : ℕ)) (𝓞 K) :=
     (mem_primesOverFinset_iff (K := K) (ℓ := (q : ℕ))).1 hP
-  haveI : P.IsPrime := hP_over.1
-  haveI : P.LiesOver (Ideal.span {((q : ℕ) : ℤ)}) := by
+  have : P.IsPrime := hP_over.1
+  have : P.LiesOver (Ideal.span {((q : ℕ) : ℤ)}) := by
     simpa [rationalPrimeIdeal] using hP_over.2
-  haveI : P.IsMaximal := Ideal.IsMaximal.of_liesOver_isMaximal P (Ideal.span {((q : ℕ) : ℤ)})
+  have : P.IsMaximal := Ideal.IsMaximal.of_liesOver_isMaximal P (Ideal.span {((q : ℕ) : ℤ)})
   rw [← primesOver_inertiaDeg_eq_localResidueDegree p K hq P hP_over,
     ← Ideal.inertiaDeg'_eq_inertiaDeg (Ideal.span {((q : ℕ) : ℤ)}) P]
   exact Ideal.absNorm_eq_pow_inertiaDeg' P q.2
@@ -245,8 +241,6 @@ lemma idealNormMultiplicity_prime_pow_mul_localResidueDegree_eq_card_sym
   classical
   set d := localResidueDegree (p := p) (q : ℕ) hq with hd
   let α : Type _ := {P : Ideal (𝓞 K) // P ∈ primesOverFinset K (q : ℕ)}
-  letI : Fintype α := Fintype.ofFinset (primesOverFinset K (q : ℕ)) fun P => by
-    simp
   let β : Type _ := {I : NonzeroIdeal K // Ideal.absNorm I.1 = (q : ℕ) ^ (d * n)}
   have hd_pos : 0 < d := by
     rw [hd]
@@ -385,7 +379,7 @@ lemma dedekind_prime_power_series_eq_localFactor
     (∑' k : ℕ, (idealNormMultiplicity K ((q : ℕ) ^ k) : ℂ) *
       (((q : ℕ) ^ k : ℕ) : ℂ) ^ (-s)) =
       (dedekindLocalFactor K (q : ℕ) s)⁻¹ := by
-  haveI : Fact (q : ℕ).Prime := ⟨q.2⟩
+  have : Fact (q : ℕ).Prime := ⟨q.2⟩
   by_cases hq : (q : ℕ) = p
   · have hq' : q = ⟨p, Fact.out⟩ := by
       apply Subtype.ext
@@ -395,8 +389,6 @@ lemma dedekind_prime_power_series_eq_localFactor
   · classical
     set d := localResidueDegree (p := p) (q : ℕ) hq with hd
     let α : Type _ := {P : Ideal (𝓞 K) // P ∈ primesOverFinset K (q : ℕ)}
-    letI : Fintype α := Fintype.ofFinset (primesOverFinset K (q : ℕ)) fun P => by
-      simp
     let f : ℕ → ℂ := fun k =>
       (idealNormMultiplicity K ((q : ℕ) ^ k) : ℂ) * ((((q : ℕ) ^ k : ℕ) : ℂ) ^ (-s))
     let g : ℕ → ℂ := fun n =>
@@ -455,7 +447,7 @@ lemma dedekind_prime_power_series_eq_localFactor
         simp [f, g, mul_comm]
     have hcard_finset :
         (primesOverFinset K (q : ℕ)).card = localPrimeCount (p := p) (q : ℕ) hq := by
-      haveI : (rationalPrimeIdeal (q : ℕ)).IsMaximal :=
+      have : (rationalPrimeIdeal (q : ℕ)).IsMaximal :=
         Int.ideal_span_isMaximal_of_prime (q : ℕ)
       have hne : (rationalPrimeIdeal (q : ℕ)) ≠ ⊥ := by
         simp [rationalPrimeIdeal, q.2.ne_zero]
@@ -500,7 +492,7 @@ lemma LProduct_eq_tprod_localFactors {s : ℂ} (hs : 1 < s.re) :
 
 lemma localFactors_agree_prime_ne_p {q : Nat.Primes} (hq : (q : ℕ) ≠ p) {s : ℂ} :
     dedekindLocalFactor K (q : ℕ) s = charLocalFactor (p := p) (q : ℕ) s := by
-  haveI : Fact (q : ℕ).Prime := ⟨q.2⟩
+  have : Fact (q : ℕ).Prime := ⟨q.2⟩
   rw [dedekindLocalFactor_eq_pow_localResidueDegree (p := p) (K := K) hq,
     charLocalFactor_eq_pow_localResidueDegree (p := p) hq]
 

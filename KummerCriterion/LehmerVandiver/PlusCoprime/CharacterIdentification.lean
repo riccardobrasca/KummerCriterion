@@ -46,7 +46,6 @@ theorem zeta_pow_mul_cyclotomicUnit_p_sub_eq_neg
     (c : ℕ) (hc : c ≤ p) :
     ((zeta_spec p ℚ K).unit' : 𝓞 K) ^ c * cyclotomicUnit p K (p - c) =
       -cyclotomicUnit p K c := by
-  haveI : NeZero p := ⟨hp.out.ne_zero⟩
   set ζ : 𝓞 K := ((zeta_spec p ℚ K).unit' : 𝓞 K)
   have hζ_sub_one_ne_zero : (ζ - 1 : 𝓞 K) ≠ 0 :=
     (zeta_spec p ℚ K).zeta_sub_one_prime'.ne_zero
@@ -77,7 +76,6 @@ theorem cyclotomicUnit_eq_neg_zeta_pow_mul_cyclotomicUnit_p_sub
     cyclotomicUnit p K d =
       -((zeta_spec p ℚ K).unit' : 𝓞 K) ^ d *
         cyclotomicUnit p K (p - d) := by
-  haveI : NeZero p := ⟨hp.out.ne_zero⟩
   set ζ : 𝓞 K := ((zeta_spec p ℚ K).unit' : 𝓞 K)
   have hζ_p : ζ ^ p = 1 := by
     have hζ_prim : IsPrimitiveRoot ζ p := (zeta_spec p ℚ K).unit'_coe

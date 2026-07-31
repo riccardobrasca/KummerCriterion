@@ -173,7 +173,7 @@ lemma teichmuller_neg_one (hp_odd : p ≠ 2) : teichmuller p (-1) = -1 := by
   have h_sq : teichmuller p (-1 : ZMod p) ^ 2 = 1 := by
     rw [sq, ← map_mul, neg_one_mul, neg_neg, map_one]
   rcases sq_eq_one_iff.mp h_sq with h1 | h_neg
-  · haveI : Fact (2 < p) := ⟨lt_of_le_of_ne hp.1.two_le (Ne.symm hp_odd)⟩
+  · have : Fact (2 < p) := ⟨lt_of_le_of_ne hp.1.two_le (Ne.symm hp_odd)⟩
     exact absurd (by simpa using congrArg PadicInt.toZMod h1) ZMod.neg_one_ne_one
   · exact h_neg
 

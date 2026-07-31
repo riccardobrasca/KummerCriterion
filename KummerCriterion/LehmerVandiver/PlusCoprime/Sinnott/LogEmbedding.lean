@@ -211,8 +211,6 @@ theorem regOfFamily_cyclotomicUnitFamilyKplus_eq_det
                     (K := K)).trans
                   (KummerCriterion.units_rank_eq_prime_sub_three_div_two
                     (p := p) (K := K)))) + 2) : 𝓞 K) : K))).det| := by
-  letI : DecidableEq {w : InfinitePlace (NumberField.maximalRealSubfield K) //
-        w ≠ NumberField.Units.dirichletUnitTheorem.w₀} := Classical.decEq _
   rw [NumberField.Units.regOfFamily_eq_det']
   congr 1
   congr 1

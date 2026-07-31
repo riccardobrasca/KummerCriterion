@@ -218,9 +218,7 @@ theorem card_nontriv_mulChar_eq
       Fintype.ofFinite _
     Fintype.card {ξ : MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ // ξ ≠ 1} =
       (p - 3) / 2 := by
-  classical
-  letI : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=
-    Fintype.ofFinite _
+  let : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) := Fintype.ofFinite _
   have h_card_mc :
       Fintype.card (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) =
       (p - 1) / 2 := by

@@ -41,16 +41,11 @@ def lambdaRationalHeightOneSpectrum : IsDedekindDomain.HeightOneSpectrum ℤ whe
 /-- The cyclotomic `lambda` prime lies over the rational prime `(p)`. -/
 theorem zetaPrime_liesOver_lambdaRationalPrimeIdeal :
     (zetaPrime p K).LiesOver (lambdaRationalPrimeIdeal p) := by
-  haveI : IsCyclotomicExtension {p ^ (0 + 1)} ℚ K := by
+  have : IsCyclotomicExtension {p ^ (0 + 1)} ℚ K := by
     simpa using (inferInstance : IsCyclotomicExtension {p} ℚ K)
-  have hζpow : IsPrimitiveRoot (IsCyclotomicExtension.zeta p ℚ K) (p ^ (0 + 1)) := by
-    simp
-  have h :
-      (Ideal.span
-          ({((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger - 1 : 𝓞 K)} :
-            Set (𝓞 K))).LiesOver (Ideal.span ({(p : ℤ)} : Set ℤ)) :=
-    IsCyclotomicExtension.Rat.liesOver_span_zeta_sub_one
-      (p := p) (k := 0) (K := K) (hζ := hζpow)
+  have hζpow : IsPrimitiveRoot (IsCyclotomicExtension.zeta p ℚ K) (p ^ (0 + 1)) := by simp
+  have h : (Ideal.span ({((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger - 1 : 𝓞 K)})).LiesOver
+    (Ideal.span ({(p : ℤ)})) := IsCyclotomicExtension.Rat.liesOver_span_zeta_sub_one _ _ hζpow
   simpa [zetaPrime, lambdaRationalPrimeIdeal] using h
 
 end KummerArtinHasse
@@ -139,7 +134,7 @@ in the rational prime `(p)`. -/
 theorem intCast_mem_zetaPrime_iff_mem_lambdaRationalPrimeIdeal (n : ℤ) :
     algebraMap ℤ (𝓞 K) n ∈ zetaPrime p K ↔
       n ∈ lambdaRationalPrimeIdeal p := by
-  letI : (zetaPrime p K).LiesOver (lambdaRationalPrimeIdeal p) :=
+  have : (zetaPrime p K).LiesOver (lambdaRationalPrimeIdeal p) :=
     zetaPrime_liesOver_lambdaRationalPrimeIdeal (p := p) (K := K)
   simpa using
     (Ideal.mem_of_liesOver (A := ℤ) (B := 𝓞 K)
@@ -178,8 +173,6 @@ theorem lambdaValuation_algebraMap_rat_le_one_iff_den (x : ℚ) :
     (lambdaHeightOneSpectrum p K).valuation K (algebraMap ℚ K x) ≤ 1 ↔
       (x.den : ℤ) ∉ lambdaRationalPrimeIdeal p := by
   classical
-  haveI : IsCyclotomicExtension {p ^ (0 + 1)} ℚ K := by
-    simpa using (inferInstance : IsCyclotomicExtension {p} ℚ K)
   have hden_ne : (algebraMap ℤ (𝓞 K) (x.den : ℤ)) ≠ 0 := by
     exact_mod_cast (by exact_mod_cast x.den_nz)
   have hcop :
@@ -194,9 +187,8 @@ theorem lambdaValuation_algebraMap_rat_le_one_iff_den (x : ℚ) :
         x.num ∈ lambdaRationalPrimeIdeal p :=
       (intCast_mem_zetaPrime_iff_mem_lambdaRationalPrimeIdeal
         (p := p) (K := K) x.num).mp hnum
-    haveI : (lambdaRationalPrimeIdeal p).IsPrime := by
-      simpa [lambdaRationalHeightOneSpectrum] using
-        (lambdaRationalHeightOneSpectrum p).isPrime
+    have : (lambdaRationalPrimeIdeal p).IsPrime := by
+      simpa [lambdaRationalHeightOneSpectrum] using (lambdaRationalHeightOneSpectrum p).isPrime
     exact (Ideal.IsPrime.notMem_of_isCoprime_of_mem
       (by simpa using! x.isCoprime_num_den.symm.intCast) hdenZ) hnumZ
   have hx :

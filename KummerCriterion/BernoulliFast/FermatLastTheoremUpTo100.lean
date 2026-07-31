@@ -41,7 +41,7 @@ private theorem fermatLastTheoremFor_of_isRegularPrime_dvd
     (hp_reg : letI : Fact p.Prime := ⟨hp_prime⟩; IsRegularPrime p)
     (hp_odd : p ≠ 2) (hdvd : p ∣ n) :
     FermatLastTheoremFor n := by
-  letI : Fact p.Prime := ⟨hp_prime⟩
+  have : Fact p.Prime := ⟨hp_prime⟩
   exact FermatLastTheoremFor.mono hdvd (flt_regular hp_reg hp_odd)
 
 /-- Fermat's Last Theorem for every exponent up to `100` except `2`, the

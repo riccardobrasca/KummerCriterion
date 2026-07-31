@@ -44,7 +44,6 @@ noncomputable def dirichletCharacterMulEquivUnits : DirichletCharacter ℂ p ≃
 
 /-- There are exactly `p - 1` complex-valued Dirichlet characters modulo `p`. -/
 lemma card_dirichletCharacter_complex : Nat.card (DirichletCharacter ℂ p) = p - 1 := by
-  letI := neZero_p (p := p)
   rw [DirichletCharacter.card_eq_totient_of_hasEnoughRootsOfUnity, Nat.totient_prime hp.1]
 
 /-- For prime modulus `p`, the `L`-function of the trivial character is
@@ -52,7 +51,6 @@ lemma card_dirichletCharacter_complex : Nat.card (DirichletCharacter ℂ p) = p 
 lemma LFunction_trivial_eq_mul_riemannZeta {s : ℂ} (hs : s ≠ 1) :
     DirichletCharacter.LFunctionTrivChar p s =
       (1 - (p : ℂ) ^ (-s)) * riemannZeta s := by
-  letI := neZero_p (p := p)
   have hpf : Nat.primeFactors p = {p} := by
     simpa using (Nat.primeFactors_prime_pow (p := p) (k := 1) (by decide : (1 : ℕ) ≠ 0) hp.1)
   rw [DirichletCharacter.LFunctionTrivChar_eq_mul_riemannZeta (N := p) hs, hpf,
@@ -427,7 +425,7 @@ lemma charLocalFactor_at_p {s : ℂ} :
 
 lemma mem_primesOverFinset_iff {ℓ : ℕ} [Fact ℓ.Prime] {P : Ideal (𝓞 K)} :
     P ∈ primesOverFinset K ℓ ↔ P ∈ Ideal.primesOver (rationalPrimeIdeal ℓ) (𝓞 K) := by
-  haveI : (rationalPrimeIdeal ℓ).IsMaximal := Int.ideal_span_isMaximal_of_prime ℓ
+  have : (rationalPrimeIdeal ℓ).IsMaximal := Int.ideal_span_isMaximal_of_prime ℓ
   have hne : (rationalPrimeIdeal ℓ) ≠ ⊥ := by
     rw [rationalPrimeIdeal, Ne, Ideal.span_singleton_eq_bot]
     exact_mod_cast (Fact.out : ℓ.Prime).ne_zero
@@ -435,7 +433,6 @@ lemma mem_primesOverFinset_iff {ℓ : ℕ} [Fact ℓ.Prime] {P : Ideal (𝓞 K)}
 
 lemma zetaInteger_isIntegralGenerator :
     Algebra.adjoin ℤ ({zetaInteger (p := p) (K := K)} : Set (𝓞 K)) = ⊤ := by
-  haveI : NeZero p := ⟨hp.out.ne_zero⟩
   exact IsCyclotomicExtension.Rat.adjoin_singleton_eq_top (IsCyclotomicExtension.zeta_spec p ℚ K)
 
 lemma zetaInteger_exponent_eq_one :
@@ -458,7 +455,6 @@ lemma monicFactorsMod_card_eq_localPrimeCount {ℓ : ℕ} [Fact ℓ.Prime] (hℓ
     (RingOfIntegers.monicFactorsMod (θ := zetaInteger (p := p) (K := K)) (p := ℓ)).card =
       localPrimeCount (p := p) ℓ hℓp := by
   classical
-  haveI : NeZero p := ⟨hp.out.ne_zero⟩
   have hmin : minpoly ℤ (zetaInteger (p := p) (K := K)) = cyclotomic p ℤ := by
     rw [zetaInteger, ← NumberField.RingOfIntegers.minpoly_coe]
     exact (Polynomial.cyclotomic_eq_minpoly (IsCyclotomicExtension.zeta_spec p ℚ K)
@@ -479,7 +475,6 @@ lemma cyclotomic_mod_p_eq_X_sub_one_pow :
     map (Int.castRingHom (ZMod p))
         (minpoly ℤ (zetaInteger (p := p) (K := K))) =
       (X - 1) ^ (p - 1) := by
-  haveI : NeZero p := ⟨hp.out.ne_zero⟩
   have hmin : minpoly ℤ (zetaInteger (p := p) (K := K)) = cyclotomic p ℤ := by
     rw [zetaInteger, ← NumberField.RingOfIntegers.minpoly_coe]
     exact (Polynomial.cyclotomic_eq_minpoly (IsCyclotomicExtension.zeta_spec p ℚ K)
@@ -520,8 +515,8 @@ lemma ncard_primesOver_at_p_eq_one :
 lemma primesOver_inertiaDeg_eq_one_at_p (P : Ideal (𝓞 K))
     (hP : P ∈ Ideal.primesOver (rationalPrimeIdeal p) (𝓞 K)) :
     P.inertiaDeg ℤ = 1 := by
-  haveI : P.IsPrime := hP.1
-  haveI : P.LiesOver (Ideal.span {(p : ℤ)}) := by
+  have : P.IsPrime := hP.1
+  have : P.LiesOver (Ideal.span {(p : ℤ)}) := by
     simpa [rationalPrimeIdeal] using hP.2
   simpa [rationalPrimeIdeal] using IsCyclotomicExtension.Rat.inertiaDeg_eq_of_prime p K P
 
@@ -529,8 +524,8 @@ lemma primesOver_inertiaDeg_eq_localResidueDegree {ℓ : ℕ} [Fact ℓ.Prime]
     (hℓp : ℓ ≠ p) (P : Ideal (𝓞 K))
     (hP : P ∈ Ideal.primesOver (rationalPrimeIdeal ℓ) (𝓞 K)) :
     P.inertiaDeg ℤ = localResidueDegree (p := p) ℓ hℓp := by
-  haveI : P.IsPrime := hP.1
-  haveI : P.LiesOver (Ideal.span {(ℓ : ℤ)}) := hP.2
+  have : P.IsPrime := hP.1
+  have : P.LiesOver (Ideal.span {(ℓ : ℤ)}) := hP.2
   have hcop : ¬ ℓ ∣ p := fun h => hℓp ((Nat.prime_dvd_prime_iff_eq
     (Fact.out : ℓ.Prime) hp.out).mp h)
   rw [IsCyclotomicExtension.Rat.inertiaDeg_eq_of_not_dvd ℓ K P hcop]
@@ -542,8 +537,8 @@ lemma primesOver_ramificationIdx_eq_one {ℓ : ℕ} [Fact ℓ.Prime]
     (hℓp : ℓ ≠ p) (P : Ideal (𝓞 K))
     (hP : P ∈ Ideal.primesOver (rationalPrimeIdeal ℓ) (𝓞 K)) :
     P.ramificationIdx ℤ = 1 := by
-  haveI : P.IsPrime := hP.1
-  haveI : P.LiesOver (Ideal.span {(ℓ : ℤ)}) := hP.2
+  have : P.IsPrime := hP.1
+  have : P.LiesOver (Ideal.span {(ℓ : ℤ)}) := hP.2
   have hcop : ¬ ℓ ∣ p := fun h => hℓp ((Nat.prime_dvd_prime_iff_eq
     (Fact.out : ℓ.Prime) hp.out).mp h)
   exact IsCyclotomicExtension.Rat.ramificationIdx_eq_of_not_dvd ℓ K P hcop
@@ -562,8 +557,7 @@ lemma dedekindLocalFactor_eq_pow_localResidueDegree {ℓ : ℕ} [Fact ℓ.Prime]
       (1 - (ℓ : ℂ) ^ (-(localResidueDegree (p := p) ℓ hℓp : ℂ) * s)) ^
         localPrimeCount (p := p) ℓ hℓp := by
   classical
-  haveI : (rationalPrimeIdeal ℓ).IsMaximal :=
-    Int.ideal_span_isMaximal_of_prime ℓ
+  have : (rationalPrimeIdeal ℓ).IsMaximal := Int.ideal_span_isMaximal_of_prime ℓ
   have hne : (rationalPrimeIdeal ℓ) ≠ ⊥ := by
     rw [rationalPrimeIdeal, Ne, Ideal.span_singleton_eq_bot]
     exact_mod_cast (Fact.out : ℓ.Prime).ne_zero
@@ -582,9 +576,9 @@ lemma dedekindLocalFactor_eq_pow_localResidueDegree {ℓ : ℕ} [Fact ℓ.Prime]
           (↑(IsDedekindDomain.primesOverFinset (rationalPrimeIdeal ℓ) (𝓞 K)) : Set _) :=
         hP
       rwa [hcoe] at this
-    haveI : P.IsPrime := hPmem.1
-    haveI : P.LiesOver (Ideal.span {(ℓ : ℤ)}) := hPmem.2
-    haveI : P.IsMaximal := Ideal.IsMaximal.of_liesOver_isMaximal P (Ideal.span {(ℓ : ℤ)})
+    have : P.IsPrime := hPmem.1
+    have : P.LiesOver (Ideal.span {(ℓ : ℤ)}) := hPmem.2
+    have : P.IsMaximal := Ideal.IsMaximal.of_liesOver_isMaximal P (Ideal.span {(ℓ : ℤ)})
     have habsNorm : Ideal.absNorm P = ℓ ^ (localResidueDegree (p := p) ℓ hℓp) := by
       rw [← primesOver_inertiaDeg_eq_localResidueDegree p K hℓp P hPmem,
         ← Ideal.inertiaDeg'_eq_inertiaDeg (Ideal.span {(ℓ : ℤ)}) P]
@@ -617,9 +611,9 @@ lemma dedekindLocalFactor_at_p {s : ℂ} :
   have hPmem : P ∈ (Ideal.span {(p : ℤ)}).primesOver (𝓞 K) := by
     rw [← hcoe, hP]
     exact Finset.mem_singleton_self P
-  haveI : P.IsPrime := hPmem.1
-  haveI : P.LiesOver (Ideal.span {(p : ℤ)}) := hPmem.2
-  haveI : P.IsMaximal := Ideal.IsMaximal.of_liesOver_isMaximal P (Ideal.span {(p : ℤ)})
+  have : P.IsPrime := hPmem.1
+  have : P.LiesOver (Ideal.span {(p : ℤ)}) := hPmem.2
+  have : P.IsMaximal := Ideal.IsMaximal.of_liesOver_isMaximal P (Ideal.span {(p : ℤ)})
   have habsNorm : Ideal.absNorm P = p ^ (1 : ℕ) := by
     have hP' : P ∈ Ideal.primesOver (rationalPrimeIdeal p) (𝓞 K) := by
       simpa [rationalPrimeIdeal] using hPmem

@@ -50,7 +50,6 @@ theorem gaussSum_mul_gaussSum_inv_stdAddChar
     gaussSum χ (ZMod.stdAddChar (N := p)) *
         gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)) =
       χ (-1) * p := by
-  haveI : NeZero p := ⟨hp.out.ne_zero⟩
   have h_prim : (ZMod.stdAddChar : AddChar (ZMod p) ℂ).IsPrimitive :=
     ZMod.isPrimitive_stdAddChar p
   have h_card : (Fintype.card (ZMod p) : ℂ) = p := by
@@ -81,9 +80,7 @@ theorem gaussSum_mul_gaussSum_inv_stdAddChar
 is primitive. Follows from `χ.conductor ∣ p` and the fact that the only
 character factoring through `1` is the trivial character. -/
 theorem DirichletCharacter.isPrimitive_of_ne_one
-    {χ : DirichletCharacter ℂ p} (hχ : χ ≠ 1) :
-    χ.IsPrimitive := by
-  haveI : NeZero p := ⟨hp.out.ne_zero⟩
+    {χ : DirichletCharacter ℂ p} (hχ : χ ≠ 1) : χ.IsPrimitive := by
   rw [DirichletCharacter.isPrimitive_def]
   rcases (Nat.dvd_prime hp.out).mp χ.conductor_dvd_level with h | h
   · exact absurd ((DirichletCharacter.factorsThrough_one_iff χ).mp

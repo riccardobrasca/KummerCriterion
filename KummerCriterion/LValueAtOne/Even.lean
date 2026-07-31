@@ -28,7 +28,6 @@ theorem even_LFunction_one_eq_evenLValueRhs
     (hχ_ne_one : χ ≠ 1) :
     DirichletCharacter.LFunction χ 1 = evenLValueRhs p χ := by
   let _ := hχ_prim
-  haveI : NeZero p := ⟨hp.out.ne_zero⟩
   change ZMod.LFunction (fun a : ZMod p => χ a) 1 = evenLValueRhs p χ
   have hp_ne_one : p ≠ 1 := hp.out.ne_one
   have hχinv_ne_one : χ⁻¹ ≠ 1 := by

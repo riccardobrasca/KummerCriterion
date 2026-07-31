@@ -104,8 +104,7 @@ Strategy:
 theorem quotientCharBijectionToEvenNontriv_proof (hp_two : 2 < p) :
     QuotientCharBijectionToEvenNontriv (p := p) := by
   classical
-  letI : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=
-    Fintype.ofFinite _
+  let : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) := Fintype.ofFinite _
   change (∏ ξ ∈ (Finset.univ : Finset
         (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ)).erase 1,
       DirichletLogSum p (dirichletOfQuotientChar p ξ)) =
@@ -182,10 +181,7 @@ theorem FrobeniusDetIdentity_of_named_hypotheses
     (h_bij : QuotientCharBijectionToEvenNontriv (p := p)) :
     FrobeniusDetIdentity (p := p) K hp_odd hp_three := by
   classical
-  letI : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=
-    Fintype.ofFinite _
-  letI : DecidableEq (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=
-    Classical.decEq _
+  let : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) := Fintype.ofFinite _
   unfold FrobeniusDetIdentity
   have h_det_sq := det_convolutionMatrixLogNormEven_sq_eq_log_p_sq_mul_nontrivial_DLS_sq
       p hp_two
@@ -266,7 +262,6 @@ theorem fintype_card_InfinitePlace_eq
     [NumberField.IsTotallyComplex K] (_hp_two : 2 < p) :
     Fintype.card (NumberField.InfinitePlace K) = (p - 1) / 2 := by
   classical
-  haveI : Fact (Nat.Prime p) := hp
   have h_finrank_eq : Module.finrank ℚ K = p - 1 := by
     have : Module.finrank ℚ K = (p : ℕ).totient :=
       IsCyclotomicExtension.finrank K (Polynomial.cyclotomic.irreducible_rat hp.out.pos)
@@ -521,16 +516,10 @@ theorem det_convolutionMatrixLogNormEven_sq_eq_qe_one_sq_mul_prod_nontrivial_qe_
             (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ)).erase 1,
           quotientEigenvalue p ξ) ^ 2 := by
   classical
-  letI : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=
-    Fintype.ofFinite _
-  letI : DecidableEq (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=
-    Classical.decEq _
-  rw [det_convolutionMatrixLogNormEven_sq_eq_prod_quotientEigenvalue_sq p hp_two]
-  rw [← Finset.prod_pow]
-  rw [prod_quot_eq_prod_mulChar p (fun ξ => (quotientEigenvalue p ξ) ^ 2)]
-  rw [Finset.prod_pow]
-  rw [← Finset.prod_erase_mul _ _ (Finset.mem_univ
-    (1 : MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ))]
+  let : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) := Fintype.ofFinite _
+  rw [det_convolutionMatrixLogNormEven_sq_eq_prod_quotientEigenvalue_sq p hp_two,
+    ← Finset.prod_pow, prod_quot_eq_prod_mulChar p (fun ξ => (quotientEigenvalue p ξ) ^ 2),
+    Finset.prod_pow, ← Finset.prod_erase_mul _ _ (Finset.mem_univ 1)]
   ring
 
 end Sinnott

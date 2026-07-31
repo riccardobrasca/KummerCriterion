@@ -134,7 +134,6 @@ lemma bernoulliGen_teichmuller_inverse_eq_p_sub_one_div_p_add_padicInt
         ((p - 1 : ℚ_[p]) / p) + z := by
   have hp : Nat.Prime p := Fact.out
   have hp_gt2 : 2 < p := lt_of_le_of_ne hp.two_le (Ne.symm hp_odd)
-  haveI : NeZero p := ⟨hp.ne_zero⟩
   let ωZ : DirichletCharacter ℤ_[p] p := (teichmullerChar p) ^ (p - 2)
   let ωQ : DirichletCharacter ℚ_[p] p := (teichmullerCharQp p) ^ (p - 2)
   let S : ℤ_[p] := ∑ a : ZMod p, ωZ a * (a.val : ℤ_[p])

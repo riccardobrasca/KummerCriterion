@@ -81,15 +81,9 @@ theorem matrixRestrictionToSinnott_of_regOfFamily_sq_eq_prod_nontrivial_qe_sq
     (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) (hp_two : 2 < p)
     (h : RegOfFamilySqEqProdNontrivialQeSq (p := p) K hp_odd hp_three) :
     MatrixRestrictionToSinnott (p := p) K hp_odd hp_three := by
-  classical
-  letI : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=
-    Fintype.ofFinite _
-  letI : DecidableEq (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=
-    Classical.decEq _
   unfold MatrixRestrictionToSinnott
   unfold RegOfFamilySqEqProdNontrivialQeSq at h
-  rw [det_convolutionMatrixLogNormEven_sq_eq_qe_one_sq_mul_prod_nontrivial_qe_sq p hp_two]
-  rw [h]
+  rw [det_convolutionMatrixLogNormEven_sq_eq_qe_one_sq_mul_prod_nontrivial_qe_sq p hp_two, h]
   ring
 
 /-- **`KummerDirichletDeterminant` from the eigenvalue-product hypothesis**:
@@ -126,8 +120,7 @@ theorem exists_embedding_index
       w.embedding (((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K)) =
         ZMod.stdAddChar (N := p) ((a : ZMod p)) := by
   classical
-  haveI hp_prime : Nat.Prime p := hp.out
-  haveI : NeZero p := ⟨hp_prime.ne_zero⟩
+  have hp_prime : Nat.Prime p := hp.out
   have h_zeta_OK : IsPrimitiveRoot
       (KummerCriterion.cyclotomicZetaInteger (p := p) K) p :=
     KummerCriterion.cyclotomicZetaInteger_isPrimitiveRoot (p := p) K
@@ -455,8 +448,6 @@ theorem embeddingIndex_eq_iff_embedding_eq
     embeddingIndex (p := p) K w₁ = embeddingIndex (p := p) K w₂ ↔
       w₁.embedding = w₂.embedding := by
   classical
-  haveI hp_prime : Nat.Prime p := hp.out
-  haveI : NeZero p := ⟨hp_prime.ne_zero⟩
   constructor
   · intro h_eq
     have h_emb :
@@ -526,8 +517,6 @@ theorem embeddingIndex_neg_implies_place_eq
     (h : embeddingIndex (p := p) K w₁ = -(embeddingIndex (p := p) K w₂)) :
     w₁ = w₂ := by
   classical
-  haveI hp_prime : Nat.Prime p := hp.out
-  haveI : NeZero p := ⟨hp_prime.ne_zero⟩
   have h_zeta_K_eq : w₁.embedding
       (((KummerCriterion.cyclotomicZetaInteger (p := p) K : 𝓞 K) : K)) =
         (starRingEnd ℂ) (w₂.embedding
@@ -636,11 +625,6 @@ theorem kplusEmbeddingIndexQuotient_bijective
     (K : Type) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
     [NumberField.IsCMField K] (hp_two : 2 < p) :
     Function.Bijective (kplusEmbeddingIndexQuotient (p := p) K) := by
-  classical
-  haveI : Fintype (NumberField.InfinitePlace (NumberField.maximalRealSubfield K)) :=
-    Fintype.ofFinite _
-  haveI : Fintype (KummerCriterion.CyclotomicEvenDelta p) :=
-    Fintype.ofFinite _
   refine (Fintype.bijective_iff_injective_and_card _).mpr
     ⟨kplusEmbeddingIndexQuotient_injective (p := p) K, ?_⟩
   exact Fintype.card_congr (KplusInfinitePlaceEquivCyclotomicEvenDelta (p := p) K hp_two)
@@ -725,12 +709,6 @@ theorem familyIndexAsUnit_ne_one_and_neg_one
       rw [h_eq]
     have h_neg_one : ((-1 : (ZMod p)ˣ) : ZMod p).val = p - 1 := by
       change ((-1 : ZMod p)).val = p - 1
-      haveI : NeZero p := ⟨h_p_prime.ne_zero⟩
-      haveI : NeZero (1 : ZMod p) := by
-        refine ⟨?_⟩
-        intro h_one
-        have : (1 : ZMod p) ≠ 0 := one_ne_zero
-        exact this h_one
       have h_v := ZMod.val_neg_of_ne_zero (a := (1 : ZMod p))
       have h_one_val : (1 : ZMod p).val = 1 := by
         rw [ZMod.val_one_eq_one_mod]

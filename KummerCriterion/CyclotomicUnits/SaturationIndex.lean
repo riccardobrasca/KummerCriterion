@@ -122,7 +122,7 @@ theorem not_dvd_index_of_pSaturated (hp_three : 3 ≤ p)
     ¬ p ∣ (CPlus (p := p) (K := K) hp_three).index := by
   classical
   let H : Subgroup (𝓞 K⁺)ˣ := CPlus (p := p) (K := K) hp_three
-  haveI : H.FiniteIndex := ⟨by
+  have : H.FiniteIndex := ⟨by
     simpa [H] using CPlus_index_ne_zero (p := p) (K := K) hp_three⟩
   have hsatTop : pSaturated H (⊤ : Subgroup (𝓞 K⁺)ˣ) p := by
     simpa [H, EPlus] using hsat

@@ -184,7 +184,6 @@ theorem multiplicity_zetaPrime_even_of_map_eq_span [IsCMField K]
   have hPprime : P.IsPrime := by
     dsimp [P]
     exact zetaPrime_isPrime p K
-  letI : P.IsPrime := hPprime
   have hPPlus0 : PPlus ≠ ⊥ := by
     intro hbot
     have hmap : Ideal.map f PPlus = P ^ 2 := by

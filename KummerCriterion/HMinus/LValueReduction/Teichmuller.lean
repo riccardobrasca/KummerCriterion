@@ -332,7 +332,7 @@ noncomputable def complexGeneratorRoot : ℂ :=
 
 theorem complexCharacterGenerator_powers :
     ∀ χ : DirichletCharacter ℂ p, χ ∈ Submonoid.powers (complexCharacterGenerator p) := by
-  letI : IsCyclic (DirichletCharacter ℂ p) := complexCharacters_isCyclic (p := p)
+  have : IsCyclic (DirichletCharacter ℂ p) := complexCharacters_isCyclic (p := p)
   simpa [complexCharacterGenerator] using
     (IsCyclic.exists_monoid_generator (α := DirichletCharacter ℂ p)).choose_spec
 
@@ -542,7 +542,7 @@ lemma exponent_zmodUnits_eq_prime_sub_one :
 
 theorem qpadic_hasEnoughRootsOfUnity_prime_sub_one :
     HasEnoughRootsOfUnity ℚ_[p] (p - 1) := by
-  letI : NeZero (p - 1) := ⟨prime_sub_one_ne_zero (p := p)⟩
+  have : NeZero (p - 1) := ⟨prime_sub_one_ne_zero (p := p)⟩
   apply HasEnoughRootsOfUnity.of_card_le (R := ℚ_[p])
   refine le_of_eq ?_
   rw [eq_comm, card_rootsOfUnity_eq_iff_exists_isPrimitiveRoot]
@@ -553,8 +553,7 @@ theorem qpadic_hasEnoughRootsOfUnity_prime_sub_one :
 
 theorem card_dirichletCharacterQp :
     Nat.card (DirichletCharacter ℚ_[p] p) = p - 1 := by
-  letI : NeZero p := ⟨hp.out.ne_zero⟩
-  letI : HasEnoughRootsOfUnity ℚ_[p] (Monoid.exponent (ZMod p)ˣ) := by
+  have : HasEnoughRootsOfUnity ℚ_[p] (Monoid.exponent (ZMod p)ˣ) := by
     simpa [exponent_zmodUnits_eq_prime_sub_one (p := p)] using
       qpadic_hasEnoughRootsOfUnity_prime_sub_one (p := p)
   rw [DirichletCharacter.card_eq_totient_of_hasEnoughRootsOfUnity, Nat.totient_prime hp.out]

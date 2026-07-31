@@ -42,7 +42,7 @@ lemma dedekindZeta_eq_tprod_primePowerSeriesNF
 lemma idealNormMultiplicityNF_p_pow_eq_one_plus (hp_odd : p ≠ 2) (k : ℕ) :
     idealNormMultiplicityNF K⁺ (p ^ k) = 1 := by
   classical
-  haveI : IsCMField K := isCMField_of_cyclotomic (p := p) (K := K) hp_odd
+  have : IsCMField K := isCMField_of_cyclotomic (p := p) (K := K) hp_odd
   have hcard : (primesOverFinsetPlus (K := K) p).card = 1 := by
     rw [primesOverFinsetPlus_card_eq_ncard (K := K) (ℓ := p)]
     exact ncard_primesOverPlus_at_p_eq_one (p := p) (K := K)
@@ -62,12 +62,9 @@ lemma idealNormMultiplicityNF_p_pow_eq_one_plus (hp_odd : p ≠ 2) (k : ℕ) :
       rw [rationalPrimeIdeal, Ne, Ideal.span_singleton_eq_bot]
       exact_mod_cast hp.out.ne_zero
     exact hne hunder
-  haveI : PPlus.IsPrime := hPPlusmem.1
-  haveI : PPlus.IsMaximal := Ring.DimensionLEOne.maximalOfPrime hPPlus_ne hPPlusmem.1
-  haveI : PPlus.LiesOver (Ideal.span {(p : ℤ)}) := by
+  have : PPlus.IsMaximal := Ring.DimensionLEOne.maximalOfPrime hPPlus_ne hPPlusmem.1
+  have : PPlus.LiesOver (Ideal.span {(p : ℤ)}) := by
     simpa [rationalPrimeIdeal] using hPPlusmem.2
-  haveI : (Ideal.span {(p : ℤ)} : Ideal ℤ).IsMaximal := by
-    simpa [rationalPrimeIdeal] using Int.ideal_span_isMaximal_of_prime p
   have habsNormPPlus : Ideal.absNorm PPlus = p := by
     calc
       Ideal.absNorm PPlus = p ^ (1 : ℕ) := by
@@ -75,8 +72,7 @@ lemma idealNormMultiplicityNF_p_pow_eq_one_plus (hp_odd : p ≠ 2) (k : ℕ) :
         rw [← Ideal.inertiaDeg'_eq_inertiaDeg (p := Ideal.span {(p : ℤ)}) (q := PPlus)]
         exact Ideal.absNorm_eq_pow_inertiaDeg' PPlus hp.out
       _ = p := by simp
-  unfold idealNormMultiplicityNF idealNormMultiplicity
-  haveI : Unique {I : NonzeroIdealNF K⁺ // Ideal.absNorm I.1 = p ^ k} :=
+  have : Unique {I : NonzeroIdealNF K⁺ // Ideal.absNorm I.1 = p ^ k} :=
     { default := ⟨⟨PPlus ^ k, pow_ne_zero k hPPlus_ne⟩, by
           rw [map_pow, habsNormPPlus]⟩
       uniq := by
@@ -98,10 +94,9 @@ lemma idealNormMultiplicityNF_p_pow_eq_one_plus (hp_odd : p ≠ 2) (k : ℕ) :
           have hRfac := (Ideal.mem_normalizedFactors_iff hQ_ne).1 hRmem
           have hRprime : R.IsPrime := hRfac.1
           have hQ_le_R : Q ≤ R := hRfac.2
-          haveI : R.IsPrime := hRprime
           have hR_ne : R ≠ ⊥ := fun hR_bot =>
             hQ_ne (le_bot_iff.mp (hQ_le_R.trans_eq hR_bot))
-          haveI : NeZero R := ⟨hR_ne⟩
+          have : NeZero R := ⟨hR_ne⟩
           have hI_le_Q : I ≤ Q := by
             rw [hIeq]
             exact Ideal.mul_le_left
@@ -153,18 +148,16 @@ lemma normalizedFactors_subset_primesOverFinsetPlus_of_absNorm_prime_pow
     {k : ℕ} (hI_norm : Ideal.absNorm I = (q : ℕ) ^ k) :
     (UniqueFactorizationMonoid.normalizedFactors I).toFinset ⊆
       primesOverFinsetPlus (K := K) (q : ℕ) := by
-  classical
-  haveI : Fact (q : ℕ).Prime := ⟨q.2⟩
+  have : Fact (q : ℕ).Prime := ⟨q.2⟩
   intro PPlus hPPlus
   have hPPlus_mem : PPlus ∈ UniqueFactorizationMonoid.normalizedFactors I :=
     Multiset.mem_toFinset.1 hPPlus
   have hPPlus_fac := (Ideal.mem_normalizedFactors_iff hI_ne).1 hPPlus_mem
   have hPPlus_prime : PPlus.IsPrime := hPPlus_fac.1
   have hI_le_PPlus : I ≤ PPlus := hPPlus_fac.2
-  haveI : PPlus.IsPrime := hPPlus_prime
   have hPPlus_ne : PPlus ≠ ⊥ := fun hPPlus_bot =>
     hI_ne (le_bot_iff.mp (hPPlus_bot ▸ hI_le_PPlus))
-  haveI : NeZero PPlus := ⟨hPPlus_ne⟩
+  have : NeZero PPlus := ⟨hPPlus_ne⟩
   have hPPlus_dvd : Ideal.absNorm PPlus ∣ (q : ℕ) ^ k := by
     rw [← hI_norm]
     exact Ideal.absNorm_dvd_absNorm_of_le hI_le_PPlus
@@ -192,14 +185,11 @@ lemma absNorm_eq_q_pow_localResidueDegreePlus_of_mem_primesOverFinsetPlus
     Ideal.absNorm PPlus = (q : ℕ) ^ localResidueDegreePlus (p := p) (q : ℕ) hq := by
   have hPPlus_over : PPlus ∈ Ideal.primesOver (rationalPrimeIdeal (q : ℕ)) (𝓞 K⁺) :=
     (mem_primesOverFinsetPlus_iff (K := K) (ℓ := (q : ℕ))).1 hPPlus
-  haveI : PPlus.IsPrime := hPPlus_over.1
-  haveI : PPlus.LiesOver (Ideal.span {((q : ℕ) : ℤ)}) := by
+  have : PPlus.LiesOver (Ideal.span {((q : ℕ) : ℤ)}) := by
     simpa [rationalPrimeIdeal] using hPPlus_over.2
-  haveI : (rationalPrimeIdeal (q : ℕ)).IsMaximal := by
+  have : (rationalPrimeIdeal (q : ℕ)).IsMaximal := by
     simpa [rationalPrimeIdeal] using Int.ideal_span_isMaximal_of_prime (q : ℕ)
-  haveI : (Ideal.span {((q : ℕ) : ℤ)} : Ideal ℤ).IsMaximal := by
-    simpa [rationalPrimeIdeal] using Int.ideal_span_isMaximal_of_prime (q : ℕ)
-  haveI : PPlus.IsMaximal := Ideal.isMaximal_of_mem_primesOver hPPlus_over
+  have : PPlus.IsMaximal := Ideal.isMaximal_of_mem_primesOver hPPlus_over
   rw [← primesOver_inertiaDeg_eq_localResidueDegreePlus
     (p := p) (K := K) hp_odd hq PPlus hPPlus_over]
   rw [← Ideal.inertiaDeg'_eq_inertiaDeg
@@ -268,8 +258,6 @@ lemma idealNormMultiplicityNF_prime_pow_mul_localResidueDegreePlus_eq_card_sym
   set d := localResidueDegreePlus (p := p) (q : ℕ) hq with hd
   let α : Type _ :=
     {PPlus : Ideal (𝓞 K⁺) // PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ)}
-  letI : Fintype α := Fintype.ofFinset (primesOverFinsetPlus (K := K) (q : ℕ)) fun PPlus => by
-    simp
   let β : Type _ := {I : NonzeroIdealNF K⁺ // Ideal.absNorm I.1 = (q : ℕ) ^ (d * n)}
   have hd_raw_pos : 0 < localResidueDegree (p := p) (q : ℕ) hq := by
     dsimp [localResidueDegree]
@@ -404,7 +392,7 @@ lemma dedekind_prime_power_series_eq_localFactorPlus_at_p
     (∑' k : ℕ, (idealNormMultiplicityNF K⁺ (p ^ k) : ℂ) *
       (((p ^ k : ℕ) : ℂ) ^ (-s))) =
       (dedekindLocalFactor K⁺ p s)⁻¹ := by
-  haveI : IsCMField K := isCMField_of_cyclotomic (p := p) (K := K) hp_odd
+  have : IsCMField K := isCMField_of_cyclotomic (p := p) (K := K) hp_odd
   have hnorm : ‖(p : ℂ) ^ (-s)‖ < 1 := by
     have hle : ‖(p : ℂ) ^ (-s)‖ ≤ 1 / 2 :=
       Complex.norm_prime_cpow_le_one_half ⟨p, hp.out⟩ hs
@@ -423,7 +411,7 @@ lemma dedekind_prime_power_series_eq_localFactorPlus
     (∑' k : ℕ, (idealNormMultiplicityNF K⁺ ((q : ℕ) ^ k) : ℂ) *
       ((((q : ℕ) ^ k : ℕ) : ℂ) ^ (-s))) =
       (dedekindLocalFactor K⁺ (q : ℕ) s)⁻¹ := by
-  haveI : Fact (q : ℕ).Prime := ⟨q.2⟩
+  have : Fact (q : ℕ).Prime := ⟨q.2⟩
   by_cases hq : (q : ℕ) = p
   · have hq' : q = ⟨p, Fact.out⟩ := by
       apply Subtype.ext
@@ -432,12 +420,10 @@ lemma dedekind_prime_power_series_eq_localFactorPlus
     simpa using dedekind_prime_power_series_eq_localFactorPlus_at_p
       (p := p) (K := K) hp_odd hs
   · classical
-    haveI : IsCMField K := isCMField_of_cyclotomic (p := p) (K := K) hp_odd
+    have : IsCMField K := isCMField_of_cyclotomic (p := p) (K := K) hp_odd
     set d := localResidueDegreePlus (p := p) (q : ℕ) hq with hd
     let α : Type _ := {PPlus : Ideal (𝓞 K⁺) //
       PPlus ∈ primesOverFinsetPlus (K := K) (q : ℕ)}
-    letI : Fintype α :=
-      Fintype.ofFinset (primesOverFinsetPlus (K := K) (q : ℕ)) fun PPlus => by simp
     let f : ℕ → ℂ := fun k =>
       (idealNormMultiplicityNF K⁺ ((q : ℕ) ^ k) : ℂ) * ((((q : ℕ) ^ k : ℕ) : ℂ) ^ (-s))
     let g : ℕ → ℂ := fun n =>
@@ -557,8 +543,8 @@ lemma localFactorsPlus_agree_prime_ne_p (hp_odd : p ≠ 2)
     {q : Nat.Primes} (hq : (q : ℕ) ≠ p) {s : ℂ} :
     dedekindLocalFactor K⁺ (q : ℕ) s =
       (1 - ((q : ℕ) : ℂ) ^ (-s)) * evenCharLocalFactor (p := p) (q : ℕ) s := by
-  haveI : IsCMField K := isCMField_of_cyclotomic (p := p) (K := K) hp_odd
-  haveI : Fact (q : ℕ).Prime := ⟨q.2⟩
+  have : IsCMField K := isCMField_of_cyclotomic (p := p) (K := K) hp_odd
+  have : Fact (q : ℕ).Prime := ⟨q.2⟩
   rw [dedekindLocalFactor_eq_pow_localResidueDegreePlus (p := p) (K := K) hp_odd hq]
   symm
   simpa [neg_mul] using
@@ -568,7 +554,7 @@ lemma localFactorsPlus_agree_prime_ne_p (hp_odd : p ≠ 2)
 lemma localFactorsPlus_agree_at_p (hp_odd : p ≠ 2) {s : ℂ} :
     dedekindLocalFactor K⁺ p s =
       (1 - (p : ℂ) ^ (-s)) * evenCharLocalFactor (p := p) p s := by
-  haveI : IsCMField K := isCMField_of_cyclotomic (p := p) (K := K) hp_odd
+  have : IsCMField K := isCMField_of_cyclotomic (p := p) (K := K) hp_odd
   rw [evenCharLocalFactor_at_p (p := p), mul_one, dedekindLocalFactorPlus_at_p (p := p) (K := K)]
 
 lemma localFactorsPlus_agree (hp_odd : p ≠ 2) {q : Nat.Primes} {s : ℂ} :

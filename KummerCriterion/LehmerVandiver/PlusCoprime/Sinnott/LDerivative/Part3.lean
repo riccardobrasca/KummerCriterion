@@ -119,7 +119,6 @@ Uses the project's `norm_one_sub_exp_two_pi_I_mul` identity. -/
 theorem log_norm_one_sub_stdAddChar_unit (a : (ZMod p)ˣ) :
     Real.log ‖(1 : ℂ) - ZMod.stdAddChar (N := p) ((a : ZMod p))‖ =
       Real.log (2 * |Real.sin (Real.pi * (ZMod.val (a : ZMod p) : ℕ) / p)|) := by
-  haveI : NeZero p := ⟨hp.out.ne_zero⟩
   set k : ℕ := ZMod.val ((a : ZMod p))
   have h_val_cast : ((a : ZMod p)) = ((k : ℤ) : ZMod p) := by
     change (a : ZMod p) = ((ZMod.val (a : ZMod p) : ℤ) : ZMod p)
@@ -277,10 +276,7 @@ theorem prod_mulChar_DLS_eq_trivial_mul_nontrivial :
             (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ)).erase 1,
           DirichletLogSum p (dirichletOfQuotientChar p ξ) := by
   classical
-  letI : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=
-    Fintype.ofFinite _
-  letI : DecidableEq (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=
-    Classical.decEq _
+  let : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) := Fintype.ofFinite _
   rw [← Finset.prod_erase_mul _ _ (Finset.mem_univ
     (1 : MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ))]
   rw [dirichletOfQuotientChar_one]
@@ -319,7 +315,6 @@ theorem frobenius_eigenvalue_eq_neg_DirichletLogSum
       ∑ a : ZMod p,
         χ a * ((Real.log ‖(1 : ℂ) -
           ZMod.stdAddChar (N := p) a‖ : ℝ) : ℂ) := by
-    haveI : NeZero p := ⟨hp.out.ne_zero⟩
     rw [← Finset.sum_erase_add _ _ (Finset.mem_univ (0 : ZMod p))]
     rw [χ.map_zero, zero_mul, add_zero]
     refine Finset.sum_bij (fun (a : (ZMod p)ˣ) _ => (a : ZMod p)) ?_ ?_ ?_ ?_
@@ -420,8 +415,7 @@ theorem det_convolutionMatrixLogNormEven_sq_eq_prod_DLS_sq_div_four_pow
       (∏ ξ : MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ,
         (DirichletLogSum p (dirichletOfQuotientChar p ξ)) ^ 2) /
       4 ^ (Fintype.card (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ)) := by
-  letI : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=
-    Fintype.ofFinite _
+  let : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) := Fintype.ofFinite _
   rw [det_convolutionMatrixLogNormEven_sq_eq_prod_quotientEigenvalue_sq p hp_two]
   rw [← Finset.prod_pow]
   rw [prod_quot_eq_prod_mulChar p (fun ξ => (quotientEigenvalue p ξ) ^ 2)]
@@ -450,10 +444,7 @@ theorem det_convolutionMatrixLogNormEven_sq_eq_log_p_sq_mul_nontrivial_DLS_sq
           DirichletLogSum p (dirichletOfQuotientChar p ξ)) ^ 2 /
       4 ^ (Fintype.card (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ)) := by
   classical
-  letI : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=
-    Fintype.ofFinite _
-  letI : DecidableEq (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=
-    Classical.decEq _
+  let : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) := Fintype.ofFinite _
   have h_sq_eq : (∏ ξ : MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ,
       (DirichletLogSum p (dirichletOfQuotientChar p ξ)) ^ 2) =
     (∏ ξ : MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ,

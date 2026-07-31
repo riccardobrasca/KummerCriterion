@@ -66,7 +66,7 @@ theorem cyclotomicGalEquivZMod_complexConjGal_eq_neg_one
     (hp_gt_two : 2 < p) :
     cyclotomicGalEquivZMod (p := p) K
         (cyclotomicComplexConjGal (p := p) K hp_gt_two) = -1 := by
-  haveI : NumberField.IsCMField K :=
+  have : NumberField.IsCMField K :=
     IsCyclotomicExtension.Rat.isCMField (S := {p}) K ⟨p, rfl, hp_gt_two⟩
   let c : Gal(K / ℚ) := cyclotomicComplexConjGal (p := p) K hp_gt_two
   have hζ := IsCyclotomicExtension.zeta_spec p ℚ K

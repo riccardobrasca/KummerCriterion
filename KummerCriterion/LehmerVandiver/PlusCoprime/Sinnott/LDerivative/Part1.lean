@@ -116,9 +116,7 @@ direct from `stdAddChar(-x) = conj(stdAddChar(x))` (mathlib's
 the cyclotomic log-norm, foundational for descending to the
 `(ZMod p)ˣ ⧸ ⟨-1⟩` quotient convolution matrix. -/
 theorem norm_one_sub_stdAddChar_neg (a : ZMod p) :
-    ‖(1 : ℂ) - ZMod.stdAddChar (N := p) (-a)‖ =
-      ‖(1 : ℂ) - ZMod.stdAddChar (N := p) a‖ := by
-  haveI : NeZero p := ⟨hp.out.ne_zero⟩
+    ‖(1 : ℂ) - ZMod.stdAddChar (N := p) (-a)‖ = ‖(1 : ℂ) - ZMod.stdAddChar (N := p) a‖ := by
   rw [AddChar.map_neg_eq_conj]
   rw [show (1 : ℂ) - (starRingEnd ℂ) (ZMod.stdAddChar (N := p) a) =
         (starRingEnd ℂ) (1 - ZMod.stdAddChar (N := p) a) from by
@@ -204,10 +202,6 @@ group cardinality-wise). -/
 theorem nat_card_mulChar_cyclotomicEvenDelta_eq :
     Nat.card (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) =
       Nat.card (KummerCriterion.CyclotomicEvenDelta p) := by
-  haveI : NeZero (Monoid.exponent (KummerCriterion.CyclotomicEvenDelta p)ˣ) := by
-    constructor
-    haveI : Fintype (KummerCriterion.CyclotomicEvenDelta p)ˣ := Fintype.ofFinite _
-    exact Monoid.exponent_ne_zero_of_finite
   rw [MulChar.card_eq_card_units_of_hasEnoughRootsOfUnity]
   exact Nat.card_congr toUnits.symm.toEquiv
 
@@ -539,8 +533,7 @@ theorem prod_quot_eq_prod_mulChar
         f ((quotCharEquivQuot p).symm k) =
       ∏ ξ : MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ, f ξ := by
   classical
-  letI : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) :=
-    Fintype.ofFinite _
+  let : Fintype (MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) := Fintype.ofFinite _
   exact (Fintype.prod_equiv (quotCharEquivQuot p)
     (fun ξ => f ξ)
     (fun k => f ((quotCharEquivQuot p).symm k))

@@ -977,8 +977,6 @@ theorem bernoulli_div_sModEq_of_modEq_full_geFive
         (((bernoulli n : ℚ) / (n : ℕ) : ℚ) : ℚ_[p]) =
       (p : ℚ_[p]) * (z : ℚ_[p]) := by
   have hp : Nat.Prime p := Fact.out
-  haveI : NeZero p := ⟨hp.ne_zero⟩
-  haveI : Fact (1 < p) := ⟨hp.one_lt⟩
   have hnot_m : ¬ (p - 1) ∣ m := by
     intro hdvd
     have h_n_mod : n ≡ 0 [MOD p - 1] :=

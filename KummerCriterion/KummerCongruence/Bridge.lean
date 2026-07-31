@@ -45,8 +45,6 @@ theorem bernoulliGen_teichmuller_pow_sModEq_div
         (p : ℚ_[p]) * (z : ℚ_[p]) := by
   have hp : Nat.Prime p := hp.out
   have hp_gt : 2 < p := lt_of_le_of_ne hp.two_le (Ne.symm hp_odd)
-  haveI : NeZero p := ⟨hp.ne_zero⟩
-  haveI : Fact (1 < p) := ⟨hp.one_lt⟩
   set t : ℕ := p * n + 1 with ht_def
   have hpQ_ne : (p : ℚ_[p]) ≠ 0 := by exact_mod_cast hp.ne_zero
   have hn_le_pm3 : n ≤ p - 3 := by omega

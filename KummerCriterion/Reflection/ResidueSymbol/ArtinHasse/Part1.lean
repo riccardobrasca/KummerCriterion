@@ -223,9 +223,6 @@ noncomputable def artinHasseExpInverseSeries (r : ℕ) [Fact (Nat.Prime r)] :
   let P : PowerSeries ℚ := artinHasseExpMinusOneSeries r
   have hcoeff : (PowerSeries.coeff (R := ℚ) 1) P = 1 := by
     simp [P]
-  letI : Invertible ((PowerSeries.coeff (R := ℚ) 1) P) := by
-    rw [hcoeff]
-    exact invertibleOfNonzero (by norm_num : (1 : ℚ) ≠ 0)
   simp [artinHasseExpInverseSeries]
 
 @[simp] theorem artinHasseExpInverseSeries_coeff_one
@@ -234,9 +231,6 @@ noncomputable def artinHasseExpInverseSeries (r : ℕ) [Fact (Nat.Prime r)] :
   let P : PowerSeries ℚ := artinHasseExpMinusOneSeries r
   have hcoeff : (PowerSeries.coeff (R := ℚ) 1) P = 1 := by
     simp [P]
-  letI : Invertible ((PowerSeries.coeff (R := ℚ) 1) P) := by
-    rw [hcoeff]
-    exact invertibleOfNonzero (by norm_num : (1 : ℚ) ≠ 0)
   simp [artinHasseExpInverseSeries, P, hcoeff]
 
 /-- Formal right-inverse identity for `artinHasseExpInverseSeries`. -/
@@ -247,9 +241,8 @@ theorem artinHasseExpMinusOneSeries_subst_inverse
   let P : PowerSeries ℚ := artinHasseExpMinusOneSeries r
   have hcoeff : (PowerSeries.coeff (R := ℚ) 1) P = 1 := by
     simp [P]
-  letI : Invertible ((PowerSeries.coeff (R := ℚ) 1) P) := by
-    rw [hcoeff]
-    exact invertibleOfNonzero (by norm_num : (1 : ℚ) ≠ 0)
+  let : Invertible ((PowerSeries.coeff (R := ℚ) 1) P) := by
+    simpa [hcoeff] using invertibleOfNonzero (by norm_num : (1 : ℚ) ≠ 0)
   simpa [artinHasseExpInverseSeries, P] using
     PowerSeries.subst_substInv_right P (by simp [P])
 

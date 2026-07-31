@@ -8,7 +8,7 @@ import Mathlib.CategoryTheory.Category.Init
 import Mathlib.NumberTheory.Padics.RingHoms
 
 /-!
-# Kummer's congruence 
+# Kummer's congruence
 
 The classical Kummer congruence: for even positive integers
 `m ≡ n (mod p − 1)` with `(p − 1) ∤ n`, `p ∤ m`, `p ∤ n`,
@@ -50,8 +50,6 @@ theorem bernoulli_div_sModEq_of_modEq
         (p : ℚ_[p]) * (z : ℚ_[p]) := by
   have hp : Nat.Prime p := hp.out
   have hp_gt : 2 < p := lt_of_le_of_ne hp.two_le (Ne.symm hp_odd)
-  haveI : NeZero p := ⟨hp.ne_zero⟩
-  haveI : Fact (1 < p) := ⟨hp.one_lt⟩
   have hpQ_ne : (p : ℚ_[p]) ≠ 0 := by exact_mod_cast hp.ne_zero
   have hm_two : 2 ≤ m := by
     obtain ⟨r, hr⟩ := hm_even; omega

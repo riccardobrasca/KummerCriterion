@@ -85,13 +85,9 @@ theorem det_normalizedDft_eq_det_normalizedFourierMatrix :
 /-- A fixed equivalence used to reindex `ZMod p` by `Fin p` for matrix
 determinant computations. -/
 noncomputable def zmodEquivFin : ZMod p ≃ Fin p := by
-  haveI : NeZero p := ⟨hp.out.ne_zero⟩
   exact (ZMod.finEquiv p).symm.toEquiv
 
-theorem zmodEquivFin_symm_apply (i : Fin p) :
-    (zmodEquivFin (p := p)).symm i = (i : ZMod p) := by
-  haveI : NeZero p := ⟨hp.out.ne_zero⟩
-  change ZMod.finEquiv p i = (i : ZMod p)
+theorem zmodEquivFin_symm_apply (i : Fin p) : (zmodEquivFin (p := p)).symm i = (i : ZMod p) := by
   cases p with
   | zero =>
       exact (hp.out.ne_zero rfl).elim

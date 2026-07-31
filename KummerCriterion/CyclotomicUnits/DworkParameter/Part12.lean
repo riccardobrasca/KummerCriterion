@@ -49,7 +49,7 @@ theorem cyclotomicLambda_isMaximal : (cyclotomicLambda p K).IsMaximal := by
 
 /-- The global residue ring at `lambda` has cardinality `p`. -/
 theorem globalCyclotomicResidueCard : Nat.card (𝓞 K ⧸ cyclotomicLambda p K) = p := by
-  haveI : IsCyclotomicExtension {p ^ (0 + 1)} ℚ K := by
+  have : IsCyclotomicExtension {p ^ (0 + 1)} ℚ K := by
     simpa using (inferInstance : IsCyclotomicExtension {p} ℚ K)
   have hζ : IsPrimitiveRoot (IsCyclotomicExtension.zeta p ℚ K) (p ^ (0 + 1)) := by simp
   have hAbs : Ideal.absNorm (cyclotomicLambda p K) = p := by
@@ -369,7 +369,7 @@ theorem globalCyclotomicResidue_natCast_fin_surjective :
       (algebraMap ℤ (𝓞 K) (i : ℤ))
   have hcardQ : Nat.card Q = p :=
     Reflection.Local.globalCyclotomicResidueCard (p := p) (K := K)
-  haveI : Finite Q := Nat.finite_of_card_ne_zero (by
+  have : Finite Q := Nat.finite_of_card_ne_zero (by
     rw [hcardQ]
     exact (Fact.out : Nat.Prime p).ne_zero)
   have hinj : Function.Injective f := by
@@ -391,7 +391,6 @@ theorem globalCyclotomicResidue_natCast_fin_surjective :
     have hmemZ :
         ((i : ℤ) - (j : ℤ)) ∈
           Furtwaengler.KummerArtinHasse.lambdaRationalPrimeIdeal p := by
-      letI := hlie
       exact (Ideal.mem_of_liesOver
         (P := Reflection.Local.cyclotomicLambda p K)
         (p := Furtwaengler.KummerArtinHasse.lambdaRationalPrimeIdeal p)
@@ -438,8 +437,7 @@ theorem exists_global_fin_valuation_sub_le_exp_neg_one_of_valuation_le_one
   let I : Ideal (𝓞 K) := Reflection.Local.cyclotomicLambda p K
   have hImax : I.IsMaximal :=
     Reflection.Local.cyclotomicLambda_isMaximal (p := p) (K := K)
-  letI : I.IsMaximal := hImax
-  letI : Field (𝓞 K ⧸ I) := Ideal.Quotient.field I
+  let : Field (𝓞 K ⧸ I) := Ideal.Quotient.field I
   rcases v.exists_primeCompl_mul_eq_of_integer (K := K) x hx with ⟨n, d, hxd⟩
   let q : 𝓞 K →+* 𝓞 K ⧸ I := Ideal.Quotient.mk I
   have hd_not_mem : (d : 𝓞 K) ∉ I := d.property

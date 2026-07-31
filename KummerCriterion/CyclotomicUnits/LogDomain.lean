@@ -109,13 +109,8 @@ theorem integralUnit_pow_pred_sub_one_mem_cyclotomicLambda (u : (𝓞 K)ˣ) :
   let R : Type _ := 𝓞 K
   let I : Ideal R := Reflection.Local.cyclotomicLambda p K
   let F : Type _ := R ⧸ I
-  letI : I.IsMaximal := Reflection.Local.cyclotomicLambda_isMaximal (p := p) (K := K)
-  letI : Field F := Ideal.Quotient.field I
-  haveI : Finite F := Nat.finite_of_card_ne_zero <| by
-    rw [show Nat.card F = p from
-      Reflection.Local.globalCyclotomicResidueCard (p := p) (K := K)]
-    exact (Fact.out : Nat.Prime p).ne_zero
-  letI : Fintype F := Fintype.ofFinite F
+  have : I.IsMaximal := Reflection.Local.cyclotomicLambda_isMaximal (p := p) (K := K)
+  let : Fintype F := Fintype.ofFinite F
   have hcard : Fintype.card F = p := by
     rw [← Nat.card_eq_fintype_card]
     exact Reflection.Local.globalCyclotomicResidueCard (p := p) (K := K)

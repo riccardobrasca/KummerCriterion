@@ -285,9 +285,8 @@ theorem inverseSeries_subst_expMinusOneSeries :
   let P : PowerSeries ℚ := expMinusOneSeries p
   have hcoeff : (PowerSeries.coeff (R := ℚ) 1) P = 1 := by
     simp [P, expMinusOneSeries]
-  letI : Invertible ((PowerSeries.coeff (R := ℚ) 1) P) := by
-    rw [hcoeff]
-    exact invertibleOfNonzero (by norm_num : (1 : ℚ) ≠ 0)
+  let : Invertible ((PowerSeries.coeff (R := ℚ) 1) P) := by
+    simpa [hcoeff] using invertibleOfNonzero (by norm_num : (1 : ℚ) ≠ 0)
   simpa [P, inverseSeries, expMinusOneSeries,
     Furtwaengler.artinHasseExpInverseSeries] using
     PowerSeries.subst_substInv_left P (by simp [P, expMinusOneSeries])

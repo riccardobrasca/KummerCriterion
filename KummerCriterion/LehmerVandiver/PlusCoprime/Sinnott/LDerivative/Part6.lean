@@ -166,13 +166,6 @@ theorem familyIndexAsUnit_quotient_injective
           -1 * familyIndexAsUnit p K hp_odd hp_three i₂ := by rw [hk]
       rwa [inv_mul_cancel_right, neg_one_mul] at this
     have h_p_prime : Nat.Prime p := hp.out
-    haveI : NeZero p := ⟨h_p_prime.ne_zero⟩
-    haveI : NeZero ((familyIndexAsUnit p K hp_odd hp_three i₂ : (ZMod p)ˣ) : ZMod p) := by
-      refine ⟨?_⟩
-      intro h_zero
-      rw [show ((((familyIndexAsUnit p K hp_odd hp_three i₂ : (ZMod p)ˣ) : ZMod p)).val) = 0 from
-        by rw [h_zero]; exact ZMod.val_zero] at h_ge_two
-      omega
     have h_v_eq : ((familyIndexAsUnit p K hp_odd hp_three i₁ : (ZMod p)ˣ) : ZMod p).val =
         ((-familyIndexAsUnit p K hp_odd hp_three i₂ : (ZMod p)ˣ) : ZMod p).val := by
       rw [h_neg]

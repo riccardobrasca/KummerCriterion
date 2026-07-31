@@ -25,7 +25,7 @@ theorem not_isRegularPrime_of_bernoulli_num_dvd
       (p : ℤ) ∣ (bernoulli (2 * k)).num) :
     letI : Fact p.Prime := ⟨hp⟩
     ¬ IsRegularPrime p := by
-  letI : Fact p.Prime := ⟨hp⟩
+  have : Fact p.Prime := ⟨hp⟩
   intro hreg
   rcases h with ⟨k, hk_pos, hk_range, hdiv⟩
   exact ((KummerCriterion (p := p) hp_odd).mp hreg k hk_pos hk_range) hdiv
@@ -37,7 +37,7 @@ theorem exists_bernoulli_num_dvd_of_not_isRegularPrime
     (hirr : letI : Fact p.Prime := ⟨hp⟩; ¬ IsRegularPrime p) :
     ∃ k, 1 ≤ k ∧ 2 * k ≤ p - 3 ∧
       (p : ℤ) ∣ (bernoulli (2 * k)).num := by
-  letI : Fact p.Prime := ⟨hp⟩
+  have : Fact p.Prime := ⟨hp⟩
   by_contra h
   exact hirr <| (KummerCriterion (p := p) hp_odd).mpr <| by
     intro k hk_pos hk_range hdiv

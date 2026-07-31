@@ -44,7 +44,6 @@ theorem dft_deltaZero_eq_constOne :
 /-- The DFT of the constant-one function is concentrated at `0`. -/
 theorem dft_constOne (k : ZMod p) :
     ZMod.dft (fun _ : ZMod p => (1 : ℂ)) k = if k = 0 then p else 0 := by
-  haveI : NeZero p := ⟨hp.out.ne_zero⟩
   by_cases hk : k = 0
   · subst hk
     rw [ZMod.dft_apply_zero]
@@ -79,7 +78,6 @@ theorem dft_eq_scalar_smul_inv_character {χ : DirichletCharacter ℂ p}
     ZMod.dft χ =
       (χ⁻¹ (-1) * gaussSum χ (ZMod.stdAddChar (N := p))) •
         (((χ⁻¹ : DirichletCharacter ℂ p) : ZMod p → ℂ)) := by
-  haveI : NeZero p := ⟨hp.out.ne_zero⟩
   have hprim : χ.IsPrimitive := DirichletCharacter.isPrimitive_of_ne_one (p := p) hχ
   ext k
   simp only [Pi.smul_apply, smul_eq_mul]

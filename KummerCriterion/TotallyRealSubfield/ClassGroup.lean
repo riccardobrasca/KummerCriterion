@@ -129,7 +129,6 @@ theorem ringOfIntegers_faithfullyFlat_maximalRealSubfield
     Module.FaithfullyFlat (𝓞 (NumberField.maximalRealSubfield L)) (𝓞 L) := by
   let R := 𝓞 (NumberField.maximalRealSubfield L)
   let S := 𝓞 L
-  haveI : Module.Flat R S := inferInstance
   have hsurj : Function.Surjective (PrimeSpectrum.comap (algebraMap R S)) := by
     intro q
     obtain ⟨⟨Q, hQprime, hQover⟩⟩ := q.asIdeal.nonempty_primesOver (S := S)
@@ -143,10 +142,7 @@ theorem map_comap_eq_ringOfIntegers
     (J : Ideal (𝓞 (NumberField.maximalRealSubfield L))) :
     (J.map (algebraMap (𝓞 (NumberField.maximalRealSubfield L)) (𝓞 L))).comap
         (algebraMap (𝓞 (NumberField.maximalRealSubfield L)) (𝓞 L)) = J := by
-  let R := 𝓞 (NumberField.maximalRealSubfield L)
-  let S := 𝓞 L
-  letI : Module.FaithfullyFlat R S := ringOfIntegers_faithfullyFlat_maximalRealSubfield L
-  simpa using Ideal.comap_map_eq_self_of_faithfullyFlat (A := R) (B := S) J
+  simpa using Ideal.comap_map_eq_self_of_faithfullyFlat J
 
 /-- If `I · 𝒪_K = (b)` with `b` descending from `𝒪_{K⁺}`, then `I` is principal. -/
 theorem isPrincipal_of_map_eq_span_singleton_of_mem

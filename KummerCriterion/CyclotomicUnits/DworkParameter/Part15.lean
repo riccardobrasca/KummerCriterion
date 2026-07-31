@@ -187,7 +187,7 @@ theorem rationalPadicInteger_two_ne_zero :
       ((2 : RationalPadicIntegerRing p) :
         (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) = 0 :=
     congrArg Subtype.val h
-  letI : CharZero ((lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) :=
+  have : CharZero ((lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) :=
     algebraRat.charZero ((lambdaRationalHeightOneSpectrum p).adicCompletion ℚ)
   exact (by norm_num :
     (2 : (lambdaRationalHeightOneSpectrum p).adicCompletion ℚ) ≠ 0) hval

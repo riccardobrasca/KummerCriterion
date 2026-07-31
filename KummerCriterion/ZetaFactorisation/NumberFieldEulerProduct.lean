@@ -38,8 +38,7 @@ lemma idealNormMultiplicity_zero : idealNormMultiplicity L 0 = 0 := by
   exact hI (Ideal.absNorm_eq_zero_iff.mp hnorm)
 
 lemma idealNormMultiplicity_one : idealNormMultiplicity L 1 = 1 := by
-  unfold idealNormMultiplicity
-  haveI : Unique {I : NonzeroIdeal L // Ideal.absNorm I.1 = 1} :=
+  have : Unique {I : NonzeroIdeal L // Ideal.absNorm I.1 = 1} :=
     { default := ⟨⟨⊤, by simp⟩, Ideal.absNorm_top⟩
       uniq := by
         rintro ⟨⟨I, hI⟩, hnorm⟩
@@ -287,7 +286,7 @@ lemma summable_tsum_symGeometric (α : Type*) [Fintype α] [Finite α] {z : ℂ}
       (∑' n : ℕ, (Fintype.card (Sym α n) : ℂ) * z ^ n) =
         ((1 - z)⁻¹) ^ Fintype.card α := by
   by_cases hα : Fintype.card α = 0
-  · haveI : IsEmpty α := Fintype.card_eq_zero_iff.mp hα
+  · have : IsEmpty α := Fintype.card_eq_zero_iff.mp hα
     let term : ℕ → ℂ := fun n => (Fintype.card (Sym α n) : ℂ) * z ^ n
     have hzero : ∀ n ≠ 0, term n = 0 := by
       intro n hn

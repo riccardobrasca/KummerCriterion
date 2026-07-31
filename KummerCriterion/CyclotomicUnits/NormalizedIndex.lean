@@ -226,7 +226,7 @@ theorem cyclotomicUnitIndex_primeConductor_pPrimary_aux
 theorem hPlus_eq_one_of_eq_three (hp_odd : p ≠ 2) (hp_eq : p = 3) :
     hPlus K = 1 := by
   subst p
-  letI : IsPrincipalIdealRing (𝓞 K) := IsCyclotomicExtension.Rat.three_pid K
+  have : IsPrincipalIdealRing (𝓞 K) := IsCyclotomicExtension.Rat.three_pid K
   have h_dvd : hPlus K ∣ h K :=
     hPlus_dvd_h (p := 3) (hp_odd := by norm_num) (K := K)
   have h_one : h K = 1 := by
