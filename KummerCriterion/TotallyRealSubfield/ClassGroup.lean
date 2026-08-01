@@ -123,19 +123,6 @@ variable (p : ℕ) [hp : Fact p.Prime] (hp_odd : p ≠ 2)
 
 local notation3 "K⁺" => NumberField.maximalRealSubfield K
 
-/-- `𝓞 L` is faithfully flat over `𝓞(L⁺)`. -/
-theorem ringOfIntegers_faithfullyFlat_maximalRealSubfield
-    (L : Type*) [Field L] [NumberField L] :
-    Module.FaithfullyFlat (𝓞 (NumberField.maximalRealSubfield L)) (𝓞 L) := by
-  let R := 𝓞 (NumberField.maximalRealSubfield L)
-  let S := 𝓞 L
-  have hsurj : Function.Surjective (PrimeSpectrum.comap (algebraMap R S)) := by
-    intro q
-    obtain ⟨⟨Q, hQprime, hQover⟩⟩ := q.asIdeal.nonempty_primesOver (S := S)
-    refine ⟨⟨Q, hQprime⟩, ?_⟩
-    exact PrimeSpectrum.ext (((Ideal.liesOver_iff _ _).mp hQover).symm)
-  exact Module.FaithfullyFlat.of_comap_surjective hsurj
-
 /-- Extending and contracting ideals along `𝓞(L⁺) ⊆ 𝓞 L` is the identity. -/
 theorem map_comap_eq_ringOfIntegers
     (L : Type*) [Field L] [NumberField L]

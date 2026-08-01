@@ -33,9 +33,6 @@ noncomputable instance instFintypeSym (α : Type*) [Finite α] (n : ℕ) :
 variable (p : ℕ) [hp : Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-lemma neZero_p : NeZero p :=
-  ⟨hp.1.ne_zero⟩
-
 /-- A chosen multiplicative equivalence between complex-valued Dirichlet
 characters mod `p` and the unit group `(ZMod p)ˣ`. -/
 noncomputable def dirichletCharacterMulEquivUnits : DirichletCharacter ℂ p ≃* (ZMod p)ˣ := by
