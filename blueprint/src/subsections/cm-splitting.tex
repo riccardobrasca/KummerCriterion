@@ -41,25 +41,9 @@ maximal real subfield:
 
 \section{Descent of principal ideals}
 
-\begin{theorem}\label{thm:ring-of-integers-faithfully-flat}
-  \lean{KummerCriterion.ringOfIntegers_faithfullyFlat_maximalRealSubfield}\leanok
-  \uses{def:cm-real-subfield}
-For every number field $L$, the ring $\mathcal O_L$ is faithfully flat over
-$\mathcal O_{L^+}$.
-\end{theorem}
-\begin{proof}\leanok
-$\mathcal O_L$ is a finitely generated torsion-free module over the
-Dedekind domain $\mathcal O_{L^+}$, hence projective, hence flat.  For
-faithfulness we use the criterion in terms of prime spectra: it suffices
-that $\operatorname{Spec}\mathcal O_L \to \operatorname{Spec}\mathcal
-O_{L^+}$ be surjective.  Given a prime $\mathfrak p$ of $\mathcal O_{L^+}$,
-the extension $\mathcal O_{L^+} \subseteq \mathcal O_L$ is integral, so
-lying-over produces a prime of $\mathcal O_L$ contracting to $\mathfrak p$.
-\end{proof}
-
 \begin{theorem}\label{thm:map-comap-ring-of-integers}
   \lean{KummerCriterion.map_comap_eq_ringOfIntegers}\leanok
-  \uses{thm:ring-of-integers-faithfully-flat}
+  \uses{def:cm-real-subfield}
 If $J$ is an ideal of $\mathcal O_{L^+}$, then extension to $\mathcal O_L$
 followed by contraction is the identity:
 \[
@@ -70,8 +54,12 @@ followed by contraction is the identity:
 For a faithfully flat ring map $A \to B$, every ideal $J \subseteq A$
 satisfies $JB \cap A = J$: the inclusion $J \subseteq JB \cap A$ is clear,
 and the quotient map $A/J \to B/JB$ is injective by faithful flatness of
-$B/JB$ over $A/J$.  Apply this with
-\cref{thm:ring-of-integers-faithfully-flat}.
+$B/JB$ over $A/J$.  It remains to note that $\mathcal O_L$ is faithfully
+flat over $\mathcal O_{L^+}$: it is a finitely generated torsion-free
+module over the Dedekind domain $\mathcal O_{L^+}$, hence projective, hence
+flat, and $\operatorname{Spec}\mathcal O_L \to \operatorname{Spec}\mathcal
+O_{L^+}$ is surjective because the integral extension $\mathcal O_{L^+}
+\subseteq \mathcal O_L$ satisfies lying-over.
 \end{proof}
 
 \begin{theorem}\label{thm:is-principal-map-span-singleton}
