@@ -1,10 +1,12 @@
-import KummerCriterion.BernoulliFast.FermatLastTheoremUpTo100
+module
+
+public import KummerCriterion.BernoulliFast.FermatLastTheoremUpTo100
 
 /-!
 Solution side for Comparator: forwards to the project's proof.
 -/
 
-theorem fermatLastTheoremFor_le100_of_ne_irregular
+public theorem fermatLastTheoremFor_le100_of_ne_irregular
     (n : ℕ) (hn_two : 2 < n) (hn_le100 : n ≤ 100)
     (hn37 : n ≠ 37) (hn59 : n ≠ 59) (hn67 : n ≠ 67) (hn74 : n ≠ 74) :
     FermatLastTheoremFor n :=
