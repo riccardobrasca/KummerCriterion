@@ -315,13 +315,13 @@ theorem logSeries_rescale_neg (hp_two : 2 < p) :
   rw [PowerSeries.coeff_rescale, map_neg]
   rw [Furtwaengler.artinHasseLogSeries_coeff]
   by_cases hpow : p ^ Nat.log p n = n ∧ n ≠ 0
-  · rw [if_pos hpow]
+  · rw [ite_eq_left hpow]
     have hn_odd : Odd n := by
       rw [← hpow.1]
       exact hp_odd.pow
     rw [Odd.neg_one_pow (α := ℚ) hn_odd]
     ring
-  · rw [if_neg hpow]
+  · rw [ite_eq_right hpow]
     ring
 
 theorem subst_logSeries_evalNeg_exp :

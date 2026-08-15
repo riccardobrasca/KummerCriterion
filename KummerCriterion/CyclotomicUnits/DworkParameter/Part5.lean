@@ -498,10 +498,10 @@ theorem samePrimeFiniteArtinHasseLogHomogeneousNumerator_factorial_weighted_sub_
   have hu : N + 1 + s ≤ u := by
     by_cases hdsmall : d < N + n
     · dsimp [u]
-      rw [if_pos hdsmall]
+      rw [ite_eq_left hdsmall]
       omega
     · dsimp [u]
-      rw [if_neg hdsmall]
+      rw [ite_eq_right hdsmall]
       omega
   have hpowdiff :
       ((samePrimeFiniteArtinHasseExpCoordPoly (p := p) (K := K) N x) ^ n).coeff d -

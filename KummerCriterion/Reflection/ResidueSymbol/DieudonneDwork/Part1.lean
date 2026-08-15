@@ -440,7 +440,7 @@ theorem coeff_mul_left_multiple_pos_right_integral_lt {r n : ℕ} {F G : PowerSe
     · exact IsRIntegralRat.zero r
     · intro p hp
       by_cases hp0 : p.1 = 0
-      · rw [dif_pos hp0]
+      · rw [dite_eq_left hp0]
         exact IsRIntegralRat.zero r
       · have hp1pos : 0 < p.1 := Nat.pos_of_ne_zero hp0
         have hp2lt : p.2 < n := by
@@ -448,7 +448,7 @@ theorem coeff_mul_left_multiple_pos_right_integral_lt {r n : ℕ} {F G : PowerSe
             simpa [s] using Finset.mem_antidiagonal.mp hp
           rw [← hsum]
           exact Nat.lt_add_of_pos_left hp1pos
-        rw [dif_neg hp0]
+        rw [dite_eq_right hp0]
         exact ((hFpos p.1 (Nat.succ_le_of_lt hp1pos)).choose_spec.1).mul
           (hGlt p.2 hp2lt)
   · calc
@@ -462,13 +462,13 @@ theorem coeff_mul_left_multiple_pos_right_integral_lt {r n : ℕ} {F G : PowerSe
             intro p hp
             by_cases hp0 : p.1 = 0
             · dsimp [qTerm]
-              rw [dif_pos hp0]
+              rw [dite_eq_left hp0]
               simp [hp0, hF0]
             · have hp1pos : 0 < p.1 := Nat.pos_of_ne_zero hp0
               have hcoeff :=
                 (hFpos p.1 (Nat.succ_le_of_lt hp1pos)).choose_spec.2
               dsimp [qTerm]
-              rw [dif_neg hp0]
+              rw [dite_eq_right hp0]
               calc
                 (PowerSeries.coeff (R := ℚ) p.1) F *
                     (PowerSeries.coeff (R := ℚ) p.2) G

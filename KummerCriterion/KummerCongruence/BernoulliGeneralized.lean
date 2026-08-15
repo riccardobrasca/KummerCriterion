@@ -157,7 +157,7 @@ lemma bernoulliGen_teichmuller_inverse_eq_p_sub_one_div_p_add_padicInt
         dsimp [ωZ]; rw [MulChar.pow_apply' _ hpow_ne_zero, map_pow, teichmullerChar_apply,
           toZMod_teichmuller]
       have hval : PadicInt.toZMod (a.val : ℤ_[p]) = a := by simp
-      rw [map_mul, hω, hval, if_neg ha]
+      rw [map_mul, hω, hval, ite_eq_right ha]
       calc
         a ^ (p - 2) * a = a ^ ((p - 2) + 1) := by rw [mul_comm, pow_succ']
         _ = a ^ (p - 1) := by congr; omega
@@ -166,7 +166,7 @@ lemma bernoulliGen_teichmuller_inverse_eq_p_sub_one_div_p_add_padicInt
     have hsplit :
         (∑ a : ZMod p, if a = 0 then 0 else 1) =
           (Finset.univ.erase (0 : ZMod p)).sum (fun _ => (1 : ZMod p)) := by
-      rw [← Finset.sum_erase_add _ _ (Finset.mem_univ 0), if_pos rfl, add_zero]
+      rw [← Finset.sum_erase_add _ _ (Finset.mem_univ 0), ite_eq_left rfl, add_zero]
       refine Finset.sum_congr rfl fun a ha => ?_
       simp [(Finset.mem_erase.mp ha).1]
     calc
@@ -216,7 +216,7 @@ theorem bernoulli_mem_padicInt_of_lt_sub_one {p : ℕ} [hp : Fact p.Prime]
   · exact ⟨1, by simp [_root_.bernoulli_zero]⟩
   have hkp1_lt : k + 1 < p := by omega
   have h_sum := _root_.sum_bernoulli (k + 1)
-  rw [if_neg (by omega : k + 1 ≠ 1), Finset.sum_range_succ] at h_sum
+  rw [ite_eq_right (by omega : k + 1 ≠ 1), Finset.sum_range_succ] at h_sum
   have h_choose_k : (Nat.choose (k + 1) k : ℚ) = (k + 1 : ℚ) := by
     rw [Nat.choose_succ_self_right]; push_cast; rfl
   rw [h_choose_k] at h_sum
@@ -228,7 +228,7 @@ theorem bernoulli_mem_padicInt_of_lt_sub_one {p : ℕ} [hp : Fact p.Prime]
   let z_of : ℕ -> ℤ_[p] := fun j =>
     if h : j < k then (hj_wit j h).choose else 0
   have hz_of : ∀ j, j < k -> (bernoulli j : ℚ_[p]) = ((z_of j : ℤ_[p]) : ℚ_[p]) := by
-    intro j hj; simp only [z_of, dif_pos hj]; exact (hj_wit j hj).choose_spec
+    intro j hj; simp only [z_of, dite_eq_left hj]; exact (hj_wit j hj).choose_spec
   let S : ℤ_[p] := ∑ j ∈ Finset.range k, (Nat.choose (k + 1) j : ℤ_[p]) * z_of j
   have hS_coe : (S : ℚ_[p]) =
       ∑ j ∈ Finset.range k, (Nat.choose (k + 1) j : ℚ_[p]) * (bernoulli j : ℚ_[p]) := by

@@ -265,7 +265,7 @@ theorem samePrimeFiniteLogTermCore_finiteArtinHasseExpCoord_eq_homogeneous_suppo
           simpa [P] using
             samePrimeFiniteArtinHasseExpCoordPoly_pow_coeff_mem_lambdaIdeal_pow
               (p := p) (K := K) N hx n d
-        rw [samePrimeFiniteArtinHasseExpCoordLogHomogeneousCore, dif_neg hn, dif_pos hnd]
+        rw [samePrimeFiniteArtinHasseExpCoordLogHomogeneousCore, dite_eq_right hn, dite_eq_left hnd]
         exact (samePrimeNatDivEvalAtDegree_eq_samePrimeNatDivEval
           (p := p) (K := K) hn hcoeff hden (hcoeff_order d)).symm
 

@@ -641,7 +641,7 @@ theorem samePrimeFiniteLogTermCore_quotientMap_complexConj {N n : ℕ}
   by_cases hn : n = 0
   · subst n
     simp
-  rw [samePrimeFiniteLogTermCore, samePrimeFiniteLogTermCore, dif_neg hn, dif_neg hn]
+  rw [samePrimeFiniteLogTermCore, samePrimeFiniteLogTermCore, dite_eq_right hn, dite_eq_right hn]
   rw [map_mul, quotientNatCastInv_quotientMap_complexConj]
   change Ideal.Quotient.mk ((lambdaIdeal p K) ^ (N + 1))
         (valuedIntegerComplexConj (p := p) K

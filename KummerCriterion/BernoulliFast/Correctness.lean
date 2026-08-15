@@ -211,7 +211,7 @@ theorem bernoulliList_getD_eq :
           rw [hsum]
           have hb :
               (∑ x ∈ range (n + 2), ↑((n + 2).choose x) * bernoulli x) = 0 := by
-            simpa only [Nat.succ_succ_ne_one, if_false] using sum_bernoulli (n + 2)
+            simpa only [Nat.succ_succ_ne_one, ite_false] using sum_bernoulli (n + 2)
           rw [sum_range_succ] at hb
           have hchooseNat : (n + 2).choose (n + 1) = n + 2 := by
             simp

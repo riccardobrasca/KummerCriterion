@@ -5,7 +5,6 @@ public import KummerCriterion.HMinus.KplusLocalCharacters
 public import KummerCriterion.TotallyRealSubfield.ClassGroup
 public import KummerCriterion.TotallyRealSubfield.ZetaPrime
 import Mathlib.LinearAlgebra.Dimension.DivisionRing
-import Mathlib.NumberTheory.RamificationInertia.Inertia
 import Mathlib.NumberTheory.RamificationInertia.Ramification
 import Mathlib.RingTheory.Ideal.Norm.AbsNorm
 import Mathlib.RingTheory.Flat.TorsionFree
@@ -312,7 +311,7 @@ lemma neg_one_mem_zpowers_unitOfPrimeNe_iff_even_localResidueDegree
     have htwo : 2 ∣ orderOf u := by
       have horder_neg : orderOf (-1 : (ZMod p)ˣ) = 2 := by
         rw [← orderOf_units, Units.coe_neg_one, orderOf_neg_one, ringChar.eq (ZMod p) p,
-          if_neg hp_odd]
+          ite_eq_right hp_odd]
       exact horder_neg ▸ orderOf_dvd_of_mem_zpowers hneg
     simpa [u, localResidueDegree, even_iff_two_dvd] using htwo
   · intro hd_even
@@ -677,9 +676,8 @@ lemma dedekindLocalFactor_eq_pow_localResidueDegreePlus (hp_odd : p ≠ 2)
     have : PPlus.IsMaximal := Ideal.isMaximal_of_mem_primesOver hPmem
     have habsNorm : Ideal.absNorm PPlus = ℓ ^ (localResidueDegreePlus (p := p) ℓ hℓp) := by
       rw [← primesOver_inertiaDeg_eq_localResidueDegreePlus (p := p) (K := K)
-        hp_odd hℓp PPlus hPmem,
-        ← Ideal.inertiaDeg'_eq_inertiaDeg (p := rationalPrimeIdeal ℓ) (q := PPlus)]
-      simpa [rationalPrimeIdeal] using Ideal.absNorm_eq_pow_inertiaDeg' PPlus (Fact.out : ℓ.Prime)
+        hp_odd hℓp PPlus hPmem]
+      exact (Ideal.pow_inertiaDeg ℓ PPlus).symm
     rw [habsNorm]
     push_cast
     have := Complex.natCast_cpow_natCast_mul ℓ (localResidueDegreePlus (p := p) ℓ hℓp) (-s)
@@ -803,8 +801,7 @@ lemma dedekindLocalFactorPlus_at_p {s : ℂ} :
     simpa [rationalPrimeIdeal] using hPPlus_mem)
   have habsNorm : Ideal.absNorm PPlus = p ^ (1 : ℕ) := by
     rw [← primesOverPlus_inertiaDeg_eq_one_at_p (p := p) (K := K) PPlus]
-    · rw [← Ideal.inertiaDeg'_eq_inertiaDeg (Ideal.span {(p : ℤ)}) PPlus]
-      exact Ideal.absNorm_eq_pow_inertiaDeg' PPlus hp.out
+    · exact (Ideal.pow_inertiaDeg p PPlus).symm
     · simpa [rationalPrimeIdeal] using hPPlus_mem
   rw [habsNorm]
   push_cast

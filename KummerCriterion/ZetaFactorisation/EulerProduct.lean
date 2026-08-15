@@ -57,9 +57,8 @@ lemma idealNormMultiplicity_p_pow_eq_one (k : ℕ) :
   have habsNormP : Ideal.absNorm P = p := by
     calc
       Ideal.absNorm P = p ^ (1 : ℕ) := by
-        rw [← primesOver_inertiaDeg_eq_one_at_p (p := p) (K := K) P hPmem,
-          ← Ideal.inertiaDeg'_eq_inertiaDeg (Ideal.span {(p : ℤ)}) P]
-        exact Ideal.absNorm_eq_pow_inertiaDeg' P hp.out
+        rw [← primesOver_inertiaDeg_eq_one_at_p (p := p) (K := K) P hPmem]
+        exact (Ideal.pow_inertiaDeg p P).symm
       _ = p := by simp
   have : Unique {I : NonzeroIdeal K // Ideal.absNorm I.1 = p ^ k} :=
     { default := ⟨⟨P ^ k, pow_ne_zero k hP_ne⟩, by
@@ -178,9 +177,8 @@ lemma absNorm_eq_q_pow_localResidueDegree_of_mem_primesOverFinset
   have : P.LiesOver (Ideal.span {((q : ℕ) : ℤ)}) := by
     simpa [rationalPrimeIdeal] using hP_over.2
   have : P.IsMaximal := Ideal.IsMaximal.of_liesOver_isMaximal P (Ideal.span {((q : ℕ) : ℤ)})
-  rw [← primesOver_inertiaDeg_eq_localResidueDegree p K hq P hP_over,
-    ← Ideal.inertiaDeg'_eq_inertiaDeg (Ideal.span {((q : ℕ) : ℤ)}) P]
-  exact Ideal.absNorm_eq_pow_inertiaDeg' P q.2
+  rw [← primesOver_inertiaDeg_eq_localResidueDegree p K hq P hP_over]
+  exact (Ideal.pow_inertiaDeg (q : ℕ) P).symm
 
 lemma normalizedFactors_card_mul_localResidueDegree_of_absNorm_prime_pow
     {q : Nat.Primes} [Fact (q : ℕ).Prime] (hq : (q : ℕ) ≠ p)

@@ -416,10 +416,10 @@ theorem samePrimeFiniteLog_eq_productHomogeneousGrid (N : ℕ)
   intro n _hnC
   by_cases hn0 : n = 0
   · simp [samePrimeFiniteLogLocalizedTerm, hn0]
-  · rw [samePrimeFiniteLogLocalizedTerm, dif_neg hn0]
+  · rw [samePrimeFiniteLogLocalizedTerm, dite_eq_right hn0]
     rw [samePrimeFiniteLogProductHomogeneousGrid_term_eq
       (p := p) (K := K) N n hn0 hx hy]
-    rw [dif_neg hn0]
+    rw [dite_eq_right hn0]
 
 theorem samePrimeFiniteLog_add_add_mul (N : ℕ)
     {x y : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K)
@@ -620,7 +620,7 @@ theorem samePrimeFiniteArtinHasseExpCoordPoly_coeff_sub_coeff_mem_lambdaIdeal_po
         (samePrimeFiniteArtinHasseExpCoordPoly (p := p) (K := K) M x).coeff d ∈
       (lambdaIdeal p K) ^ (if d ≤ N then N + 1 + d else d) := by
   by_cases hdN : d ≤ N
-  · rw [if_pos hdN]
+  · rw [ite_eq_left hdN]
     by_cases hd0 : d = 0
     · subst d
       simp [samePrimeFiniteArtinHasseExpCoordPoly_coeff_zero]
@@ -630,7 +630,7 @@ theorem samePrimeFiniteArtinHasseExpCoordPoly_coeff_sub_coeff_mem_lambdaIdeal_po
         samePrimeFiniteArtinHasseExpCoordPoly_coeff_eq_of_pos_le
           (p := p) (K := K) M d x hd0 hdM, sub_self]
       exact zero_mem _
-  · rw [if_neg hdN]
+  · rw [ite_eq_right hdN]
     have hNmem :
         (samePrimeFiniteArtinHasseExpCoordPoly (p := p) (K := K) N x).coeff d ∈
           (lambdaIdeal p K) ^ d :=
@@ -691,13 +691,13 @@ theorem samePrimeFiniteArtinHasseExpCoordPoly_pow_coeff_sub_coeff_mem_lambdaIdea
           refine Ideal.pow_le_pow_right ?_ hmul₁
           by_cases hdsmall : d < N + (n + 1)
           · have ha1small : a.1 < N + n := by omega
-            rw [if_pos hdsmall, if_pos ha1small]
+            rw [ite_eq_left hdsmall, ite_eq_left ha1small]
             omega
-          · rw [if_neg hdsmall]
+          · rw [ite_eq_right hdsmall]
             by_cases ha1small : a.1 < N + n
-            · rw [if_pos ha1small]
+            · rw [ite_eq_left ha1small]
               omega
-            · rw [if_neg ha1small]
+            · rw [ite_eq_right ha1small]
               omega
         have hterm₂ :
             (PM ^ n).coeff a.1 * (PN.coeff a.2 - PM.coeff a.2) ∈
@@ -729,13 +729,13 @@ theorem samePrimeFiniteArtinHasseExpCoordPoly_pow_coeff_sub_coeff_mem_lambdaIdea
             refine Ideal.pow_le_pow_right ?_ hmul₂
             by_cases hdsmall : d < N + (n + 1)
             · have ha2N : a.2 ≤ N := by omega
-              rw [if_pos hdsmall, if_pos ha2N]
+              rw [ite_eq_left hdsmall, ite_eq_left ha2N]
               omega
-            · rw [if_neg hdsmall]
+            · rw [ite_eq_right hdsmall]
               by_cases ha2N : a.2 ≤ N
-              · rw [if_pos ha2N]
+              · rw [ite_eq_left ha2N]
                 omega
-              · rw [if_neg ha2N]
+              · rw [ite_eq_right ha2N]
                 omega
         rw [show
             (PN ^ n).coeff a.1 * PN.coeff a.2 -

@@ -131,7 +131,7 @@ private theorem artinHasseLogSeries_coeff_eq_X_of_lt
         rw [← hlog, hlog_zero]
         simp
       exact hn1 hn_eq_one
-    rw [if_neg hnot, if_neg hn1]
+    rw [ite_eq_right hnot, ite_eq_right hn1]
 
 private theorem artinHasseLogSeries_trunc_eq_X
     (r : ℕ) [Fact (Nat.Prime r)] :
@@ -140,8 +140,8 @@ private theorem artinHasseLogSeries_trunc_eq_X
   ext n
   rw [PowerSeries.coeff_trunc, PowerSeries.coeff_trunc]
   by_cases hn : n < r
-  · rw [if_pos hn, if_pos hn, artinHasseLogSeries_coeff_eq_X_of_lt r hn]
-  · rw [if_neg hn, if_neg hn]
+  · rw [ite_eq_left hn, ite_eq_left hn, artinHasseLogSeries_coeff_eq_X_of_lt r hn]
+  · rw [ite_eq_right hn, ite_eq_right hn]
 
 private theorem artinHasseLogSeries_pow_coeff_eq_X_pow_of_lt
     (r : ℕ) [Fact (Nat.Prime r)] (d : ℕ) {n : ℕ} (hn : n < r) :
@@ -271,7 +271,7 @@ private theorem artinHasseLogSeries_coeff_eq_of_pow
       (1 : ℚ) / (r : ℚ) ^ k := by
   have hr : 1 < r := (Fact.out : Nat.Prime r).one_lt
   rw [artinHasseLogSeries_coeff, Nat.log_pow hr]
-  rw [if_pos ⟨rfl, pow_ne_zero k (Nat.Prime.ne_zero Fact.out)⟩]
+  rw [ite_eq_left ⟨rfl, pow_ne_zero k (Nat.Prime.ne_zero Fact.out)⟩]
 
 private theorem artinHasseLogSeries_coeff_eq_zero_of_not_pow
     (r n : ℕ) [Fact (Nat.Prime r)] (hn : ¬ ∃ k : ℕ, n = r ^ k) :
@@ -301,7 +301,7 @@ private theorem artinHasseLogSeries_smul_subst_X_pow_eq_smul_X
         exact Nat.not_dvd_of_pos_of_lt zero_lt_one hr_one_lt
       have hr_not_dvd_one' : ¬ r ∣ 1 := by
         simpa [hn1] using hr_not_dvd_one
-      rw [hn1, if_neg hr_not_dvd_one']
+      rw [hn1, ite_eq_right hr_not_dvd_one']
       simp
     · have hn_ne_one : n ≠ 1 := hn1
       by_cases hn_pow : ∃ k : ℕ, n = r ^ k
@@ -319,9 +319,9 @@ private theorem artinHasseLogSeries_smul_subst_X_pow_eq_smul_X
             have hXcoeff :
                 (PowerSeries.coeff (R := ℚ) (r ^ (k + 1))) PowerSeries.X = 0 := by
               rw [PowerSeries.coeff_X]
-              rw [if_neg (Nat.ne_of_gt (Nat.one_lt_pow (Nat.succ_ne_zero k) hr_one_lt))]
+              rw [ite_eq_right (Nat.ne_of_gt (Nat.one_lt_pow (Nat.succ_ne_zero k) hr_one_lt))]
             have hq : (r : ℚ) ≠ 0 := Nat.cast_ne_zero.mpr hr_ne_zero
-            rw [if_pos hdiv, hquot, artinHasseLogSeries_coeff_eq_of_pow,
+            rw [ite_eq_left hdiv, hquot, artinHasseLogSeries_coeff_eq_of_pow,
               artinHasseLogSeries_coeff_eq_of_pow, hXcoeff]
             simp only [Algebra.algebraMap_self, RingHom.id_apply]
             field_simp [pow_succ, hq]
@@ -340,7 +340,7 @@ private theorem artinHasseLogSeries_smul_subst_X_pow_eq_smul_X
                 ((PowerSeries.coeff (R := ℚ) (n / r)) (artinHasseLogSeries r) : ℚ)
               else 0) = 0 := by
           by_cases hdiv : r ∣ n
-          · rw [if_pos hdiv]
+          · rw [ite_eq_left hdiv]
             have hn_div_not_pow : ¬ ∃ k : ℕ, n / r = r ^ k := by
               rintro ⟨k, hk⟩
               apply hn_pow

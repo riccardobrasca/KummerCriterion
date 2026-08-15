@@ -359,7 +359,7 @@ theorem toMatrix_deltaZeroConstOneDirichletCharacterBasis_normalizedDft :
       simp [Module.Basis.repr_self, hij]
     simpa only [Matrix.mul_diagonal, PEquiv.toMatrix_apply, Equiv.toPEquiv_apply,
       Equiv.Perm.coe_inv, Option.mem_def, Option.some.injEq, ite_mul, one_mul, zero_mul, hneq',
-      if_false] using hsingle
+      ite_false] using hsingle
 
 theorem det_normalizedDft_eq_sign_mul_prod_basisScalars :
     LinearMap.det (normalizedDft p) =

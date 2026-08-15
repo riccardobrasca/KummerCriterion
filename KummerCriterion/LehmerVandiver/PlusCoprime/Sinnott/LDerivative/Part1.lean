@@ -42,7 +42,7 @@ theorem cyclotomicEvenDeltaSubgroup_card (hp_gt_two : 2 < p) :
   rw [Fintype.card_zpowers]
   have hp_ne_two : p ≠ 2 := by omega
   rw [← orderOf_units, Units.coe_neg_one, orderOf_neg_one, ringChar.eq (ZMod p) p,
-    if_neg hp_ne_two]
+    ite_eq_right hp_ne_two]
 
 /-- For `p > 2`, the quotient `Delta / {±1}` has order `(p - 1) / 2`. -/
 theorem cyclotomicEvenDelta_card (hp_gt_two : 2 < p) :
@@ -423,7 +423,7 @@ theorem characterMatrixSquareOnEven_mul_inverseCharacterMatrixSquareOnEven_trans
   rw [Finset.sum_congr rfl (fun a _ => h_inv a)]
   by_cases hkk : k = k'
   · subst hkk
-    rw [if_pos rfl, mul_one]
+    rw [ite_eq_left rfl, mul_one]
     rw [show ((quotCharEquivQuot p).symm k) *
         ((quotCharEquivQuot p).symm k)⁻¹ =
         (1 : MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) from mul_inv_cancel _]
@@ -434,7 +434,7 @@ theorem characterMatrixSquareOnEven_mul_inverseCharacterMatrixSquareOnEven_trans
         Fintype.card (KummerCriterion.CyclotomicEvenDelta p) :=
       Fintype.card_congr toUnits.symm.toEquiv
     rw [h_card]
-  · rw [if_neg hkk, mul_zero]
+  · rw [ite_eq_right hkk, mul_zero]
     have h_ne : ((quotCharEquivQuot p).symm k) *
         ((quotCharEquivQuot p).symm k')⁻¹ ≠
         (1 : MulChar (KummerCriterion.CyclotomicEvenDelta p) ℂ) := by

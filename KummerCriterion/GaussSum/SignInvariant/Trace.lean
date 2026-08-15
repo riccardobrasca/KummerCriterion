@@ -48,7 +48,7 @@ theorem dft_constOne (k : ZMod p) :
   · subst hk
     rw [ZMod.dft_apply_zero]
     simp
-  · rw [ZMod.dft_apply, if_neg hk]
+  · rw [ZMod.dft_apply, ite_eq_right hk]
     have hne : ((ZMod.stdAddChar : AddChar (ZMod p) ℂ).mulShift (-k)) ≠ 1 := by
       intro hshift
       have heval : (ZMod.stdAddChar (N := p)) (-k) = 1 := by

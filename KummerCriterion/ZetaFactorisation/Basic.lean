@@ -577,9 +577,8 @@ lemma dedekindLocalFactor_eq_pow_localResidueDegree {ℓ : ℕ} [Fact ℓ.Prime]
     have : P.LiesOver (Ideal.span {(ℓ : ℤ)}) := hPmem.2
     have : P.IsMaximal := Ideal.IsMaximal.of_liesOver_isMaximal P (Ideal.span {(ℓ : ℤ)})
     have habsNorm : Ideal.absNorm P = ℓ ^ (localResidueDegree (p := p) ℓ hℓp) := by
-      rw [← primesOver_inertiaDeg_eq_localResidueDegree p K hℓp P hPmem,
-        ← Ideal.inertiaDeg'_eq_inertiaDeg (Ideal.span {(ℓ : ℤ)}) P]
-      exact Ideal.absNorm_eq_pow_inertiaDeg' P (Fact.out : ℓ.Prime)
+      rw [← primesOver_inertiaDeg_eq_localResidueDegree p K hℓp P hPmem]
+      exact (Ideal.pow_inertiaDeg ℓ P).symm
     rw [habsNorm]
     push_cast
     have := Complex.natCast_cpow_natCast_mul ℓ (localResidueDegree (p := p) ℓ hℓp) (-s)
@@ -614,9 +613,8 @@ lemma dedekindLocalFactor_at_p {s : ℂ} :
   have habsNorm : Ideal.absNorm P = p ^ (1 : ℕ) := by
     have hP' : P ∈ Ideal.primesOver (rationalPrimeIdeal p) (𝓞 K) := by
       simpa [rationalPrimeIdeal] using hPmem
-    rw [← primesOver_inertiaDeg_eq_one_at_p (p := p) (K := K) P hP',
-      ← Ideal.inertiaDeg'_eq_inertiaDeg (Ideal.span {(p : ℤ)}) P]
-    exact Ideal.absNorm_eq_pow_inertiaDeg' P hp.out
+    rw [← primesOver_inertiaDeg_eq_one_at_p (p := p) (K := K) P hP']
+    exact (Ideal.pow_inertiaDeg p P).symm
   rw [habsNorm]
   push_cast
   rw [pow_one]

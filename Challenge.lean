@@ -1,4 +1,6 @@
-import Mathlib.NumberTheory.FLT.Basic
+module
+
+public import Mathlib.NumberTheory.FLT.Basic
 
 /-!
 Challenge statement for Comparator: Fermat's Last Theorem for exponents
@@ -9,7 +11,7 @@ The transitive closure of imports here is the trusted side. Only the bare
 mathlib statement of `FermatLastTheoremFor` is required.
 -/
 
-theorem fermatLastTheoremFor_le100_of_ne_irregular
+public theorem fermatLastTheoremFor_le100_of_ne_irregular
     (n : ℕ) (hn_two : 2 < n) (hn_le100 : n ≤ 100)
     (hn37 : n ≠ 37) (hn59 : n ≠ 59) (hn67 : n ≠ 67) (hn74 : n ≠ 74) :
     FermatLastTheoremFor n := sorry

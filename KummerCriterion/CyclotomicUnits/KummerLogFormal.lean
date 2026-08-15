@@ -24,6 +24,7 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
+import Mathlib.Data.Nat.Prime.Factorial
 
 /-!
 # Formal Kummer logarithm series

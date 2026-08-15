@@ -166,7 +166,7 @@ theorem valuedLambdaQuotientDworkCoeffModP_samePrimeFiniteLogTerm_p_eq_ramificat
   have hcore :
       samePrimeFiniteLogTermCore (p := p) (K := K) (p - 2) p x hx =
         Ideal.Quotient.mk ((lambdaIdeal p K) ^ ((p - 2) + 1)) y := by
-    rw [samePrimeFiniteLogTermCore, dif_neg hp_ne]
+    rw [samePrimeFiniteLogTermCore, dite_eq_right hp_ne]
     change
       Ideal.Quotient.mk ((lambdaIdeal p K) ^ ((p - 2) + 1)) y *
           quotientNatCastInv (p := p) (K := K) (p - 2) (ordCompl[p] p)

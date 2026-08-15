@@ -64,7 +64,7 @@ theorem odd_LFunction_one_eq_oddLValueRhs_of_LFunction_inv_zero
     simp
   have hfe :=
     DirichletCharacter.IsPrimitive.completedLFunction_one_sub (χ := χ) hχ_prim (0 : ℂ)
-  rw [DirichletCharacter.rootNumber, if_neg hχ_odd.not_even, pow_one,
+  rw [DirichletCharacter.rootNumber, ite_eq_right hχ_odd.not_even, pow_one,
     ← mul_comm_div, ← mul_comm_div, ← Complex.cpow_sub _ _ hp_ne_zero, sub_sub, add_halves,
     hL0, hχ0] at hfe
   have hfe' : DirichletCharacter.completedLFunction χ 1 =

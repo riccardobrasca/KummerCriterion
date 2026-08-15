@@ -94,7 +94,7 @@ theorem sum_nonidentity_inv_mulChar_mul
   classical
   by_cases hχψ : χ = ψ
   · subst hχψ
-    rw [if_pos rfl]
+    rw [ite_eq_left rfl]
     rw [show (∑ h : Nonidentity G, (χ h.val)⁻¹ * χ h.val) =
         ∑ _h : Nonidentity G, (1 : ℂ) from by
       refine Finset.sum_congr rfl ?_
@@ -102,7 +102,7 @@ theorem sum_nonidentity_inv_mulChar_mul
       have h_unit : IsUnit (χ h.val) := IsUnit.map χ.toMonoidHom (Group.isUnit h.val)
       exact inv_mul_cancel₀ h_unit.ne_zero]
     simp
-  · rw [if_neg hχψ]
+  · rw [ite_eq_right hχψ]
     have hchar : χ⁻¹ * ψ ≠ 1 := by
       intro h
       apply hχψ
@@ -180,7 +180,7 @@ theorem deletedCharacterMatrix_leftInverse
   · have hval : χ.val ≠ ψ.val := fun h =>
       hχψ (Subtype.ext h)
     simp only [hval, ite_false]
-    rw [if_neg hχψ]
+    rw [ite_eq_right hχψ]
     ring
 
 /-- Full Fourier reindexing for the inverse-character convention. -/
@@ -290,7 +290,7 @@ theorem deletedConvolution_mul_deletedCharacter
   rw [Finset.sum_eq_single χ]
   · simp
   · intro ψ _ hψ
-    rw [if_neg hψ, mul_zero]
+    rw [ite_eq_right hψ, mul_zero]
   · intro hmem
     exact absurd (Finset.mem_univ χ) hmem
 

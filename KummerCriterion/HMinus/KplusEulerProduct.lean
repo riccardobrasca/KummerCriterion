@@ -69,8 +69,7 @@ lemma idealNormMultiplicityNF_p_pow_eq_one_plus (hp_odd : p ≠ 2) (k : ℕ) :
     calc
       Ideal.absNorm PPlus = p ^ (1 : ℕ) := by
         rw [← primesOverPlus_inertiaDeg_eq_one_at_p (p := p) (K := K) PPlus hPPlusmem]
-        rw [← Ideal.inertiaDeg'_eq_inertiaDeg (p := Ideal.span {(p : ℤ)}) (q := PPlus)]
-        exact Ideal.absNorm_eq_pow_inertiaDeg' PPlus hp.out
+        exact (Ideal.pow_inertiaDeg p PPlus).symm
       _ = p := by simp
   have : Unique {I : NonzeroIdealNF K⁺ // Ideal.absNorm I.1 = p ^ k} :=
     { default := ⟨⟨PPlus ^ k, pow_ne_zero k hPPlus_ne⟩, by
@@ -192,9 +191,7 @@ lemma absNorm_eq_q_pow_localResidueDegreePlus_of_mem_primesOverFinsetPlus
   have : PPlus.IsMaximal := Ideal.isMaximal_of_mem_primesOver hPPlus_over
   rw [← primesOver_inertiaDeg_eq_localResidueDegreePlus
     (p := p) (K := K) hp_odd hq PPlus hPPlus_over]
-  rw [← Ideal.inertiaDeg'_eq_inertiaDeg
-    (p := Ideal.span {((q : ℕ) : ℤ)}) (q := PPlus)]
-  exact Ideal.absNorm_eq_pow_inertiaDeg' PPlus q.2
+  exact (Ideal.pow_inertiaDeg (q : ℕ) PPlus).symm
 
 lemma normalizedFactors_card_mul_localResidueDegreePlus_of_absNorm_prime_pow
     (hp_odd : p ≠ 2) {q : Nat.Primes} [Fact (q : ℕ).Prime] (hq : (q : ℕ) ≠ p)

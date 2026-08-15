@@ -212,7 +212,7 @@ theorem samePrimeFiniteLogTerm_eq_localizedTerm (N n : ℕ)
   by_cases hn : n = 0
   · subst n
     simp [samePrimeFiniteLogLocalizedTerm]
-  rw [samePrimeFiniteLogTerm, samePrimeFiniteLogLocalizedTerm, dif_neg hn,
+  rw [samePrimeFiniteLogTerm, samePrimeFiniteLogLocalizedTerm, dite_eq_right hn,
     samePrimeFiniteLogTermCore_eq_samePrimeNatDivEvalAtDegree
       (p := p) (K := K) hn hx]
 

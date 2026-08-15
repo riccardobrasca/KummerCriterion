@@ -157,7 +157,7 @@ theorem coeff_logOf_artinHasseExpSeries_eq_of_pow
       (1 : ℚ) / (ell : ℚ) ^ k := by
   have hell : 1 < ell := (Fact.out : Nat.Prime ell).one_lt
   rw [coeff_logOf_artinHasseExpSeries_eq, Nat.log_pow hell]
-  rw [if_pos ⟨rfl, pow_ne_zero k (Nat.Prime.ne_zero Fact.out)⟩]
+  rw [ite_eq_left ⟨rfl, pow_ne_zero k (Nat.Prime.ne_zero Fact.out)⟩]
 
 /-- Coefficient of `logOf (E_ell)` away from `ell`-powers. -/
 theorem coeff_logOf_artinHasseExpSeries_eq_zero_of_not_pow

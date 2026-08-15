@@ -684,7 +684,7 @@ theorem samePrimeFiniteLogTermCore_eq_samePrimeNatDivEval {N n : â„•} (hn : n â‰
     simpa [factorization_mul_pred_add_samePrimeFiniteLogTermOrder
         (p := p) hn] using
       Ideal.pow_mem_pow hx n
-  rw [samePrimeFiniteLogTermCore, dif_neg hn]
+  rw [samePrimeFiniteLogTermCore, dite_eq_right hn]
   rw [samePrimeNatDivEval_eq_of_spec (p := p) (K := K) hn hz
     (samePrimeFiniteLogTermNumerator_mul_spec (p := p) (K := K) hn hx)]
 
@@ -715,7 +715,7 @@ theorem samePrimeFiniteLogTermCore_mem_map_lambdaIdeal_pow {N n : â„•} (hn : n â
     samePrimeFiniteLogTermCore (p := p) (K := K) N n x hx âˆˆ
       Ideal.map (Ideal.Quotient.mk ((lambdaIdeal p K) ^ (N + 1)))
         ((lambdaIdeal p K) ^ samePrimeFiniteLogTermOrder (p := p) n) := by
-  rw [samePrimeFiniteLogTermCore, dif_neg hn]
+  rw [samePrimeFiniteLogTermCore, dite_eq_right hn]
   exact
     (Ideal.map (Ideal.Quotient.mk ((lambdaIdeal p K) ^ (N + 1)))
       ((lambdaIdeal p K) ^ samePrimeFiniteLogTermOrder (p := p) n)).mul_mem_right

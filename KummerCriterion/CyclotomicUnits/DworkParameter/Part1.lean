@@ -686,7 +686,7 @@ theorem samePrimeFiniteLogTermNumerator_spec {n : ℕ} (hn : n ≠ 0)
       (p : ValuedIntegerRing p K) ^ n.factorization p *
           samePrimeFiniteLogTermNumerator (p := p) (K := K) n x hx =
         x ^ n := by
-  rw [samePrimeFiniteLogTermNumerator, dif_neg hn]
+  rw [samePrimeFiniteLogTermNumerator, dite_eq_right hn]
   exact Classical.choose_spec
     (samePrimeFiniteLogTermData_exists (p := p) (K := K) hn hx)
 
