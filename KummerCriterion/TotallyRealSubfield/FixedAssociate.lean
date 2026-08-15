@@ -1,9 +1,9 @@
 module
 
 public import KummerCriterion.PrimitiveRootUnits
-public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
 import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
 import KummerCriterion.TotallyRealSubfield.Conjugation
+public import Mathlib.NumberTheory.NumberField.CMField
 
 /-!
 # Fixed-associate descent

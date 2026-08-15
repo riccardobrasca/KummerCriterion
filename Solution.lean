@@ -1,6 +1,7 @@
 module
 
-public import KummerCriterion.BernoulliFast.FermatLastTheoremUpTo100
+public import Mathlib.NumberTheory.FLT.Basic
+import KummerCriterion.BernoulliFast.FermatLastTheoremUpTo100
 
 /-!
 Solution side for Comparator: forwards to the project's proof.

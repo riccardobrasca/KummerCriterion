@@ -1,7 +1,6 @@
 module
 
 public import Mathlib.Analysis.Normed.Module.Basic
-public import Mathlib.Data.Matrix.Mul
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.CategoryTheory.Category.Init

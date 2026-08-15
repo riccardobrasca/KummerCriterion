@@ -1,14 +1,11 @@
 module
 
-public import KummerCriterion.PrimitiveRootUnits
 public import Mathlib.RingTheory.ClassGroup.ExtendedHom
-public import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
 import KummerCriterion.TotallyRealSubfield.Conjugation
 import KummerCriterion.TotallyRealSubfield.FixedAssociate
-import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
-import Mathlib.RingTheory.Flat.TorsionFree
 public import Mathlib.NumberTheory.NumberField.CMField
 public import Mathlib.NumberTheory.NumberField.ClassNumber
+import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
 
 /-!
 # Basic CM data for the totally real subfield

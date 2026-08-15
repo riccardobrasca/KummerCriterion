@@ -2,7 +2,6 @@ module
 
 public import Mathlib.RingTheory.AdicCompletion.Algebra
 public import KummerCriterion.UnitQuotient.DeltaAction
-public import Mathlib.Algebra.Lie.OfAssociative
 public import KummerCriterion.TotallyRealSubfield.ZetaPrime
 
 /-!

@@ -1,13 +1,24 @@
 module
 
-public import Mathlib.NumberTheory.Bernoulli
 public import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.Algebra.Order.Ring.Unbundled.Rat
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Data.Rat.Lemmas
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.NumberTheory.Padics.WithVal
-import Mathlib.Tactic
+import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+import Mathlib.Data.Nat.Choose.Multinomial
+import Mathlib.Tactic.ENatToNat
+import Mathlib.Tactic.Measurability.Init
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
+import Mathlib.Tactic.Polynomial.Basic
+import Mathlib.Tactic.ReduceModChar
 
 /-!
 # Rational numerator bookkeeping

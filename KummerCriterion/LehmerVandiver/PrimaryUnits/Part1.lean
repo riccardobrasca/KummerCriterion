@@ -1,10 +1,10 @@
 module
 
 public import KummerCriterion.PrimitiveRootUnits
-public import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
 import KummerCriterion.TotallyRealSubfield.ZetaPrime
+public import Mathlib.NumberTheory.NumberField.CMField
 
 /-!
 # Primary elements of cyclotomic rings of integers

@@ -3,7 +3,6 @@ module
 public import KummerCriterion.CyclotomicUnits.DeletedFourier
 public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part6
 public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge
-import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.DetBridge
 
 /-!
 # Deleted Fourier determinant on the even cyclotomic quotient

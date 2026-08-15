@@ -1,6 +1,5 @@
 module
 
-public import FltRegular.NumberTheory.Cyclotomic.CyclRat
 public import Mathlib.NumberTheory.Bernoulli
 public import Mathlib.RingTheory.PowerSeries.Log
 import KummerCriterion.KummerCongruence.BernoulliGeneralized
@@ -9,13 +8,11 @@ import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogForm
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.ENatToNat
-import Mathlib.Tactic.NormNum.BigOperators
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
 import Mathlib.Tactic.NormNum.LegendreSymbol
 import Mathlib.Tactic.NormNum.ModEq
-import Mathlib.Tactic.NormNum.NatFactorial
 import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt

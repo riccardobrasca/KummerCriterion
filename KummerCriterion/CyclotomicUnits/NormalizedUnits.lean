@@ -1,6 +1,5 @@
 module
 
-public import KummerCriterion.PrimitiveRootUnits
 public import KummerCriterion.CyclotomicUnits.Saturation
 import KummerCriterion.LehmerVandiver.PlusCoprime.CharacterIdentification
 import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.SigmaPreservation

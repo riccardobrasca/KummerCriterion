@@ -2,7 +2,6 @@ module
 
 
 public import KummerCriterion.ZetaFactorisation.Basic
-public import FltRegular.NumberTheory.Cyclotomic.CyclRat
 import KummerCriterion.GaussSum.SignInvariant.BranchChoice
 
 /-!

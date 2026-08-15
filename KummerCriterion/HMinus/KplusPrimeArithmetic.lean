@@ -4,11 +4,6 @@ public import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
 public import KummerCriterion.HMinus.KplusLocalCharacters
 public import KummerCriterion.TotallyRealSubfield.ClassGroup
 public import KummerCriterion.TotallyRealSubfield.ZetaPrime
-import Mathlib.LinearAlgebra.Dimension.DivisionRing
-import Mathlib.NumberTheory.RamificationInertia.Ramification
-import Mathlib.RingTheory.Ideal.Norm.AbsNorm
-import Mathlib.RingTheory.Flat.TorsionFree
-import Mathlib.RingTheory.RamificationInertia.Basic
 
 /-!
 # `K⁺` prime arithmetic

@@ -7,18 +7,14 @@ module
 
 public import KummerCriterion.BernoulliFast.Correctness
 public meta import Lean.Meta.Sym.LitValues
-public meta import Lean.Meta.Sym.SymM
 public meta import Lean.Meta.Sym.InferType
 public meta import Lean.Meta.Tactic.Cbv.Util
-public meta import Lean.Elab.Tactic.CbvSimproc
 import Mathlib.Tactic.ENatToNat
-import Mathlib.Tactic.NormNum.BigOperators
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime
 import Mathlib.Tactic.NormNum.IsSquare
 import Mathlib.Tactic.NormNum.LegendreSymbol
 import Mathlib.Tactic.NormNum.ModEq
-import Mathlib.Tactic.NormNum.NatFactorial
 import Mathlib.Tactic.NormNum.NatFib
 import Mathlib.Tactic.NormNum.NatLog
 import Mathlib.Tactic.NormNum.NatSqrt
@@ -27,6 +23,7 @@ import Mathlib.Tactic.NormNum.Parity
 import Mathlib.Tactic.NormNum.Prime
 import Mathlib.Tactic.NormNum.RealSqrt
 import Mathlib.Tactic.ReduceModChar
+import Std.Data.DHashMap.Internal.AssocList.Lemmas
 
 /-!
 # `cbv`-optimized Bernoulli number evaluation

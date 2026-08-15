@@ -1,7 +1,6 @@
 module
 
 public import KummerCriterion.CyclotomicUnits.NormalizedUnits
-public import Mathlib.GroupTheory.Rank
 import Mathlib.GroupTheory.Schreier
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 

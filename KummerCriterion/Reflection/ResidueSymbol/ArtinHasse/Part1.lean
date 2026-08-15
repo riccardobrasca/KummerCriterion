@@ -2,7 +2,6 @@ module
 
 public import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part1
 public import Mathlib.RingTheory.PowerSeries.Exp
-public import Mathlib.Analysis.Normed.Field.Lemmas
 import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part2
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.CategoryTheory.Category.Init

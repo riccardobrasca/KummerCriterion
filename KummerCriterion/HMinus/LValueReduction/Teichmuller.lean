@@ -1,6 +1,5 @@
 module
 
-public import FltRegular.NumberTheory.Cyclotomic.CyclRat
 import KummerCriterion.GaussSum.SignInvariant.BlockDeterminant
 import KummerCriterion.HMinus.LValueReduction.LValues
 import KummerCriterion.ZetaFactorisation.EulerProduct

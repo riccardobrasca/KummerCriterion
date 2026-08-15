@@ -1,9 +1,7 @@
 module
 
 public import KummerCriterion.PrimitiveRootUnits
-public import FltRegular.NumberTheory.Cyclotomic.CyclRat
 public import Mathlib.NumberTheory.NumberField.CMField
-public import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
 import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
 
 /-!

@@ -1,8 +1,6 @@
 module
 
-public import KummerCriterion.PrimitiveRootUnits
 public import KummerCriterion.LehmerVandiver.PrimaryUnits.Part1
-public import FltRegular.NumberTheory.Cyclotomic.CyclRat
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 
 /-!

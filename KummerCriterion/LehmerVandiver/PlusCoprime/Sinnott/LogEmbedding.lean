@@ -1,6 +1,5 @@
 module
 
-public import KummerCriterion.PrimitiveRootUnits
 public import KummerCriterion.HMinus.ClassNumberFormula
 public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.IndexFormula
 import Mathlib.Analysis.SpecialFunctions.Bernstein

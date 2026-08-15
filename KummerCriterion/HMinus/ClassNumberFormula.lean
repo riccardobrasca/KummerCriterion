@@ -1,13 +1,12 @@
 module
 
-public import KummerCriterion.PrimitiveRootUnits
 public import KummerCriterion.TotallyRealSubfield.ClassGroup
 public import KummerCriterion.TotallyRealSubfield.ZetaPrime
 public import Mathlib.NumberTheory.NumberField.DedekindZeta
-import FltRegular.NumberTheory.Cyclotomic.UnitLemmas
-import KummerCriterion.ZetaFactorisation.Basic
 import Mathlib.Algebra.Polynomial.Degree.IsMonicOfDegree
 import Mathlib.RingTheory.RootsOfUnity.CyclotomicUnits
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.NumberTheory.ArithmeticFunction.VonMangoldt
 
 /-!
 # Analytic class number formula for `K` and `K⁺`

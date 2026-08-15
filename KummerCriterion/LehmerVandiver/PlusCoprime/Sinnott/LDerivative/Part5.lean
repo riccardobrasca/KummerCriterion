@@ -1,6 +1,5 @@
 module
 
-public import KummerCriterion.PrimitiveRootUnits
 public import KummerCriterion.LehmerVandiver.PlusCoprime.Sinnott.LDerivative.Part4
 
 @[expose] public section

@@ -1,12 +1,13 @@
 module
 
-public import KummerCriterion.KummerCongruence.Bridge
-public import KummerCriterion.IrregularPrimes.VonStaudtConsequences
-import KummerCriterion.KummerCongruence.Kummer
-import KummerCriterion.KummerCongruence.VonStaudtClausen
 import KummerCriterion.KummerCongruence.Voronoi
 import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogBounds
-import Mathlib.Data.Nat.Factorization.Basic
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+import KummerCriterion.IrregularPrimes.VonStaudtConsequences
+import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+import Mathlib.Data.ZMod.Units
+import Mathlib.NumberTheory.Padics.RingHoms
 
 /-!
 # Kummer congruence interface for the Carlitz route

@@ -1,15 +1,28 @@
 module
 
-public import KummerCriterion.IrregularPrimes.Basic
 public import KummerCriterion.IrregularPrimes.DivisorClosedBase
 import KummerCriterion.IrregularPrimes.BernoulliGrowth
-public import KummerCriterion.IrregularPrimes.KummerCongruenceFull
 import KummerCriterion.IrregularPrimes.RatNumerator
 import KummerCriterion.IrregularPrimes.VonStaudtConsequences
-import Mathlib.Algebra.Order.Ring.Abs
-import Mathlib.Data.Nat.ModEq
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Tactic
+public import FltRegular.NumberTheory.RegularPrimes
+public import Mathlib.NumberTheory.Bernoulli
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+import KummerCriterion.IrregularPrimes.Basic
+import KummerCriterion.IrregularPrimes.KummerCongruenceFull
+import Mathlib.Algebra.Order.Ring.Star
+import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Tactic.NormNum.Irrational
+import Mathlib.Tactic.NormNum.IsCoprime
+import Mathlib.Tactic.NormNum.IsSquare
+import Mathlib.Tactic.NormNum.LegendreSymbol
+import Mathlib.Tactic.NormNum.ModEq
+import Mathlib.Tactic.NormNum.NatFib
+import Mathlib.Tactic.NormNum.NatLog
+import Mathlib.Tactic.NormNum.NatSqrt
+import Mathlib.Tactic.NormNum.Ordinal
+import Mathlib.Tactic.NormNum.Parity
+import Mathlib.Tactic.NormNum.Prime
+import Mathlib.Tactic.NormNum.RealSqrt
 
 /-!
 # Infinitude assembly infrastructure
