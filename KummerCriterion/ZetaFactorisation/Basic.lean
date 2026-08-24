@@ -1,6 +1,6 @@
 module
 
-public import Mathlib.Data.Finite.Vector
+public import Mathlib.Data.Fintype.Vector
 public import Mathlib.NumberTheory.DirichletCharacter.Orthogonality
 public import Mathlib.NumberTheory.LSeries.DirichletContinuation
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
