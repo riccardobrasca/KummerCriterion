@@ -184,24 +184,7 @@ lemma _root_.IsPrimitiveRoot.pow_isPrimitiveRoot_div_gcd
     {M : Type*} [CommMonoid M] {n : ℕ} (hn : 0 < n) (a : ℕ)
     {ω : M} (hω : IsPrimitiveRoot ω n) :
     IsPrimitiveRoot (ω ^ a) (n / n.gcd a) := by
-  set d := n / n.gcd a with hd_def
-  set c := n.gcd a with hc_def
-  have hc_dvd_n : c ∣ n := Nat.gcd_dvd_left n a
-  have hc_dvd_a : c ∣ a := Nat.gcd_dvd_right n a
-  have hc_mul_d : c * d = n := Nat.mul_div_cancel' hc_dvd_n
-  have hc_pos : 0 < c := Nat.gcd_pos_of_pos_left _ hn
-  obtain ⟨a', ha'⟩ := hc_dvd_a
-  have ha'_cop : a'.Coprime d := by
-    have key : c * Nat.gcd a' d = c * 1 := by
-      rw [mul_one]
-      calc c * Nat.gcd a' d
-          = (c * a').gcd (c * d) := (Nat.gcd_mul_left c a' d).symm
-        _ = a.gcd n := by rw [← ha', hc_mul_d]
-        _ = c := by rw [Nat.gcd_comm]
-    exact Nat.eq_of_mul_eq_mul_left hc_pos key
-  have hω_c : IsPrimitiveRoot (ω ^ c) d := hω.pow hn hc_mul_d.symm
-  rw [ha', pow_mul]
-  exact hω_c.pow_of_coprime _ ha'_cop
+  exact hω.pow_div_gcd a (Nat.ne_of_gt (Nat.gcd_pos_of_pos_left a hn))
 
 /-- Polynomial identity: for `ω` a primitive `n`-th root of unity in `ℂ` and any
 `a: ℕ`, `∏_{k = 0..n-1} (1 - ω^{ka} T) = (1 - T^{n/gcd(n,a)})^{gcd(n,a)}`. -/

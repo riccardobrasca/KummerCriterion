@@ -14,7 +14,7 @@ hard to check directly. Kummer's criterion replaces it with a finite, purely
 arithmetic test on Bernoulli numbers.
 
 The main theorem lives in
-[`KummerCriterion/Main.lean`](KummerCriterion/Main.lean):
+[`PrimesUpTo100.lean`](KummerCriterion/BernoulliFast/PrimesUpTo100.lean):
 
 ```lean
 /-- **Kummer's criterion.**

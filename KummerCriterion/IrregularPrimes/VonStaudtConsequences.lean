@@ -161,9 +161,12 @@ theorem not_dvd_num_of_add_inv_den_not_dvd
 theorem not_dvd_num_bernoulli_of_sub_one_dvd
     {p n : ℕ} (hp : p.Prime) (hn_pos : 0 < n) (hn_even : Even n)
     (hdiv : p - 1 ∣ n) :
-    ¬ (p : ℤ) ∣ (bernoulli n).num :=
-  not_dvd_num_of_add_inv_den_not_dvd hp
-    (not_dvd_den_bernoulli_add_inv_of_sub_one_dvd hp hn_pos hn_even hdiv)
+    ¬ (p : ℤ) ∣ (bernoulli n).num := by
+  have : Fact p.Prime := ⟨hp⟩
+  obtain ⟨k, rfl⟩ := hn_even
+  simpa [two_mul] using
+    (Bernoulli.not_dvd_num_bernoulli (p := p) (k := k) (by omega)
+      (by simpa [two_mul] using hdiv))
 
 /-- If `p - 1 ∣ n`, then `p` cannot divide the reduced numerator of `B_n / n`. -/
 theorem not_dvd_num_bernoulli_div_self_of_sub_one_dvd

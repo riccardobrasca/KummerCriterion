@@ -2,7 +2,6 @@ module
 
 public import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part1
 public import Mathlib.RingTheory.PowerSeries.Log
-import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogFormal
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.ENatToNat
@@ -86,40 +85,19 @@ theorem coeff_subst_log_eq_sum_Icc
 Artin-Hasse logarithm series. -/
 theorem logOf_artinHasseExpSeries (ell : ℕ) [Fact (Nat.Prime ell)] :
     PowerSeries.logOf (artinHasseExpSeries ell) = artinHasseLogSeries ell := by
-  let E : PowerSeries ℚ := artinHasseExpSeries ell
   let L : PowerSeries ℚ := artinHasseLogSeries ell
-  let a : PowerSeries ℚ := E - 1
-  have hE0 : PowerSeries.constantCoeff E = 1 := by
-    simp [E]
-  have hL0 : PowerSeries.constantCoeff L = 0 := by
-    simp [L]
-  have ha0 : PowerSeries.constantCoeff a = 0 := by
-    simp [a, hE0]
-  have ha : PowerSeries.HasSubst a :=
-    PowerSeries.HasSubst.of_constantCoeff_zero' ha0
   have hLsubst : PowerSeries.HasSubst L := by
     simpa [L] using artinHasseLogSeries_hasSubst ell
-  have hE_deriv : d⁄dX ℚ E = E * d⁄dX ℚ L := by
-    change d⁄dX ℚ (PowerSeries.subst L (PowerSeries.exp ℚ)) =
-      PowerSeries.subst L (PowerSeries.exp ℚ) * d⁄dX ℚ L
-    rw [PowerSeries.derivative_subst hLsubst, PowerSeries.derivative_exp]
-  have hgeom :
-      PowerSeries.subst a (d⁄dX ℚ (PowerSeries.log ℚ)) * E = 1 := by
-    have h := FiniteLogFormal.subst_deriv_log_mul_one_add (A := ℚ) ha
-    simpa [a] using h
-  refine PowerSeries.derivative.ext ?_ ?_
-  · rw [PowerSeries.logOf_eq, PowerSeries.derivative_subst ha]
-    have hda : d⁄dX ℚ a = d⁄dX ℚ E := by
-      simp [a]
-    rw [hda, hE_deriv]
-    calc
-      PowerSeries.subst a (d⁄dX ℚ (PowerSeries.log ℚ)) * (E * d⁄dX ℚ L)
-          = (PowerSeries.subst a (d⁄dX ℚ (PowerSeries.log ℚ)) * E) *
-              d⁄dX ℚ L := by
-            ring
-      _ = d⁄dX ℚ L := by
-            rw [hgeom, one_mul]
-  · rw [PowerSeries.constantCoeff_logOf hE0, hL0]
+  rw [PowerSeries.logOf_eq]
+  change PowerSeries.subst (PowerSeries.subst L (PowerSeries.exp ℚ) - 1)
+      (PowerSeries.log ℚ) = L
+  have hsub :
+      PowerSeries.subst L (PowerSeries.exp ℚ) - 1 =
+        PowerSeries.subst L (PowerSeries.exp ℚ - 1) := by
+    rw [PowerSeries.subst_sub hLsubst,
+      ← PowerSeries.coe_substAlgHom hLsubst (R := ℚ), map_one]
+  rw [hsub, ← PowerSeries.subst_comp_subst_apply PowerSeries.HasSubst.exp_sub_one hLsubst,
+    PowerSeries.subst_log_exp_sub_one, PowerSeries.subst_X hLsubst]
 
 theorem coeff_logOf_artinHasseExpSeries_eq_sum_Icc
     (ell d : ℕ) [Fact (Nat.Prime ell)] :

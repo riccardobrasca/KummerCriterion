@@ -214,17 +214,8 @@ theorem orderOf_unitGroupGenerator :
 theorem unitGroupGenerator_pow_eq_iff_of_lt {m n : ℕ}
     (hm : m < p - 1) (hn : n < p - 1) :
     unitGroupGenerator p ^ m = unitGroupGenerator p ^ n ↔ m = n := by
-  constructor
-  · intro hmn
-    have hmod :
-        m ≡ n [MOD orderOf (unitGroupGenerator p)] := by
-      simpa using (pow_eq_pow_iff_modEq (x := unitGroupGenerator p) (n := m) (m := n)).mp hmn
-    have hmod' : m ≡ n [MOD p - 1] := by
-      simpa [orderOf_unitGroupGenerator (p := p)] using hmod
-    have hEq : m % (p - 1) = n := Nat.mod_eq_of_modEq hmod' hn
-    simpa [Nat.mod_eq_of_lt hm] using hEq
-  · rintro rfl
-    rfl
+  rw [pow_inj_mod, orderOf_unitGroupGenerator (p := p), Nat.mod_eq_of_lt hm,
+    Nat.mod_eq_of_lt hn]
 
 /-- The complementary exponent to `j` modulo `p - 1`, normalized to the range
 `[0, p - 1)`. -/
@@ -394,17 +385,8 @@ theorem complexCharacterGenerator_pow_inv_eq_pow_complement (j : Fin (p - 1)) :
 theorem complexCharacterGenerator_pow_eq_iff_of_lt {i j : ℕ}
     (hi : i < p - 1) (hj : j < p - 1) :
     (complexCharacterGenerator p) ^ i = (complexCharacterGenerator p) ^ j ↔ i = j := by
-  constructor
-  · intro hij
-    have hmod :
-        i ≡ j [MOD orderOf (complexCharacterGenerator p)] := by
-      simpa using (pow_eq_pow_iff_modEq (x := complexCharacterGenerator p) (n := i) (m := j)).mp hij
-    have hmod' : i ≡ j [MOD p - 1] := by
-      simpa [orderOf_complexCharacterGenerator (p := p)] using hmod
-    have hEq : i % (p - 1) = j := Nat.mod_eq_of_modEq hmod' hj
-    simpa [Nat.mod_eq_of_lt hi] using hEq
-  · rintro rfl
-    rfl
+  rw [pow_inj_mod, orderOf_complexCharacterGenerator (p := p), Nat.mod_eq_of_lt hi,
+    Nat.mod_eq_of_lt hj]
 
 theorem exists_oddCharacter (hp_odd' : p ≠ 2) :
     ∃ χ : DirichletCharacter ℂ p, χ.Odd := by
@@ -588,17 +570,8 @@ theorem teichmullerCharQp_pow_inv_eq_pow_complement (j : Fin (p - 1)) :
 theorem teichmullerCharQp_pow_eq_iff_of_lt {i j : ℕ}
     (hi : i < p - 1) (hj : j < p - 1) :
     (teichmullerCharQp p) ^ i = (teichmullerCharQp p) ^ j ↔ i = j := by
-  constructor
-  · intro hij
-    have hmod :
-        i ≡ j [MOD orderOf (teichmullerCharQp p)] := by
-      simpa using (pow_eq_pow_iff_modEq (x := teichmullerCharQp p) (n := i) (m := j)).mp hij
-    have hmod' : i ≡ j [MOD p - 1] := by
-      simpa [orderOf_teichmullerCharQp (p := p)] using hmod
-    have hEq : i % (p - 1) = j := Nat.mod_eq_of_modEq hmod' hj
-    simpa [Nat.mod_eq_of_lt hi] using hEq
-  · rintro rfl
-    rfl
+  rw [pow_inj_mod, orderOf_teichmullerCharQp (p := p), Nat.mod_eq_of_lt hi,
+    Nat.mod_eq_of_lt hj]
 
 theorem teichmullerCharQp_pow_bijective :
     Function.Bijective fun j : Fin (p - 1) => (teichmullerCharQp p) ^ (j : ℕ) := by

@@ -60,7 +60,7 @@ theorem zetaUnit_pow_eq_of_zmod_eq {m n : ℕ}
   have hord : orderOf ζu = p := by
     rw [← orderOf_units]
     exact ((IsPrimitiveRoot.unit'_coe (zeta_spec p ℚ K)).eq_orderOf).symm
-  rw [pow_eq_pow_iff_modEq, hord]
+  rw [pow_inj_mod, hord]
   exact (ZMod.natCast_eq_natCast_iff m n p).mp h
 
 omit [IsCMField K] in

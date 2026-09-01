@@ -43,6 +43,64 @@ lemma sinZeta_toAddCircle_eq_val_div_prime (a : ZMod p) (s : ℂ) :
     HurwitzZeta.sinZeta (ZMod.toAddCircle a) s = HurwitzZeta.sinZeta (a.val / p : ℝ) s := by
   rw [ZMod.toAddCircle_apply]
 
+/-- The unit-circle point with argument `2πx` is nontrivial when `0 < x < 1`. -/
+lemma exp_two_pi_mul_I_ne_one {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) :
+    Complex.exp ((2 * Real.pi * x) * Complex.I) ≠ 1 := by
+  intro hexp
+  obtain ⟨m, hm⟩ := Complex.exp_eq_one_iff.mp hexp
+  have him : 2 * Real.pi * x = (m : ℝ) * (2 * Real.pi) := by
+    simpa using congrArg Complex.im hm
+  have hm_pos : (0 : ℝ) < m := by nlinarith [Real.pi_pos, hx₀, him]
+  have hm_lt_one : (m : ℝ) < 1 := by nlinarith [Real.pi_pos, hx₁, him]
+  have hm_pos_int : 0 < m := by exact_mod_cast hm_pos
+  have hm_lt_one_int : m < 1 := by exact_mod_cast hm_lt_one
+  omega
+
+/-- Multiplying a unit-circle exponential by a nonnegative real scales its
+norm by that real. -/
+lemma norm_real_mul_exp_two_pi_mul_I (x : ℝ) {r : ℝ} (hr : 0 ≤ r) :
+    ‖(r : ℂ) * Complex.exp ((2 * Real.pi * x) * Complex.I)‖ = r := by
+  rw [norm_mul, Complex.norm_real, Real.norm_of_nonneg hr]
+  rw [show ‖Complex.exp ((2 * Real.pi * x) * Complex.I)‖ = 1 by
+    simpa [mul_assoc] using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * x)]
+  simp
+
+/-- Partial sums of powers of a nontrivial unit complex number are bounded by
+`2 / ‖z - 1‖`. -/
+lemma norm_geom_sum_le_two_div_norm_sub_one {z : ℂ} (hz_norm : ‖z‖ = 1)
+    (hz_ne_one : z ≠ 1) (n : ℕ) :
+    ‖∑ i ∈ Finset.range n, z ^ i‖ ≤ 2 / ‖z - 1‖ := by
+  calc
+    ‖∑ i ∈ Finset.range n, z ^ i‖ = ‖(z ^ n - 1) / (z - 1)‖ := by
+      rw [geom_sum_eq hz_ne_one]
+    _ = ‖z ^ n - 1‖ / ‖z - 1‖ := by rw [Complex.norm_div]
+    _ ≤ 2 / ‖z - 1‖ := by
+      have hden : 0 < ‖z - 1‖ := norm_pos_iff.mpr (sub_ne_zero.mpr hz_ne_one)
+      have hnum : ‖z ^ n - 1‖ ≤ 2 := by
+        calc
+          ‖z ^ n - 1‖ ≤ ‖z ^ n‖ + ‖(1 : ℂ)‖ := norm_sub_le _ _
+          _ = 1 + 1 := by rw [norm_pow, hz_norm]; simp
+          _ = 2 := by norm_num
+      simpa [div_eq_mul_inv] using
+        mul_le_mul_of_nonneg_right hnum (inv_nonneg.mpr hden.le)
+
+/-- The reciprocal chord-length bound used for trigonometric partial sums. -/
+lemma one_le_two_div_norm_one_sub_exp_two_pi_mul_I {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) :
+    1 ≤ 2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
+  have hnorm : ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ ≤ 2 := by
+    calc
+      ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖
+          ≤ ‖(1 : ℂ)‖ + ‖Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := norm_sub_le _ _
+      _ = 1 + 1 := by
+        rw [norm_one]
+        simpa [mul_assoc] using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * x)
+      _ = 2 := by norm_num
+  have hzero : (1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I) ≠ 0 :=
+    sub_ne_zero.mpr (exp_two_pi_mul_I_ne_one hx₀ hx₁).symm
+  have hden_pos : 0 < ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ :=
+    norm_pos_iff.mpr hzero
+  simpa using (one_le_div hden_pos).2 hnorm
+
 /-- Rewriting `1 - e^{it}` in polar form on the upper unit semicircle. -/
 lemma one_sub_exp_ofReal_mul_I (t : ℝ) :
     (1 : ℂ) - Complex.exp (t * Complex.I) =
@@ -94,15 +152,7 @@ lemma hasSum_mul_rpow_sin (x r : ℝ) (hr₀ : 0 ≤ r) (hr₁ : r < 1) :
       (-Complex.log ((1 : ℂ) - (r : ℂ) * Complex.exp ((2 * Real.pi * x) * Complex.I))).im := by
   let z : ℂ := (r : ℂ) * Complex.exp ((2 * Real.pi * x) * Complex.I)
   have hz : ‖z‖ < 1 := by
-    have hexp : ‖Complex.exp (2 * Real.pi * x * Complex.I)‖ = 1 := by
-      simpa [mul_assoc] using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * x)
-    have hz' : ‖z‖ = r := by
-      calc
-        ‖z‖ = ‖(r : ℂ)‖ * ‖Complex.exp (2 * Real.pi * x * Complex.I)‖ := by
-          simp [z]
-        _ = r * 1 := by rw [Complex.norm_real, Real.norm_of_nonneg hr₀, hexp]
-        _ = r := by ring
-    rw [hz']
+    rw [show ‖z‖ = r by simpa [z] using norm_real_mul_exp_two_pi_mul_I x hr₀]
     exact hr₁
   refine (Complex.hasSum_im (Complex.hasSum_taylorSeries_neg_log hz)).congr_fun ?_
   intro n
@@ -124,15 +174,7 @@ lemma hasSum_mul_rpow_cos (x r : ℝ) (hr₀ : 0 ≤ r) (hr₁ : r < 1) :
       (-Real.log ‖(1 : ℂ) - (r : ℂ) * Complex.exp ((2 * Real.pi * x) * Complex.I)‖) := by
   let z : ℂ := (r : ℂ) * Complex.exp ((2 * Real.pi * x) * Complex.I)
   have hz : ‖z‖ < 1 := by
-    have hexp : ‖Complex.exp (2 * Real.pi * x * Complex.I)‖ = 1 := by
-      simpa [mul_assoc] using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * x)
-    have hz' : ‖z‖ = r := by
-      calc
-        ‖z‖ = ‖(r : ℂ)‖ * ‖Complex.exp (2 * Real.pi * x * Complex.I)‖ := by
-          simp [z]
-        _ = r * 1 := by rw [Complex.norm_real, Real.norm_of_nonneg hr₀, hexp]
-        _ = r := by ring
-    rw [hz']
+    rw [show ‖z‖ = r by simpa [z] using norm_real_mul_exp_two_pi_mul_I x hr₀]
     exact hr₁
   have hsum :
       HasSum (fun n : ℕ => (z ^ n / n).re) (-Complex.log ((1 : ℂ) - z)).re :=

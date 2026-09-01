@@ -289,9 +289,7 @@ theorem pow_sub_pow_mem_of_sub_mem_ideal
     {R : Type*} [CommRing R] (I : Ideal R) {x y : R}
     (hxy : x - y ∈ I) (n : ℕ) :
     x ^ n - y ^ n ∈ I := by
-  rcases sub_dvd_pow_sub_pow x y n with ⟨z, hz⟩
-  rw [hz]
-  exact I.mul_mem_right z hxy
+  exact SModEq.sub_mem.mp ((SModEq.sub_mem.mpr hxy).pow n)
 
 omit [NumberField.IsCMField K] in
 /-- Fermat's theorem, as membership in the Dwork lambda ideal for rational

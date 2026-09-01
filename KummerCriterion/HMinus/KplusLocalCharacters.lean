@@ -98,13 +98,6 @@ lemma orderOf_unitOfPrimeNe_sq_eq_localResidueDegreePlus
       localResidueDegreePlus (p := p) ℓ hℓp := by
   let u : (ZMod p)ˣ := unitOfPrimeNe (p := p) ℓ hℓp
   let d : ℕ := localResidueDegree (p := p) ℓ hℓp
-  have hfin : IsOfFinOrder u := isOfFinOrder_iff_pow_eq_one.mpr
-    ⟨d, by
-      dsimp [d, localResidueDegree]
-      exact orderOf_pos u,
-      by
-        dsimp [d, localResidueDegree]
-        exact pow_orderOf_eq_one u⟩
   by_cases hd_even : Even d
   · rcases hd_even with ⟨k, hk⟩
     have hd_even' : Even (localResidueDegree (p := p) ℓ hℓp) :=
@@ -115,14 +108,14 @@ lemma orderOf_unitOfPrimeNe_sq_eq_localResidueDegreePlus
       · exact Nat.dvd_gcd ⟨k, by omega⟩ dvd_rfl
     rw [show orderOf (u ^ 2) = d / d.gcd 2 by
         dsimp [d, localResidueDegree]
-        rw [hfin.orderOf_pow], hgcd,
+        rw [orderOf_pow], hgcd,
       localResidueDegreePlus_eq_half (p := p) hℓp hd_even']
   · have hd_odd : Odd d := Nat.not_even_iff_odd.mp hd_even
     have hgcd : d.gcd 2 = 1 :=
       Nat.coprime_iff_gcd_eq_one.mp hd_odd.coprime_two_right
     rw [show orderOf (u ^ 2) = d / d.gcd 2 by
         dsimp [d, localResidueDegree]
-        rw [hfin.orderOf_pow], hgcd,
+        rw [orderOf_pow], hgcd,
       localResidueDegreePlus_eq_self (p := p) hℓp (by simpa [d] using hd_even)]
     simp [d]
 
@@ -266,8 +259,6 @@ lemma prod_even_characters_eval_eq_pow_localResidueDegreePlus
   have hg_order : orderOf g = n := by
     rw [← hn_units']
     exact orderOf_eq_card_of_forall_mem_zpowers hg_zpow
-  have hfin_g : IsOfFinOrder g := isOfFinOrder_iff_pow_eq_one.mpr
-    ⟨n, hn_pos, by rw [← hg_order]; exact pow_orderOf_eq_one g⟩
   have hgcd2 : n.gcd 2 = 2 :=
     Nat.dvd_antisymm (Nat.gcd_dvd_right n 2) (Nat.dvd_gcd ⟨n2, hn2'⟩ dvd_rfl)
   have hω : IsPrimitiveRoot (Complex.exp (2 * Real.pi * Complex.I / n)) n :=
@@ -383,15 +374,8 @@ lemma prod_even_characters_eval_eq_pow_localResidueDegreePlus
               rw [hexp, pow_mul]
       _ = (1 - T ^ (n2 / n2.gcd a)) ^ n2.gcd a :=
             prod_pow_primRoot_eq_pow hn2_pos a hω_sq_prim T
-  have hfin_g2 : IsOfFinOrder (g ^ 2) := isOfFinOrder_iff_pow_eq_one.mpr
-    ⟨n2, hn2_pos, by
-      rw [← pow_mul]
-      have : 2 * n2 = n := by
-        omega
-      rw [this, ← hg_order]
-      exact pow_orderOf_eq_one g⟩
   have hg_sq_order : orderOf (g ^ 2) = n2 := by
-    rw [hfin_g.orderOf_pow, hg_order, hgcd2, hn2']
+    rw [orderOf_pow, hg_order, hgcd2, hn2']
     simp
   have hu_sq : (unitOfPrimeNe (p := p) ℓ hℓp) ^ 2 = (g ^ 2) ^ a := by
     rw [← ha, ← pow_mul]
@@ -399,7 +383,7 @@ lemma prod_even_characters_eval_eq_pow_localResidueDegreePlus
       omega
     rw [this, pow_mul]
   have horder_u_sq : orderOf ((unitOfPrimeNe (p := p) ℓ hℓp) ^ 2) = n2 / n2.gcd a := by
-    rw [hu_sq, hfin_g2.orderOf_pow, hg_sq_order]
+    rw [hu_sq, orderOf_pow, hg_sq_order]
   have hlocalResidue :
       localResidueDegreePlus (p := p) ℓ hℓp = n2 / n2.gcd a := by
     rw [← orderOf_unitOfPrimeNe_sq_eq_localResidueDegreePlus (p := p) hℓp, horder_u_sq]

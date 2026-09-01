@@ -50,31 +50,12 @@ theorem gaussSum_mul_gaussSum_inv_stdAddChar
     gaussSum χ (ZMod.stdAddChar (N := p)) *
         gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)) =
       χ (-1) * p := by
-  have h_prim : (ZMod.stdAddChar : AddChar (ZMod p) ℂ).IsPrimitive :=
-    ZMod.isPrimitive_stdAddChar p
-  have h_card : (Fintype.card (ZMod p) : ℂ) = p := by
-    rw [ZMod.card]
-  have h1 : gaussSum χ (ZMod.stdAddChar (N := p)) *
-      gaussSum χ⁻¹ (ZMod.stdAddChar (N := p))⁻¹ = (p : ℂ) := by
-    rw [← h_card]; exact gaussSum_mul_gaussSum_eq_card hχ h_prim
-  have h2 := mul_gaussSum_inv_eq_gaussSum χ⁻¹ (ZMod.stdAddChar (N := p))
-  have h_neg_unit : IsUnit (-1 : ZMod p) := isUnit_one.neg
-  have h_sq : χ (-1) * χ (-1) = 1 := by
-    rw [← map_mul, show (-1 : ZMod p) * -1 = 1 from by ring, MulChar.map_one]
-  have h_ne : χ (-1) ≠ 0 := fun h => by
-    rw [h, mul_zero] at h_sq; exact zero_ne_one h_sq
-  have h_inv_neg_one : χ⁻¹ (-1) = χ (-1) := by
-    have h_inv_mul : χ⁻¹ (-1) * χ (-1) = 1 := by
-      rw [← MulChar.mul_apply, MulChar.inv_mul, MulChar.one_apply h_neg_unit]
-    exact mul_right_cancel₀ h_ne (h_inv_mul.trans h_sq.symm)
-  rw [h_inv_neg_one] at h2
-  have h3 : χ (-1) * (gaussSum χ (ZMod.stdAddChar (N := p)) *
-      gaussSum χ⁻¹ (ZMod.stdAddChar (N := p))⁻¹) = χ (-1) * p := by rw [h1]
-  rw [show χ (-1) * (gaussSum χ (ZMod.stdAddChar (N := p)) *
-        gaussSum χ⁻¹ (ZMod.stdAddChar (N := p))⁻¹) =
-      gaussSum χ (ZMod.stdAddChar (N := p)) *
-        (χ (-1) * gaussSum χ⁻¹ (ZMod.stdAddChar (N := p))⁻¹) from by ring, h2] at h3
-  exact h3
+  have hpow : χ ^ (orderOf χ - 1) = χ⁻¹ := by
+    refine (inv_eq_of_mul_eq_one_right ?_).symm
+    rw [← pow_succ', Nat.sub_one_add_one_eq_of_pos χ.orderOf_pos, pow_orderOf_eq_one]
+  rw [← hpow]
+  simpa [ZMod.card] using
+    gaussSum_mul_gaussSum_pow_orderOf_sub_one hχ (ZMod.isPrimitive_stdAddChar p)
 
 /-- For a prime modulus `p`, any non-trivial Dirichlet character
 is primitive. Follows from `χ.conductor ∣ p` and the fact that the only

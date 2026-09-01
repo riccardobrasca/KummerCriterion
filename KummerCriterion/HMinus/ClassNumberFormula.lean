@@ -529,8 +529,7 @@ lemma natAbs_discr_maximalRealSubfield_eq_pow (hp_odd' : p ≠ 2) :
             omega
   have hsq' : (NumberField.discr L).natAbs ^ 2 = (p ^ ((p - 3) / 2)) ^ 2 := by
     rw [hpow, hsq]
-  have := congrArg Nat.sqrt hsq'
-  simpa [Nat.sqrt_eq'] using this
+  exact Nat.pow_left_injective (by decide : 2 ≠ 0) hsq'
 
 lemma abs_discr_maximalRealSubfield_eq_pow (hp_odd' : p ≠ 2) :
     |((NumberField.discr (NumberField.maximalRealSubfield K) : ℤ) : ℝ)| =

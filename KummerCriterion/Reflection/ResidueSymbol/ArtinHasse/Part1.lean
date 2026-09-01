@@ -88,19 +88,9 @@ noncomputable def artinHasseExpSeries (r : ℕ) [Fact (Nat.Prime r)] :
 
 @[simp] theorem artinHasseExpSeries_constantCoeff (r : ℕ) [Fact (Nat.Prime r)] :
     (PowerSeries.constantCoeff (R := ℚ)) (artinHasseExpSeries r) = 1 := by
-  rw [PowerSeries.coeff_zero_eq_constantCoeff_apply (artinHasseExpSeries r) |>.symm]
   unfold artinHasseExpSeries
-  rw [PowerSeries.coeff_subst' (artinHasseLogSeries_hasSubst r)]
-  rw [finsum_eq_single _ 0]
-  · simp
-  · intro d hd
-    have hL_const : (PowerSeries.constantCoeff (R := ℚ)) (artinHasseLogSeries r) = 0 :=
-      artinHasseLogSeries_constantCoeff r
-    have h_pow_const : (PowerSeries.constantCoeff (R := ℚ))
-        ((artinHasseLogSeries r) ^ d) = 0 := by
-      rw [map_pow, hL_const, zero_pow hd]
-    rw [PowerSeries.coeff_zero_eq_constantCoeff_apply, h_pow_const]
-    simp
+  rw [PowerSeries.constantCoeff_eq, PowerSeries.constantCoeff_subst_of_constantCoeff_zero
+    (artinHasseLogSeries_constantCoeff r), PowerSeries.constantCoeff_exp, map_one]
 
 private theorem artinHasseLogSeries_coeff_eq_X_of_lt
     (r : ℕ) [Fact (Nat.Prime r)] {n : ℕ} (hn : n < r) :

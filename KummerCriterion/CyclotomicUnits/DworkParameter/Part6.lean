@@ -676,13 +676,13 @@ theorem samePrimeFiniteArtinHasseExpCoordLogHomogeneousDegreeSum_eq_logTerm
     (N r : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) :
     samePrimeFiniteArtinHasseExpCoordLogHomogeneousDegreeSum
         (p := p) (K := K) N (p ^ r) x hx =
-      samePrimeFiniteArtinHasseLogTerm (p := p) (K := K) N r x hx :=
-  samePrimeFiniteArtinHasseExpCoordLogHomogeneousDegreeSum_eq_logTerm_of_factorial_weighted_sub_pow_mem
-    (p := p) (K := K) N r hx
-    (by
-      simpa [samePrimeFiniteArtinHasseExpCoordLogHomogeneousNumerator] using
-        samePrimeFiniteArtinHasseLogHomogeneousNumerator_factorial_weighted_sub_pow_mem_lambdaIdeal_pow
-          (p := p) (K := K) N r hx)
+      samePrimeFiniteArtinHasseLogTerm (p := p) (K := K) N r x hx := by
+  apply
+    samePrimeFiniteArtinHasseExpCoordLogHomogeneousDegreeSum_eq_logTerm_of_factorial_weighted_sub_pow_mem
+      (p := p) (K := K) N r hx
+  simpa [samePrimeFiniteArtinHasseExpCoordLogHomogeneousNumerator] using
+    samePrimeFiniteArtinHasseLogHomogeneousNumerator_factorial_weighted_sub_pow_mem_lambdaIdeal_pow
+      (p := p) (K := K) N r hx
 
 end DworkParameter
 end PadicLogSetup

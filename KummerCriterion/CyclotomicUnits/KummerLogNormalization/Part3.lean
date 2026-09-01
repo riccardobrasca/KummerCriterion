@@ -493,7 +493,8 @@ set_option maxHeartbeats 800000 in
 omit [NumberField.IsCMField K] in
 /-- Factorial-cleared normalized homogeneous degree slice, expressed through
 the formal normalized Artin-Hasse logarithm coefficient. -/
-theorem natCast_factorial_mul_samePrimeFiniteArtinHasseNormalizedCoordLogHomogeneousDegreeSum_eq_formal
+theorem
+  natCast_factorial_mul_samePrimeFiniteArtinHasseNormalizedCoordLogHomogeneousDegreeSum_eq_formal
     (N d : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) :
     ((d.factorial : ℕ) :
         ValuedIntegerRing p K ⧸ (lambdaIdeal p K) ^ (N + 1)) *

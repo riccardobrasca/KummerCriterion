@@ -138,12 +138,8 @@ theorem tendsto_factorial_pred_div_const_pow_atTop {A : ℝ} (hA : 0 < A) :
   field_simp [pow_ne_zero n hA.ne', Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero (n - 1))]
 
 /-- The map `k ↦ 2 * k` tends to infinity. -/
-theorem tendsto_two_mul_atTop : Tendsto (fun k : ℕ => 2 * k) atTop atTop := by
-  apply tendsto_atTop_atTop_of_monotone
-  · intro a b hab
-    exact Nat.mul_le_mul_left 2 hab
-  · intro n
-    exact ⟨n, by omega⟩
+theorem tendsto_two_mul_atTop : Tendsto (fun k : ℕ => 2 * k) atTop atTop :=
+  tendsto_id.const_mul_atTop' (by norm_num)
 
 /-- The lower bound for `|B_{2k}/(2k)|` tends to infinity. -/
 theorem tendsto_bernoulli_lower_bound_atTop :
@@ -196,9 +192,8 @@ theorem exists_large_even_multiple_abs_bernoulli_div_self_gt_one
     omega
   have hpow : Tendsto (fun t : ℕ => 2 ^ t) atTop atTop :=
     tendsto_pow_atTop_atTop_of_one_lt (by norm_num : 1 < (2 : ℕ))
-  have hc_tendsto : Tendsto (fun t : ℕ => c * 2 ^ t) atTop atTop := by
-    refine tendsto_atTop_mono (fun t => ?_) hpow
-    exact Nat.le_mul_of_pos_left (2 ^ t) hc_pos
+  have hc_tendsto : Tendsto (fun t : ℕ => c * 2 ^ t) atTop atTop :=
+    hpow.const_mul_atTop' hc_pos
   have hcomp := tendsto_abs_bernoulli_div_self_even.comp hc_tendsto
   have hevent := hcomp.eventually (eventually_gt_atTop 1)
   obtain ⟨t, ht⟩ := hevent.exists

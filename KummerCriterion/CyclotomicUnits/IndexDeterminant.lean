@@ -195,6 +195,8 @@ theorem detASubB_sq_eq_deletedFourier_sq
             (((LehmerVandiver.Sinnott.sinnottMatrixA p K -
               LehmerVandiver.Sinnott.sinnottMatrixB p K) i w : ℝ) : ℂ)) =
         D.submatrix rowEquiv colEquiv := by
+    let _ : CommGroup (CyclotomicEvenDelta p) :=
+      QuotientGroup.Quotient.commGroup (CyclotomicEvenDeltaSubgroup p)
     ext w i
     rw [Matrix.of_apply, Matrix.submatrix_apply]
     rw [LehmerVandiver.Sinnott.sinnottMatrix_A_sub_B_apply_eq_sub_shifted
@@ -206,8 +208,9 @@ theorem detASubB_sq_eq_deletedFourier_sq
     rw [LehmerVandiver.Sinnott.familyIndexAsCEnotOneEquiv_apply
       (p := p) K hp_odd hp_three hp_ge_five hp_two i]
     congr 2
-    · simp [mul_comm]
-    · simp [mul_comm]
+    all_goals
+      try simp only [mul_one]
+      ac_rfl
   rw [hcast]
   rw [← Matrix.det_transpose]
   change

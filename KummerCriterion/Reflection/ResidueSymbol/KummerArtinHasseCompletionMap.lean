@@ -44,8 +44,10 @@ theorem zetaPrime_liesOver_lambdaRationalPrimeIdeal :
   have : IsCyclotomicExtension {p ^ (0 + 1)} ℚ K := by
     simpa using (inferInstance : IsCyclotomicExtension {p} ℚ K)
   have hζpow : IsPrimitiveRoot (IsCyclotomicExtension.zeta p ℚ K) (p ^ (0 + 1)) := by simp
-  have h : (Ideal.span ({((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger - 1 : 𝓞 K)})).LiesOver
-    (Ideal.span ({(p : ℤ)})) := IsCyclotomicExtension.Rat.liesOver_span_zeta_sub_one _ _ hζpow
+  have h :
+      (Ideal.span ({((IsCyclotomicExtension.zeta_spec p ℚ K).toInteger - 1 : 𝓞 K)})).LiesOver
+        (Ideal.span ({(p : ℤ)})) :=
+    IsCyclotomicExtension.Rat.liesOver_span_zeta_sub_one _ _ hζpow
   simpa [zetaPrime, lambdaRationalPrimeIdeal] using h
 
 end KummerArtinHasse

@@ -39,9 +39,7 @@ theorem pow_sub_one_mem_of_sub_one_mem
     {R : Type*} [CommRing R] (x : R) (n : ℕ)
     {I : Ideal R} (h : x - 1 ∈ I) :
     x ^ n - 1 ∈ I := by
-  obtain ⟨c, hc⟩ := sub_one_dvd_pow_sub_one x n
-  rw [hc]
-  exact Ideal.mul_mem_right _ _ h
+  simpa using SModEq.sub_mem.mp ((SModEq.sub_mem.mpr h).pow n)
 
 end Furtwaengler
 

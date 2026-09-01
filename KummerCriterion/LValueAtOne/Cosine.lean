@@ -31,17 +31,7 @@ lemma norm_sum_range_cos_le {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) (n : ℕ) 
     ‖∑ i ∈ Finset.range n, Real.cos (2 * Real.pi * x * i)‖ ≤
       2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
   let z : ℂ := Complex.exp ((2 * Real.pi * x) * Complex.I)
-  have hz_ne_one : z ≠ 1 := by
-    intro hz
-    have hexp : Complex.exp ((2 * Real.pi * x) * Complex.I) = 1 := by simpa [z] using hz
-    obtain ⟨m, hm⟩ := Complex.exp_eq_one_iff.mp hexp
-    have him : 2 * Real.pi * x = (m : ℝ) * (2 * Real.pi) := by
-      simpa using congrArg Complex.im hm
-    have hm_pos : (0 : ℝ) < m := by nlinarith [Real.pi_pos, hx₀, him]
-    have hm_lt_one : (m : ℝ) < 1 := by nlinarith [Real.pi_pos, hx₁, him]
-    have hm_pos_int : 0 < m := by exact_mod_cast hm_pos
-    have hm_lt_one_int : m < 1 := by exact_mod_cast hm_lt_one
-    lia
+  have hz_ne_one : z ≠ 1 := by simpa [z] using exp_two_pi_mul_I_ne_one hx₀ hx₁
   have hre :
       ((∑ i ∈ Finset.range n, z ^ i).re : ℝ) =
         ∑ i ∈ Finset.range n, Real.cos (2 * Real.pi * x * i) := by
@@ -52,24 +42,10 @@ lemma norm_sum_range_cos_le {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) (n : ℕ) 
       congr 1
       norm_num
       ring, Complex.exp_ofReal_mul_I_re]
-  have hgeom : ‖∑ i ∈ Finset.range n, z ^ i‖ ≤ 2 / ‖z - 1‖ := by
-    calc
-      ‖∑ i ∈ Finset.range n, z ^ i‖ = ‖(z ^ n - 1) / (z - 1)‖ := by
-        rw [geom_sum_eq hz_ne_one]
-      _ = ‖z ^ n - 1‖ / ‖z - 1‖ := by rw [Complex.norm_div]
-      _ ≤ 2 / ‖z - 1‖ := by
-        have hden : 0 < ‖z - 1‖ := norm_pos_iff.mpr (sub_ne_zero.mpr hz_ne_one)
-        have hnum : ‖z ^ n - 1‖ ≤ 2 := by
-          calc
-            ‖z ^ n - 1‖ ≤ ‖z ^ n‖ + ‖(1 : ℂ)‖ := norm_sub_le _ _
-            _ = 1 + 1 := by
-              rw [norm_pow]
-              have hz_norm : ‖z‖ = 1 := by
-                simpa [z] using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * x)
-              rw [hz_norm]
-              simp
-            _ = 2 := by norm_num
-        simpa [div_eq_mul_inv] using mul_le_mul_of_nonneg_right hnum (inv_nonneg.mpr hden.le)
+  have hz_norm : ‖z‖ = 1 := by
+    simpa [z] using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * x)
+  have hgeom : ‖∑ i ∈ Finset.range n, z ^ i‖ ≤ 2 / ‖z - 1‖ :=
+    norm_geom_sum_le_two_div_norm_sub_one hz_norm hz_ne_one n
   calc
     ‖∑ i ∈ Finset.range n, Real.cos (2 * Real.pi * x * i)‖
       = ‖((∑ i ∈ Finset.range n, z ^ i).re : ℝ)‖ := by rw [hre]
@@ -165,31 +141,8 @@ lemma norm_sum_range_shifted_cos_term_le {x s : ℝ} (hx₀ : 0 < x) (hx₁ : x 
       _ ≤ 2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ +
             2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
             have hdenom :
-                1 ≤ 2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
-              have hnorm : ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ ≤ 2 := by
-                calc
-                  ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖
-                      ≤ ‖(1 : ℂ)‖ + ‖Complex.exp ((2 * Real.pi * x) * Complex.I)‖ :=
-                        norm_sub_le _ _
-                  _ = 1 + 1 := by
-                        rw [norm_one]
-                        simpa [mul_assoc] using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * x)
-                  _ = 2 := by norm_num
-              have hzero : (1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I) ≠ 0 := by
-                intro hzero
-                have hexp : Complex.exp ((2 * Real.pi * x) * Complex.I) = 1 := by
-                  simpa [eq_comm] using sub_eq_zero.mp hzero
-                obtain ⟨m, hm⟩ := Complex.exp_eq_one_iff.mp hexp
-                have him : 2 * Real.pi * x = (m : ℝ) * (2 * Real.pi) := by
-                  simpa using congrArg Complex.im hm
-                have hm_pos : (0 : ℝ) < m := by nlinarith [Real.pi_pos, hx₀, him]
-                have hm_lt_one : (m : ℝ) < 1 := by nlinarith [Real.pi_pos, hx₁, him]
-                have hm_pos_int : 0 < m := by exact_mod_cast hm_pos
-                have hm_lt_one_int : m < 1 := by exact_mod_cast hm_lt_one
-                lia
-              have hden_pos : 0 < ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ :=
-                norm_pos_iff.mpr hzero
-              simpa using (one_le_div hden_pos).2 hnorm
+                1 ≤ 2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ :=
+              one_le_two_div_norm_one_sub_exp_two_pi_mul_I hx₀ hx₁
             linarith
       _ = 4 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by ring
   calc
@@ -293,32 +246,9 @@ lemma exists_tendsto_sum_range_cos_div_nat {x : ℝ} (hx₀ : 0 < x) (hx₁ : x 
               exact add_le_add hcos le_rfl
         _ ≤ 2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ +
               2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
-              have hnorm : ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ ≤ 2 := by
-                calc
-                  ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖
-                      ≤ ‖(1 : ℂ)‖ + ‖Complex.exp ((2 * Real.pi * x) * Complex.I)‖ :=
-                        norm_sub_le _ _
-                  _ = 1 + 1 := by
-                        rw [norm_one]
-                        simpa [mul_assoc] using Complex.norm_exp_ofReal_mul_I (2 * Real.pi * x)
-                  _ = 2 := by norm_num
-              have hzero : (1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I) ≠ 0 := by
-                intro hzero
-                have hexp : Complex.exp ((2 * Real.pi * x) * Complex.I) = 1 := by
-                  simpa [eq_comm] using sub_eq_zero.mp hzero
-                obtain ⟨m, hm⟩ := Complex.exp_eq_one_iff.mp hexp
-                have him : 2 * Real.pi * x = (m : ℝ) * (2 * Real.pi) := by
-                  simpa using congrArg Complex.im hm
-                have hm_pos : (0 : ℝ) < m := by nlinarith [Real.pi_pos, hx₀, him]
-                have hm_lt_one : (m : ℝ) < 1 := by nlinarith [Real.pi_pos, hx₁, him]
-                have hm_pos_int : 0 < m := by exact_mod_cast hm_pos
-                have hm_lt_one_int : m < 1 := by exact_mod_cast hm_lt_one
-                lia
-              have hden_pos : 0 < ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ :=
-                norm_pos_iff.mpr hzero
               have hdenom :
-                  1 ≤ 2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
-                simpa using (one_le_div hden_pos).2 hnorm
+                  1 ≤ 2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ :=
+                one_le_two_div_norm_one_sub_exp_two_pi_mul_I hx₀ hx₁
               linarith
         _ = 4 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by ring
   have hcauchy := hf.cauchySeq_series_mul_of_tendsto_zero_of_bounded hf0 hbound
@@ -372,18 +302,8 @@ lemma tendsto_sum_range_cos_div_nat {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) :
         (𝓝[<] 1) (𝓝 l) :=
     Tendsto.congr' (hcoeff.eventuallyEq_of_mem (Ioo_mem_nhdsLT zero_lt_one)) habel
   have hzero :
-      (1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I) ≠ 0 := by
-    intro hzero
-    have hexp : Complex.exp ((2 * Real.pi * x) * Complex.I) = 1 := by
-      simpa [eq_comm] using sub_eq_zero.mp hzero
-    obtain ⟨m, hm⟩ := Complex.exp_eq_one_iff.mp hexp
-    have him : 2 * Real.pi * x = (m : ℝ) * (2 * Real.pi) := by
-      simpa using congrArg Complex.im hm
-    have hm_pos : (0 : ℝ) < m := by nlinarith [Real.pi_pos, hx₀, him]
-    have hm_lt_one : (m : ℝ) < 1 := by nlinarith [Real.pi_pos, hx₁, him]
-    have hm_pos_int : 0 < m := by exact_mod_cast hm_pos
-    have hm_lt_one_int : m < 1 := by exact_mod_cast hm_lt_one
-    lia
+      (1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I) ≠ 0 :=
+    sub_ne_zero.mpr (exp_two_pi_mul_I_ne_one hx₀ hx₁).symm
   have hcont :
       Tendsto
         (fun r : ℝ =>

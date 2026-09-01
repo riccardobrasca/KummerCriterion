@@ -321,7 +321,8 @@ omit [NumberField.IsCMField K] in
 /-- For ordinary same-prime logarithm terms `n < p`, no same-prime
 denominator folding occurs. Hence a homogeneous piece of lambda-degree
 `>= N + 1` is already zero in the `lambda^(N + 1)` quotient. -/
-theorem samePrimeFiniteArtinHasseNormalizedCoordLogHomogeneousTerm_eq_zero_of_quotient_le_of_lt_prime
+theorem
+  samePrimeFiniteArtinHasseNormalizedCoordLogHomogeneousTerm_eq_zero_of_quotient_le_of_lt_prime
     {N n d : ℕ} {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K)
     (hnlt : n < p) (hd : N + 1 ≤ d) :
     samePrimeFiniteArtinHasseNormalizedCoordLogHomogeneousTerm
@@ -381,8 +382,9 @@ theorem samePrimeFiniteLogTerm_normalizedArtinHasseCoord_eq_homogeneous_quotient
       Nat.le_of_not_gt (by
         intro hlt
         exact hdSmall (Finset.mem_range.mpr hlt))
-    exact samePrimeFiniteArtinHasseNormalizedCoordLogHomogeneousTerm_eq_zero_of_quotient_le_of_lt_prime
-      (p := p) (K := K) hx hnlt hd)).symm
+    exact
+      samePrimeFiniteArtinHasseNormalizedCoordLogHomogeneousTerm_eq_zero_of_quotient_le_of_lt_prime
+        (p := p) (K := K) hx hnlt hd)).symm
 
 set_option linter.style.longLine false in
 set_option maxHeartbeats 800000 in

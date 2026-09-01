@@ -503,8 +503,8 @@ lemma primesOver_inertiaDeg_eq_localResidueDegreePlus
     simpa using Ideal.inertiaDeg_tower
       (R := ℤ) (S := 𝓞 (K⁺)) (T := 𝓞 K) (q := PPlus) (r := P)
   have hP_inertia :
-      P.inertiaDeg ℤ = localResidueDegree (p := p) ℓ hℓp := by
-    exact primesOver_inertiaDeg_eq_localResidueDegree (p := p) (K := K) hℓp P hP_over
+      P.inertiaDeg ℤ = localResidueDegree (p := p) ℓ hℓp :=
+    primesOver_inertiaDeg_eq_localResidueDegree (p := p) (K := K) hℓp P hP_over
   by_cases hfix : P.map (ringOfIntegersComplexConj K).toRingEquiv.toRingHom = P
   · have hfiber_card : fiber.card = 1 := by
       rcases primesOverFinsetContractionToPlus_fiber_eq_singleton_or_pair (K := K) hP_fin with
@@ -574,11 +574,8 @@ lemma primesOverPlus_ramificationIdx_eq_one {ℓ : ℕ} [Fact ℓ.Prime] (hℓp 
         PPlus.ramificationIdx ℤ * P.ramificationIdx (𝓞 (K⁺)) := by
     simpa using Ideal.ramificationIdx_tower
       (R := ℤ) (S := 𝓞 (K⁺)) (T := 𝓞 K) (q := PPlus) (r := P)
-  have hℓ_ne : rationalPrimeIdeal ℓ ≠ ⊥ := by
-    rw [rationalPrimeIdeal, Ne, Ideal.span_singleton_eq_bot]
-    exact_mod_cast (Fact.out : ℓ.Prime).ne_zero
-  have hram_abs : P.ramificationIdx ℤ = 1 := by
-    exact KummerCriterion.primesOver_ramificationIdx_eq_one (p := p) (K := K) hℓp P hP_over
+  have hram_abs : P.ramificationIdx ℤ = 1 :=
+    KummerCriterion.primesOver_ramificationIdx_eq_one (p := p) (K := K) hℓp P hP_over
   apply Nat.eq_one_of_dvd_one
   refine ⟨P.ramificationIdx (𝓞 (K⁺)), ?_⟩
   rw [← hram_tower, hram_abs]
@@ -601,7 +598,7 @@ lemma ncard_primesOverPlus_eq_localPrimeCountPlus (hp_odd : p ≠ 2)
     rw [← NumberField.RingOfIntegers.rank (K⁺),
       ← Ideal.sum_ramification_inertia_eq_finrank (rationalPrimeIdeal ℓ) (𝓞 (K⁺)),
       ← Finset.sum_coe_sort]
-    exact Fintype.sum_equiv (Equiv.setCongr hcoe) _ _ fun _ => rfl
+    exact Fintype.sum_equiv (Set.equivOfEq hcoe) _ _ fun _ ↦ rfl
   have hsum_const :
       (primesOverFinsetPlus (K := K) ℓ).card * localResidueDegreePlus (p := p) ℓ hℓp =
         Module.finrank ℚ (K⁺) := by
@@ -753,9 +750,9 @@ lemma zetaPrimePlus_inertiaDeg_eq_one_at_p :
     simpa using Ideal.inertiaDeg_tower
       (R := ℤ) (S := 𝓞 (K⁺)) (T := 𝓞 K) (q := zetaPrimePlus p K) (r := zetaPrime p K)
   have hzeta_inertia :
-      (zetaPrime p K).inertiaDeg ℤ = 1 := by
-    exact primesOver_inertiaDeg_eq_one_at_p (p := p) (K := K) (zetaPrime p K)
-      (zetaPrime_mem_primesOver_at_p (p := p) (K := K))
+      (zetaPrime p K).inertiaDeg ℤ = 1 :=
+    primesOver_inertiaDeg_eq_one_at_p (p := p) (K := K) (zetaPrime p K)
+        (zetaPrime_mem_primesOver_at_p (p := p) (K := K))
   rw [hzeta_inertia] at hinertia_tower
   exact Nat.eq_one_of_dvd_one <|
     ⟨(zetaPrime p K).inertiaDeg (𝓞 (K⁺)), hinertia_tower⟩

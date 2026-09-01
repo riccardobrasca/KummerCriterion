@@ -132,20 +132,8 @@ theorem conj_zeta_pow [IsCMField K]
   have hzeta_torsion : hζ.unit' ∈ NumberField.Units.torsion K := by
     refine (CommGroup.mem_torsion _).2 (isOfFinOrder_iff_pow_eq_one.2 ⟨p, hp.1.pos, ?_⟩)
     exact hζ.unit'_pow
-  have hbase : unitsComplexConj K hζ.unit' = (hζ.unit'⁻¹ : (𝓞 K)ˣ) := by
-    simpa using unitsComplexConj_torsion K ⟨hζ.unit', hzeta_torsion⟩
-  have hunits :
-      unitsComplexConj K (hζ.unit' ^ m : (𝓞 K)ˣ) =
-        ((hζ.unit' ^ m)⁻¹ : (𝓞 K)ˣ) := by
-    calc
-      unitsComplexConj K (hζ.unit' ^ m : (𝓞 K)ˣ) =
-          (unitsComplexConj K hζ.unit') ^ m := by simp
-      _ = ((hζ.unit')⁻¹ : (𝓞 K)ˣ) ^ m := by rw [hbase]
-      _ = ((hζ.unit' ^ m)⁻¹ : (𝓞 K)ˣ) := by simp
-  have hro :
-      ringOfIntegersComplexConj K (((hζ.unit' ^ m : (𝓞 K)ˣ) : 𝓞 K)) =
-        (((hζ.unit' ^ m)⁻¹ : (𝓞 K)ˣ) : 𝓞 K) := Units.ext_iff.1 hunits
-  exact RingOfIntegers.ext_iff.mp hro
+  simpa using complexConj_torsion K
+    ⟨hζ.unit' ^ m, (NumberField.Units.torsion K).pow_mem hzeta_torsion m⟩
 
 include hp_odd in
 /-- The ramification index of `zetaPrime` over `zetaPrimePlus` is `2`. -/

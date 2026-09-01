@@ -73,21 +73,8 @@ theorem cyclotomicUnit_eq_neg_zeta_pow_mul_cyclotomicUnit_p_sub
     cyclotomicUnit p K d =
       -((zeta_spec p ℚ K).unit' : 𝓞 K) ^ d *
         cyclotomicUnit p K (p - d) := by
-  set ζ : 𝓞 K := ((zeta_spec p ℚ K).unit' : 𝓞 K)
-  have hζ_p : ζ ^ p = 1 := by
-    have hζ_prim : IsPrimitiveRoot ζ p := (zeta_spec p ℚ K).unit'_coe
-    exact hζ_prim.pow_eq_one
-  have h := zeta_pow_mul_cyclotomicUnit_p_sub_eq_neg
-    (p := p) (K := K) (p - d) (Nat.sub_le _ _)
-  rw [show p - (p - d) = d from Nat.sub_sub_self hd] at h
-  have h_pow : ζ ^ d * ζ ^ (p - d) = 1 := by
-    rw [← pow_add, Nat.add_sub_cancel' hd, hζ_p]
-  calc cyclotomicUnit p K d
-      = 1 * cyclotomicUnit p K d := by ring
-    _ = (ζ ^ d * ζ ^ (p - d)) * cyclotomicUnit p K d := by rw [h_pow]
-    _ = ζ ^ d * (ζ ^ (p - d) * cyclotomicUnit p K d) := by ring
-    _ = ζ ^ d * (-cyclotomicUnit p K (p - d)) := by rw [h]
-    _ = -ζ ^ d * cyclotomicUnit p K (p - d) := by ring
+  have h := zeta_pow_mul_cyclotomicUnit_p_sub_eq_neg (p := p) (K := K) d hd
+  linear_combination h
 
 end PairUp
 

@@ -114,7 +114,8 @@ direct from `stdAddChar(-x) = conj(stdAddChar(x))` (mathlib's
 the cyclotomic log-norm, foundational for descending to the
 `(ZMod p)ˣ ⧸ ⟨-1⟩` quotient convolution matrix. -/
 theorem norm_one_sub_stdAddChar_neg (a : ZMod p) :
-    ‖(1 : ℂ) - ZMod.stdAddChar (N := p) (-a)‖ = ‖(1 : ℂ) - ZMod.stdAddChar (N := p) a‖ := by
+    ‖(1 : ℂ) - ZMod.stdAddChar (N := p) (-a)‖ =
+      ‖(1 : ℂ) - ZMod.stdAddChar (N := p) a‖ := by
   rw [AddChar.map_neg_eq_conj]
   rw [show (1 : ℂ) - (starRingEnd ℂ) (ZMod.stdAddChar (N := p) a) =
         (starRingEnd ℂ) (1 - ZMod.stdAddChar (N := p) a) from by

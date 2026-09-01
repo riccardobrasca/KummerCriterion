@@ -115,7 +115,7 @@ theorem p_dvd_hMinus_iff_p_dvd_some_bernoulli (hp_odd' : p ≠ 2) :
     calc
       ‖(p : ℚ_[p]) * (z : ℚ_[p])‖ = ‖(z : ℚ_[p])‖ * ‖(p : ℚ_[p])‖ := by
         rw [norm_mul, mul_comm]
-      _ < 1 := mul_lt_one_of_nonneg_of_lt_one_right z.2 (norm_nonneg _) hp_lt
+      _ < 1 := (mul_le_of_le_one_left (norm_nonneg _) z.2).trans_lt hp_lt
   have hA_lt_iff :
       ‖A‖ < 1 ↔
         ∃ j, j ∈ S ∧ (p : ℤ) ∣ (bernoulli (j + 1)).num := by

@@ -1,7 +1,7 @@
 module
 
 public import Mathlib.NumberTheory.MulChar.Basic
-public import Mathlib.Data.Complex.Basic
+public import Mathlib.Basic.Complex.Basic
 public import Mathlib.LinearAlgebra.Matrix.Determinant.Basic
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.NormNum.Irrational
@@ -101,15 +101,7 @@ theorem sum_nonidentity_inv_mulChar_mul
       exact inv_mul_cancel₀ h_unit.ne_zero]
     simp
   · rw [ite_eq_right hχψ]
-    have hchar : χ⁻¹ * ψ ≠ 1 := by
-      intro h
-      apply hχψ
-      calc
-        χ = χ * 1 := by rw [mul_one]
-        _ = χ * (χ⁻¹ * ψ) := by rw [h]
-        _ = (χ * χ⁻¹) * ψ := by rw [mul_assoc]
-        _ = 1 * ψ := by rw [mul_inv_cancel]
-        _ = ψ := by rw [one_mul]
+    have hchar : χ⁻¹ * ψ ≠ 1 := by rwa [Ne, inv_mul_eq_one]
     rw [← sum_nonidentity_mulChar_eq_neg_one (G := G) (χ⁻¹ * ψ) hchar]
     refine Finset.sum_congr rfl ?_
     intro h _
@@ -173,13 +165,10 @@ theorem deletedCharacterMatrix_leftInverse
       exact_mod_cast card_nonidentity_add_one (G := G)
     have hnz : ((Fintype.card G : ℕ) : ℂ) ≠ 0 :=
       card_group_ne_zero_complex (G := G)
-    field_simp [hnz]
-    linear_combination hcard
+    rw [sub_neg_eq_add, hcard, inv_mul_cancel₀ hnz]
   · have hval : χ.val ≠ ψ.val := fun h =>
       hχψ (Subtype.ext h)
-    simp only [hval, ite_false]
-    rw [ite_eq_right hχψ]
-    ring
+    simp [hval, hχψ]
 
 /-- Full Fourier reindexing for the inverse-character convention. -/
 theorem sum_translate_inv_mulChar
@@ -321,12 +310,8 @@ theorem det_deletedConvolutionMatrixOnNonidentity_eq_prod_deletedFourierCoeff
 
 /-- Inversion preserves the deleted index set. -/
 def nonidentityInvEquiv : Nonidentity G ≃ Nonidentity G where
-  toFun h := ⟨h.val⁻¹, by
-    intro hinv
-    exact h.property <| inv_eq_one.mp hinv⟩
-  invFun h := ⟨h.val⁻¹, by
-    intro hinv
-    exact h.property <| inv_eq_one.mp hinv⟩
+  toFun h := ⟨h.val⁻¹, inv_ne_one.mpr h.property⟩
+  invFun h := ⟨h.val⁻¹, inv_ne_one.mpr h.property⟩
   left_inv h := by
     ext
     simp
@@ -396,7 +381,7 @@ theorem prod_mulChar_apply_sq_eq_one
     intro χ _
     exact (IsUnit.map χ.toMonoidHom (Group.isUnit h₀)).ne_zero
   calc
-    P ^ 2 = P * P := by ring
+    P ^ 2 = P * P := pow_two P
     _ = P * P⁻¹ := congrArg (fun z => P * z) hP_inv
     _ = 1 := mul_inv_cancel₀ hP_ne
 
@@ -489,7 +474,7 @@ theorem deletedFourierCoeff_invArg_eq_mul
   intro h _
   rw [map_inv]
   rw [inv_inv]
-  ring
+  rw [mul_comm]
 
 /-- Squared determinant identity in the `hk` convention. The square removes
 the sign of the row-inversion permutation. -/

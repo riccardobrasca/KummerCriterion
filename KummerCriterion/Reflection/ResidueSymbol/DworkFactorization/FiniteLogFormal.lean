@@ -1,7 +1,6 @@
 module
 
 public import Mathlib.RingTheory.PowerSeries.Log
-import Mathlib.RingTheory.PowerSeries.WellKnown
 
 /-!
 # Formal logarithm identities for the finite logarithm
@@ -28,24 +27,17 @@ variable {A : Type*} [CommRing A] [Algebra ℚ A]
 
 /-- The derivative of `log(1+X)` is inverse to `1+X` as a formal series. -/
 theorem deriv_log_mul_one_add_X :
-    (d⁄dX A (PowerSeries.log A)) * (1 + PowerSeries.X) = 1 := by
-  have h :=
-    congrArg (PowerSeries.rescale (-1 : A))
-      (PowerSeries.mk_one_mul_one_sub_eq_one A)
-  rw [map_mul, map_one] at h
-  simpa [PowerSeries.deriv_log, PowerSeries.rescale_mk, PowerSeries.rescale_X] using h
+    (d⁄dX A (PowerSeries.log A)) * (1 + PowerSeries.X) = 1 :=
+  PowerSeries.derivative_log_mul_one_add_X
 
 theorem subst_deriv_log_mul_one_add {a : PowerSeries A} (ha : PowerSeries.HasSubst a) :
     (PowerSeries.subst a (d⁄dX A (PowerSeries.log A))) * (1 + a) = 1 := by
   have h := congrArg (PowerSeries.subst a) (deriv_log_mul_one_add_X (A := A))
-  rw [PowerSeries.subst_mul ha] at h
+  rw [PowerSeries.subst_mul ha, PowerSeries.subst_add ha, PowerSeries.subst_X ha] at h
   have h_one : PowerSeries.subst a (1 : PowerSeries A) = 1 := by
-    rw [show (1 : PowerSeries A) = PowerSeries.C (1 : A) by rfl]
-    rw [PowerSeries.subst_C]
+    rw [show (1 : PowerSeries A) = PowerSeries.C (1 : A) by rfl, PowerSeries.subst_C]
     rfl
-  have h_one_add : PowerSeries.subst a (1 + PowerSeries.X : PowerSeries A) = 1 + a := by
-    rw [PowerSeries.subst_add ha, PowerSeries.subst_X ha, h_one]
-  simpa [h_one_add, h_one] using h
+  simpa only [h_one] using h
 
 /-- `log((1+T*x)*(1+T*y)) = log(1+T*x) + log(1+T*y)`.
 
@@ -85,7 +77,6 @@ theorem log_subst_mul_one_add_scaled [IsAddTorsionFree A] (x y : A) :
   have hunit_b : IsUnit (1 + b) := by
     rw [PowerSeries.isUnit_iff_constantCoeff]
     simp [b]
-  have hunit_ab : IsUnit ((1 + a) * (1 + b)) := hunit_a.mul hunit_b
   refine PowerSeries.derivative.ext ?_ ?_
   · rw [PowerSeries.derivative_subst hz]
     rw [map_add]
@@ -98,41 +89,42 @@ theorem log_subst_mul_one_add_scaled [IsAddTorsionFree A] (x y : A) :
       simp [z, hda, hdb, map_sub, map_add]
       ring
     rw [hdz, hda, hdb]
-    apply hunit_ab.mul_right_injective
-    have hleft :
-        ((1 + a) * (1 + b)) *
-            (PowerSeries.subst z (d⁄dX A (PowerSeries.log A)) *
-              (PowerSeries.C x * (1 + b) + (1 + a) * PowerSeries.C y)) =
-          PowerSeries.C x * (1 + b) + (1 + a) * PowerSeries.C y := by
+    have hza :
+        PowerSeries.subst z (d⁄dX A (PowerSeries.log A)) * (1 + b) =
+          PowerSeries.subst a (d⁄dX A (PowerSeries.log A)) := by
+      apply hunit_a.mul_right_injective
       calc
-        ((1 + a) * (1 + b)) *
-            (PowerSeries.subst z (d⁄dX A (PowerSeries.log A)) *
-              (PowerSeries.C x * (1 + b) + (1 + a) * PowerSeries.C y))
-            =
-          (PowerSeries.subst z (d⁄dX A (PowerSeries.log A)) * ((1 + a) * (1 + b))) *
-            (PowerSeries.C x * (1 + b) + (1 + a) * PowerSeries.C y) := by
-            ring
-        _ = PowerSeries.C x * (1 + b) + (1 + a) * PowerSeries.C y := by
-            rw [hgeom_z, one_mul]
-    have hright :
-        ((1 + a) * (1 + b)) *
-            (PowerSeries.subst a (d⁄dX A (PowerSeries.log A)) * PowerSeries.C x +
-              PowerSeries.subst b (d⁄dX A (PowerSeries.log A)) * PowerSeries.C y) =
-          PowerSeries.C x * (1 + b) + (1 + a) * PowerSeries.C y := by
+        (1 + a) * (PowerSeries.subst z (d⁄dX A (PowerSeries.log A)) * (1 + b)) =
+            PowerSeries.subst z (d⁄dX A (PowerSeries.log A)) * ((1 + a) * (1 + b)) := by
+          ring
+        _ = 1 := hgeom_z
+        _ = (1 + a) * PowerSeries.subst a (d⁄dX A (PowerSeries.log A)) := by
+          rw [mul_comm, hgeom_a]
+    have hzb :
+        PowerSeries.subst z (d⁄dX A (PowerSeries.log A)) * (1 + a) =
+          PowerSeries.subst b (d⁄dX A (PowerSeries.log A)) := by
+      apply hunit_b.mul_right_injective
       calc
-        ((1 + a) * (1 + b)) *
-            (PowerSeries.subst a (d⁄dX A (PowerSeries.log A)) * PowerSeries.C x +
-              PowerSeries.subst b (d⁄dX A (PowerSeries.log A)) * PowerSeries.C y)
-            =
-          (PowerSeries.subst a (d⁄dX A (PowerSeries.log A)) * (1 + a)) *
-              (PowerSeries.C x * (1 + b)) +
-            (PowerSeries.subst b (d⁄dX A (PowerSeries.log A)) * (1 + b)) *
-              ((1 + a) * PowerSeries.C y) := by
-            ring
-        _ = PowerSeries.C x * (1 + b) + (1 + a) * PowerSeries.C y := by
-            rw [hgeom_a, hgeom_b]
-            ring
-    exact hleft.trans hright.symm
+        (1 + b) * (PowerSeries.subst z (d⁄dX A (PowerSeries.log A)) * (1 + a)) =
+            PowerSeries.subst z (d⁄dX A (PowerSeries.log A)) * ((1 + a) * (1 + b)) := by
+          ring
+        _ = 1 := hgeom_z
+        _ = (1 + b) * PowerSeries.subst b (d⁄dX A (PowerSeries.log A)) := by
+          rw [mul_comm, hgeom_b]
+    calc
+      PowerSeries.subst z (d⁄dX A (PowerSeries.log A)) *
+          (PowerSeries.C x * (1 + b) + (1 + a) * PowerSeries.C y) =
+        PowerSeries.C x *
+            (PowerSeries.subst z (d⁄dX A (PowerSeries.log A)) * (1 + b)) +
+          PowerSeries.C y *
+            (PowerSeries.subst z (d⁄dX A (PowerSeries.log A)) * (1 + a)) := by
+          ring
+      _ = PowerSeries.C x * PowerSeries.subst a (d⁄dX A (PowerSeries.log A)) +
+          PowerSeries.C y * PowerSeries.subst b (d⁄dX A (PowerSeries.log A)) := by
+        rw [hza, hzb]
+      _ = PowerSeries.subst a (d⁄dX A (PowerSeries.log A)) * PowerSeries.C x +
+          PowerSeries.subst b (d⁄dX A (PowerSeries.log A)) * PowerSeries.C y := by
+        ring
   · have hz0 :
         PowerSeries.constantCoeff
             (PowerSeries.subst z (PowerSeries.log A)) = 0 :=

@@ -14,8 +14,6 @@ This module defines `bernoulliCompute : ℕ → ℚ`, using an incremental binom
 sum and an iterative list recurrence for efficient concrete evaluation.
 -/
 
-set_option linter.unusedVariables false
-
 @[expose] public section
 
 namespace KummerCriterion.BernoulliFast
