@@ -110,18 +110,17 @@ theorem antisymmetric_unit_eq_neg_one_pow_mul_zeta_pow [IsCMField K]
           rw [← pow_mul, mul_comm, pow_mul, hνp, one_pow]
         exact congrArg (fun x : (𝓞 K)ˣ => (((x : (𝓞 K)) : K))) hν2p
   have hpo : Odd p := hp.1.odd_of_ne_two hp_odd
-  obtain ⟨n, k, hk⟩ := roots_of_unity_in_cyclo (K := K) (hζ := hζ) hpo (u : K) hu_fin
+  obtain ⟨n, k, hk⟩ : ∃ n k : ℕ,
+      (u : K) = (-1 : K) ^ k * IsCyclotomicExtension.zeta p ℚ K ^ n := by
+    obtain ⟨N, hN, huN⟩ := hu_fin
+    obtain ⟨r, -, hr | hr⟩ := hζ.exists_pow_or_neg_mul_pow_of_isOfFinOrder hpo
+      (isOfFinOrder_iff_pow_eq_one.mpr ⟨N, hN, huN⟩)
+    · exact ⟨r, 2, by simp [hr]⟩
+    · exact ⟨r, 1, by simp [hr]⟩
   refine ⟨n, k, ?_⟩
   apply Units.ext
   apply RingOfIntegers.ext
-  have hunit_coe : ((((hζ.unit' : (𝓞 K)ˣ) : 𝓞 K) : K)) =
-      IsCyclotomicExtension.zeta p ℚ K := by
-    change (hζ.toInteger : K) = IsCyclotomicExtension.zeta p ℚ K
-    exact hζ.coe_toInteger
-  change (u : K) =
-    (-1 : K) ^ k * IsCyclotomicExtension.zeta p ℚ K ^ n
-  change (u : K) = (-1 : K) ^ k * hζ.toInteger.1 ^ n at hk
-  rw [hζ.coe_toInteger] at hk
+  change (u : K) = (-1 : K) ^ k * IsCyclotomicExtension.zeta p ℚ K ^ n
   exact hk
 
 /-- Complex conjugation sends `ζ^m` to `ζ^{-m}`. -/

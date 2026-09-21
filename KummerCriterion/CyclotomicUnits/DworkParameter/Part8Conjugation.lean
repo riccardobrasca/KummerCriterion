@@ -78,7 +78,7 @@ theorem uniformContinuous_withValCongr_comap
               (MonoidWithZeroHom.ofClass (Valued.v : Valuation (WithVal v) ℤᵐ⁰))) k) := by
         rw [MonoidWithZeroHom.ValueGroup₀.embedding_restrict₀]
         exact WithVal.apply_ofVal (v := v) k
-      _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := by rw [hk]
+      _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := congr(embedding $hk)
   have hδ₀_ne : δ₀ ≠ 0 := by
     rw [← map_ne_zero (MonoidWithZeroHom.ValueGroup₀.embedding
       (f := MonoidWithZeroHom.ofClass (Valued.v : Valuation (WithVal w) ℤᵐ⁰))),
@@ -135,7 +135,7 @@ theorem uniformContinuous_withValCongr_comap_symm
               (MonoidWithZeroHom.ofClass (Valued.v : Valuation (WithVal w) ℤᵐ⁰))) k) := by
         rw [MonoidWithZeroHom.ValueGroup₀.embedding_restrict₀]
         exact WithVal.apply_ofVal (v := w) k
-      _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := by rw [hk]
+      _ = MonoidWithZeroHom.ValueGroup₀.embedding γ.1 := congr(embedding $hk)
   have hδ₀_ne : δ₀ ≠ 0 := by
     rw [← map_ne_zero (MonoidWithZeroHom.ValueGroup₀.embedding
       (f := MonoidWithZeroHom.ofClass (Valued.v : Valuation (WithVal v) ℤᵐ⁰))), hδ₀_emb]
@@ -458,8 +458,8 @@ theorem lambdaIdeal_map_valuedIntegerComplexConj :
       lambdaIdeal p K := by
   rw [lambdaIdeal, Ideal.map_span]
   rw [Set.image_singleton]
-  change Ideal.span ({valuedIntegerComplexConj (p := p) K
-      (valuedCyclotomicLambdaInteger p K)} : Set (ValuedIntegerRing p K)) =
+  change Ideal.span ({(valuedIntegerComplexConj (p := p) K
+      (valuedCyclotomicLambdaInteger p K))} : Set (ValuedIntegerRing p K)) =
     lambdaIdeal p K
   rw [valuedIntegerComplexConj_valuedCyclotomicLambdaInteger]
   exact (lambdaIdeal_eq_span_conjugateLambda (p := p) (K := K)).symm
