@@ -2,6 +2,7 @@ module
 
 public import KummerCriterion.CyclotomicUnits.DworkParameter.Part8
 public import KummerCriterion.CyclotomicUnits.DworkParameter.Part9
+import Mathlib.Data.Nat.Choose.Dvd
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime

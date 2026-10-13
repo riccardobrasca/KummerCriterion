@@ -530,7 +530,7 @@ theorem qpadic_hasEnoughRootsOfUnity_prime_sub_one :
   obtain ⟨g, hg_gen⟩ := IsCyclic.exists_generator (α := (ZMod p)ˣ)
   refine ⟨((teichmuller p (g : ZMod p) : ℤ_[p]) : ℚ_[p]), ?_⟩
   exact (teichmuller_isPrimitiveRoot_of_generator (p := p) hg_gen).map_of_injective
-    (f := PadicInt.Coe.ringHom) (hf := fun _ _ h => Subtype.coe_injective h)
+    (f := PadicInt.Coe.ringHom) (hf := fun _ _ ↦ PadicInt.ext)
 
 theorem card_dirichletCharacterQp :
     Nat.card (DirichletCharacter ℚ_[p] p) = p - 1 := by
@@ -548,7 +548,7 @@ theorem qpadicGeneratorRoot_isPrimitiveRoot :
     IsPrimitiveRoot (qpadicGeneratorRoot p) (p - 1) :=
   (teichmuller_isPrimitiveRoot_of_generator (p := p) (g := unitGroupGenerator p)
     (unitGroupGenerator_zpowers (p := p))).map_of_injective
-    (f := PadicInt.Coe.ringHom) (hf := fun _ _ h => Subtype.coe_injective h)
+    (f := PadicInt.Coe.ringHom) (hf := fun _ _ ↦ PadicInt.ext)
 
 theorem teichmullerCharQp_apply_unitGroupGeneratorPow (m : ℕ) :
     teichmullerCharQp p (((unitGroupGenerator p) ^ m : (ZMod p)ˣ) : ZMod p) =

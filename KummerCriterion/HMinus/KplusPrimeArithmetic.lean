@@ -4,6 +4,7 @@ public import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
 public import KummerCriterion.HMinus.KplusLocalCharacters
 public import KummerCriterion.TotallyRealSubfield.ClassGroup
 public import KummerCriterion.TotallyRealSubfield.ZetaPrime
+import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
 
 /-!
 # `K⁺` prime arithmetic

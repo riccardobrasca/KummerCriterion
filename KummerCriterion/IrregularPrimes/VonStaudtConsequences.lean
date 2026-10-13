@@ -3,6 +3,7 @@ module
 public import Mathlib.NumberTheory.Bernoulli
 public import Mathlib.NumberTheory.Padics.PadicIntegers
 import KummerCriterion.IrregularPrimes.RatNumerator
+import Mathlib.Algebra.GCDMonoid.FinsetLemmas
 import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.Measurability.Init

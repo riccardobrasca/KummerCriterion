@@ -6,6 +6,7 @@ public import Mathlib.NumberTheory.DirichletCharacter.Basic
 public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 import Mathlib.CategoryTheory.Category.Init
 import Mathlib.FieldTheory.Finite.Basic
+import Mathlib.LinearAlgebra.SModEq.Pow
 
 /-!
 # Characters of `Gal(ℚ(ζ_p)/ℚ)` - Teichmüller character
@@ -151,7 +152,7 @@ lemma teichmuller_isPrimitiveRoot_of_generator {g : (ZMod p)ˣ}
 of the Teichmüller character is the trivial character. This is the
 concrete form of "characters cycle with period `p-1`". -/
 lemma teichmullerChar_pow_sub_one_eq_one : (teichmullerChar p) ^ (p - 1) = 1 := by
-  ext a
+  ext a : 1
   rw [MulChar.pow_apply_coe, teichmullerChar_apply, MulChar.one_apply_coe]
   exact teichmuller_pow_sub_one a.ne_zero
 

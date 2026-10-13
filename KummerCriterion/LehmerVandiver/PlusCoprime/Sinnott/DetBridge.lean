@@ -145,7 +145,6 @@ theorem card_kplus_ne_w₀_eq
   rw [h_eq, h_card_compl]
   omega
 
-set_option backward.isDefEq.respectTransparency false in
 open Classical in
 /-- **`regOfFamily² = 2^(p-3) · det(A-B)²` in ℝ**. -/
 theorem regOfFamily_sq_eq_two_pow_mul_det_A_sub_B_sq
@@ -180,7 +179,6 @@ theorem regOfFamily_sq_eq_two_pow_mul_det_A_sub_B_sq
   rcases h_p_odd with ⟨k, hk⟩
   omega
 
-set_option backward.isDefEq.respectTransparency false in
 open Classical in
 /-- **`RegOfFamilySqEqProdNontrivialQeSq` from `DetASubBSqEqProdNontrivialQeSq`**:
 the corrected squared form follows from the substantive matrix-level
@@ -209,7 +207,6 @@ theorem regOfFamilySqEqProdNontrivialQeSq_of_detASubBSqEqProdQeSq
 
 set_option maxHeartbeats 6400000 in
 -- Matrix identities here exceed the default heartbeat budget.
-set_option backward.isDefEq.respectTransparency false in
 open Classical in
 /-- **Cardinality of non-trivial characters**: `(p-1)/2 - 1 = (p-3)/2`. -/
 theorem card_nontriv_mulChar_eq

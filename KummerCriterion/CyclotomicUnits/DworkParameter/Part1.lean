@@ -4,6 +4,7 @@ public import KummerCriterion.CyclotomicUnits.PadicLogSetup
 public import Mathlib.RingTheory.Henselian
 import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part2
 import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogBounds
+import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
 import Mathlib.RingTheory.AdicCompletion.AsTensorProduct
 import Mathlib.RingTheory.AdicCompletion.Completeness
 import Mathlib.RingTheory.WittVector.IsPoly

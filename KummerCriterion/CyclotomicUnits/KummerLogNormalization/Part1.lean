@@ -4,6 +4,7 @@ public import KummerCriterion.CyclotomicUnits.KummerLogTrace
 public import KummerCriterion.CyclotomicUnits.NormalizedUnits
 import KummerCriterion.CyclotomicUnits.DworkParameter.Part17
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Data.Nat.Choose.Dvd
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.NormNum.Irrational

@@ -2,6 +2,8 @@ module
 
 public import KummerCriterion.CyclotomicUnits.DworkParameter.Part12
 public import Mathlib.Topology.Algebra.Nonarchimedean.AdicTopology
+import Mathlib.Algebra.Order.Archimedean.Submonoid
+import Mathlib.GroupTheory.ArchimedeanDensely
 import Mathlib.RingTheory.AdicCompletion.Completeness
 import Mathlib.RingTheory.AdicCompletion.Topology
 import Mathlib.RingTheory.WittVector.IsPoly

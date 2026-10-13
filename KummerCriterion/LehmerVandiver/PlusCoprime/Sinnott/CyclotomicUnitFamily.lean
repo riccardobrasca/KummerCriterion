@@ -43,7 +43,6 @@ variable (p : ℕ) [hp : Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
   [IsCMField K]
 
-set_option backward.isDefEq.respectTransparency false in
 /-- The **real cyclotomic unit at index `a`**:
 
  `cyclotomicRealUnit a:= cyclotomicUnitUnit p K a ·
@@ -54,7 +53,6 @@ def cyclotomicRealUnit {a : ℕ} (ha : a.Coprime p) (hp_two : 2 ≤ p) : (𝓞 K
   cyclotomicUnitUnit p K a ha hp_two *
     unitsComplexConj K (cyclotomicUnitUnit p K a ha hp_two)
 
-set_option backward.isDefEq.respectTransparency false in
 /-- σ² is the identity on units (since complex conjugation is an
 involution). -/
 theorem unitsComplexConj_unitsComplexConj (u : (𝓞 K)ˣ) :
@@ -66,7 +64,6 @@ theorem unitsComplexConj_unitsComplexConj (u : (𝓞 K)ˣ) :
   rw [coe_ringOfIntegersComplexConj, coe_ringOfIntegersComplexConj]
   exact complexConj_apply_apply K _
 
-set_option backward.isDefEq.respectTransparency false in
 /-- The real cyclotomic unit is σ-fixed: `σ(cyclotomicRealUnit a) = cyclotomicRealUnit a`. -/
 theorem unitsComplexConj_cyclotomicRealUnit {a : ℕ} (ha : a.Coprime p) (hp_two : 2 ≤ p) :
     unitsComplexConj K (cyclotomicRealUnit p K ha hp_two) =
@@ -74,7 +71,6 @@ theorem unitsComplexConj_cyclotomicRealUnit {a : ℕ} (ha : a.Coprime p) (hp_two
   unfold cyclotomicRealUnit
   rw [map_mul, unitsComplexConj_unitsComplexConj, mul_comm]
 
-set_option backward.isDefEq.respectTransparency false in
 /-- `realCyclotomicUnitPlus p K a` is a unit in `𝓞 K⁺` when `a.Coprime p`
 and `2 ≤ p`. The inverse exists in 𝓞 K and is real (σ-fixed), hence
 descends to `𝓞 K⁺`. -/
@@ -119,14 +115,12 @@ theorem isUnit_realCyclotomicUnitPlus
       rw [mul_comm]; exact h_mul
     rw [h_comm, Units.val_one]
 
-set_option backward.isDefEq.respectTransparency false in
 /-- The K⁺-side real cyclotomic unit packaged as a unit. -/
 noncomputable def realCyclotomicUnitPlusUnit
     {a : ℕ} (ha : a.Coprime p) (ha_lt : a < p) (hp_two : 2 ≤ p) :
     (𝓞 (NumberField.maximalRealSubfield K))ˣ :=
   (isUnit_realCyclotomicUnitPlus p K ha ha_lt hp_two).unit
 
-set_option backward.isDefEq.respectTransparency false in
 /-- The value of `realCyclotomicUnitPlusUnit` is `realCyclotomicUnitPlus`. -/
 @[simp]
 theorem realCyclotomicUnitPlusUnit_val
@@ -136,7 +130,6 @@ theorem realCyclotomicUnitPlusUnit_val
     LehmerVandiver.realCyclotomicUnitPlus p K a :=
   IsUnit.unit_spec _
 
-set_option backward.isDefEq.respectTransparency false in
 /-- For `i: Fin ((p-3)/2)`, the index `(i+2)` is coprime to `p` (and `< p`). -/
 theorem cyclotomicUnitFamily_index_coprime (hp_three : 3 ≤ p)
     (i : Fin ((p - 3) / 2)) : ((i : ℕ) + 2).Coprime p := by
@@ -151,7 +144,6 @@ theorem cyclotomicUnitFamily_index_coprime (hp_three : 3 ≤ p)
     omega
   exact (hp_prime.coprime_iff_not_dvd.mpr h_not_dvd).symm
 
-set_option backward.isDefEq.respectTransparency false in
 omit hp in
 /-- For `i: Fin ((p-3)/2)`, the index `(i+2) < p`. -/
 theorem cyclotomicUnitFamily_index_lt
@@ -161,7 +153,6 @@ theorem cyclotomicUnitFamily_index_lt
   have h_half : (p - 3) / 2 ≤ p - 3 := Nat.div_le_self _ _
   omega
 
-set_option backward.isDefEq.respectTransparency false in
 /-- **The cyclotomic-unit family for K⁺**, indexed by `Fin ((p-3)/2)`.
 
 For `i: Fin ((p-3)/2)`, returns `realCyclotomicUnitPlusUnit (i+2)`. -/
@@ -172,7 +163,6 @@ noncomputable def cyclotomicUnitFamilyKplus (hp_three : 3 ≤ p)
     (cyclotomicUnitFamily_index_lt p hp_three i)
     (Nat.Prime.two_le Fact.out)
 
-set_option backward.isDefEq.respectTransparency false in
 /-- The cyclotomic-unit family at the `Fin (Units.rank K⁺)` index expected
 by `regOfFamily_div_regulator`, via the rank identity
 `Units.rank K⁺ = (p-3)/2`. -/
@@ -185,7 +175,6 @@ noncomputable def cyclotomicUnitFamilyKplusFinRank (_hp_odd : p ≠ 2)
       (i.cast ((NumberField.IsCMField.units_rank_eq_units_rank (K := K)).trans
         (KummerCriterion.units_rank_eq_prime_sub_three_div_two (p := p) (K := K))))
 
-set_option backward.isDefEq.respectTransparency false in
 /-- **Sinnott index identity (parametric)**: applying mathlib's
 `regOfFamily_div_regulator` to the cyclotomic-unit family gives
 

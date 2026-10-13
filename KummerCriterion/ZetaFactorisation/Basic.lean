@@ -6,6 +6,7 @@ public import Mathlib.NumberTheory.LSeries.DirichletContinuation
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
 public import Mathlib.NumberTheory.NumberField.Ideal.KummerDedekind
 import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
+import Mathlib.RingTheory.Polynomial.Cyclotomic.Factorization
 
 /-!
 # Basic cyclotomic zeta-factorisation infrastructure

@@ -41,7 +41,6 @@ variable (p : ℕ) [hp : Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
   [IsCMField K]
 
-set_option backward.isDefEq.respectTransparency false in
 /-- **σ-conjugate of `(ζ - 1)`**: `σ(ζ - 1) = ζ^{p-1} - 1`.
 
 Direct from `complexConj_apply_zeta`. -/
@@ -54,7 +53,6 @@ theorem ringOfIntegersComplexConj_zeta_sub_one :
     (zeta_spec p ℚ K).toInteger ^ (p - 1)
   exact complexConj_apply_zeta (p := p) (K := K)
 
-set_option backward.isDefEq.respectTransparency false in
 /-- **σ-conjugate of `ζ^k - 1`**: `σ(ζ^k - 1) = ζ^{(p-1)·k} - 1 = (ζ^{p-1})^k - 1`. -/
 theorem ringOfIntegersComplexConj_zeta_pow_sub_one (k : ℕ) :
     ringOfIntegersComplexConj K (((zeta_spec p ℚ K).unit' : 𝓞 K) ^ k - 1) =
@@ -65,7 +63,6 @@ theorem ringOfIntegersComplexConj_zeta_pow_sub_one (k : ℕ) :
     (zeta_spec p ℚ K).toInteger ^ (p - 1)
   exact complexConj_apply_zeta (p := p) (K := K)
 
-set_option backward.isDefEq.respectTransparency false in
 omit [IsCMField K] in
 /-- **Reduce `(p-1)·k` mod `p`**: `ζ^{(p-1)·k} = ζ^{p-k}` for `1 ≤ k ≤ p-1`.
 
@@ -87,7 +84,6 @@ theorem zeta_pow_pred_pow_eq (k : ℕ) (hk_le : k ≤ p) :
     ((zeta_spec p ℚ K).unit'.isUnit).pow k
   exact mul_right_cancel₀ hzeta_unit.ne_zero (h1.trans h2.symm)
 
-set_option backward.isDefEq.respectTransparency false in
 /-- **σ-image of `cyclotomicUnit k`** (1 ≤ k ≤ p-1): the key identity
 
  `(ζ-1) · cyclotomicUnit(p-1) · σ(cyclotomicUnit k) = (ζ-1) · cyclotomicUnit(p-k)`.
@@ -115,7 +111,6 @@ theorem zeta_sub_one_mul_cyclotomicUnit_pred_mul_complexConj_cyclotomicUnit_eq
       zeta_pow_pred_pow_eq (p := p) (K := K) k hk_le]
   rw [zeta_sub_one_mul_cyclotomicUnit]
 
-set_option backward.isDefEq.respectTransparency false in
 /-- **σ-image clean form** (1 ≤ k ≤ p-1): cancelling `(ζ-1)`
 key identity gives
 

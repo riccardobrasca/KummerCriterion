@@ -109,7 +109,7 @@ lemma orderOf_teichmullerCharQp :
     simp only [pow_orderOf_eq_one]
   have hpowZ : (teichmullerChar p) ^ orderOf (teichmullerCharQp p) = 1 :=
     (MulChar.ringHomComp_eq_one_iff (f := PadicInt.Coe.ringHom)
-      (hf := fun _ _ h => Subtype.coe_injective h)).mp hpowQ'
+      (hf := fun _ _ ↦ PadicInt.ext)).mp hpowQ'
   simpa [orderOf_teichmullerChar (p := p)] using orderOf_dvd_of_pow_eq_one hpowZ
 
 lemma teichmullerCharQp_pow_eq_one_iff (n : ℕ) :

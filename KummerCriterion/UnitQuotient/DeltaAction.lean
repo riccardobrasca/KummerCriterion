@@ -1,5 +1,6 @@
 module
 
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Galois
 
 /-!

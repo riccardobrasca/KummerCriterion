@@ -44,13 +44,14 @@ theorem subst_deriv_log_mul_one_add {a : PowerSeries A} (ha : PowerSeries.HasSub
 The dummy variable `T` is the `PowerSeries.X`; in later quotient arguments,
 the coefficient of `T^d` is the total-degree-`d` part of the two-variable
 identity. -/
-theorem log_subst_mul_one_add_scaled [IsAddTorsionFree A] (x y : A) :
+theorem log_subst_mul_one_add_scaled (x y : A) :
     PowerSeries.subst
         ((1 + PowerSeries.X * PowerSeries.C x) *
             (1 + PowerSeries.X * PowerSeries.C y) - 1)
         (PowerSeries.log A) =
       PowerSeries.subst (PowerSeries.X * PowerSeries.C x) (PowerSeries.log A) +
         PowerSeries.subst (PowerSeries.X * PowerSeries.C y) (PowerSeries.log A) := by
+  have : HasUniqueDiv A := .of_module_rat A
   let a : PowerSeries A := PowerSeries.X * PowerSeries.C x
   let b : PowerSeries A := PowerSeries.X * PowerSeries.C y
   let z : PowerSeries A := (1 + a) * (1 + b) - 1
@@ -143,7 +144,7 @@ theorem log_subst_mul_one_add_scaled [IsAddTorsionFree A] (x y : A) :
 
 The argument of the left logarithm is `T*x + T*y + T^2*x*y`, the principal-unit
 coordinate of `(1+T*x)*(1+T*y)`. -/
-theorem log_subst_add_add_mul_scaled [IsAddTorsionFree A] (x y : A) :
+theorem log_subst_add_add_mul_scaled (x y : A) :
     PowerSeries.subst
         (PowerSeries.X * PowerSeries.C x + PowerSeries.X * PowerSeries.C y +
           PowerSeries.X ^ 2 * PowerSeries.C (x * y))
@@ -163,7 +164,7 @@ theorem log_subst_add_add_mul_scaled [IsAddTorsionFree A] (x y : A) :
 /-- Coefficient extraction from the scaled two-variable formal logarithm
 identity. The coefficient of `T^n` is the homogeneous total-degree `n` part
 of the identity in `x` and `y`. -/
-theorem coeff_log_subst_add_add_mul_scaled [IsAddTorsionFree A] (x y : A) (n : ℕ) :
+theorem coeff_log_subst_add_add_mul_scaled (x y : A) (n : ℕ) :
     PowerSeries.coeff n
         (PowerSeries.subst
           (PowerSeries.X * PowerSeries.C x + PowerSeries.X * PowerSeries.C y +

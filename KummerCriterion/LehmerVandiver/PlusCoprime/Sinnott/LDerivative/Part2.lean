@@ -112,7 +112,6 @@ namespace Sinnott
 
 variable (p : ℕ) [hp : Fact p.Prime]
 
-set_option backward.isDefEq.respectTransparency false in
 /-- **ZMod-sum bridge for vanishing-at-zero functions**: `∑ a: ZMod p, f a =
 ∑ a ∈ Finset.Ico 1 p, f ((a: ℕ): ZMod p)` whenever `f 0 = 0`.
 

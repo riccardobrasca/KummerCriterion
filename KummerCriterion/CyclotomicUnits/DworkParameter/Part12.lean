@@ -1,6 +1,7 @@
 module
 
 public import KummerCriterion.CyclotomicUnits.DworkParameter.Part11
+import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.NormNum.Irrational
 import Mathlib.Tactic.NormNum.IsCoprime

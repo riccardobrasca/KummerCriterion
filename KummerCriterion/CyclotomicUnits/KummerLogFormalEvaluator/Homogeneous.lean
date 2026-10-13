@@ -2,6 +2,7 @@ module
 
 public import KummerCriterion.CyclotomicUnits.KummerLogFormalEvaluator.Folded
 import Mathlib.Analysis.SpecialFunctions.Bernstein
+import Mathlib.Data.Nat.Prime.Factorial
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.NormNum.Irrational

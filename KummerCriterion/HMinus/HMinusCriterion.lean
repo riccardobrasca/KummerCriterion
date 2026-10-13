@@ -148,10 +148,10 @@ theorem p_dvd_hMinus_iff_p_dvd_some_bernoulli (hp_odd' : p ≠ 2) :
       exact absurd (hpz_one ▸ hpz_lt) (lt_irrefl _)
     exact (exists_odd_index_iff_exists_k (p := p) hp_odd'
       (Q := fun n => (p : ℤ) ∣ (bernoulli n).num)).1 ((hA_lt_iff).1 <| by
-        simpa [PadicInt.padic_norm_e_of_padicInt] using hA_lt)
+        simpa using hA_lt)
   · rintro hbad
     have hA_lt : ‖((A : ℤ_[p]) : ℚ_[p])‖ < 1 := by
-      simpa [PadicInt.padic_norm_e_of_padicInt] using
+      simpa using
         (hA_lt_iff).2 <| (exists_odd_index_iff_exists_k (p := p)
           hp_odd'
           (Q := fun n => (p : ℤ) ∣ (bernoulli n).num)).2 hbad

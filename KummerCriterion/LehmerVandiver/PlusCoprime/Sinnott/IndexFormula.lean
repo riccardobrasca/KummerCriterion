@@ -71,7 +71,6 @@ def SinnottIndexFormula (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) : Prop :=
     NumberField.Units.torsion (NumberField.maximalRealSubfield K)).index =
   2 ^ ((p - 3) / 2) * hPlus K
 
-set_option backward.isDefEq.respectTransparency false in
 /-- **Sinnott formula in regulator form**: equivalent statement asserting
 `regOfFamily(family) = 2^((p-3)/2) · h⁺ · regulator(K⁺)` directly.
 The factor `2^((p-3)/2)` reflects the index of the squared cyclotomic
@@ -85,7 +84,6 @@ def SinnottRegulatorIdentity (hp_odd : p ≠ 2) (hp_three : 3 ≤ p) : Prop :=
     (2 : ℝ) ^ ((p - 3) / 2) * (hPlus K : ℝ) *
       NumberField.Units.regulator (NumberField.maximalRealSubfield K)
 
-set_option backward.isDefEq.respectTransparency false in
 /-- **Equivalence of Sinnott formula formulations**: the index version
 follows from the regulator version (both encode the same content via
 `regOfFamily_div_regulator`). -/
@@ -107,7 +105,6 @@ theorem sinnottIndexFormula_of_regulatorIdentity
     field_simp] at h_div
   exact_mod_cast h_div.symm
 
-set_option backward.isDefEq.respectTransparency false in
 /-- **Sinnott formula bridge target**: under `SinnottIndexFormula` (step C/D),
 the index identity gives `[E⁺: ⟨family⟩ ⊔ torsion] = 2^((p-3)/2) · h⁺`
 directly. The factor `2^((p-3)/2)` reflects the gap between the project's

@@ -3,6 +3,7 @@ module
 public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 import Mathlib.Topology.Algebra.Valued.WithZeroMulInt
 public import KummerCriterion.TotallyRealSubfield.ZetaPrime
+public import Mathlib.RingTheory.Ideal.Int
 import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
 
 /-!

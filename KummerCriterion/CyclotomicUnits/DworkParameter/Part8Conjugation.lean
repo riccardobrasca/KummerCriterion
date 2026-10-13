@@ -334,6 +334,7 @@ theorem valuedCompletionCyclotomicEquiv_le_one_iff
       (WithVal.congr w v σ)
       (uniformContinuous_withValCongr_comap (K := K) v σ).continuous
       (uniformContinuous_withValCongr_comap_symm (K := K) v σ).continuous)
+  simp only [← IsDedekindDomain.HeightOneSpectrum.adicCompletion.valued_toCompletion_apply]
   change Valued.v (E (e₀ x)) ≤ 1 ↔ Valued.v (e₀ x) ≤ 1
   dsimp only [E]
   rw [RingEquiv.trans_apply]

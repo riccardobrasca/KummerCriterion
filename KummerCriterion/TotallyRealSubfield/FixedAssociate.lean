@@ -149,7 +149,7 @@ theorem generator_unit_eq_zeta_pow [IsCMField K]
         have hsub := Ideal.sub_mem _ hu'_plus_mem hminus
         convert hsub using 1
         ring
-      exact IsCyclotomicExtension.Rat.two_not_mem_span_zeta_sub_one' p (zeta_spec p ℚ K) hp2 htwo
+      exact IsCyclotomicExtension.Rat.two_notMem_span_zeta_sub_one' p (zeta_spec p ℚ K) hp2 htwo
     have hprod_mem : ((((u' : (𝓞 K)ˣ) : 𝓞 K) - 1) * b : 𝓞 K) ∈ P := by
       have hres : (ringOfIntegersComplexConj K b : 𝓞 K) - b ∈ P :=
         complexConj_sub_mem_zetaPrime p K b

@@ -2,6 +2,7 @@ module
 
 public import KummerCriterion.ZetaFactorisation.Basic
 public import Mathlib.NumberTheory.NumberField.DedekindZeta
+import Mathlib.Algebra.BigOperators.Ring.Nat
 import Mathlib.Data.Sym.Card
 
 /-!
