@@ -34,8 +34,6 @@ open Furtwaengler.KummerArtinHasse
 variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 
-set_option maxHeartbeats 400000 in
--- Required for the `simpa` call.
 theorem dworkParameterPowerLinearMap_coeff_mem_primeIdeal_of_eq_zero
     {a : Fin (p - 1) → RationalPadicIntegerRing p}
     (ha : dworkParameterPowerLinearMap p K a = 0)

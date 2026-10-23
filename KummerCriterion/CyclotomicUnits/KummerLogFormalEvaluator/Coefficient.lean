@@ -274,7 +274,6 @@ theorem normalizedFiniteLogApprox_evenCoeff_eq_lowHomogeneousDegreeSums
           (p := p) (K := K) (N := p - 2) (d := d) hx]
 
 set_option linter.style.longLine false in
-set_option maxHeartbeats 800000 in
 -- The proof first unfolds the same-prime finite logarithm to ordinary
 -- homogeneous slices, then collapses the Dwork coordinate sum to one degree.
 omit [NumberField.IsCMField K] in

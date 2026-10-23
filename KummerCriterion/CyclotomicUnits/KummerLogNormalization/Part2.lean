@@ -39,9 +39,6 @@ variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 variable [NumberField.IsCMField K]
 
-set_option maxHeartbeats 800000 in
--- Mapping the factorial-weighted normalized source through two power-series
--- coefficient layers is elaboration-heavy, especially around `mapTo_sub`.
 omit [NumberField.IsCMField K] in
 theorem samePrime_rIntegralRatToQuotient_normalizedFactorialWeightedLogCoeff
     (N d n : ℕ) :
@@ -618,8 +615,6 @@ def samePrimeFiniteArtinHasseNormalizedCoordQuotientSeries
     (PowerSeries.map (Ideal.Quotient.mk ((lambdaIdeal p K) ^ (N + 1)))
       (integralArtinHasseNormalizedExpMinusOneSeries p K - 1))
 
-set_option maxHeartbeats 800000 in
--- The quotient-series coefficient comparison unfolds mapped power-series coefficients.
 omit [NumberField.IsCMField K] in
 theorem samePrimeFiniteArtinHasseNormalizedCoordPoly_map_eq_quotientSeries
     (N : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) :

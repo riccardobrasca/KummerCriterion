@@ -31,20 +31,9 @@ namespace Nat
 bounds. -/
 theorem mul_pred_le_pow_sub_one (a n : ℕ) (ha : 1 ≤ a) :
     n * (a - 1) ≤ a ^ n - 1 := by
-  have ha_pos : 0 < a := Nat.lt_of_lt_of_le Nat.zero_lt_one ha
-  have hpow_one : 1 ≤ a ^ n := Nat.one_le_pow n a ha_pos
-  have hbern :
-      (1 : ℤ) + (n : ℤ) * ((a : ℤ) - 1) ≤ (a : ℤ) ^ n :=
-    one_add_mul_sub_le_pow (by omega) n
-  have hcast :
-      ((n * (a - 1) : ℕ) : ℤ) ≤ ((a ^ n - 1 : ℕ) : ℤ) := by
-    have hpow_cast : ((a ^ n : ℕ) : ℤ) = (a : ℤ) ^ n :=
-      Nat.cast_pow a n
-    rw [Nat.cast_mul, Nat.cast_sub ha, Nat.cast_sub hpow_one, hpow_cast,
-      Nat.cast_one]
-    change (n : ℤ) * ((a : ℤ) - 1) ≤ (a : ℤ) ^ n - 1
-    omega
-  exact_mod_cast hcast
+  have := one_add_le_pow_of_two_add_nonneg (Nat.zero_le (2 + (a - 1))) n
+  rw [Nat.cast_id, Nat.add_sub_cancel' ha] at this
+  omega
 
 /-- For nonzero `n`, `(ell - 1) * v_ell(n)` is at most `n - 1`. -/
 theorem factorization_mul_pred_le_pred {ell n : ℕ}

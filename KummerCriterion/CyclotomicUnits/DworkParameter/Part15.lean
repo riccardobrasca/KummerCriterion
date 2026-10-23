@@ -148,8 +148,6 @@ def dworkSignedCoefficients
     Fin (p - 1) → RationalPadicIntegerRing p :=
   fun i => (-1 : RationalPadicIntegerRing p) ^ (i : ℕ) * a i
 
-set_option maxHeartbeats 800000 in
--- Needed for normalizing nested rational-integer algebra maps.
 theorem dworkCompleteComplexConj_powerLinearMap
     (hp_two : 2 < p)
     (a : Fin (p - 1) → RationalPadicIntegerRing p) :
@@ -219,8 +217,6 @@ theorem dworkParameterPowerLinearMap_odd_coeff_eq_zero_of_fixed
   exact (mul_eq_zero.mp htwo).resolve_left
     (rationalPadicInteger_two_ne_zero (p := p))
 
-set_option synthInstance.maxHeartbeats 80000 in
--- Needed for the fixed-subalgebra inherited additive-monoid instance.
 instance instAddCommMonoidDworkFixedSubalgebra :
     AddCommMonoid (dworkFixedSubalgebra p K) :=
   inferInstance
@@ -251,8 +247,6 @@ theorem dworkSignedCoefficients_evenCoeffExtend
   · simp [dworkSignedCoefficients, hi.neg_one_pow]
   · simp [dworkSignedCoefficients, dworkEvenCoeffExtend, hi]
 
-set_option synthInstance.maxHeartbeats 80000 in
--- Needed for bundled linear-map instance synthesis over the fixed subalgebra.
 /-- The even-power expansion map into the fixed subalgebra. -/
 def dworkEvenPowerLinearMap (hp_two : 2 < p) :
     (dworkEvenPowerIndex p → RationalPadicIntegerRing p) →ₗ[RationalPadicIntegerRing p]

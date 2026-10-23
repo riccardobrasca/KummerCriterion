@@ -687,8 +687,6 @@ private theorem integralExpMinusOneSeries_coeff_zero :
   rw [hsubzero]
   exact map_zero (rIntegralRatToValuedInteger p K)
 
-set_option maxHeartbeats 800000 in
--- Needed for truncated inverse-series substitution over quotient rings.
 theorem evalIntegralPowerSeries_inverse_zetaPowSubOne_eq_scaledDworkParameter
     (a : ZMod p) :
     evalIntegralPowerSeries p K (integralInverseSeries p K)

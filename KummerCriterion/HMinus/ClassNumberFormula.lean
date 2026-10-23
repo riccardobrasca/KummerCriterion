@@ -126,35 +126,17 @@ lemma maximalRealSubfield_torsion_eq_one_or_neg_one
     (x : (𝓞 (NumberField.maximalRealSubfield K))ˣ) = 1 ∨
       (x : (𝓞 (NumberField.maximalRealSubfield K))ˣ) = -1 := by
   let L := NumberField.maximalRealSubfield K
-  let φ : L →+* ℂ := Classical.choice inferInstance
-  let hφ : ComplexEmbedding.IsReal φ :=
-    NumberField.IsTotallyReal.complexEmbedding_isReal φ
-  let u : (𝓞 L)ˣ := x
-  let r : ℝ := hφ.embedding (u : L)
-  have hur : ((r : ℂ)) = φ (u : L) :=
-    hφ.coe_embedding_apply (u : L)
-  have hu_fin : IsOfFinOrder u := (CommGroup.mem_torsion u).1 x.prop
-  obtain ⟨n, hn, hu_pow⟩ := isOfFinOrder_iff_pow_eq_one.mp hu_fin
-  have hnorm : ‖φ (u : L)‖ = 1 :=
-    Complex.norm_eq_one_of_pow_eq_one
-      (by simpa [map_pow] using congrArg (fun z : (𝓞 L)ˣ => φ (z : L)) hu_pow)
-      (Nat.ne_of_gt hn)
-  have hr_norm : ‖(r : ℂ)‖ = 1 := by
-    rwa [← hur] at hnorm
-  have hr_abs : |r| = 1 := by
-    simpa [Complex.norm_real] using hr_norm
-  have hr_sq : r ^ 2 = 1 := by
-    have hsquare := congrArg (fun t : ℝ => t ^ 2) hr_abs
-    simpa [sq_abs] using hsquare
-  rcases sq_eq_one_iff.mp hr_sq with hr | hr
-  · left
-    apply NumberField.Units.coe_injective (K := L)
-    apply φ.injective
-    simpa [hr] using hur.symm
-  · right
-    apply NumberField.Units.coe_injective (K := L)
-    apply φ.injective
-    simpa [hr] using hur.symm
+  by_cases! hc : 2 < orderOf (x : (𝓞 L)ˣ)
+  · rw [← orderOf_units,
+      ← orderOf_injective _ (FaithfulSMul.algebraMap_injective (𝓞 L) L)] at hc
+    linarith [InfinitePlace.IsPrimitiveRoot.nrRealPlaces_eq_zero_of_two_lt hc
+        (IsPrimitiveRoot.orderOf _),
+      IsTotallyReal.finrank (K := L), Module.finrank_pos (R := ℚ) (M := L)]
+  · interval_cases hi : orderOf (x : (𝓞 L)ˣ)
+    · linarith [orderOf_pos_iff.2 ((CommGroup.mem_torsion x.1).1 x.2)]
+    · exact .inl (orderOf_eq_one_iff.1 hi)
+    · rw [← orderOf_units, CharP.orderOf_eq_two_iff 0 (by decide)] at hi
+      simp [← Units.val_inj, hi]
 
 set_option linter.unusedSectionVars false in
 lemma maximalRealSubfield_torsionOrder_eq_two :

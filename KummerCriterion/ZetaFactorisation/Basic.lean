@@ -452,46 +452,9 @@ lemma monicFactorsMod_card_eq_localPrimeCount {ℓ : ℕ} [Fact ℓ.Prime] (hℓ
     ← orderOf_units (y := ZMod.unitOfCoprime ℓ _), ZMod.coe_unitOfCoprime,
     ZMod.coe_unitOfCoprime, pow_one]
 
-lemma cyclotomic_mod_p_eq_X_sub_one_pow :
-    map (Int.castRingHom (ZMod p))
-        (minpoly ℤ (zetaInteger (p := p) (K := K))) =
-      (X - 1) ^ (p - 1) := by
-  have hmin : minpoly ℤ (zetaInteger (p := p) (K := K)) = cyclotomic p ℤ := by
-    rw [zetaInteger, ← NumberField.RingOfIntegers.minpoly_coe]
-    exact (Polynomial.cyclotomic_eq_minpoly (IsCyclotomicExtension.zeta_spec p ℚ K)
-      hp.out.pos).symm
-  rw [hmin, Polynomial.map_cyclotomic_int]
-  have h1 : (cyclotomic p (ZMod p)) * (X - 1) = X ^ p - 1 :=
-    cyclotomic_prime_mul_X_sub_one (ZMod p) p
-  have h2 : (X - 1 : (ZMod p)[X]) ^ p = X ^ p - 1 := by
-    rw [sub_pow_char_of_commute p (Commute.one_right X)]
-    ring
-  have hne : (X - 1 : (ZMod p)[X]) ≠ 0 := X_sub_C_ne_zero 1
-  have hpow : (X - 1 : (ZMod p)[X]) ^ p = (X - 1) ^ (p - 1) * (X - 1) := by
-    have hpos : 0 < p := hp.out.pos
-    rw [← pow_succ]
-    congr 1
-    omega
-  refine mul_right_cancel₀ hne ?_
-  rw [← hpow, h2, ← h1]
-
-lemma monicFactorsMod_at_p_singleton :
-    (RingOfIntegers.monicFactorsMod (θ := zetaInteger (p := p) (K := K)) (p := p)).card = 1 := by
-  classical
-  unfold RingOfIntegers.monicFactorsMod
-  rw [cyclotomic_mod_p_eq_X_sub_one_pow (p := p) (K := K)]
-  have hirr : Irreducible (X - 1 : (ZMod p)[X]) :=
-    irreducible_X_sub_C 1
-  rw [hirr.normalizedFactors_pow, Multiset.toFinset_replicate]
-  have hp_pos : p - 1 ≠ 0 := Nat.sub_ne_zero_of_lt hp.out.one_lt
-  simp [hp_pos]
-
 lemma ncard_primesOver_at_p_eq_one :
-    (Ideal.primesOver (rationalPrimeIdeal p) (𝓞 K)).ncard = 1 := by
-  classical
-  rw [← monicFactorsMod_at_p_singleton (p := p) (K := K),
-    ← Nat.card_coe_set_eq, Nat.card_congr (primesOverEquivMonicFactorsMod (p := p) (K := K) p),
-    Nat.card_eq_finsetCard]
+    (Ideal.primesOver (rationalPrimeIdeal p) (𝓞 K)).ncard = 1 :=
+  IsCyclotomicExtension.Rat.ncard_primesOver_of_prime p K
 
 lemma primesOver_inertiaDeg_eq_one_at_p (P : Ideal (𝓞 K))
     (hP : P ∈ Ideal.primesOver (rationalPrimeIdeal p) (𝓞 K)) :

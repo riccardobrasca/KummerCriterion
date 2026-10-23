@@ -44,9 +44,6 @@ variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 variable [NumberField.IsCMField K]
 
-set_option maxHeartbeats 1200000 in
--- The proof unfolds a quotient coordinate through the Dwork power basis and
--- a ramification congruence; elaborating the completion coercions is slow.
 omit [NumberField.IsCMField K] in
 /-- The integral ramification-unit representative of the folded `n = p`
 finite-log term has zero even Kummer coordinates once the divided argument
@@ -110,7 +107,6 @@ theorem dworkRamificationCorrection_evenCoeff_eq_zero_of_sub_residue
     simp
   exact hy
 
-set_option maxHeartbeats 800000 in
 -- The `n = p` finite-log term is compared with the ramification correction
 -- by identifying their `p`-multiples in the complete Dwork ring and then
 -- cancelling `p` there, not in the finite quotient.
@@ -225,9 +221,6 @@ theorem valuedLambdaQuotientDworkCoeffModP_samePrimeFiniteLogTerm_p_eq_ramificat
     dworkParameterQuotientCoeffModP_mk]
   rw [hmap_y]
 
-set_option maxHeartbeats 1000000 in
--- The statement contains a same-prime term at precision `p - 2` coerced to
--- the Kummer quotient; elaborating those quotient powers is expensive.
 omit [NumberField.IsCMField K] in
 /-- The folded `n = p` same-prime finite-log term has zero even Kummer
 coordinate for every lambda-adic argument. The argument is factored by the
@@ -388,10 +381,6 @@ theorem samePrimeFiniteLogTerm_normalizedArtinHasseCoord_eq_homogeneous_quotient
         (p := p) (K := K) hx hnlt hd)).symm
 
 set_option linter.style.longLine false in
-set_option maxHeartbeats 800000 in
--- The proof pushes the factorial-cleared homogeneous identity through
--- quotient maps and Dwork-coordinate extraction; elaboration is above the
--- default heartbeat budget.
 omit [NumberField.IsCMField K] in
 /-- Coordinate of one low normalized homogeneous degree slice at the Dwork
 parameter approximant. The bound `d < p - 1` makes `d!` invertible modulo

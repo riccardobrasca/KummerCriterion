@@ -149,8 +149,6 @@ theorem samePrimeFiniteLog_lambda_p_nsmul_eq_zero (N : ℕ) :
     _ = 0 :=
         samePrimeFiniteLog_powCoord_prime_lambda_eq_zero (p := p) (K := K) N
 
-set_option maxHeartbeats 1000000 in
--- Required for the quotient Artin-Hasse/Dwork-parameter comparison.
 /-- Finite-quotient form of `E_p(G_p(lambda)) = zeta_p`. -/
 theorem dworkParameter_eval_exp_mod (N : ℕ) :
     let A : Type _ := ValuedIntegerRing p K ⧸ (lambdaIdeal p K) ^ (N + 1)

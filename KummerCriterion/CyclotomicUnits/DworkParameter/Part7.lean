@@ -457,8 +457,6 @@ theorem mem_ideal_smul_top_iff_self
     x ∈ I • (⊤ : Submodule R R) ↔ x ∈ I := by
   rw [Ideal.smul_eq_mul, Ideal.mul_top]
 
-set_option maxHeartbeats 400000 in
--- Required for the `simpa` call.
 theorem factor_evalₐ_eq_evalₐ
     {M N : ℕ} (hMN : M ≤ N)
     (x : DworkCompleteIntegerRing p K) :

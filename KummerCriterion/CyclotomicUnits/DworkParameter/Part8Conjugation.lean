@@ -37,8 +37,6 @@ open Furtwaengler.KummerArtinHasse
 open MonoidWithZeroHom.ValueGroup₀
 open KummerCriterion.Reflection.Local
 
-set_option maxHeartbeats 800000 in
--- Required for the valuation-neighborhood comparison.
 omit [NumberField K] in
 theorem uniformContinuous_withValCongr_comap
     (v : Valuation K ℤᵐ⁰) (σ : K ≃+* K) :
@@ -98,8 +96,6 @@ theorem uniformContinuous_withValCongr_comap
   rw [hval, ← hδ₀_emb]
   exact hx
 
-set_option maxHeartbeats 800000 in
--- Required for the inverse valuation-neighborhood comparison.
 omit [NumberField K] in
 theorem uniformContinuous_withValCongr_comap_symm
     (v : Valuation K ℤᵐ⁰) (σ : K ≃+* K) :

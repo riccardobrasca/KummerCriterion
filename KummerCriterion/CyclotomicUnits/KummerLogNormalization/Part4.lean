@@ -448,10 +448,6 @@ theorem kummerLogDworkArtinHasseNormalizedQuotientArg_evalₐ_add_one_mul_normal
         (p := p) (K := K) hp_three a)
   simpa [map_mul] using h
 
-set_option maxHeartbeats 800000 in
--- The proof compares the Teichmuller scalar with the integral scalar through
--- the completed Dwork ramification identity; the larger heartbeat budget keeps
--- the coercion reductions deterministic.
 omit [NumberField.IsCMField K] in
 /-- The Dwork Artin-Hasse specialization represents the same normalized
 quotient as modulo the Dwork `p`-level `(lambda)^(p-1)`. -/

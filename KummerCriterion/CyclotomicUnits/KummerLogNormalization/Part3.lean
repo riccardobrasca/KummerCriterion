@@ -38,9 +38,6 @@ variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 variable [NumberField.IsCMField K]
 
 set_option linter.style.longLine false in
-set_option maxHeartbeats 800000 in
--- The quotient-sum comparison expands mapped polynomial powers and the
--- factorial-weighted formal source at the same time.
 omit [NumberField.IsCMField K] in
 theorem quotient_mk_samePrimeFiniteArtinHasseNormalizedLogHomogeneousNumerator_factorial_weighted_sum_eq_formal
     (N d : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K) :
@@ -374,8 +371,6 @@ theorem samePrimeFiniteArtinHasseNormalizedCoordLogHomogeneousDegreeSum_eq_eval_
     hnum0 _
 
 set_option linter.style.longLine false in
-set_option maxHeartbeats 800000 in
--- The proof expands quotient sums and same-prime denominator transport termwise.
 omit [NumberField.IsCMField K] in
 /-- Multiplying a normalized homogeneous finite-log degree slice by `d!`
 clears the same-prime denominators and gives the factorial-weighted numerator
@@ -487,7 +482,6 @@ theorem natCast_factorial_mul_samePrimeFiniteArtinHasseNormalizedCoordLogHomogen
               q (((d.factorial / n : ℕ) : ValuedIntegerRing p K) * z n)))
 
 set_option linter.style.longLine false in
-set_option maxHeartbeats 800000 in
 -- This is the exact source bridge used by the coefficient-level evaluator:
 -- it combines denominator clearing with the formal normalized log coefficient.
 omit [NumberField.IsCMField K] in
@@ -510,7 +504,6 @@ theorem
     (p := p) (K := K) N d hx
 
 set_option linter.style.longLine false in
-set_option maxHeartbeats 800000 in
 -- This repeats the Part5 factorial-cleared comparison with the normalized
 -- formal source. The formal hypothesis is a concrete coefficient equality,
 -- not a bundled finite-log assumption.

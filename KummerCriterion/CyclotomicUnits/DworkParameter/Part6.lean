@@ -418,8 +418,6 @@ theorem samePrimeFiniteArtinHasseLogTerm_eq_zero_of_succ_le_index
     (hr.trans (le_samePrimeArtinHasseLogTermOrder (p := p) r))
 
 set_option linter.style.longLine false in
-set_option maxHeartbeats 800000 in
--- Required for the same-prime homogeneous degree-sum comparison.
 theorem samePrimeFiniteArtinHasseExpCoordLogHomogeneousDegreeSum_eq_logTerm_of_factorial_weighted_sub_pow_mem
     (N r : ℕ) {x : ValuedIntegerRing p K} (hx : x ∈ lambdaIdeal p K)
     (hclear :

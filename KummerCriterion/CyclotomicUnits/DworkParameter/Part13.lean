@@ -528,8 +528,6 @@ theorem dworkParameterPowerLinearMap_mem_parameterIdeal_pow_mul_pred_of_mem_prim
     (fun i => pi_apply_mem_of_mem_ideal_smul_top
       ((rationalPadicPrimeIdeal p) ^ q) ha i)
 
-set_option maxHeartbeats 1200000 in
--- Needed for reducing nested Dwork completion algebra maps.
 theorem dworkParameterPowerLinearMap_oneStepCorrection_of_residue_lift
     (hres :
       ∀ y : DworkCompleteIntegerRing p K,
@@ -805,8 +803,6 @@ theorem dworkParameterPowerApproxBlockSeq_sub_mem_primeIdeal_pow_smul_top
     (hMN := Nat.mul_le_mul_right (p - 1) hmn)
     (hM := le_rfl)
 
-set_option maxHeartbeats 1200000 in
--- Needed for the precompletion limit construction over finite coefficient functions.
 theorem dworkParameterPowerLinearMap_surjective_of_precomplete
     [IsPrecomplete (rationalPadicPrimeIdeal p)
       (Fin (p - 1) → RationalPadicIntegerRing p)] :

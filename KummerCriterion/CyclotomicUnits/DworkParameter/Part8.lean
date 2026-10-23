@@ -374,8 +374,6 @@ theorem quotient_pow_zero_eq_zero (I : Ideal (ValuedIntegerRing p K))
   intro r
   exact Ideal.Quotient.eq_zero_iff_mem.mpr (by simp)
 
-set_option maxHeartbeats 1000000 in
--- Required for the quotient-local power-series comparison.
 theorem evalIntegralPowerSeriesMod_expMinusOne_neg_dworkParameter_eq_conjugateLambda
     (hp_two : 2 < p) (N : ℕ) :
     evalIntegralPowerSeriesMod p K (integralExpMinusOneSeries p K)
@@ -586,8 +584,6 @@ theorem evalIntegralPowerSeriesMod_expMinusOne_neg_dworkParameter_eq_conjugateLa
         _ = Ideal.Quotient.mk ((lambdaIdeal p K) ^ (M + 1))
             (valuedCyclotomicConjugateLambdaInteger p K) := rfl
 
-set_option maxHeartbeats 1000000 in
--- Required for the completed conjugate-parameter comparison.
 theorem dworkConjugateParameter_eq_neg_dworkParameter (hp_two : 2 < p) :
     dworkConjugateParameter p K = -dworkParameter p K := by
   classical

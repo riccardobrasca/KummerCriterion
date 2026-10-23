@@ -691,10 +691,6 @@ theorem samePrimeFiniteLog_quotientMap_complexConj {N : ℕ}
 
 end PadicLogSetup.DworkParameter.Conjugation
 
-set_option synthInstance.maxHeartbeats 80000 in
--- Needed for quotient-ring instance search in the Dwork completion.
-set_option maxHeartbeats 400000 in
--- Needed for quotient-ring instance search in the Dwork completion.
 theorem kummerLogValuedCyclotomicUnit_complexConj
     (hp_three : 3 ≤ p) (a : Fin (kummerLogRank p)) :
     Conjugation.valuedIntegerComplexConj (p := p) K

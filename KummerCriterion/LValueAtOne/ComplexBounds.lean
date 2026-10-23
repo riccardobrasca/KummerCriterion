@@ -202,24 +202,8 @@ lemma hasSum_mul_rpow_cos (x r : ℝ) (hr₀ : 0 ≤ r) (hr₁ : r < 1) :
 /-- The norm of `1 - e^{it}` on the upper unit semicircle. -/
 lemma norm_one_sub_exp_ofReal_mul_I {t : ℝ} (ht₀ : 0 < t) (ht₂π : t < 2 * Real.pi) :
     ‖(1 : ℂ) - Complex.exp (t * Complex.I)‖ = 2 * Real.sin (t / 2) := by
-  have hs : 0 < 2 * Real.sin (t / 2) := by
-    have hhalf : 0 < t / 2 ∧ t / 2 < Real.pi := by
-      constructor <;> nlinarith [ht₀, ht₂π, Real.pi_pos]
-    have hsin : 0 < Real.sin (t / 2) := Real.sin_pos_of_mem_Ioo hhalf
-    positivity
-  calc
-    ‖(1 : ℂ) - Complex.exp (t * Complex.I)‖
-        = ‖((2 * Real.sin (t / 2) : ℝ) : ℂ)‖ *
-            ‖Real.cos (t / 2 - Real.pi / 2) + Real.sin (t / 2 - Real.pi / 2) * Complex.I‖ := by
-              rw [one_sub_exp_ofReal_mul_I, Complex.norm_mul]
-    _ = |2 * Real.sin (t / 2)| * 1 := by
-          rw [Complex.norm_real, Real.norm_eq_abs]
-          have hunit :
-              ‖Real.cos (t / 2 - Real.pi / 2) +
-                  Real.sin (t / 2 - Real.pi / 2) * Complex.I‖ = 1 := by
-            simpa using Complex.norm_cos_add_sin_mul_I (t / 2 - Real.pi / 2)
-          rw [hunit]
-    _ = 2 * Real.sin (t / 2) := by rw [abs_of_pos hs, mul_one]
+  rw [← norm_neg, neg_sub, mul_comm, Complex.norm_exp_I_mul_ofReal_sub_one, Real.norm_eq_abs,
+    abs_of_pos (mul_pos two_pos (Real.sin_pos_of_pos_of_lt_pi (by linarith) (by linarith)))]
 
 end LValueAtOne
 

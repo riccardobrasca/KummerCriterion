@@ -205,8 +205,6 @@ theorem regOfFamilySqEqProdNontrivialQeSq_of_detASubBSqEqProdQeSq
     exact this
   rw [h_reg_sq_C, h]
 
-set_option maxHeartbeats 6400000 in
--- Matrix identities here exceed the default heartbeat budget.
 open Classical in
 /-- **Cardinality of non-trivial characters**: `(p-1)/2 - 1 = (p-3)/2`. -/
 theorem card_nontriv_mulChar_eq

@@ -45,10 +45,6 @@ variable (p : ℕ) [Fact p.Prime]
 variable (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]
 variable [NumberField.IsCMField K]
 
-set_option maxHeartbeats 800000 in
--- The proof compares two full Dwork power-basis expansions through the
--- completed ramification identity `(p) = (varpi)^(p - 1)`; elaborating the
--- basis and scalar-action coercions is slower than the default budget.
 omit [NumberField.IsCMField K] in
 theorem dworkParameterPowerBasis_coeff_sub_mem_primeIdeal_of_mem_parameterIdeal_pow_pred
     {x y : DworkCompleteIntegerRing p K}
@@ -412,9 +408,6 @@ theorem dworkParameterQuotientCoeffModP_mk_sub
       ((dworkParameterPowerBasis p K).repr y i)
   rw [map_sub]
 
-set_option maxHeartbeats 800000 in
--- The quotient type in this additive extensionality lemma unfolds the completed
--- Dwork ideal comparison enough that the default heartbeat limit is tight.
 omit [NumberField.IsCMField K] in
 theorem valuedLambdaQuotientDworkCoeffModP_add
     (i : Fin (p - 1))
