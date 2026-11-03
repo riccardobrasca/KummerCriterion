@@ -45,9 +45,32 @@ jobs:
           use-mathlib-cache: true
           use-github-cache: false
 
+      - name: Cache API documentation
+        if: github.event_name == 'push'
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: |
+            .lake/build/api-docs.db
+            .lake/build/doc-data
+            .lake/build/doc
+            .lake/build/doc-manifest.json
+          key: API-docs-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
+
+      # Build with our pinned doc-gen4: docgen-action otherwise replaces it with the release tag.
+      - name: Build API documentation
+        if: github.event_name == 'push'
+        env:
+          LEAN_NUM_THREADS: 2
+        run: |
+          lake build :docs
+          mkdir -p home_page/docs
+          cp -a .lake/build/doc/. home_page/docs/
+
       - name: Compile blueprint and homepage
         uses: dwrensha/docgen-action@a3f8189646977363717917b605e6de25f9704656
         with:
-          api-docs: true
+          api-docs: false
           blueprint: true
+          # home_page contains generated docs and blueprint output, not a Jekyll project.
+          build-page: false
           homepage: home_page

@@ -28,7 +28,8 @@ rev = "master"
 [[require]]
 name = "«doc-gen4»"
 git = "https://github.com/leanprover/doc-gen4"
-rev = "main"
+# Avoid blocking source-URI jobs: https://github.com/leanprover/doc-gen4/pull/435
+rev = "438ef089bb15774edba9a21e158e9cd7acc67714"
 
 [[require]]
 name = "checkdecls"
