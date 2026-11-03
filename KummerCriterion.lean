@@ -80,7 +80,6 @@ import KummerCriterion.KummerCongruence.Voronoi
 import KummerCriterion.LValueAtOne.ComplexBounds
 import KummerCriterion.LValueAtOne.Cosine
 import KummerCriterion.LValueAtOne.Odd
-import KummerCriterion.LValueAtOne.DirichletBounds
 import KummerCriterion.LValueAtOne.Even
 import KummerCriterion.LValueAtOne.Sine
 import KummerCriterion.LehmerVandiver.PlusCoprime.CharacterIdentification
@@ -106,7 +105,6 @@ import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part2
 import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.Basic
 import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteArtinHasseFormal
 import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogBounds
-import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogFormal
 import KummerCriterion.Reflection.ResidueSymbol.KummerArtinHasseCompletionMap
 import KummerCriterion.TotallyRealSubfield.ClassGroup
 import KummerCriterion.TotallyRealSubfield.Conjugation

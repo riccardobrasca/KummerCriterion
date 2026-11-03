@@ -1,10 +1,9 @@
 module
 
 public import Mathlib.NumberTheory.Bernoulli
-public import Mathlib.RingTheory.PowerSeries.Log
+public import TauCeti.RingTheory.PowerSeries.Log
+import TauCeti.RingTheory.PowerSeries.Substitution
 import KummerCriterion.KummerCongruence.BernoulliGeneralized
-import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteArtinHasseFormal
-import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogFormal
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.ENatToNat
@@ -81,33 +80,6 @@ theorem bernoulliPowerSeries_mul_formalExpNormalizedMinusOne :
           rw [_root_.bernoulliPowerSeries_mul_exp_sub_one]
     _ = PowerSeries.X * (1 : PowerSeries ℚ) := by rw [mul_one]
 
-theorem derivative_logOf_formalExpNormalizedMinusOne_mul_self :
-    (d⁄dX (PowerSeries.logOf formalExpNormalizedMinusOne)) *
-        formalExpNormalizedMinusOne =
-      d⁄dX formalExpNormalizedMinusOne := by
-  let N : PowerSeries ℚ := formalExpNormalizedMinusOne
-  have hN0 : PowerSeries.constantCoeff (N - 1) = 0 := by
-    simp [N]
-  have hsubst : PowerSeries.HasSubst (N - 1) :=
-    PowerSeries.HasSubst.of_constantCoeff_zero' hN0
-  have hgeom :
-      PowerSeries.subst (N - 1) (d⁄dX (PowerSeries.log ℚ)) * N = 1 := by
-    have h :=
-      Furtwaengler.FiniteLogFormal.subst_deriv_log_mul_one_add (A := ℚ) hsubst
-    simpa [N, sub_eq_add_neg, add_assoc] using h
-  rw [PowerSeries.logOf_eq, PowerSeries.derivative_subst hsubst]
-  have hderiv_sub : d⁄dX (N - 1) = d⁄dX N := by simp
-  calc
-    (PowerSeries.subst (N - 1) (d⁄dX (PowerSeries.log ℚ)) *
-          d⁄dX (N - 1)) * N
-        =
-          (PowerSeries.subst (N - 1) (d⁄dX (PowerSeries.log ℚ)) * N) *
-            d⁄dX N := by
-          rw [hderiv_sub]
-          ring
-    _ = 1 * d⁄dX N := by rw [hgeom]
-    _ = d⁄dX N := by rw [one_mul]
-
 theorem X_mul_derivative_logOf_formalExpNormalizedMinusOne :
     PowerSeries.X * (d⁄dX (PowerSeries.logOf formalExpNormalizedMinusOne)) =
       PowerSeries.X + _root_.bernoulliPowerSeries ℚ - 1 := by
@@ -118,7 +90,8 @@ theorem X_mul_derivative_logOf_formalExpNormalizedMinusOne :
     simpa [B, N] using bernoulliPowerSeries_mul_formalExpNormalizedMinusOne
   have hNB : N * B = 1 := by rw [mul_comm, hBN]
   have hDN : D * N = d⁄dX N := by
-    simpa [D, N] using derivative_logOf_formalExpNormalizedMinusOne_mul_self
+    simpa only [PowerSeries.logDeriv_def] using
+      PowerSeries.logDeriv_mul N formalExpNormalizedMinusOne_constantCoeff
   have hD_eq : D = B * (d⁄dX N) := by
     calc
       D = D * 1 := by rw [mul_one]
@@ -197,24 +170,6 @@ theorem coeff_logOf_formalExpNormalizedMinusOne_eq_bernoulli
           field_simp [show (n : ℚ) ≠ 0 by exact_mod_cast hn_ne_zero,
             show (Nat.factorial n : ℚ) ≠ 0 by exact_mod_cast Nat.factorial_ne_zero n]
 
-theorem coeff_pow_eq_of_coeff_eq_le
-    {A : Type*} [CommSemiring A] {F G : PowerSeries A} :
-    ∀ (m d : ℕ), (∀ k, k ≤ d → PowerSeries.coeff k F = PowerSeries.coeff k G) →
-      PowerSeries.coeff d (F ^ m) = PowerSeries.coeff d (G ^ m)
-  | 0, d, _ => by simp
-  | m + 1, d, h => by
-      rw [pow_succ, pow_succ, PowerSeries.coeff_mul, PowerSeries.coeff_mul]
-      refine Finset.sum_congr rfl ?_
-      rintro ⟨i, k⟩ hik
-      have hiksum : i + k = d := Finset.mem_antidiagonal.mp hik
-      have hi : i ≤ d := by omega
-      have hk : k ≤ d := by omega
-      change PowerSeries.coeff i (F ^ m) * PowerSeries.coeff k F =
-        PowerSeries.coeff i (G ^ m) * PowerSeries.coeff k G
-      rw [coeff_pow_eq_of_coeff_eq_le (m := m) (d := i)
-          (fun t ht => h t (ht.trans hi)),
-        h k hk]
-
 theorem coeff_logOf_eq_of_coeff_eq_le
     {A : Type*} [CommRing A] [Algebra ℚ A] {F G : PowerSeries A} {d : ℕ}
     (hF0 : PowerSeries.constantCoeff F = 1)
@@ -222,18 +177,15 @@ theorem coeff_logOf_eq_of_coeff_eq_le
     (hcoeff : ∀ k, k ≤ d → PowerSeries.coeff k F = PowerSeries.coeff k G) :
     PowerSeries.coeff d (PowerSeries.logOf F) =
       PowerSeries.coeff d (PowerSeries.logOf G) := by
-  have hFsub0 : PowerSeries.constantCoeff (F - 1) = 0 := by simp [hF0]
-  have hGsub0 : PowerSeries.constantCoeff (G - 1) = 0 := by simp [hG0]
-  rw [PowerSeries.logOf_eq, PowerSeries.logOf_eq]
-  rw [Furtwaengler.FiniteArtinHasseFormal.coeff_subst_log_eq_sum_Icc
-      (F - 1) hFsub0 d,
-    Furtwaengler.FiniteArtinHasseFormal.coeff_subst_log_eq_sum_Icc
-      (G - 1) hGsub0 d]
-  refine Finset.sum_congr rfl ?_
-  intro m hm
-  congr 1
-  exact coeff_pow_eq_of_coeff_eq_le (m := m) (d := d) fun k hk => by
-    simp [hcoeff k hk]
+  have hdiv : PowerSeries.X ^ (d + 1) ∣ (F - 1) - (G - 1) := by
+    apply PowerSeries.X_pow_dvd_iff.mpr
+    intro k hk
+    simp [hcoeff k (Nat.le_of_lt_succ hk)]
+  apply sub_eq_zero.mp
+  rw [PowerSeries.logOf_eq, PowerSeries.logOf_eq, ← map_sub]
+  exact PowerSeries.X_pow_dvd_iff.mp
+    (PowerSeries.X_pow_dvd_subst_sub_subst (by simp [hF0]) (by simp [hG0])
+      hdiv (PowerSeries.log A)) d (Nat.lt_succ_self d)
 
 /-- Reduction of a rational number modulo `p`, written using numerator and
 denominator. The later coefficient theorems use separate hypotheses proving

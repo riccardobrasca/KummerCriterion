@@ -140,15 +140,6 @@ theorem toZMod_add {r : ℕ} {q₁ q₂ : ℚ}
       _ = N * (d₁ * d₂) := by rw [← hcross]; ring
       _ = (d₁ * d₂) * N := by ring
 
-theorem toZMod_neg {r : ℕ} {q : ℚ} (h : IsRIntegralRat r q) :
-    toZMod (-q) h.neg = -toZMod q h := by
-  simp [toZMod]
-
-theorem toZMod_sub {r : ℕ} {q₁ q₂ : ℚ}
-    (h₁ : IsRIntegralRat r q₁) (h₂ : IsRIntegralRat r q₂) :
-    toZMod (q₁ - q₂) (h₁.sub h₂) = toZMod q₁ h₁ - toZMod q₂ h₂ := by
-  simpa [sub_eq_add_neg, toZMod_neg h₂] using toZMod_add h₁ h₂.neg
-
 theorem toZMod_mul {r : ℕ} {q₁ q₂ : ℚ}
     (h₁ : IsRIntegralRat r q₁) (h₂ : IsRIntegralRat r q₂) :
     toZMod (q₁ * q₂) (h₁.mul h₂) = toZMod q₁ h₁ * toZMod q₂ h₂ := by
@@ -179,33 +170,6 @@ theorem toZMod_mul {r : ℕ} {q₁ q₂ : ℚ}
       _ = (n₁ * n₂) * D := by rw [hden₁, hden₂]
       _ = N * (d₁ * d₂) := by rw [← hcross]; ring
       _ = (d₁ * d₂) * N := by ring
-
-theorem toZMod_finset_sum {r : ℕ} {ι : Type*} (s : Finset ι)
-    (f : ι → ℚ) (hf : ∀ i ∈ s, IsRIntegralRat r (f i))
-    (hsum : IsRIntegralRat r (Finset.sum s f)) :
-    toZMod (Finset.sum s f) hsum =
-      Finset.sum s (fun i => ((f i).num : ZMod r) * ((f i).den : ZMod r)⁻¹) := by
-  classical
-  revert hf hsum
-  refine Finset.induction_on s ?empty ?insert
-  · intro _ _
-    simp [toZMod]
-  · intro a s ha ih hf hsum
-    have hfa : IsRIntegralRat r (f a) := hf a (by simp [ha])
-    have hfs : ∀ i ∈ s, IsRIntegralRat r (f i) := fun i hi =>
-      hf i (Finset.mem_insert_of_mem hi)
-    have hsum_s : IsRIntegralRat r (Finset.sum s f) :=
-      Finset.sum_induction _ _ (fun _ _ ha hb => ha.add hb) (IsRIntegralRat.zero r) hfs
-    calc
-      toZMod (Finset.sum (insert a s) f) hsum
-          = toZMod (f a + Finset.sum s f) (hfa.add hsum_s) := by
-            simp [toZMod, Finset.sum_insert ha]
-      _ = toZMod (f a) hfa + toZMod (Finset.sum s f) hsum_s := by
-            rw [toZMod_add hfa hsum_s]
-      _ = Finset.sum (insert a s)
-          (fun i => ((f i).num : ZMod r) * ((f i).den : ZMod r)⁻¹) := by
-            rw [ih hfs hsum_s, Finset.sum_insert ha]
-            rfl
 
 theorem exists_eq_natCast_mul_of_toZMod_eq_zero {r : ℕ} {q : ℚ}
     (h : IsRIntegralRat r q) (hz : toZMod q h = 0) :
@@ -584,168 +548,66 @@ theorem map_mapTo {r : ℕ} {A B : Type*} [CommSemiring A] [CommSemiring B]
   ext n
   simp [mapTo]
 
-theorem mapTo_congr_proof {r : ℕ} {A : Type*} [CommSemiring A]
-    (φ : rIntegralRatSubring r →+* A) {F : PowerSeries ℚ}
-    (hF hF' : IsRIntegralPS r F) : hF.mapTo φ = hF'.mapTo φ := by
-  ext n
-  simp [mapTo]
-
 theorem mapTo_eq_of_eq {r : ℕ} {A : Type*} [CommSemiring A]
     (φ : rIntegralRatSubring r →+* A) {F G : PowerSeries ℚ}
     (hF : IsRIntegralPS r F) (hG : IsRIntegralPS r G) (h : F = G) :
     hF.mapTo φ = hG.mapTo φ := by
   subst h
-  exact mapTo_congr_proof φ hF hG
+  rfl
 
 @[simp]
 theorem mapTo_one {r : ℕ} {A : Type*} [CommSemiring A]
     (φ : rIntegralRatSubring r →+* A) :
     (IsRIntegralPS.one r).mapTo φ = (1 : PowerSeries A) := by
-  ext n
-  by_cases hn : n = 0
-  · calc
-      (PowerSeries.coeff (R := A) n) ((IsRIntegralPS.one r).mapTo φ)
-          = φ (1 : rIntegralRatSubring r) := by
-            rw [coeff_mapTo]
-            apply congrArg φ
-            ext
-            simp only [PowerSeries.coeff_one, hn, ↓reduceIte]
-            rfl
-      _ = 1 := by simp
-      _ = (PowerSeries.coeff (R := A) n) (1 : PowerSeries A) := by
-            simp only [PowerSeries.coeff_one, hn, ↓reduceIte]
-  · calc
-      (PowerSeries.coeff (R := A) n) ((IsRIntegralPS.one r).mapTo φ)
-          = φ (0 : rIntegralRatSubring r) := by
-            rw [coeff_mapTo]
-            apply congrArg φ
-            ext
-            simp only [PowerSeries.coeff_one, hn, ↓reduceIte]
-            rfl
-      _ = 0 := by simp
-      _ = (PowerSeries.coeff (R := A) n) (1 : PowerSeries A) := by
-            simp only [PowerSeries.coeff_one, hn, ↓reduceIte]
+  have h : (IsRIntegralPS.one r).toSubringPS = 1 := by
+    apply PowerSeries.map_injective _ (rIntegralRatSubring r).subtype_injective
+    simp
+  simpa only [mapTo_eq_map_toSubringPS, map_one] using congr(PowerSeries.map φ $h)
 
 @[simp]
 theorem mapTo_X {r : ℕ} {A : Type*} [CommSemiring A]
     (φ : rIntegralRatSubring r →+* A) :
     (IsRIntegralPS.X r).mapTo φ = (PowerSeries.X : PowerSeries A) := by
-  ext n
-  rw [coeff_mapTo]
-  by_cases hn : n = 1
-  · calc
-      φ (⟨(PowerSeries.coeff (R := ℚ) n) (PowerSeries.X : PowerSeries ℚ),
-            (IsRIntegralPS.X r) n⟩ : rIntegralRatSubring r)
-          = φ (1 : rIntegralRatSubring r) := by
-            apply congrArg φ
-            ext
-            simp only [PowerSeries.coeff_X, hn, ↓reduceIte]
-            rfl
-      _ = 1 := by simp
-      _ = (PowerSeries.coeff (R := A) n) (PowerSeries.X : PowerSeries A) := by
-            simp only [PowerSeries.coeff_X, hn, ↓reduceIte]
-  · calc
-      φ (⟨(PowerSeries.coeff (R := ℚ) n) (PowerSeries.X : PowerSeries ℚ),
-            (IsRIntegralPS.X r) n⟩ : rIntegralRatSubring r)
-          = φ (0 : rIntegralRatSubring r) := by
-            apply congrArg φ
-            ext
-            simp only [PowerSeries.coeff_X, hn, ↓reduceIte]
-            rfl
-      _ = 0 := by simp
-      _ = (PowerSeries.coeff (R := A) n) (PowerSeries.X : PowerSeries A) := by
-            simp only [PowerSeries.coeff_X, hn, ↓reduceIte]
+  have h : (IsRIntegralPS.X r).toSubringPS = PowerSeries.X := by
+    apply PowerSeries.map_injective _ (rIntegralRatSubring r).subtype_injective
+    simp
+  simpa only [mapTo_eq_map_toSubringPS, PowerSeries.map_X] using congr(PowerSeries.map φ $h)
 
 theorem mapTo_add {r : ℕ} {A : Type*} [CommSemiring A]
     (φ : rIntegralRatSubring r →+* A) {F G : PowerSeries ℚ}
     (hF : IsRIntegralPS r F) (hG : IsRIntegralPS r G) :
     (hF.add hG).mapTo φ = hF.mapTo φ + hG.mapTo φ := by
-  ext n
-  calc
-    (PowerSeries.coeff (R := A) n) ((hF.add hG).mapTo φ)
-        = φ (⟨(PowerSeries.coeff (R := ℚ) n) (F + G), (hF.add hG) n⟩ :
-            rIntegralRatSubring r) := by
-          simp [mapTo]
-    _ = φ ((⟨(PowerSeries.coeff (R := ℚ) n) F, hF n⟩ :
-            rIntegralRatSubring r) +
-          ⟨(PowerSeries.coeff (R := ℚ) n) G, hG n⟩) := by
-          apply congrArg φ
-          ext
-          simp
-    _ = φ (⟨(PowerSeries.coeff (R := ℚ) n) F, hF n⟩ :
-            rIntegralRatSubring r) +
-          φ (⟨(PowerSeries.coeff (R := ℚ) n) G, hG n⟩ :
-            rIntegralRatSubring r) := by
-          rw [map_add]
-    _ = (PowerSeries.coeff (R := A) n) (hF.mapTo φ + hG.mapTo φ) := by
-          simp [mapTo]
+  have h : (hF.add hG).toSubringPS = hF.toSubringPS + hG.toSubringPS := by
+    apply PowerSeries.map_injective _ (rIntegralRatSubring r).subtype_injective
+    simp
+  simpa only [mapTo_eq_map_toSubringPS, map_add] using congr(PowerSeries.map φ $h)
 
 theorem mapTo_neg {r : ℕ} {A : Type*} [CommRing A]
     (φ : rIntegralRatSubring r →+* A) {F : PowerSeries ℚ}
     (hF : IsRIntegralPS r F) :
     hF.neg.mapTo φ = -hF.mapTo φ := by
-  ext n
-  calc
-    (PowerSeries.coeff (R := A) n) (hF.neg.mapTo φ)
-        = φ (⟨(PowerSeries.coeff (R := ℚ) n) (-F), hF.neg n⟩ :
-            rIntegralRatSubring r) := by
-          simp [mapTo]
-    _ = φ (-(⟨(PowerSeries.coeff (R := ℚ) n) F, hF n⟩ :
-            rIntegralRatSubring r)) := by
-          apply congrArg φ
-          ext
-          simp
-    _ = -φ (⟨(PowerSeries.coeff (R := ℚ) n) F, hF n⟩ :
-            rIntegralRatSubring r) := by
-          rw [map_neg]
-    _ = (PowerSeries.coeff (R := A) n) (-hF.mapTo φ) := by
-          simp [mapTo]
+  have h : hF.neg.toSubringPS = -hF.toSubringPS := by
+    apply PowerSeries.map_injective _ (rIntegralRatSubring r).subtype_injective
+    simp
+  simpa only [mapTo_eq_map_toSubringPS, map_neg] using congr(PowerSeries.map φ $h)
 
 theorem mapTo_sub {r : ℕ} {A : Type*} [CommRing A]
     (φ : rIntegralRatSubring r →+* A) {F G : PowerSeries ℚ}
     (hF : IsRIntegralPS r F) (hG : IsRIntegralPS r G) :
     (hF.sub hG).mapTo φ = hF.mapTo φ - hG.mapTo φ := by
-  calc
-    (hF.sub hG).mapTo φ
-        = (hF.add hG.neg).mapTo φ :=
-            mapTo_eq_of_eq φ (hF.sub hG) (hF.add hG.neg)
-              (by rw [sub_eq_add_neg])
-    _ = hF.mapTo φ + hG.neg.mapTo φ := mapTo_add φ hF hG.neg
-    _ = hF.mapTo φ - hG.mapTo φ := by
-          rw [mapTo_neg φ hG, sub_eq_add_neg]
+  have h : (hF.sub hG).toSubringPS = hF.toSubringPS - hG.toSubringPS := by
+    apply PowerSeries.map_injective _ (rIntegralRatSubring r).subtype_injective
+    simp
+  simpa only [mapTo_eq_map_toSubringPS, map_sub] using congr(PowerSeries.map φ $h)
 
 theorem mapTo_mul {r : ℕ} {A : Type*} [CommSemiring A]
     (φ : rIntegralRatSubring r →+* A) {F G : PowerSeries ℚ}
     (hF : IsRIntegralPS r F) (hG : IsRIntegralPS r G) :
     (hF.mul hG).mapTo φ = hF.mapTo φ * hG.mapTo φ := by
-  classical
-  ext n
-  let s : Finset (ℕ × ℕ) := Finset.antidiagonal n
-  let term : ℕ × ℕ → rIntegralRatSubring r := fun p =>
-    (⟨(PowerSeries.coeff (R := ℚ) p.1) F, hF p.1⟩ : rIntegralRatSubring r) *
-      (⟨(PowerSeries.coeff (R := ℚ) p.2) G, hG p.2⟩ : rIntegralRatSubring r)
-  have hsum :
-      (⟨(PowerSeries.coeff (R := ℚ) n) (F * G), (hF.mul hG) n⟩ :
-          rIntegralRatSubring r) = ∑ p ∈ s, term p := by
-    ext
-    simp [s, term, PowerSeries.coeff_mul]
-  calc
-    (PowerSeries.coeff (R := A) n) ((hF.mul hG).mapTo φ)
-        = φ (⟨(PowerSeries.coeff (R := ℚ) n) (F * G), (hF.mul hG) n⟩ :
-            rIntegralRatSubring r) := by
-          simp [mapTo]
-    _ = φ (∑ p ∈ s, term p) := by rw [hsum]
-    _ = ∑ p ∈ s, φ (term p) := by simp [map_sum]
-    _ = ∑ p ∈ s,
-          φ (⟨(PowerSeries.coeff (R := ℚ) p.1) F, hF p.1⟩ :
-              rIntegralRatSubring r) *
-            φ (⟨(PowerSeries.coeff (R := ℚ) p.2) G, hG p.2⟩ :
-              rIntegralRatSubring r) := by
-          refine Finset.sum_congr rfl ?_
-          intro p _hp
-          simp [term, map_mul]
-    _ = (PowerSeries.coeff (R := A) n) (hF.mapTo φ * hG.mapTo φ) := by
-          simp [PowerSeries.coeff_mul, s, mapTo]
+  have h : (hF.mul hG).toSubringPS = hF.toSubringPS * hG.toSubringPS := by
+    apply PowerSeries.map_injective _ (rIntegralRatSubring r).subtype_injective
+    simp
+  simpa only [mapTo_eq_map_toSubringPS, map_mul] using congr(PowerSeries.map φ $h)
 
 end IsRIntegralPS
 end DieudonneDwork

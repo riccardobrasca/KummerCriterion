@@ -2,7 +2,8 @@ module
 
 public import KummerCriterion.LValueAtOne.Odd
 import KummerCriterion.LValueAtOne.Cosine
-import Mathlib.NumberTheory.LSeries.Nonvanishing
+import TauCeti.NumberTheory.DirichletCharacter.Even
+import TauCeti.NumberTheory.DirichletCharacter.GaussSum
 
 /-!
 # Even-character `L(1, χ)` formulas
@@ -29,8 +30,7 @@ theorem even_LFunction_one_eq_evenLValueRhs
     DirichletCharacter.LFunction χ 1 = evenLValueRhs p χ := by
   change ZMod.LFunction (fun a : ZMod p => χ a) 1 = evenLValueRhs p χ
   have hp_ne_one : p ≠ 1 := hp.out.ne_one
-  have hχinv_even : (χ⁻¹).Even := by
-    simpa only [DirichletCharacter.Even, MulChar.inv_apply_eq_inv', inv_eq_one] using hχ_even
+  have hχinv_even : (χ⁻¹).Even := (DirichletCharacter.even_inv_iff χ).2 hχ_even
   have hχinv_zero : χ⁻¹ 0 = 0 := (χ⁻¹).map_zero' hp_ne_one
   let χinv : ZMod p → ℂ := fun a => χ⁻¹ a
   have hdft :
@@ -94,10 +94,8 @@ theorem even_LFunction_one_eq_evenLValueRhs
     · rw [cosZeta_toAddCircle_one_eq_boundary (p := p) ha,
         norm_one_sub_stdAddChar (p := p) ha]
       simp
-  have hgauss_ne : gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)) ≠ 0 := by
-    apply norm_ne_zero_iff.mp
-    rw [DirichletCharacter.norm_gaussSum_stdAddChar hχ_prim.inv]
-    exact (Real.sqrt_pos.2 (Nat.cast_pos.2 hp.out.pos)).ne'
+  have hgauss_ne := DirichletCharacter.gaussSum_inv_ne_zero_of_isPrimitive
+    (Nat.cast_ne_zero.mpr hp.out.ne_zero : (p : ℂ) ≠ 0) hχ_prim (ZMod.isPrimitive_stdAddChar p)
   apply (mul_left_cancel₀ hgauss_ne)
   calc
     gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)) * ZMod.LFunction χ 1

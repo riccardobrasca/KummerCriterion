@@ -5,6 +5,7 @@ import KummerCriterion.GaussSum.SignInvariant.VandermondeEndpoint
 import Mathlib.Analysis.SpecialFunctions.Bernstein
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.Data.Nat.Factorial.DoubleFactorial
+public import TauCeti.NumberTheory.DirichletCharacter.Even
 
 /-!
 # Branch choice for the quadratic Gauss sum
@@ -28,87 +29,25 @@ variable (p : ℕ) [hp : Fact p.Prime]
 
 attribute [local instance] Classical.decEq Classical.propDecidable
 
+/-- Each prescribed parity occurs for half the complex Dirichlet characters modulo an odd prime. -/
+theorem card_characters_apply_neg_one (hp₂ : p ≠ 2) {ε : ℂ} (hε : ε = 1 ∨ ε = -1) :
+    (Finset.univ.filter fun χ : DirichletCharacter ℂ p ↦ χ (-1) = ε).card = (p - 1) / 2 := by
+  have h := DirichletCharacter.two_mul_card_apply_neg_one_mul_apply_neg_one_eq
+    (R := ℂ) (a := p) (b := 1) (Or.inl (lt_of_le_of_ne hp.out.two_le hp₂.symm)) hε
+  have e : {q : DirichletCharacter ℂ p × DirichletCharacter ℂ 1 //
+      q.1 (-1) * q.2 (-1) = ε} ≃ {χ : DirichletCharacter ℂ p // χ (-1) = ε} :=
+    (Equiv.prodUnique _ _).subtypeEquiv fun q ↦ by
+      change q.1 (-1) * q.2 (-1) = ε ↔ q.1 (-1) = ε
+      rw [DirichletCharacter.even_of_le_two (n := 1) (by decide) q.2, mul_one]
+  rw [Nat.card_congr e, Nat.card_eq_fintype_card, Fintype.card_subtype,
+    Nat.totient_one, mul_one, Nat.totient_prime hp.out] at h
+  omega
+
 /-- The even complex Dirichlet characters modulo `p` have cardinality
 `(p - 1) / 2`. -/
 theorem card_even_characters (hp₂ : p ≠ 2) :
-    (Finset.univ.filter fun χ : DirichletCharacter ℂ p => χ.Even).card = (p - 1) / 2 := by
-  classical
-  let E : Finset (DirichletCharacter ℂ p) := Finset.univ.filter fun χ => χ.Even
-  let O : Finset (DirichletCharacter ℂ p) := Finset.univ.filter fun χ => χ.Odd
-  have hdisj : Disjoint E O := by
-    refine Finset.disjoint_left.mpr ?_
-    intro χ hχE hχO
-    have hχ_even : χ.Even := by simpa [E] using hχE
-    have hχ_odd : χ.Odd := by simpa [O] using hχO
-    exact DirichletCharacter.Odd.not_even χ hχ_odd hχ_even
-  have hunion : E ∪ O = (Finset.univ : Finset (DirichletCharacter ℂ p)) := by
-    ext χ
-    simp only [E, O, Finset.mem_union, Finset.mem_filter, Finset.mem_univ, true_and, iff_true]
-    exact DirichletCharacter.even_or_odd χ
-  have hneg_ne_one : (-1 : ZMod p) ≠ 1 := by
-    have : Fact (2 < p) := ⟨lt_of_le_of_ne hp.out.two_le (Ne.symm hp₂)⟩
-    exact ZMod.neg_one_ne_one
-  have hsum_zero :
-      ∑ χ : DirichletCharacter ℂ p, χ (-1 : ZMod p) = 0 :=
-    DirichletCharacter.sum_characters_eq_zero (R := ℂ) (n := p) hneg_ne_one
-  have hsum_split :
-      (∑ χ : DirichletCharacter ℂ p, χ (-1 : ZMod p)) = (E.card : ℂ) - O.card := by
-    have hsum_union :
-        (∑ χ : DirichletCharacter ℂ p, χ (-1 : ZMod p)) =
-          (E ∪ O).sum (fun χ => χ (-1 : ZMod p)) := by
-      rw [hunion]
-    have hsum_E : E.sum (fun χ => χ (-1 : ZMod p)) = E.card := by
-      calc
-        E.sum (fun χ => χ (-1 : ZMod p)) = E.sum (fun _ => (1 : ℂ)) := by
-          refine Finset.sum_congr rfl ?_
-          intro χ hχ
-          have hχ_even : χ.Even := by simpa [E] using hχ
-          simpa [DirichletCharacter.Even] using hχ_even
-        _ = E.card := by simp
-    have hsum_O : O.sum (fun χ => χ (-1 : ZMod p)) = -(O.card : ℂ) := by
-      calc
-        O.sum (fun χ => χ (-1 : ZMod p)) = O.sum (fun _ => (-1 : ℂ)) := by
-          refine Finset.sum_congr rfl ?_
-          intro χ hχ
-          have hχ_odd : χ.Odd := by simpa [O] using hχ
-          simpa [DirichletCharacter.Odd] using hχ_odd
-        _ = -(O.card : ℂ) := by simp
-    calc
-      (∑ χ : DirichletCharacter ℂ p, χ (-1 : ZMod p)) =
-          E.sum (fun χ => χ (-1 : ZMod p)) + O.sum (fun χ => χ (-1 : ZMod p)) := by
-            rw [hsum_union, Finset.sum_union hdisj]
-      _ = (E.card : ℂ) - O.card := by
-            rw [hsum_E, hsum_O]
-            simp [sub_eq_add_neg]
-  have hbalance : (E.card : ℂ) - O.card = 0 := by
-    rw [← hsum_split]
-    exact hsum_zero
-  have hsame : E.card = O.card := by
-    have hsame_real : (E.card : ℝ) = O.card := by
-      have hdiff_real : (E.card : ℝ) - O.card = 0 := by
-        simpa using congrArg Complex.re hbalance
-      nlinarith
-    exact_mod_cast hsame_real
-  have hcard_total : E.card + O.card = p - 1 := by
-    calc
-      E.card + O.card = (E ∪ O).card := by
-        rw [← Finset.card_union_of_disjoint hdisj]
-      _ = Fintype.card (DirichletCharacter ℂ p) := by
-        rw [hunion, Finset.card_univ]
-      _ = p - 1 := by
-        rw [← Nat.card_eq_fintype_card,
-          DirichletCharacter.card_eq_totient_of_hasEnoughRootsOfUnity (R := ℂ) (n := p),
-          Nat.totient_prime hp.out]
-  have hcardE : E.card = (p - 1) / 2 := by
-    omega
-  simpa [E] using hcardE
-
-theorem inv_eval_neg_one_eq (χ : DirichletCharacter ℂ p) :
-    χ⁻¹ (-1 : ZMod p) = χ (-1) := by
-  rw [MulChar.inv_apply', inv_neg_one]
-
-theorem even_inv_iff {χ : DirichletCharacter ℂ p} : χ⁻¹.Even ↔ χ.Even := by
-  simp [DirichletCharacter.Even, inv_eval_neg_one_eq (p := p) χ]
+    (Finset.univ.filter fun χ : DirichletCharacter ℂ p => χ.Even).card = (p - 1) / 2 :=
+  card_characters_apply_neg_one p hp₂ (Or.inl rfl)
 
 theorem quadraticCharComplex_odd_of_mod_four_eq_three
     (hp₂ : p ≠ 2) (hp₄ : p % 4 = 3) :
@@ -146,7 +85,7 @@ theorem evenNonselfdualCharacterFinset_eq_union_evenReps_image_inv (hp₂ : p �
     · exact Finset.mem_union.mpr <| Or.inl <|
         (mem_evenNonselfdualCharacterReps_iff (p := p) χ).2 ⟨hχrep, hχeven⟩
     · have hχinv_even : (χ⁻¹ : DirichletCharacter ℂ p).Even :=
-        (even_inv_iff (p := p) (χ := χ)).2 hχeven
+        (DirichletCharacter.even_inv_iff χ).2 hχeven
       exact Finset.mem_union.mpr <| Or.inr <|
         Finset.mem_image.mpr ⟨χ⁻¹,
           (mem_evenNonselfdualCharacterReps_iff (p := p) (χ⁻¹)).2 ⟨hχinvrep, hχinv_even⟩,
@@ -162,7 +101,7 @@ theorem evenNonselfdualCharacterFinset_eq_union_evenReps_image_inv (hp₂ : p �
       exact (mem_evenNonselfdualCharacterFinset_iff (p := p) ψ⁻¹).2
         ⟨inv_mem_nonselfdualCharacterFinset (p := p)
             ((mem_nonselfdualCharacterReps_iff (p := p) ψ).1 hψrep' |>.1),
-          (even_inv_iff (p := p) (χ := ψ)).2 hψeven⟩
+          (DirichletCharacter.even_inv_iff ψ).2 hψeven⟩
 
 theorem disjoint_evenNonselfdualCharacterReps_image_inv :
     Disjoint (evenNonselfdualCharacterReps (p := p))

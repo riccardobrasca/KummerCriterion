@@ -3,7 +3,7 @@ module
 public import KummerCriterion.CyclotomicUnits.DworkParameter.Part2
 public import Mathlib.RingTheory.PowerSeries.Log
 import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogBounds
-import KummerCriterion.Reflection.ResidueSymbol.DworkFactorization.FiniteLogFormal
+import TauCeti.RingTheory.PowerSeries.Log
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.ENatToNat
 import Mathlib.Tactic.NormNum.Irrational
@@ -499,10 +499,17 @@ theorem samePrimeFiniteLogAdditivity_rational_sum_eq_zero
     simpa [Py] using
       samePrimeFiniteLogProductArgPoly_coe_eq_formal (p := p) (K := K) y
         (0 : ValuedIntegerRing p K)
-  have hformal :=
-    Furtwaengler.FiniteLogFormal.coeff_log_subst_add_add_mul_scaled
-      (A := ValuedCompletion p K) (x : ValuedCompletion p K) (y : ValuedCompletion p K) d
-  rw [← hxyarg, ← hxarg, ← hyarg] at hformal
+  have hprod :
+      (1 + (Px : PowerSeries (ValuedCompletion p K))) * (1 + Py) = 1 + Pxy := by
+    rw [hxyarg, hxarg, hyarg, map_mul]
+    ring
+  have hlog := PowerSeries.logOf_mul
+    (f := 1 + (Px : PowerSeries (ValuedCompletion p K)))
+    (g := 1 + (Py : PowerSeries (ValuedCompletion p K)))
+    (by simp [hxarg]) (by simp [hyarg])
+  rw [hprod] at hlog
+  have hformal := congr(PowerSeries.coeff d $hlog)
+  simp only [PowerSeries.logOf_eq, add_sub_cancel_left, map_add] at hformal
   have hPxy0 : Pxy.coeff 0 = 0 := by
     simpa [Pxy] using samePrimeFiniteLogProductArgPoly_map_coeff_zero (p := p) (K := K) x y
   have hPx0 : Px.coeff 0 = 0 := by

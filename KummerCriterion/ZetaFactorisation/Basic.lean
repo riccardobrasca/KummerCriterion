@@ -1,6 +1,5 @@
 module
 
-public import Mathlib.Data.Fintype.Vector
 public import Mathlib.NumberTheory.DirichletCharacter.Orthogonality
 public import Mathlib.NumberTheory.LSeries.DirichletContinuation
 public import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
@@ -26,10 +25,6 @@ open scoped Topology nonZeroDivisors
 namespace KummerCriterion
 
 section ZetaFactorisation
-
-noncomputable instance instFintypeSym (α : Type*) [Finite α] (n : ℕ) :
-    Fintype (Sym α n) :=
-  Fintype.ofFinite (Sym α n)
 
 variable (p : ℕ) [hp : Fact p.Prime]
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K]

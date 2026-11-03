@@ -2,7 +2,7 @@ module
 
 public import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 public import Mathlib.NumberTheory.DirichletCharacter.Basic
-public import Mathlib.NumberTheory.GaussSum
+public import TauCeti.NumberTheory.DirichletCharacter.GaussSum
 public import Mathlib.NumberTheory.LegendreSymbol.QuadraticChar.Basic
 
 /-!
@@ -17,9 +17,6 @@ modulo a prime `p`, using the standard additive character
 * `KummerCriterion.gaussSum_one_stdAddChar`: the Gauss sum of the trivial
  Dirichlet character modulo a prime `p` with the standard additive character
  equals `-1`.
-* `KummerCriterion.gaussSum_mul_gaussSum_inv_stdAddChar`: for a non-trivial
- Dirichlet character `χ` modulo a prime `p`,
- `τ(χ) · τ(χ̄) = χ(-1) · p`.
 * `KummerCriterion.DirichletCharacter.isPrimitive_of_prime_of_ne_one`:
  `p` prime, every non-trivial Dirichlet character mod `p` is primitive.
 * `KummerCriterion.gaussSum_stdAddChar_mulShift`: the key Galois-equivariance
@@ -41,21 +38,6 @@ open scoped BigOperators ComplexConjugate
 section GaussSum
 
 variable (p : ℕ) [hp : Fact p.Prime]
-
-/-- For a non-trivial Dirichlet character `χ` modulo a prime `p`,
-`τ(χ) · τ(χ̄) = χ(-1) · p`, where `τ(χ) = gaussSum χ ZMod.stdAddChar` is
-the classical Gauss sum. -/
-theorem gaussSum_mul_gaussSum_inv_stdAddChar
-    {χ : DirichletCharacter ℂ p} (hχ : χ ≠ 1) :
-    gaussSum χ (ZMod.stdAddChar (N := p)) *
-        gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)) =
-      χ (-1) * p := by
-  have hpow : χ ^ (orderOf χ - 1) = χ⁻¹ := by
-    refine (inv_eq_of_mul_eq_one_right ?_).symm
-    rw [← pow_succ', Nat.sub_one_add_one_eq_of_pos χ.orderOf_pos, pow_orderOf_eq_one]
-  rw [← hpow]
-  simpa [ZMod.card] using
-    gaussSum_mul_gaussSum_pow_orderOf_sub_one hχ (ZMod.isPrimitive_stdAddChar p)
 
 /-- For a prime modulus `p`, any non-trivial Dirichlet character
 is primitive. Follows from `χ.conductor ∣ p` and the fact that the only

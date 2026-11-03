@@ -67,33 +67,7 @@ theorem evenLProduct_one_eq_prod_evenLValueRhs :
 lemma card_oddCharacters (hp_odd' : p ≠ 2) :
     (oddCharacters (p := p)).card = (p - 1) / 2 := by
   classical
-  let E : Finset (DirichletCharacter ℂ p) := Finset.univ.filter fun χ => χ.Even
-  let O : Finset (DirichletCharacter ℂ p) := oddCharacters (p := p)
-  have hdisj : Disjoint E O := by
-    refine Finset.disjoint_left.mpr ?_
-    intro χ hχE hχO
-    have hχ_even : χ.Even := by simpa [E] using hχE
-    have hχ_odd : χ.Odd := by simpa [O, oddCharacters] using hχO
-    exact DirichletCharacter.Odd.not_even χ hχ_odd hχ_even
-  have hunion : E ∪ O = (Finset.univ : Finset (DirichletCharacter ℂ p)) := by
-    ext χ
-    simp only [E, O, oddCharacters, Finset.mem_union, Finset.mem_filter, Finset.mem_univ,
-      true_and, iff_true]
-    exact DirichletCharacter.even_or_odd χ
-  have hcard_total : E.card + O.card = p - 1 := by
-    calc
-      E.card + O.card = (E ∪ O).card := by
-        rw [← Finset.card_union_of_disjoint hdisj]
-      _ = Nat.card (DirichletCharacter ℂ p) := by
-        rw [hunion, Finset.card_univ, Nat.card_eq_fintype_card]
-      _ = p - 1 := card_dirichletCharacter_complex (p := p)
-  have hcard_even : E.card = (p - 1) / 2 := card_even_characters (p := p) hp_odd'
-  rcases hp.out.odd_of_ne_two hp_odd' with ⟨m, hm⟩
-  have hhalf : (p - 1) / 2 = m := by omega
-  rw [hhalf] at hcard_even
-  have hcard_odd : O.card = m := by omega
-  rw [hhalf]
-  simpa [O, oddCharacters] using hcard_odd
+  exact card_characters_apply_neg_one p hp_odd' (Or.inr rfl)
 
 /-- For an odd Dirichlet character modulo a prime `p`, the Gauss
 sum contribution from the inverse pair `(χ, χ⁻¹)` is `-(p: ℂ)`. -/
@@ -107,10 +81,11 @@ theorem odd_gaussSum_mul_gaussSum_inv_stdAddChar
     exact DirichletCharacter.Odd.not_even _ hχ_odd (by
       change (1 : DirichletCharacter ℂ p) (-1) = 1
       rw [MulChar.one_apply (isUnit_one.neg)])
-  rw [gaussSum_mul_gaussSum_inv_stdAddChar (p := p) (χ := χ) hχ_ne_one]
-  rw [DirichletCharacter.Odd] at hχ_odd
-  rw [hχ_odd]
-  simp
+  change χ (-1) = -1 at hχ_odd
+  simpa only [ZMod.card, hχ_odd, neg_one_mul] using
+    DirichletCharacter.gaussSum_mul_gaussSum_inv_eq_neg_one_mul_card_of_isPrimitive
+      (DirichletCharacter.isPrimitive_of_ne_one (p := p) hχ_ne_one)
+      (ZMod.isPrimitive_stdAddChar p)
 
 /-- An odd self-inverse Dirichlet character modulo a prime `p` is
 the quadratic character. -/

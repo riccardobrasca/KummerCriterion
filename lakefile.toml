@@ -11,6 +11,16 @@ linter.flexible = true
 linter.style.header = false
 
 [[require]]
+name = "TauCeti"
+git = "https://github.com/TauCetiProject/TauCeti.git"
+rev = "ae590cc45dab074fb3ce5b25574d91e8d7d4ed87"
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "1b1ccf4b088b32fa3f23f2de1127433254a81e1e"
+
+[[require]]
 name = "flt-regular"
 git = "https://github.com/leanprover-community/flt-regular.git"
 rev = "master"

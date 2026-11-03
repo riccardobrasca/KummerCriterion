@@ -1,7 +1,7 @@
 module
 
 public import KummerCriterion.Reflection.ResidueSymbol.ArtinHasse.Part1
-public import Mathlib.RingTheory.PowerSeries.Log
+public import TauCeti.RingTheory.PowerSeries.Log
 import Mathlib.Analysis.SpecialFunctions.Gamma.Basic
 import Mathlib.RingTheory.WittVector.IsPoly
 import Mathlib.Tactic.ENatToNat
@@ -41,14 +41,6 @@ namespace FiniteArtinHasseFormal
 
 open PowerSeries
 
-theorem coeff_pow_eq_zero_of_lt_of_constantCoeff_eq_zero
-    {A : Type*} [CommRing A] (F : PowerSeries A)
-    (hF0 : PowerSeries.constantCoeff F = 0) {n d : ℕ} (hdn : d < n) :
-    PowerSeries.coeff d (F ^ n) = 0 := by
-  have hle : (n : ℕ∞) ≤ (F ^ n).order :=
-    PowerSeries.le_order_pow_of_constantCoeff_eq_zero n hF0
-  exact PowerSeries.coeff_of_lt_order d ((ENat.natCast_lt_natCast.mpr hdn).trans_le hle)
-
 theorem coeff_subst_log_eq_sum_Icc
     {A : Type*} [CommRing A] [Algebra ℚ A] (F : PowerSeries A)
     (hF0 : PowerSeries.constantCoeff F = 0) (d : ℕ) :
@@ -78,42 +70,9 @@ theorem coeff_subst_log_eq_sum_Icc
         have hn1 : 1 ≤ n := Nat.succ_le_of_lt (Nat.pos_of_ne_zero hn0)
         have hnd : n ≤ d := by omega
         exact hnI (Finset.mem_Icc.mpr ⟨hn1, hnd⟩)
-      have hcoeff := coeff_pow_eq_zero_of_lt_of_constantCoeff_eq_zero F hF0 hdn
+      have hcoeff := PowerSeries.X_pow_dvd_iff.mp
+        (pow_dvd_pow_of_dvd (PowerSeries.X_dvd_iff.mpr hF0) n) d hdn
       simp [hcoeff] at hnmem
-
-/-- The formal logarithm of the Artin-Hasse exponential is its defining
-Artin-Hasse logarithm series. -/
-theorem logOf_artinHasseExpSeries (ell : ℕ) [Fact (Nat.Prime ell)] :
-    PowerSeries.logOf (artinHasseExpSeries ell) = artinHasseLogSeries ell := by
-  let L : PowerSeries ℚ := artinHasseLogSeries ell
-  have hLsubst : PowerSeries.HasSubst L := by
-    simpa [L] using artinHasseLogSeries_hasSubst ell
-  rw [PowerSeries.logOf_eq]
-  change PowerSeries.subst (PowerSeries.subst L (PowerSeries.exp ℚ) - 1)
-      (PowerSeries.log ℚ) = L
-  have hsub :
-      PowerSeries.subst L (PowerSeries.exp ℚ) - 1 =
-        PowerSeries.subst L (PowerSeries.exp ℚ - 1) := by
-    rw [PowerSeries.subst_sub hLsubst,
-      ← PowerSeries.coe_substAlgHom hLsubst (R := ℚ), map_one]
-  rw [hsub, ← PowerSeries.subst_comp_subst_apply PowerSeries.HasSubst.exp_sub_one hLsubst,
-    PowerSeries.subst_log_exp_sub_one, PowerSeries.subst_X hLsubst]
-
-theorem coeff_logOf_artinHasseExpSeries_eq_sum_Icc
-    (ell d : ℕ) [Fact (Nat.Prime ell)] :
-    (PowerSeries.coeff (R := ℚ) d)
-        (PowerSeries.logOf (artinHasseExpSeries ell)) =
-      ∑ n ∈ Finset.Icc 1 d,
-        (((-1 : ℚ) ^ (n + 1)) / n) *
-          PowerSeries.coeff d ((artinHasseExpSeries ell - 1) ^ n) := by
-  let E : PowerSeries ℚ := artinHasseExpSeries ell
-  let A : PowerSeries ℚ := E - 1
-  have hE0 : PowerSeries.constantCoeff E = 1 := by
-    simp [E]
-  have hA0 : PowerSeries.constantCoeff A = 0 := by
-    simp [A, hE0]
-  rw [PowerSeries.logOf_eq]
-  simpa [A] using coeff_subst_log_eq_sum_Icc (A := ℚ) A hA0 d
 
 /-- Explicit coefficient formula for `logOf (artinHasseExpSeries ell)`. -/
 @[simp] theorem coeff_logOf_artinHasseExpSeries_eq
@@ -123,7 +82,8 @@ theorem coeff_logOf_artinHasseExpSeries_eq_sum_Icc
       if ell ^ Nat.log ell n = n ∧ n ≠ 0 then
         (1 : ℚ) / (ell : ℚ) ^ Nat.log ell n
       else 0 := by
-  rw [logOf_artinHasseExpSeries, artinHasseLogSeries_coeff]
+  rw [artinHasseExpSeries, PowerSeries.logOf_subst_exp
+    (artinHasseLogSeries_constantCoeff ell), artinHasseLogSeries_coeff]
 
 /-- Coefficient of `logOf (E_ell)` at an `ell`-power. -/
 theorem coeff_logOf_artinHasseExpSeries_eq_of_pow
@@ -186,7 +146,8 @@ theorem coe_sum_factorialWeightedLogCoeff
         (PowerSeries.coeff (R := ℚ) d)
           (PowerSeries.logOf (artinHasseExpSeries ell)) := by
   classical
-  rw [coeff_logOf_artinHasseExpSeries_eq_sum_Icc]
+  rw [PowerSeries.logOf_eq, coeff_subst_log_eq_sum_Icc _ (by simp)]
+  simp only [Algebra.algebraMap_self, RingHom.id_apply]
   rw [Finset.mul_sum]
   change (DieudonneDwork.rIntegralRatSubring ell).subtype
       (∑ n ∈ Finset.Icc 1 d, factorialWeightedLogCoeff ell d n) =

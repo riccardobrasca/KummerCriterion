@@ -3,6 +3,7 @@ module
 public import KummerCriterion.Reflection.ResidueSymbol.DieudonneDwork.Part1
 public import Mathlib.RingTheory.MvPowerSeries.Inverse
 import Mathlib.Data.Nat.Totient
+import TauCeti.RingTheory.PowerSeries.Trunc
 import Mathlib.RingTheory.PowerSeries.Inverse
 import Mathlib.Tactic.NormNum.GCD
 import Mathlib.Tactic.Positivity.Finset
@@ -47,21 +48,10 @@ theorem mapTo_pow {r : ℕ} {A : Type*} [CommSemiring A]
     (φ : rIntegralRatSubring r →+* A) {F : PowerSeries ℚ}
     (hF : IsRIntegralPS r F) (k : ℕ) :
     (hF.pow k).mapTo φ = hF.mapTo φ ^ k := by
-  induction k with
-  | zero =>
-      calc
-        (hF.pow 0).mapTo φ = (IsRIntegralPS.one r).mapTo φ :=
-          mapTo_congr_proof φ _ _
-        _ = 1 := mapTo_one φ
-        _ = hF.mapTo φ ^ 0 := by simp
-  | succ k ih =>
-      have hmul : IsRIntegralPS r (F ^ k * F) := (hF.pow k).mul hF
-      calc
-        (hF.pow (k + 1)).mapTo φ
-            = hmul.mapTo φ :=
-              mapTo_eq_of_eq φ _ _ (by rw [pow_succ])
-        _ = (hF.pow k).mapTo φ * hF.mapTo φ := mapTo_mul φ (hF.pow k) hF
-        _ = hF.mapTo φ ^ (k + 1) := by rw [ih, pow_succ]
+  have h : (hF.pow k).toSubringPS = hF.toSubringPS ^ k := by
+    apply PowerSeries.map_injective _ (rIntegralRatSubring r).subtype_injective
+    simp
+  simpa only [mapTo_eq_map_toSubringPS, map_pow] using congr(PowerSeries.map φ $h)
 
 theorem mapTo_subst {r : ℕ} {A : Type*} [CommRing A]
     (φ : rIntegralRatSubring r →+* A) {F G : PowerSeries ℚ}
@@ -85,77 +75,15 @@ theorem mapTo_subst {r : ℕ} {A : Type*} [CommRing A]
     _ = PowerSeries.subst (hG.mapTo φ) (hF.mapTo φ) := by
           rw [← mapTo_eq_map_toSubringPS φ hG, ← mapTo_eq_map_toSubringPS φ hF]
 
-theorem toZModPS_congr_proof {r : ℕ} {F : PowerSeries ℚ}
-    (hF hF' : IsRIntegralPS r F) : hF.toZModPS = hF'.toZModPS := by
-  ext n
-  simp [toZModPS, IsRIntegralRat.toZMod]
-
-theorem toZModPS_eq_of_eq {r : ℕ} {F G : PowerSeries ℚ}
-    (hF : IsRIntegralPS r F) (hG : IsRIntegralPS r G) (h : F = G) :
-    hF.toZModPS = hG.toZModPS := by
-  subst h
-  exact toZModPS_congr_proof hF hG
-
-@[simp]
-theorem toZModPS_one (r : ℕ) :
-    (IsRIntegralPS.one r).toZModPS = (1 : PowerSeries (ZMod r)) := by
-  ext n
-  by_cases hn : n = 0
-  · simp [toZModPS, hn]
-  · simp [toZModPS, hn]
-
 theorem toZModPS_sub {r : ℕ} {F G : PowerSeries ℚ}
     (hF : IsRIntegralPS r F) (hG : IsRIntegralPS r G) :
     (hF.sub hG).toZModPS = hF.toZModPS - hG.toZModPS := by
-  ext n
-  simpa [toZModPS, map_sub] using IsRIntegralRat.toZMod_sub (hF n) (hG n)
-
-theorem toZModPS_mul {r : ℕ} {F G : PowerSeries ℚ}
-    (hF : IsRIntegralPS r F) (hG : IsRIntegralPS r G) :
-    (hF.mul hG).toZModPS = hF.toZModPS * hG.toZModPS := by
-  classical
-  ext n
-  let f : ℕ × ℕ → ℚ := fun p =>
-    ((PowerSeries.coeff (R := ℚ) p.1) F) *
-      ((PowerSeries.coeff (R := ℚ) p.2) G)
-  let s : Finset (ℕ × ℕ) := Finset.antidiagonal n
-  have hsum : IsRIntegralRat r (Finset.sum s f) := by
-    simpa [s, f, PowerSeries.coeff_mul] using (hF.mul hG n)
-  calc
-    (PowerSeries.coeff (R := ZMod r) n) (hF.mul hG).toZModPS
-        = IsRIntegralRat.toZMod (Finset.sum s f) hsum := by
-          simp [toZModPS, IsRIntegralRat.toZMod, s, f, PowerSeries.coeff_mul]
-    _ = Finset.sum s (fun p => ((f p).num : ZMod r) * ((f p).den : ZMod r)⁻¹) :=
-          IsRIntegralRat.toZMod_finset_sum s f
-            (fun p _ => (hF p.1).mul (hG p.2)) hsum
-    _ = Finset.sum s (fun p =>
-          IsRIntegralRat.toZMod ((PowerSeries.coeff (R := ℚ) p.1) F) (hF p.1) *
-            IsRIntegralRat.toZMod ((PowerSeries.coeff (R := ℚ) p.2) G) (hG p.2)) := by
-          apply Finset.sum_congr rfl
-          intro p _
-          simpa [f, IsRIntegralRat.toZMod] using
-            IsRIntegralRat.toZMod_mul (hF p.1) (hG p.2)
-    _ = (PowerSeries.coeff (R := ZMod r) n) (hF.toZModPS * hG.toZModPS) := by
-          simp [s, toZModPS, PowerSeries.coeff_mul]
+  exact mapTo_sub (rIntegralToZMod r) hF hG
 
 theorem toZModPS_pow {r : ℕ} {F : PowerSeries ℚ} (hF : IsRIntegralPS r F)
     (k : ℕ) :
     (hF.pow k).toZModPS = hF.toZModPS ^ k := by
-  induction k with
-  | zero =>
-      calc
-        (hF.pow 0).toZModPS = (IsRIntegralPS.one r).toZModPS :=
-          toZModPS_congr_proof _ _
-        _ = 1 := toZModPS_one r
-        _ = hF.toZModPS ^ 0 := by simp
-  | succ k ih =>
-      have hmul : IsRIntegralPS r (F ^ k * F) := (hF.pow k).mul hF
-      calc
-        (hF.pow (k + 1)).toZModPS
-            = hmul.toZModPS :=
-              toZModPS_eq_of_eq _ _ (by rw [pow_succ])
-        _ = (hF.pow k).toZModPS * hF.toZModPS := toZModPS_mul (hF.pow k) hF
-        _ = hF.toZModPS ^ (k + 1) := by rw [ih, pow_succ]
+  exact mapTo_pow (rIntegralToZMod r) hF k
 
 theorem toZModPS_subst_X_pow {r k : ℕ} (hk : k ≠ 0) {F : PowerSeries ℚ}
     (hF : IsRIntegralPS r F) :
@@ -328,61 +256,15 @@ private theorem coeff_pow_eq_trunc_add
       (PowerSeries.coeff (R := ℚ) n)
         (((PowerSeries.trunc n F : Polynomial ℚ) : PowerSeries ℚ) ^ k) +
         (k : ℚ) * (PowerSeries.coeff (R := ℚ) n) F := by
-  let A : PowerSeries ℚ := ((PowerSeries.trunc n F : Polynomial ℚ) : PowerSeries ℚ)
-  let c : ℚ := (PowerSeries.coeff (R := ℚ) n) F
-  have htrunc_coeff :
-      (PowerSeries.coeff (R := ℚ) n) (F ^ k) =
-        (PowerSeries.coeff (R := ℚ) n)
-          (((PowerSeries.trunc (n + 1) F : Polynomial ℚ) : PowerSeries ℚ) ^ k) := by
-    calc
-      (PowerSeries.coeff (R := ℚ) n) (F ^ k)
-          =
-            (PowerSeries.coeff (R := ℚ) n)
-              ((PowerSeries.trunc (n + 1) (F ^ k) : Polynomial ℚ) : PowerSeries ℚ) :=
-              (PowerSeries.coeff_coe_trunc_of_lt (f := F ^ k) (m := n + 1)
-                (n := n) n.lt_succ_self).symm
-      _ =
-            (PowerSeries.coeff (R := ℚ) n)
-              ((PowerSeries.trunc (n + 1)
-                (((PowerSeries.trunc (n + 1) F : Polynomial ℚ) : PowerSeries ℚ) ^ k) :
-                  Polynomial ℚ) : PowerSeries ℚ) := by
-              rw [← PowerSeries.trunc_trunc_pow F (n + 1) k]
-      _ =
-            (PowerSeries.coeff (R := ℚ) n)
-              (((PowerSeries.trunc (n + 1) F : Polynomial ℚ) : PowerSeries ℚ) ^ k) :=
-              PowerSeries.coeff_coe_trunc_of_lt (m := n + 1) (n := n)
-                (f := (((PowerSeries.trunc (n + 1) F : Polynomial ℚ) : PowerSeries ℚ) ^ k))
-                n.lt_succ_self
-  have hsplit :
-      ((PowerSeries.trunc (n + 1) F : Polynomial ℚ) : PowerSeries ℚ) =
-        A + PowerSeries.C c * PowerSeries.X ^ n := by
-    ext m
-    rw [map_add, PowerSeries.coeff_C_mul_X_pow]
-    by_cases hmn : m < n
-    · have hmn1 : m < n + 1 := lt_trans hmn (Nat.lt_succ_self n)
-      have hne : m ≠ n := ne_of_lt hmn
-      simp [A, c, PowerSeries.coeff_trunc, hmn, hmn1, hne]
-    · have hnm : n ≤ m := le_of_not_gt hmn
-      by_cases hmn_eq : m = n
-      · subst m
-        simp [A, c, PowerSeries.coeff_trunc]
-      · have hgt : n < m := Nat.lt_of_le_of_ne hnm (Ne.symm hmn_eq)
-        have hnot : ¬m < n + 1 := not_lt.mpr (Nat.succ_le_of_lt hgt)
-        simp [A, c, PowerSeries.coeff_trunc, hmn, hnot, hmn_eq]
-  have hA0 : PowerSeries.constantCoeff A = 1 := by
-    simp [A, PowerSeries.coeff_trunc, hn, hF0]
   calc
-    (PowerSeries.coeff (R := ℚ) n) (F ^ k)
-        =
-          (PowerSeries.coeff (R := ℚ) n)
-            (((PowerSeries.trunc (n + 1) F : Polynomial ℚ) : PowerSeries ℚ) ^ k) := htrunc_coeff
-    _ =
-          (PowerSeries.coeff (R := ℚ) n)
-            ((A + PowerSeries.C c * PowerSeries.X ^ n) ^ k) := by
-              rw [hsplit]
-    _ =
-          (PowerSeries.coeff (R := ℚ) n) (A ^ k) + (k : ℚ) * c :=
-            coeff_pow_add_C_mul_X_pow hn hA0 c
+    PowerSeries.coeff n (F ^ k) =
+        PowerSeries.coeff n ((PowerSeries.trunc (n + 1) F : PowerSeries ℚ) ^ k) :=
+      PowerSeries.coeff_eq_of_trunc_eq
+        (PowerSeries.trunc_trunc_pow F (n + 1) k).symm (Nat.lt_succ_self n)
+    _ = _ := by
+      rw [PowerSeries.trunc_succ, Polynomial.coe_add, Polynomial.coe_monomial,
+        PowerSeries.monomial_eq_C_mul_X_pow]
+      exact coeff_pow_add_C_mul_X_pow hn (by simp [PowerSeries.coeff_trunc, hn, hF0]) _
 
 /-- Dieudonné-Dwork `(⇐)` direction: if the quotient
 `F(T)^r / F(T^r) - 1` has positive coefficients in `r·ℤ_(r)`, then `F` has

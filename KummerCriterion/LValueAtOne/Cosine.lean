@@ -3,7 +3,7 @@ module
 public import Mathlib.Analysis.SpecialFunctions.Complex.CircleAddChar
 public import Mathlib.NumberTheory.LSeries.HurwitzZetaEven
 import KummerCriterion.LValueAtOne.ComplexBounds
-import KummerCriterion.LValueAtOne.DirichletBounds
+import TauCeti.NumberTheory.LSeries.BoundaryConvergence.Basic
 import Mathlib.Analysis.Complex.AbelLimit
 
 /-!
@@ -54,119 +54,6 @@ lemma norm_sum_range_cos_le {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) (n : ℕ) 
     _ ≤ 2 / ‖z - 1‖ := hgeom
     _ = 2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
       simp [z, norm_sub_rev]
-
-/-- Continuity in the exponent of a single shifted cosine term. -/
-lemma continuous_shiftedCosTerm (x : ℝ) (i : ℕ) :
-    Continuous fun s : ℝ =>
-      Real.cos (2 * Real.pi * x * (i + 1)) / ((i + 1 : ℂ) ^ (s : ℂ)) := by
-  refine Continuous.div continuous_const ?_ ?_
-  · exact Continuous.const_cpow Complex.continuous_ofReal (Or.inl (Nat.cast_add_one_ne_zero i))
-  · intro s h
-    exact (Nat.cast_add_one_ne_zero i) ((Complex.cpow_eq_zero_iff _ _).mp h).1
-
-/-- Repackage `hasSum_nat_cosZeta` with the harmless zero term removed. -/
-lemma hasSum_shifted_cosZeta (x s : ℝ) (hs : 1 < s) :
-    HasSum (fun n : ℕ => Real.cos (2 * Real.pi * x * (n + 1)) / ((n + 1 : ℂ) ^ (s : ℂ)))
-      (HurwitzZeta.cosZeta x s) := by
-  let f : ℕ → ℂ := fun n => Real.cos (2 * Real.pi * x * n) / ((n : ℂ) ^ (s : ℂ))
-  have hfull : HasSum f (HurwitzZeta.cosZeta x s) := by
-    simpa [f] using HurwitzZeta.hasSum_nat_cosZeta x (show 1 < ((s : ℂ)).re by simpa)
-  have hshift : HasSum (fun n : ℕ => f (n + 1)) (∑' n : ℕ, f (n + 1)) :=
-    ((summable_nat_add_iff 1).2 hfull.summable).hasSum
-  have hfull' : HasSum f (f 0 + ∑' n : ℕ, f (n + 1)) := hshift.zero_add
-  have hvalue : (∑' n : ℕ, f (n + 1)) = HurwitzZeta.cosZeta x s := by
-    have hs0 : ((s : ℂ)) ≠ 0 := by
-      exact_mod_cast (show s ≠ 0 by linarith)
-    have hf0 : f 0 = 0 := by
-      simp [f, hs0]
-    have := tendsto_nhds_unique hfull'.tendsto_sum_nat hfull.tendsto_sum_nat
-    simpa [hf0] using this
-  exact hvalue ▸ hshift.congr_fun (fun n => by simp [f])
-
-/-- Uniform tail bound for the shifted cosine Dirichlet series on the half-line `s ≥ 1`. -/
-lemma norm_sum_range_shifted_cos_term_le {x s : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) (hs : 1 ≤ s)
-    (m n : ℕ) :
-    ‖∑ i ∈ Finset.range n,
-        Real.cos (2 * Real.pi * x * (m + i + 1)) / (((m + i + 1 : ℕ) : ℂ) ^ (s : ℂ))‖ ≤
-      (8 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖) *
-        (1 / (m + 1 : ℝ) ^ s) := by
-  let a : ℕ → ℝ := fun k => 1 / (k + 1 : ℝ) ^ s
-  let z : ℕ → ℂ := fun k => Real.cos (2 * Real.pi * x * (k + 1))
-  have ha : Antitone a := by
-    intro i j hij
-    have hij' : (i + 1 : ℝ) ≤ j + 1 := by exact_mod_cast Nat.succ_le_succ hij
-    have hi_pos : 0 < (i + 1 : ℝ) := by positivity
-    have hs_nonneg : 0 ≤ s := le_trans zero_lt_one.le hs
-    have hpow : (i + 1 : ℝ) ^ s ≤ (j + 1 : ℝ) ^ s :=
-      Real.rpow_le_rpow hi_pos.le hij' hs_nonneg
-    simpa [a, one_div] using one_div_le_one_div_of_le (Real.rpow_pos_of_pos hi_pos _) hpow
-  have ha_nonneg : ∀ k, 0 ≤ a k := by
-    intro k
-    positivity
-  have hzbound :
-      ∀ k, ‖∑ i ∈ Finset.range k, z i‖ ≤
-        4 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
-    intro k
-    let f : ℕ → ℝ := fun i => Real.cos (2 * Real.pi * x * i)
-    have hsum0 := Finset.sum_range_add f 1 k
-    have hsum :
-        ∑ i ∈ Finset.range k, Real.cos (2 * Real.pi * x * (i + 1)) =
-          ∑ i ∈ Finset.range (k + 1), Real.cos (2 * Real.pi * x * i) - 1 := by
-      rw [Finset.sum_range_one] at hsum0
-      calc
-        ∑ i ∈ Finset.range k, Real.cos (2 * Real.pi * x * (i + 1))
-            = ∑ i ∈ Finset.range k, f (1 + i) := by simp [f, add_comm]
-        _ = ∑ i ∈ Finset.range (k + 1), f i - f 0 :=
-              eq_sub_iff_add_eq.mpr (by
-                simpa [add_comm, add_left_comm, add_assoc, Nat.add_comm] using hsum0.symm)
-        _ = ∑ i ∈ Finset.range (k + 1), Real.cos (2 * Real.pi * x * i) - 1 := by simp [f]
-    rw [show (∑ i ∈ Finset.range k, z i) =
-        ((∑ i ∈ Finset.range k, Real.cos (2 * Real.pi * x * (i + 1)) : ℝ) : ℂ) by
-          simp [z, Complex.ofReal_sum]]
-    rw [Complex.norm_real, hsum]
-    calc
-      |∑ i ∈ Finset.range (k + 1), Real.cos (2 * Real.pi * x * i) - 1|
-          ≤ |∑ i ∈ Finset.range (k + 1), Real.cos (2 * Real.pi * x * i) - 0| +
-              |0 - (1 : ℝ)| := by
-              simpa using
-                abs_sub_le
-                  (∑ i ∈ Finset.range (k + 1), Real.cos (2 * Real.pi * x * i)) 0 1
-      _ ≤ |∑ i ∈ Finset.range (k + 1), Real.cos (2 * Real.pi * x * i)| + 1 := by simp
-      _ ≤ (2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖) + 1 := by
-            have hcos :
-                |∑ i ∈ Finset.range (k + 1), Real.cos (2 * Real.pi * x * i)| ≤
-                  2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
-              simpa using norm_sum_range_cos_le hx₀ hx₁ (k + 1)
-            exact add_le_add hcos le_rfl
-      _ ≤ 2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ +
-            2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
-            have hdenom :
-                1 ≤ 2 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ :=
-              one_le_two_div_norm_one_sub_exp_two_pi_mul_I hx₀ hx₁
-            linarith
-      _ = 4 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by ring
-  calc
-    ‖∑ i ∈ Finset.range n,
-        Real.cos (2 * Real.pi * x * (m + i + 1)) / (((m + i + 1 : ℕ) : ℂ) ^ (s : ℂ))‖
-        = ‖∑ i ∈ Finset.range n, a (m + i) • z (m + i)‖ := by
-            congr 1
-            refine Finset.sum_congr rfl fun i hi => ?_
-            have hcpow :
-                (((m + i + 1 : ℕ) : ℂ) ^ (s : ℂ)) =
-                  ((((m + i + 1 : ℕ) : ℝ) ^ s : ℝ) : ℂ) := by
-              simpa using
-                (Complex.ofReal_cpow (x := (m + i + 1 : ℝ)) (by positivity) (y := s)).symm
-            rw [hcpow]
-            simp [a, z, div_eq_mul_inv, mul_comm, mul_left_comm]
-    _ ≤ (2 * (4 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖)) * a m :=
-          norm_sum_range_shift_smul_le_of_antitone_of_nonneg_of_bounded ha ha_nonneg hzbound m n
-    _ = (8 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖) *
-          (1 / (m + 1 : ℝ) ^ s) := by
-          have hcoef :
-              (2 * (4 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖)) =
-                8 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
-            ring
-          rw [hcoef]
 
 /-- The endpoint cosine series converges on `(0, 1)` by Dirichlet's test. -/
 lemma exists_tendsto_sum_range_cos_div_nat {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) :
@@ -342,160 +229,36 @@ lemma tendsto_sum_range_cos_div_nat {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) :
     tendsto_nhds_unique habel' (by simpa [hnorm_value] using hcont)
   simpa [hl_eq] using hl
 
-/-- The shifted endpoint cosine series converges to the same boundary value. -/
-lemma tendsto_sum_range_shifted_cos_one {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) :
-    Tendsto
-      (fun n : ℕ => ∑ i ∈ Finset.range n,
-        Real.cos (2 * Real.pi * x * (i + 1)) / ((i + 1 : ℂ) ^ (1 : ℂ)))
-      atTop (nhds ((-Real.log (2 * Real.sin (Real.pi * x)) : ℝ) : ℂ)) := by
-  let F : ℕ → ℂ := fun n =>
-    ((∑ i ∈ Finset.range n,
-        if i = 0 then 0 else Real.cos (2 * Real.pi * x * i) / i : ℝ) : ℂ)
-  have hbase : Tendsto F atTop (nhds (((-Real.log (2 * Real.sin (Real.pi * x)) : ℝ) : ℂ))) := by
-    simpa [F] using (tendsto_sum_range_cos_div_nat hx₀ hx₁).ofReal
-  have hshifted : Tendsto (fun n : ℕ => F (n + 1)) atTop
-      (nhds (((-Real.log (2 * Real.sin (Real.pi * x)) : ℝ) : ℂ))) :=
-    (tendsto_add_atTop_iff_nat 1).2 hbase
-  refine hshifted.congr' <| Filter.Eventually.of_forall fun n => ?_
-  have hsum :=
-    Finset.sum_range_add
-      (fun i : ℕ => (((if i = 0 then 0 else Real.cos (2 * Real.pi * x * i) / i : ℝ)) : ℂ)) 1 n
-  simpa [F, add_comm, add_left_comm, add_assoc] using hsum
-
-/-- The shifted cosine Dirichlet partial sums are uniformly Cauchy on the half-line `s ≥ 1`. -/
-lemma uniformCauchySeqOn_shiftedCosPartialSums {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) :
-    UniformCauchySeqOn
-      (fun n (s : ℝ) => ∑ i ∈ Finset.range n,
-        Real.cos (2 * Real.pi * x * (i + 1)) / ((i + 1 : ℂ) ^ (s : ℂ)))
-      atTop (Set.Ici 1) := by
-  rw [Metric.uniformCauchySeqOn_iff]
-  let B : ℝ :=
-    8 / ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖
-  have hdenom : 0 < ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ := by
-    have ht₀ : 0 < 2 * Real.pi * x := by nlinarith [hx₀, Real.pi_pos]
-    have ht₂π : 2 * Real.pi * x < 2 * Real.pi := by nlinarith [hx₁, Real.pi_pos]
-    have hnorm_eq :
-        ‖(1 : ℂ) - Complex.exp ((2 * Real.pi * x) * Complex.I)‖ =
-          2 * Real.sin (Real.pi * x) := by
-      simpa [show (2 * Real.pi * x) / 2 = Real.pi * x by ring] using
-        norm_one_sub_exp_ofReal_mul_I ht₀ ht₂π
-    rw [hnorm_eq]
-    have hxπ : Real.pi * x ∈ Set.Ioo 0 Real.pi := by
-      constructor <;> nlinarith [hx₀, hx₁, Real.pi_pos]
-    have hsin : 0 < Real.sin (Real.pi * x) := Real.sin_pos_of_mem_Ioo hxπ
-    positivity
-  have hB_pos : 0 < B := by
-    positivity
-  intro ε hε
-  obtain ⟨N, hN⟩ := exists_nat_one_div_lt (div_pos hε hB_pos)
-  refine ⟨N, ?_⟩
-  have htail_bound :
-      ∀ ⦃m n : ℕ⦄, N ≤ m → m ≤ n → ∀ s ∈ Set.Ici (1 : ℝ),
-        dist
-            (∑ i ∈ Finset.range m,
-              Real.cos (2 * Real.pi * x * (i + 1)) / ((i + 1 : ℂ) ^ (s : ℂ)))
-            (∑ i ∈ Finset.range n,
-              Real.cos (2 * Real.pi * x * (i + 1)) / ((i + 1 : ℂ) ^ (s : ℂ)))
-          < ε := by
-    intro m n hm hmn s hs
-    let term : ℕ → ℂ := fun k =>
-      Real.cos (2 * Real.pi * x * (k + 1)) / ((k + 1 : ℂ) ^ (s : ℂ))
-    have hsplit :
-        ∑ i ∈ Finset.range n, term i =
-          ∑ i ∈ Finset.range m, term i + ∑ i ∈ Finset.range (n - m), term (m + i) := by
-      simpa [term, Nat.add_sub_of_le hmn] using Finset.sum_range_add term m (n - m)
-    have hs' : 1 ≤ s := hs
-    rw [dist_eq_norm, norm_sub_rev]
-    calc
-      ‖∑ i ∈ Finset.range n, term i - ∑ i ∈ Finset.range m, term i‖
-          = ‖∑ i ∈ Finset.range (n - m), term (m + i)‖ := by
-              rw [hsplit]
-              ring_nf
-      _ ≤ B * (1 / (m + 1 : ℝ) ^ s) := by
-            simpa [B, term, add_assoc, add_comm, add_left_comm] using
-              norm_sum_range_shifted_cos_term_le (x := x) hx₀ hx₁ hs' m (n - m)
-      _ ≤ B * (1 / (m + 1 : ℝ)) := by
-            have hm1 : 1 ≤ (m + 1 : ℝ) := by
-              exact_mod_cast Nat.succ_le_succ (Nat.zero_le m)
-            have hpow : (m + 1 : ℝ) ^ (1 : ℝ) ≤ (m + 1 : ℝ) ^ s := by
-              simpa using Real.rpow_le_rpow_of_exponent_le hm1 hs'
-            have hpow_inv : 1 / (m + 1 : ℝ) ^ s ≤ 1 / (m + 1 : ℝ) := by
-              simpa [Real.rpow_one] using
-                (one_div_le_one_div_of_le (show 0 < (m + 1 : ℝ) ^ (1 : ℝ) by positivity) hpow)
-            exact mul_le_mul_of_nonneg_left hpow_inv hB_pos.le
-      _ ≤ B * (1 / (N + 1 : ℝ)) := by
-            have hm_inv : 1 / (m + 1 : ℝ) ≤ 1 / (N + 1 : ℝ) :=
-              one_div_le_one_div_of_le (show 0 < (N + 1 : ℝ) by positivity)
-                (by exact_mod_cast Nat.succ_le_succ hm)
-            exact mul_le_mul_of_nonneg_left hm_inv hB_pos.le
-      _ < B * (ε / B) :=
-            mul_lt_mul_of_pos_left hN hB_pos
-      _ = ε := by
-            field_simp [hB_pos.ne']
-  intro m hm n hn s hs
-  rcases le_total m n with hmn | hnm
-  · exact htail_bound hm hmn s hs
-  · simpa [dist_comm] using htail_bound hn hnm s hs
-
 /-- The cosine zeta function takes the classical boundary value at `s = 1` for `x ∈ (0, 1)`. -/
 theorem cosZeta_one_eq_boundary {x : ℝ} (hx₀ : 0 < x) (hx₁ : x < 1) :
     HurwitzZeta.cosZeta x 1 = (((-Real.log (2 * Real.sin (Real.pi * x)) : ℝ) : ℂ)) := by
-  let boundary : ℂ := (((-Real.log (2 * Real.sin (Real.pi * x)) : ℝ) : ℂ))
-  let S : ℕ → ℝ → ℂ := fun n s =>
-    ∑ i ∈ Finset.range n,
-      Real.cos (2 * Real.pi * x * (i + 1)) / ((i + 1 : ℂ) ^ (s : ℂ))
-  let G : ℝ → ℂ := fun s => if hs : s = 1 then boundary else HurwitzZeta.cosZeta x s
-  have hCauchy : UniformCauchySeqOn S atTop (Set.Ici 1) := by
-    simpa [S] using uniformCauchySeqOn_shiftedCosPartialSums (x := x) hx₀ hx₁
-  have hpoint : ∀ s ∈ Set.Ici (1 : ℝ), Tendsto (fun n => S n s) atTop (𝓝 (G s)) := by
-    intro s hs
-    by_cases hs1 : s = 1
-    · simpa [S, G, hs1, boundary] using tendsto_sum_range_shifted_cos_one (x := x) hx₀ hx₁
-    · have hslt : 1 < s := lt_of_le_of_ne hs (by simpa [eq_comm] using hs1)
-      simpa [S, G, hs1] using (hasSum_shifted_cosZeta (x := x) s hslt).tendsto_sum_nat
-  have hunif : TendstoUniformlyOn S G atTop (Set.Ici 1) :=
-    hCauchy.tendstoUniformlyOn_of_tendsto hpoint
-  have hcont : ContinuousOn G (Set.Ici (1 : ℝ)) := by
-    apply hunif.continuousOn
-    refine Frequently.of_forall fun n => ?_
-    classical
-    dsimp [S]
-    exact Continuous.continuousOn <|
-      continuous_finsetSum _ fun i _ => continuous_shiftedCosTerm x i
-  have hG_right : Tendsto G (𝓝[Set.Ioi 1] 1) (𝓝 boundary) := by
-    have hG_Ici : Tendsto G (𝓝[Set.Ici 1] 1) (𝓝 boundary) := by
-      simpa [G, boundary] using (hcont 1 (by simp)).tendsto
-    exact hG_Ici.mono_left (nhdsWithin_mono _ Set.Ioi_subset_Ici_self)
-  have hG_eq : G =ᶠ[𝓝[Set.Ioi 1] 1] fun s : ℝ => HurwitzZeta.cosZeta x s := by
-    filter_upwards [eventually_mem_nhdsWithin] with s hs
-    have hslt : 1 < s := by simpa using hs
-    simp [G, ne_of_gt hslt]
-  have hcos_right : Tendsto (fun s : ℝ => HurwitzZeta.cosZeta x s) (𝓝[Set.Ioi 1] 1)
-      (𝓝 boundary) :=
-    Tendsto.congr' hG_eq hG_right
-  have hcos_cont : Tendsto (fun s : ℝ => HurwitzZeta.cosZeta x s) (𝓝[Set.Ioi 1] 1)
-      (𝓝 (HurwitzZeta.cosZeta x 1)) := by
-    have hxadd : (x : UnitAddCircle) ≠ 0 := by
+  refine TauCeti.LSeries.eq_of_tendsto_sum_Icc_div
+    (a := fun n ↦ (Real.cos (2 * Real.pi * x * n) : ℂ)) ?_ ?_ ?_
+  · have hlim := (tendsto_add_atTop_iff_nat 1).2
+      (tendsto_sum_range_cos_div_nat hx₀ hx₁).ofReal
+    convert hlim using 1
+    · funext N
+      rw [← Finset.Ico_succ_right_eq_Icc, Nat.succ_eq_succ,
+        Finset.sum_Ico_eq_sub _ (Nat.succ_le_succ (Nat.zero_le N))]
+      simp only [Finset.sum_range_one, Nat.cast_zero, div_zero, sub_zero, Complex.ofReal_sum]
+      apply Finset.sum_congr rfl
+      intro n _
+      split_ifs with h <;> simp [h]
+  · have hxadd : (x : UnitAddCircle) ≠ 0 := by
       intro hxzero
       rw [AddCircle.coe_eq_zero_iff] at hxzero
-      rcases hxzero with ⟨n, hn⟩
+      obtain ⟨n, hn⟩ := hxzero
       have hn' : (n : ℝ) = x := by simpa using hn
-      have hn_pos : (0 : ℝ) < n := by nlinarith [hx₀, hn']
-      have hn_lt_one : (n : ℝ) < 1 := by nlinarith [hx₁, hn']
-      have hn_pos_int : 0 < n := by exact_mod_cast hn_pos
-      have hn_lt_one_int : n < 1 := by exact_mod_cast hn_lt_one
-      lia
-    have hcomplex : Tendsto (fun z : ℂ => HurwitzZeta.cosZeta x z) (𝓝 (1 : ℂ))
-        (𝓝 (HurwitzZeta.cosZeta x 1)) :=
-      (HurwitzZeta.differentiableAt_cosZeta (a := (x : UnitAddCircle)) (s := (1 : ℂ))
-        (Or.inr hxadd)).continuousAt.tendsto
-    have hreal : Tendsto (fun s : ℝ => (s : ℂ)) (𝓝 (1 : ℝ)) (𝓝 (1 : ℂ)) :=
-      Complex.continuous_ofReal.continuousAt.tendsto
-    have hcomp : Tendsto (fun s : ℝ => HurwitzZeta.cosZeta x (s : ℂ)) (𝓝 (1 : ℝ))
-        (𝓝 (HurwitzZeta.cosZeta x 1)) := by
-      simpa [Function.comp] using! hcomplex.comp hreal
-    exact hcomp.mono_left nhdsWithin_le_nhds
-  simpa [boundary] using (tendsto_nhds_unique hcos_right hcos_cont).symm
+      have hn_pos : (0 : ℝ) < n := by linarith
+      have hn_lt_one : (n : ℝ) < 1 := by linarith
+      have : 0 < n := by exact_mod_cast hn_pos
+      have : n < 1 := by exact_mod_cast hn_lt_one
+      omega
+    exact ((HurwitzZeta.differentiableAt_cosZeta (a := (x : UnitAddCircle))
+      (s := (1 : ℂ)) (Or.inr hxadd)).continuousAt.tendsto.comp
+      Complex.continuous_ofReal.continuousAt.tendsto).mono_left nhdsWithin_le_nhds
+  · intro σ hσ
+    exact HurwitzZeta.LSeriesHasSum_cos x (by simpa using hσ)
 
 /-- For a nonzero residue class, `cosZeta` at the corresponding point of `UnitAddCircle`
 takes the classical boundary value used on the even side of the `L(1, χ)` formula. -/
