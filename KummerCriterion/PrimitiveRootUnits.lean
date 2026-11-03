@@ -36,8 +36,7 @@ lemma eq_one_mod_sub_of_pow {A : Type*} [CommRing A] [IsDomain A] {ζ μ : A} {k
   obtain ⟨i, -, hi⟩ := hζ.eq_pow_of_pow_eq_one hμ
   rw [← hi, map_pow]
   have hζ_mod : algebraMap A (A ⧸ Ideal.span ({ζ - 1} : Set A)) ζ = 1 := by
-    rw [← map_one (algebraMap A (A ⧸ Ideal.span ({ζ - 1} : Set A))), ← sub_eq_zero,
-      ← map_sub, Ideal.Quotient.algebraMap_eq, Ideal.Quotient.eq_zero_iff_mem]
+    rw [Ideal.Quotient.algebraMap_eq, Ideal.Quotient.mk_eq_one_iff_sub_mem]
     exact Ideal.subset_span (Set.mem_singleton _)
   rw [hζ_mod, one_pow]
 

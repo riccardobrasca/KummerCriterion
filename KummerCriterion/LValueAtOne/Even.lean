@@ -2,6 +2,7 @@ module
 
 public import KummerCriterion.LValueAtOne.Odd
 import KummerCriterion.LValueAtOne.Cosine
+import Mathlib.NumberTheory.LSeries.Nonvanishing
 
 /-!
 # Even-character `L(1, χ)` formulas
@@ -24,28 +25,12 @@ variable (p : ℕ) [hp : Fact p.Prime]
 
 /-- `L(1, χ)` for even primitive characters modulo `p`. -/
 theorem even_LFunction_one_eq_evenLValueRhs
-    {χ : DirichletCharacter ℂ p} (hχ_prim : χ.IsPrimitive) (hχ_even : χ.Even)
-    (hχ_ne_one : χ ≠ 1) :
+    {χ : DirichletCharacter ℂ p} (hχ_prim : χ.IsPrimitive) (hχ_even : χ.Even) :
     DirichletCharacter.LFunction χ 1 = evenLValueRhs p χ := by
-  let _ := hχ_prim
   change ZMod.LFunction (fun a : ZMod p => χ a) 1 = evenLValueRhs p χ
   have hp_ne_one : p ≠ 1 := hp.out.ne_one
-  have hχinv_ne_one : χ⁻¹ ≠ 1 := by
-    intro h
-    apply hχ_ne_one
-    calc
-      χ = χ⁻¹⁻¹ := (inv_inv χ).symm
-      _ = 1 := by simp [h]
   have hχinv_even : (χ⁻¹).Even := by
-    rw [DirichletCharacter.Even] at hχ_even ⊢
-    rw [MulChar.inv_apply_eq_inv', hχ_even]
-    simp
-  have hχinv_prim : (χ⁻¹).IsPrimitive := by
-    rw [DirichletCharacter.isPrimitive_def]
-    have hdiv : (χ⁻¹).conductor ∣ p := DirichletCharacter.conductor_dvd_level (χ⁻¹)
-    rcases (Nat.dvd_prime hp.out).mp hdiv with hcond | hcond
-    · exact (hχinv_ne_one <| (DirichletCharacter.eq_one_iff_conductor_eq_one).2 hcond).elim
-    · exact hcond
+    simpa only [DirichletCharacter.Even, MulChar.inv_apply_eq_inv', inv_eq_one] using hχ_even
   have hχinv_zero : χ⁻¹ 0 = 0 := (χ⁻¹).map_zero' hp_ne_one
   let χinv : ZMod p → ℂ := fun a => χ⁻¹ a
   have hdft :
@@ -60,25 +45,11 @@ theorem even_LFunction_one_eq_evenLValueRhs
     funext a
     simpa [χinv, hχ_even.to_fun a, mul_comm] using
       (DirichletCharacter.IsPrimitive.fourierTransform_eq_inv_mul_gaussSum
-        (χ := χ⁻¹) hχinv_prim a)
+        (χ := χ⁻¹) hχ_prim.inv a)
   have hleft :
       ZMod.LFunction (ZMod.dft χinv) 1 =
         gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)) * ZMod.LFunction χ 1 := by
-    rw [hft, ZMod.LFunction, ZMod.LFunction]
-    calc
-      (p : ℂ) ^ (-1 : ℂ) *
-          ∑ a : ZMod p,
-            (gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)) * χ a) *
-              HurwitzZeta.hurwitzZeta (ZMod.toAddCircle a) 1
-          = (p : ℂ) ^ (-1 : ℂ) *
-              (gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)) *
-                ∑ a : ZMod p, χ a * HurwitzZeta.hurwitzZeta (ZMod.toAddCircle a) 1) := by
-                congr 1
-                rw [Finset.mul_sum]
-                refine Finset.sum_congr rfl fun a _ => by ring
-      _ = gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)) * ZMod.LFunction χ 1 := by
-            rw [ZMod.LFunction]
-            ring
+    simp only [hft, ZMod.LFunction, mul_assoc, ← Finset.mul_sum, mul_left_comm]
   have hsum_sin_zero :
       ∑ a : ZMod p, χ⁻¹ a * HurwitzZeta.sinZeta (ZMod.toAddCircle a) 1 = 0 := by
     refine (hχinv_even.to_fun.mul_odd fun a => ?_).sum_eq_zero
@@ -116,40 +87,17 @@ theorem even_LFunction_one_eq_evenLValueRhs
   have hboundary :
       ∑ a : ZMod p, χ⁻¹ a * HurwitzZeta.cosZeta (ZMod.toAddCircle a) 1 =
         -evenLValueLogSum p χ := by
-    unfold evenLValueLogSum
-    calc
-      ∑ a : ZMod p, χ⁻¹ a * HurwitzZeta.cosZeta (ZMod.toAddCircle a) 1
-          = ∑ a : ZMod p,
-              -(χ⁻¹ a *
-                ((Real.log ‖(1 : ℂ) - ZMod.stdAddChar (N := p) a‖ : ℝ) : ℂ)) := by
-                  refine Finset.sum_congr rfl fun a _ => ?_
-                  rcases eq_or_ne a 0 with rfl | ha
-                  · simp [hχinv_zero]
-                  · rw [cosZeta_toAddCircle_one_eq_boundary (p := p) ha]
-                    have hlog :
-                        ((Real.log ‖(1 : ℂ) - ZMod.stdAddChar (N := p) a‖ : ℝ) : ℂ) =
-                          ((Real.log
-                            (2 * Real.sin (Real.pi * (a.val / p : ℝ))) : ℝ) : ℂ) := by
-                      congr 1
-                      rw [norm_one_sub_stdAddChar (p := p) ha]
-                    rw [hlog]
-                    rw [show
-                      (((-Real.log (2 * Real.sin (Real.pi * (a.val / p : ℝ))) : ℝ) : ℂ)) =
-                        -(((Real.log
-                          (2 * Real.sin (Real.pi * (a.val / p : ℝ))) : ℝ) : ℂ)) by simp]
-                    exact mul_neg (χ⁻¹ a)
-                      (((Real.log (2 * Real.sin (Real.pi * (a.val / p : ℝ))) : ℝ) : ℂ))
-      _ = -∑ a : ZMod p,
-            χ⁻¹ a * ((Real.log ‖(1 : ℂ) - ZMod.stdAddChar (N := p) a‖ : ℝ) : ℂ) :=
-              Finset.sum_neg_distrib
-                (s := Finset.univ)
-                (f := fun a : ZMod p =>
-                  χ⁻¹ a * ((Real.log ‖(1 : ℂ) - ZMod.stdAddChar (N := p) a‖ : ℝ) : ℂ))
-      _ = -evenLValueLogSum p χ := rfl
-  have hcard_ne : (Fintype.card (ZMod p) : ℂ) ≠ 0 := by
-    simpa [ZMod.card] using (show (p : ℂ) ≠ 0 by exact_mod_cast hp.out.ne_zero)
-  have hgauss_ne : gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)) ≠ 0 :=
-    gaussSum_ne_zero_of_nontrivial hcard_ne hχinv_ne_one (ZMod.isPrimitive_stdAddChar p)
+    rw [evenLValueLogSum, ← Finset.sum_neg_distrib]
+    refine Finset.sum_congr rfl fun a _ ↦ ?_
+    rcases eq_or_ne a 0 with rfl | ha
+    · simp [hχinv_zero]
+    · rw [cosZeta_toAddCircle_one_eq_boundary (p := p) ha,
+        norm_one_sub_stdAddChar (p := p) ha]
+      simp
+  have hgauss_ne : gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)) ≠ 0 := by
+    apply norm_ne_zero_iff.mp
+    rw [DirichletCharacter.norm_gaussSum_stdAddChar hχ_prim.inv]
+    exact (Real.sqrt_pos.2 (Nat.cast_pos.2 hp.out.pos)).ne'
   apply (mul_left_cancel₀ hgauss_ne)
   calc
     gaussSum χ⁻¹ (ZMod.stdAddChar (N := p)) * ZMod.LFunction χ 1

@@ -27,6 +27,7 @@ namespace KummerCriterion
 variable (p : ℕ) [hp : Fact p.Prime] (hp_odd : p ≠ 2)
   (K : Type*) [Field K] [NumberField K] [IsCyclotomicExtension {p} ℚ K] [IsCMField K]
 
+omit [IsCMField K] in
 /-- The class number formula for `K`, rearranged to solve for `h`. -/
 theorem h_formula :
     (h K : ℝ) =
@@ -69,33 +70,8 @@ theorem hPlus_formula :
             Real.sqrt |discr (NumberField.maximalRealSubfield K)|) /
           (2 ^ InfinitePlace.nrRealPlaces (NumberField.maximalRealSubfield K) *
             (2 * Real.pi) ^ InfinitePlace.nrComplexPlaces (NumberField.maximalRealSubfield K) *
-              Units.regulator (NumberField.maximalRealSubfield K))) := by
-  let L := NumberField.maximalRealSubfield K
-  let A : ℝ :=
-    2 ^ InfinitePlace.nrRealPlaces L *
-      (2 * Real.pi) ^ InfinitePlace.nrComplexPlaces L * Units.regulator L
-  let B : ℝ := (Units.torsionOrder L : ℝ) * Real.sqrt |discr L|
-  have hA_pos : 0 < A := by
-    dsimp [A]
-    refine mul_pos ?_ (Units.regulator_pos L)
-    exact mul_pos (pow_pos (by positivity) _) (pow_pos (by positivity) _)
-  have hA : A ≠ 0 := hA_pos.ne'
-  have hB_pos : 0 < B := by
-    dsimp [B]
-    refine mul_pos ?_ ?_
-    · exact_mod_cast Units.torsionOrder_pos L
-    · exact Real.sqrt_pos_of_pos (abs_pos.mpr (Int.cast_ne_zero.mpr (discr_ne_zero L)))
-  calc
-    (hPlus K : ℝ) = ((A * (hPlus K : ℝ)) / B) * (B / A) := by
-      field_simp [hA, hB_pos.ne']
-    _ = NumberField.dedekindZeta_residue L * (B / A) := by
-          dsimp [A, B, L]
-          rw [NumberField.dedekindZeta_residue_def, KummerCriterion.hPlus, NumberField.classNumber]
-    _ = NumberField.dedekindZeta_residue L *
-          (((Units.torsionOrder L : ℝ) * Real.sqrt |discr L|) /
-            (2 ^ InfinitePlace.nrRealPlaces L *
-              (2 * Real.pi) ^ InfinitePlace.nrComplexPlaces L * Units.regulator L)) := by
-          simp [A, B]
+              Units.regulator (NumberField.maximalRealSubfield K))) :=
+  h_formula (NumberField.maximalRealSubfield K)
 
 omit [IsCMField K] in
 lemma nrComplexPlaces_maximalRealSubfield_eq_zero :

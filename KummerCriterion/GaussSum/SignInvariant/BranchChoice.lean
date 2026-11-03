@@ -183,9 +183,6 @@ theorem card_evenNonselfdualCharacterFinset_of_mod_four_eq_three
     (evenNonselfdualCharacterFinset (p := p)).card = (p - 3) / 2 := by
   classical
   let E : Finset (DirichletCharacter ℂ p) := Finset.univ.filter fun χ => χ.Even
-  have htriv_even : (1 : DirichletCharacter ℂ p).Even := by
-    change (1 : DirichletCharacter ℂ p) (-1 : ZMod p) = 1
-    rw [MulChar.one_apply (show IsUnit (-1 : ZMod p) from isUnit_one.neg)]
   have hquad_odd : (quadraticCharComplex p).Odd :=
     quadraticCharComplex_odd_of_mod_four_eq_three (p := p) hp₂ hp₄
   have hq_not_even : ¬ (quadraticCharComplex p).Even :=
@@ -210,7 +207,7 @@ theorem card_evenNonselfdualCharacterFinset_of_mod_four_eq_three
   rw [hrewrite, Finset.card_erase_of_mem]
   · rw [card_even_characters (p := p) hp₂]
     omega
-  · simpa [E] using htriv_even
+  · simp [E]
 
 theorem card_evenNonselfdualCharacterReps_of_mod_four_eq_three
     (hp₂ : p ≠ 2) (hp₄ : p % 4 = 3) :

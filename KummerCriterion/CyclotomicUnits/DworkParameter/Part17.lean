@@ -340,17 +340,11 @@ theorem scaledDworkParameterExpApprox_sub_zetaPow_mem_pow_succ
     (a : ZMod p) {N : ℕ} (hN : 1 ≤ N) :
     scaledDworkParameterExpApprox p K a N -
         valuedCyclotomicZetaInteger p K ^ a.val ∈ I ^ (N + 1) := by
-  induction N using Nat.case_strong_induction_on with
-  | hz =>
-      cases hN
-  | hi N ih =>
-      by_cases hN0 : N = 0
-      · subst N
-        simpa using scaledDworkParameterExpApprox_sub_zetaPow_mem_sq
-          (p := p) (K := K) a
-      · have hpos : 1 ≤ N := Nat.succ_le_of_lt (Nat.pos_of_ne_zero hN0)
-        exact scaledDworkParameterExpApprox_sub_zetaPow_mem_step
-          (p := p) (K := K) a hpos (ih N le_rfl hpos)
+  induction N, hN using Nat.le_induction with
+  | base =>
+      simpa using scaledDworkParameterExpApprox_sub_zetaPow_mem_sq (p := p) (K := K) a
+  | succ N hN ih =>
+      exact scaledDworkParameterExpApprox_sub_zetaPow_mem_step (p := p) (K := K) a hN ih
 
 theorem scaledDworkParameterExpApprox_zero_sub_zetaPow_mem
     (a : ZMod p) :

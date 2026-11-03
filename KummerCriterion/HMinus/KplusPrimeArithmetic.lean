@@ -245,28 +245,18 @@ lemma galEquivZMod_complexConj_eq_neg_one (hp_odd : p ≠ 2) :
   have hc :
       c (IsCyclotomicExtension.zeta p ℚ K) =
         (IsCyclotomicExtension.zeta p ℚ K) ^ (p - 1) := by
-    have hc' := congrArg (fun x : 𝓞 K => (x : K)) (complexConj_apply_zeta (p := p) (K := K))
+    have hc' := congr((↑$(complexConj_apply_zeta (p := p) (K := K)) : K))
     rw [coe_ringOfIntegersComplexConj] at hc'
     change (complexConj K) hζ.toInteger.1 =
       hζ.toInteger.1 ^ (p - 1) at hc'
     simpa [c, complexConjRat_apply, hζ.coe_toInteger] using hc'
-  have hpow :
-      (IsCyclotomicExtension.zeta p ℚ K) ^
-          (IsCyclotomicExtension.Rat.galEquivZMod p K c).val.val =
-        (IsCyclotomicExtension.zeta p ℚ K) ^ (p - 1) := by
-    calc
-      (IsCyclotomicExtension.zeta p ℚ K) ^ (IsCyclotomicExtension.Rat.galEquivZMod p K c).val.val
-          = c (IsCyclotomicExtension.zeta p ℚ K) := by
-              symm
-              exact IsCyclotomicExtension.Rat.galEquivZMod_apply_of_pow_eq
-                (n := p) (K := K) c hζ.pow_eq_one
-      _ = (IsCyclotomicExtension.zeta p ℚ K) ^ (p - 1) := hc
+  have hpow := (IsCyclotomicExtension.autEquivPow_spec K
+    (Polynomial.cyclotomic.irreducible_rat hp.out.pos) c).symm.trans hc
   apply Units.ext
-  have hpow' := hpow
   rw [(hζ.isOfFinOrder (NeZero.ne p)).pow_inj_mod, ← hζ.eq_orderOf,
     ← ZMod.natCast_eq_natCast_iff', ZMod.natCast_val, Nat.cast_sub hp.out.one_le,
-    ZMod.natCast_self, zero_sub, Nat.cast_one] at hpow'
-  simpa [c] using hpow'
+    ZMod.natCast_self, zero_sub, Nat.cast_one] at hpow
+  simpa [c, IsCyclotomicExtension.Rat.galEquivZMod] using hpow
 
 lemma unitOfPrimeNe_pow_localResidueDegreePlus_eq_neg_one_of_even
     {ℓ : ℕ} [Fact ℓ.Prime] (hℓp : ℓ ≠ p)

@@ -49,9 +49,7 @@ lemma card_dirichletCharacter_complex : Nat.card (DirichletCharacter ℂ p) = p 
 lemma LFunction_trivial_eq_mul_riemannZeta {s : ℂ} (hs : s ≠ 1) :
     DirichletCharacter.LFunctionTrivChar p s =
       (1 - (p : ℂ) ^ (-s)) * riemannZeta s := by
-  have hpf : Nat.primeFactors p = {p} := by
-    simpa using (Nat.primeFactors_prime_pow (p := p) (k := 1) (by decide : (1 : ℕ) ≠ 0) hp.1)
-  rw [DirichletCharacter.LFunctionTrivChar_eq_mul_riemannZeta (N := p) hs, hpf,
+  rw [DirichletCharacter.LFunctionTrivChar_eq_mul_riemannZeta (N := p) hs, hp.out.primeFactors,
     Finset.prod_singleton]
 
 /-! ### Step A — local factor definitions -/

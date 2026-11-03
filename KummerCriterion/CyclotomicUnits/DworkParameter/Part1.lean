@@ -393,12 +393,7 @@ instance dworkComplete_henselianRing :
 theorem isUnit_one_add_of_mem_dworkCompleteLambdaIdeal
     {x : DworkCompleteIntegerRing p K}
     (hx : x ∈ dworkCompleteLambdaIdeal p K) : IsUnit (1 + x) := by
-  have hH : HenselianRing (DworkCompleteIntegerRing p K)
-      (dworkCompleteLambdaIdeal p K) :=
-    dworkComplete_henselianRing (p := p) (K := K)
-  have hxjac : x ∈ Ideal.jacobson (⊥ : Ideal (DworkCompleteIntegerRing p K)) :=
-    hH.jac hx
-  simpa [mul_comm, add_comm] using (Ideal.mem_jacobson_bot.mp hxjac 1)
+  simpa [add_comm] using Ring.mem_jacobson_iff.mp (HenselianRing.jac hx) 1
 
 theorem valuedCyclotomicLambdaInteger_mem_lambdaIdeal :
     valuedCyclotomicLambdaInteger p K ∈ lambdaIdeal p K :=

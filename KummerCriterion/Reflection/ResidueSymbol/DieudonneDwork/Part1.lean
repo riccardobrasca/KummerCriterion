@@ -373,17 +373,16 @@ theorem IsRIntegralPS.subst {r : ℕ} {F G : PowerSeries ℚ}
   exact Finset.sum_induction _ _ (fun _ _ ha hb => ha.add hb) (IsRIntegralRat.zero r)
     fun d _ => hterm d
 
-theorem IsRIntegralPS.substInv_of_constantCoeff_zero_coeff_one
+theorem IsRIntegralPS.substInv_of_coeff_one
     {r : ℕ} {P : PowerSeries ℚ}
     [Invertible ((PowerSeries.coeff (R := ℚ) 1) P)]
     (hP : IsRIntegralPS r P)
-    (_hP0 : PowerSeries.constantCoeff P = 0)
     (hP1 : (PowerSeries.coeff (R := ℚ) 1) P = 1) :
     IsRIntegralPS r (PowerSeries.substInv P) := by
   classical
   intro n
   induction n using Nat.strong_induction_on with
-  | h n ih =>
+  | ind n ih =>
       rcases n with _ | _ | m
       · simp [PowerSeries.substInv, PowerSeries.substInvFun, IsRIntegralRat.zero]
       · simp [PowerSeries.substInv, PowerSeries.substInvFun, hP1, IsRIntegralRat.one]

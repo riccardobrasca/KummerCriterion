@@ -281,7 +281,7 @@ lemma dedekindZeta_eq_tsum_idealNormMultiplicity {s : ℂ} (hs : 1 < s.re) :
       omega
     exact (Nat.card_congr hequiv).symm ▸ rfl
 
-lemma summable_tsum_symGeometric (α : Type*) [Fintype α] [Finite α] {z : ℂ}
+lemma summable_tsum_symGeometric (α : Type*) [Fintype α] {z : ℂ}
     (hz : ‖z‖ < 1) :
     Summable (fun n : ℕ => (Fintype.card (Sym α n) : ℂ) * z ^ n) ∧
       (∑' n : ℕ, (Fintype.card (Sym α n) : ℂ) * z ^ n) =
@@ -321,17 +321,15 @@ lemma summable_tsum_symGeometric (α : Type*) [Fintype α] [Finite α] {z : ℂ}
         _ = ((1 - z)⁻¹) ^ (k + 1) := by simp [one_div]
         _ = ((1 - z)⁻¹) ^ Fintype.card α := by simp [hk]
 
-lemma tsum_symGeometric (α : Type*) [Fintype α] [Finite α] {z : ℂ} (hz : ‖z‖ < 1) :
+lemma tsum_symGeometric (α : Type*) [Fintype α] {z : ℂ} (hz : ‖z‖ < 1) :
     (∑' n : ℕ, (Fintype.card (Sym α n) : ℂ) * z ^ n) = ((1 - z)⁻¹) ^ Fintype.card α :=
   (summable_tsum_symGeometric α hz).2
 
 lemma summable_idealNormMultiplicity_mul_cpow_neg {s : ℂ} (hs : 1 < s.re) :
     Summable fun n : ℕ => ‖(idealNormMultiplicity L n : ℂ) * (n : ℂ) ^ (-s)‖ := by
   classical
-  have h_finite : ∀ (b : ℕ), {I : NonzeroIdeal L | Ideal.absNorm I.1 = b}.Finite := fun b => by
-    refine Set.Finite.preimage (f := fun I : NonzeroIdeal L => I.1) ?_
-      (Ideal.finite_setOfPred_absNorm_eq b)
-    intro _ _ _ _; exact Subtype.ext
+  have h_finite : ∀ (b : ℕ), {I : NonzeroIdeal L | Ideal.absNorm I.1 = b}.Finite := fun b ↦
+    (Ring.HasFiniteQuotients.finite_absNorm_eq b).preimage Subtype.val_injective.injOn
   have h_sum_card : ∀ n : ℕ, ∑ k ∈ Finset.Icc 1 n, idealNormMultiplicity L k =
       Nat.card {I : NonzeroIdeal L // Ideal.absNorm I.1 ≤ n} := fun n => by
     have key := Finset.card_preimage_eq_sum_card_image_eq (f := fun I : NonzeroIdeal L =>

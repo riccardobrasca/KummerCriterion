@@ -60,12 +60,7 @@ theorem artinHasseExpInverseSeries_isRIntegral
     simpa [hcoeff] using invertibleOfNonzero (by norm_num : (1 : ℚ) ≠ 0)
   have hP : DieudonneDwork.IsRIntegralPS r P := by
     simpa [P] using artinHasseExpMinusOneSeries_isRIntegral r
-  have hP0 : PowerSeries.constantCoeff P = 0 := by
-    simp [P]
-  have hinv :=
-    DieudonneDwork.IsRIntegralPS.substInv_of_constantCoeff_zero_coeff_one
-      (P := P) hP hP0 hcoeff
-  simpa [artinHasseExpInverseSeries, P] using hinv
+  simpa [artinHasseExpInverseSeries, P] using hP.substInv_of_coeff_one hcoeff
 
 /-- The formal inverse identity transported through any coefficient map out
 of the localized Artin-Hasse coefficient ring. -/

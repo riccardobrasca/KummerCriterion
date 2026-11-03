@@ -61,7 +61,7 @@ theorem evenLProduct_one_eq_prod_evenLValueRhs :
   have hχ_ne_one : χ ≠ 1 := hχ_mem.2.2
   simpa using even_LFunction_one_eq_evenLValueRhs (p := p)
     (hχ_prim := DirichletCharacter.isPrimitive_of_ne_one (p := p) hχ_ne_one)
-    (hχ_even := hχ_even) (hχ_ne_one := hχ_ne_one)
+    (hχ_even := hχ_even)
 
 /-- The odd characters modulo `p` form exactly half of all characters. -/
 lemma card_oddCharacters (hp_odd' : p ≠ 2) :
